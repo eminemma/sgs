@@ -1,0 +1,389 @@
+@font-face {
+    font-family: 'MyriadPro-Bold';
+    src: url('../../fonts/MyriadPro-Bold.ttf');
+}
+
+@font-face {
+    font-family: 'MyriadPro-Semibold';
+    src: url('../../fonts/MyriadPro-Semibold.otf');
+}
+body {
+    font-family: Verdana;
+    margin: 0 auto;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+#zona1,
+#zona2,
+#zona3,
+#escribano_resumen {
+    width: 1080px;
+    height: 768px;
+    margin: 0 auto;
+    position: relative;
+}
+
+#zona1 {
+    background-image: url(loteria_ordinaria_escribano_img/zona1_1024_768_02.png);
+    background-repeat: no-repeat;
+}
+
+#zona2 {
+    background-image: url(escribano_img/zona2_2014_4668.png);
+    display: none;
+}
+
+#zona3 {
+    background-image: url(escribano_img/zona3.png);
+    display: none;
+}
+
+.billete {
+    border: 0px solid #000;
+    text-align: center;
+    position: absolute;
+    font-family: 'MyriadPro-Bold';
+}
+
+#primer_premio {
+    /*background-image: url(escribano_img/primero_premio.png);*/
+    background-size: 300px 72px;
+    top: 20px;
+    left: 150px;
+    position: absolute;
+    width: 300px;
+    height: 72px;
+    display: none;
+}
+
+
+/*SOLO PARA EL RESUMEN*/
+
+#escribano_resumen {
+    background-image: url(escribano_img/resumen_4668.png);
+}
+
+#bola01 {
+    top: 115px;
+    left: 124px;
+    position: absolute;
+    font-size: 118px;
+}
+
+#progresion {
+    top: 452px;
+    left: 460px;
+    position: absolute;
+    font-size: 63px;
+}
+
+#bola02 {
+    top: 341px;
+    left: 83px;
+    position: absolute;
+    font-size: 65px;
+}
+
+#bola03 {
+    top: 341px;
+    left: 325px;
+    position: absolute;
+    font-size: 65px;
+}
+
+#bola04 {
+    top: 508px;
+    left: 73px;
+    position: absolute;
+    font-size: 52px;
+}
+
+#bola05 {
+    top: 508px;
+    left: 264px;
+    position: absolute;
+    font-size: 52px;
+}
+
+#bola06 {
+    top: 50px;
+    left: 876px;
+    position: absolute;
+    font-size: 32px;
+}
+
+#bola07 {
+    top: 83px;
+    left: 876px;
+    position: absolute;
+    font-size: 32px;
+}
+
+#bola08 {
+    top: 116px;
+    left: 876px;
+    position: absolute;
+    font-size: 32px;
+}
+
+#bola09 {
+    top: 149px;
+    left: 876px;
+    position: absolute;
+    font-size: 32px;
+}
+
+#bola10 {
+    top: 182px;
+    left: 876px;
+    position: absolute;
+    font-size: 32px;
+}
+
+#bola11 {
+    top: 254px;
+    left: 651px;
+    position: absolute;
+    font-size: 32px;
+}
+
+#bola12 {
+    top: 286px;
+    left: 651px;
+    position: absolute;
+    font-size: 32px;
+}
+
+#bola13 {
+    top: 320px;
+    left: 651px;
+    position: absolute;
+    font-size: 32px;
+}
+
+#bola14 {
+    top: 352px;
+    left: 651px;
+    position: absolute;
+    font-size: 32px;
+}
+
+#bola15 {
+    top: 384px;
+    left: 651px;
+    position: absolute;
+    font-size: 32px;
+}
+
+#bola16 {
+    top: 254px;
+    left: 862px;
+    position: absolute;
+    font-size: 32px;
+}
+
+#bola17 {
+    top: 287px;
+    left: 862px;
+    position: absolute;
+    font-size: 32px;
+}
+
+#bola18 {
+    top: 318px;
+    left: 862px;
+    position: absolute;
+    font-size: 32px;
+}
+
+#bola19 {
+    top: 352px;
+    left: 862px;
+    position: absolute;
+    font-size: 32px;
+}
+
+#bola20 {
+    top: 384px;
+    left: 862px;
+    position: absolute;
+    font-size: 32px;
+}
+
+#bola21 {
+    top: 467px;
+    left: 619px;
+    position: absolute;
+    font-size: 27px;
+}
+
+#bola22 {
+    top: 504px;
+    left: 619px;
+    position: absolute;
+    font-size: 27px;
+}
+
+#bola23 {
+    top: 541px;
+    left: 619px;
+    position: absolute;
+    font-size: 27px;
+}
+
+#bola24 {
+    top: 529px;
+    left: 619px;
+    position: absolute;
+    font-size: 27px;
+}
+
+#bola25 {
+    top: 552px;
+    left: 619px;
+    position: absolute;
+    font-size: 27px;
+}
+
+#fraccion21 {
+    top: 467px;
+    left: 767px;
+    position: absolute;
+    font-size: 27px;
+}
+
+#fraccion22 {
+    top: 503px;
+    left: 767px;
+    position: absolute;
+    font-size: 27px;
+}
+
+#fraccion23 {
+    top: 542px;
+    left: 767px;
+    position: absolute;
+    font-size: 27px;
+}
+
+#fraccion24 {
+    top: 529px;
+    left: 767px;
+    position: absolute;
+    font-size: 27px;
+}
+
+#fraccion25 {
+    top: 553px;
+    left: 767px;
+    position: absolute;
+    font-size: 27px;
+}
+
+#sorteo {
+    top: 60px;
+    left: 621px;
+    position: absolute;
+    font-size: 38px;
+    font-family: 'MyriadPro-Semibold';
+}
+
+#fecha_sorteo {
+    top: 73px;
+    left: 740px;
+    position: absolute;
+    font-size: 20px;
+    font-family: 'MyriadPro-Semibold';
+}
+
+#hora_sorteo {
+    top: 72px;
+    left: 897px;
+    position: absolute;
+    font-size: 20px;
+    font-family: 'MyriadPro-Semibold';
+}
+
+#premio1 {
+    top: 145px;
+    left: 78px;
+    height: 134px;
+    font-size: 25px;
+    position: absolute;
+    color: white;
+    font-family: 'MyriadPro-Semibold';
+}
+
+#premio2 {
+    top: 137px;
+    left: 477px;
+    height: 134px;
+    font-size: 21px;
+    position: absolute;
+    color: white;
+    font-family: 'MyriadPro-Semibold';
+}
+
+#premio3 {
+    top: 137px;
+    left: 754px;
+    height: 134px;
+    font-size: 21px;
+    /* width: 402px; */
+    position: absolute;
+    color: white;
+    font-family: 'MyriadPro-Semibold';
+}
+
+#premio4 {
+    top: 265px;
+    left: 489px;
+    height: 134px;
+    font-size: 21px;
+    /* width: 402px; */
+    position: absolute;
+    color: white;
+    font-family: 'MyriadPro-Semibold';
+}
+
+#premio5 {
+    top: 265px;
+    left: 762px;
+    height: 134px;
+    font-size: 21px;
+    /* width: 402px; */
+    position: absolute;
+    color: white;
+    font-family: 'MyriadPro-Semibold';
+}
+
+#premio6 {
+    top: 400px;
+    left: 45px;
+    height: 134px;
+    font-size: 24px;
+    position: absolute;
+    color: white;
+    font-family: 'MyriadPro-Semibold';
+}
+
+#premio7 {
+    top: 401px;
+    left: 425px;
+    height: 134px;
+    font-size: 24px;
+    position: absolute;
+    color: white;
+    font-family: 'MyriadPro-Semibold';
+}
+
+#premio8 {
+    top: 405px;
+    left: 848px;
+    height: 134px;
+    font-size: 13px;
+    position: absolute;
+    color: white;
+    font-family: 'MyriadPro-Semibold';
+}

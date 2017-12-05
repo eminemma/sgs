@@ -1,0 +1,404 @@
+@font-face {
+    font-family: 'MyriadPro-Bold';
+    src: url('../../../fonts/MyriadPro-Bold.ttf');
+}
+
+@font-face {
+    font-family: 'MyriadPro-Semibold';
+    src: url('../../../fonts/MyriadPro-Semibold.otf');
+}
+
+body {
+    font-family: Verdana;
+    margin: 0 auto;
+     overflow-x: hidden;
+     overflow-y: hidden;
+}
+
+#zona1,
+#zona2,
+#zona3,
+#escribano_resumen {
+    width: 1080px;
+    height: 768px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.escribano {
+    border: 0 solid #000000;
+    position: absolute;
+    text-align: center;
+    left: 180px;
+    top: 699px;
+    font-size: 20px;
+    font-family: 'MyriadPro-Semibold';
+}
+
+.jefe {
+    border: 0 solid #000000;
+    position: absolute;
+    text-align: center;
+    left: 796px;
+    top: 699px;
+    font-size: 20px;
+    font-family: 'MyriadPro-Semibold';
+}
+
+.tipo_juego {
+    border: 0 solid #000000;
+    font-size: 20px;
+    left: 48px;
+    position: absolute;
+    text-align: center;
+    top: 180px;
+    color: #FFFFFF;
+    font-family: 'MyriadPro-Bold';
+    width: 400px;
+/*    text-shadow: rgb(15, 15, 15) 2px 0px 0px, rgb(15, 15, 15) 1.75517px 0.958851px 0px, rgb(15, 15, 15) 1.0806px 1.68294px 0px, rgb(15, 15, 15) 0.141474px 1.99499px 0px, rgb(15, 15, 15) -0.832294px 1.81859px 0px, rgb(15, 15, 15) -1.60229px 1.19694px 0px, rgb(15, 15, 15) -1.97998px 0.28224px 0px, rgb(15, 15, 15) -1.87291px -0.701566px 0px, rgb(15, 15, 15) -1.30729px -1.5136px 0px, rgb(15, 15, 15) -0.421592px -1.95506px 0px, rgb(15, 15, 15) 0.567324px -1.91785px 0px, rgb(15, 15, 15) 1.41734px -1.41108px 0px, rgb(15, 15, 15) 1.92034px -0.558831px 0px;
+*/}
+
+.nrosorteo {
+border: 0 solid #000000;
+    font-size: 35px;
+    left: 456px;
+    position: absolute;
+    text-align: center;
+    top: 167px;
+    font-family: 'MyriadPro-Bold';
+}
+
+.fechasorteo {
+    border: 0 solid #000000;
+    font-size: 22px;
+    left: 653px;
+    position: absolute;
+    text-align: center;
+    top: 176px;
+    font-family: 'MyriadPro-Bold';
+}
+
+.lfechasorteo {
+    border: 0 solid #000000;
+    font-size: 20px;
+    left: 582px;
+    position: absolute;
+    text-align: center;
+    top: 178px;
+    color: #FFFFFF;
+    font-family: 'MyriadPro-Bold';
+/*   text-shadow: rgb(15, 15, 15) 2px 0px 0px, rgb(15, 15, 15) 1.75517px 0.958851px 0px, rgb(15, 15, 15) 1.0806px 1.68294px 0px, rgb(15, 15, 15) 0.141474px 1.99499px 0px, rgb(15, 15, 15) -0.832294px 1.81859px 0px, rgb(15, 15, 15) -1.60229px 1.19694px 0px, rgb(15, 15, 15) -1.97998px 0.28224px 0px, rgb(15, 15, 15) -1.87291px -0.701566px 0px, rgb(15, 15, 15) -1.30729px -1.5136px 0px, rgb(15, 15, 15) -0.421592px -1.95506px 0px, rgb(15, 15, 15) 0.567324px -1.91785px 0px, rgb(15, 15, 15) 1.41734px -1.41108px 0px, rgb(15, 15, 15) 1.92034px -0.558831px 0px;
+*/}
+
+.horasorteo {
+    border: 0 solid #000000;
+    font-size: 22px;
+    left: 886px;
+    position: absolute;
+    text-align: center;
+    top: 176px;
+    font-family: 'MyriadPro-Bold';
+}
+
+.lhorasorteo {
+	border: 0 solid #000000;
+    font-size: 20px;
+    left: 809px;
+    position: absolute;
+    text-align: center;
+    top: 179px;
+    color: #FFFFFF;
+    font-family: 'MyriadPro-Bold';
+/*    text-shadow: rgb(15, 15, 15) 2px 0px 0px, rgb(15, 15, 15) 1.75517px 0.958851px 0px, rgb(15, 15, 15) 1.0806px 1.68294px 0px, rgb(15, 15, 15) 0.141474px 1.99499px 0px, rgb(15, 15, 15) -0.832294px 1.81859px 0px, rgb(15, 15, 15) -1.60229px 1.19694px 0px, rgb(15, 15, 15) -1.97998px 0.28224px 0px, rgb(15, 15, 15) -1.87291px -0.701566px 0px, rgb(15, 15, 15) -1.30729px -1.5136px 0px, rgb(15, 15, 15) -0.421592px -1.95506px 0px, rgb(15, 15, 15) 0.567324px -1.91785px 0px, rgb(15, 15, 15) 1.41734px -1.41108px 0px, rgb(15, 15, 15) 1.92034px -0.558831px 0px;
+*/}
+
+.tipo_juego_lado {
+    border: 0 solid #000000;
+    font-size: 22px;
+    left: -103px;
+    position: absolute;
+    text-align: center;
+    top: 417px;
+    transform: rotate(-90deg);
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    filter: progid: DXImageTransform.Microsoft.BasicImage(rotation=3);
+    color: #FFFFFF;
+    width: 300px;
+    font-family: 'MyriadPro-Bold';
+/*    text-shadow: rgb(15, 15, 15) 2px 0px 0px, rgb(15, 15, 15) 1.75517px 0.958851px 0px, rgb(15, 15, 15) 1.0806px 1.68294px 0px, rgb(15, 15, 15) 0.141474px 1.99499px 0px, rgb(15, 15, 15) -0.832294px 1.81859px 0px, rgb(15, 15, 15) -1.60229px 1.19694px 0px, rgb(15, 15, 15) -1.97998px 0.28224px 0px, rgb(15, 15, 15) -1.87291px -0.701566px 0px, rgb(15, 15, 15) -1.30729px -1.5136px 0px, rgb(15, 15, 15) -0.421592px -1.95506px 0px, rgb(15, 15, 15) 0.567324px -1.91785px 0px, rgb(15, 15, 15) 1.41734px -1.41108px 0px, rgb(15, 15, 15) 1.92034px -0.558831px 0px;
+*/}
+
+.tipo_juego_lado_1 {
+    border: 0 solid #000000;
+    font-size: 22px;
+    left: 839px;
+    position: absolute;
+    text-align: center;
+    top: 417px;
+    transform: rotate(-270deg);
+    -webkit-transform: rotate(-270deg);
+    -moz-transform: rotate(-270deg);
+    filter: progid: DXImageTransform.Microsoft.BasicImage(rotation=9);
+    width: 300px;
+    color: #FFFFFF;
+    font-family: 'MyriadPro-Bold';
+/*    text-shadow: rgb(15, 15, 15) 2px 0px 0px, rgb(15, 15, 15) 1.75517px 0.958851px 0px, rgb(15, 15, 15) 1.0806px 1.68294px 0px, rgb(15, 15, 15) 0.141474px 1.99499px 0px, rgb(15, 15, 15) -0.832294px 1.81859px 0px, rgb(15, 15, 15) -1.60229px 1.19694px 0px, rgb(15, 15, 15) -1.97998px 0.28224px 0px, rgb(15, 15, 15) -1.87291px -0.701566px 0px, rgb(15, 15, 15) -1.30729px -1.5136px 0px, rgb(15, 15, 15) -0.421592px -1.95506px 0px, rgb(15, 15, 15) 0.567324px -1.91785px 0px, rgb(15, 15, 15) 1.41734px -1.41108px 0px, rgb(15, 15, 15) 1.92034px -0.558831px 0px;
+*/}
+
+#zona1 {
+    background-image: url(escribano_img/quiniela_1024_768.png);
+    background-repeat: no-repeat;
+}
+
+#zona2 {
+    background-image: url(escribano_img/zona2_2014_4668.png);
+    display: none;
+}
+
+#zona3 {
+    background-image: url(escribano_img/zona3.png);
+    display: none;
+}
+
+.billete {
+    border: 0px solid #000;
+    text-align: center;
+    position: absolute;
+    font-family: 'MyriadPro-Bold';
+}
+
+#primer_premio {
+    /*background-image: url(escribano_img/primero_premio.png);*/
+    background-size: 300px 72px;
+    top: 20px;
+    left: 150px;
+    position: absolute;
+    width: 300px;
+    height: 72px;
+    display: none;
+}
+
+
+/*SOLO PARA EL RESUMEN*/
+
+#escribano_resumen {
+    background-image: url(escribano_img/resumen_4668.png);
+}
+
+#bola01 {
+    top: 115px;
+    left: 124px;
+    position: absolute;
+    font-size: 118px;
+}
+
+#progresion {
+    top: 452px;
+    left: 460px;
+    position: absolute;
+    font-size: 63px;
+}
+
+#bola02 {
+    top: 341px;
+    left: 83px;
+    position: absolute;
+    font-size: 65px;
+}
+
+#bola03 {
+    top: 341px;
+    left: 325px;
+    position: absolute;
+    font-size: 65px;
+}
+
+#bola04 {
+    top: 508px;
+    left: 73px;
+    position: absolute;
+    font-size: 52px;
+}
+
+#bola05 {
+    top: 508px;
+    left: 264px;
+    position: absolute;
+    font-size: 52px;
+}
+
+#bola06 {
+    top: 50px;
+    left: 876px;
+    position: absolute;
+    font-size: 32px;
+}
+
+#bola07 {
+    top: 83px;
+    left: 876px;
+    position: absolute;
+    font-size: 32px;
+}
+
+#bola08 {
+    top: 116px;
+    left: 876px;
+    position: absolute;
+    font-size: 32px;
+}
+
+#bola09 {
+    top: 149px;
+    left: 876px;
+    position: absolute;
+    font-size: 32px;
+}
+
+#bola10 {
+    top: 182px;
+    left: 876px;
+    position: absolute;
+    font-size: 32px;
+}
+
+#bola11 {
+    top: 254px;
+    left: 651px;
+    position: absolute;
+    font-size: 32px;
+}
+
+#bola12 {
+    top: 286px;
+    left: 651px;
+    position: absolute;
+    font-size: 32px;
+}
+
+#bola13 {
+    top: 320px;
+    left: 651px;
+    position: absolute;
+    font-size: 32px;
+}
+
+#bola14 {
+    top: 352px;
+    left: 651px;
+    position: absolute;
+    font-size: 32px;
+}
+
+#bola15 {
+    top: 384px;
+    left: 651px;
+    position: absolute;
+    font-size: 32px;
+}
+
+#bola16 {
+    top: 254px;
+    left: 862px;
+    position: absolute;
+    font-size: 32px;
+}
+
+#bola17 {
+    top: 287px;
+    left: 862px;
+    position: absolute;
+    font-size: 32px;
+}
+
+#bola18 {
+    top: 318px;
+    left: 862px;
+    position: absolute;
+    font-size: 32px;
+}
+
+#bola19 {
+    top: 352px;
+    left: 862px;
+    position: absolute;
+    font-size: 32px;
+}
+
+#bola20 {
+    top: 384px;
+    left: 862px;
+    position: absolute;
+    font-size: 32px;
+}
+
+#bola21 {
+    top: 467px;
+    left: 619px;
+    position: absolute;
+    font-size: 27px;
+}
+
+#bola22 {
+    top: 504px;
+    left: 619px;
+    position: absolute;
+    font-size: 27px;
+}
+
+#bola23 {
+    top: 541px;
+    left: 619px;
+    position: absolute;
+    font-size: 27px;
+}
+
+#bola24 {
+    top: 529px;
+    left: 619px;
+    position: absolute;
+    font-size: 27px;
+}
+
+#bola25 {
+    top: 552px;
+    left: 619px;
+    position: absolute;
+    font-size: 27px;
+}
+
+#fraccion21 {
+    top: 467px;
+    left: 767px;
+    position: absolute;
+    font-size: 27px;
+}
+
+#fraccion22 {
+    top: 503px;
+    left: 767px;
+    position: absolute;
+    font-size: 27px;
+}
+
+#fraccion23 {
+    top: 542px;
+    left: 767px;
+    position: absolute;
+    font-size: 27px;
+}
+
+#fraccion24 {
+    top: 529px;
+    left: 767px;
+    position: absolute;
+    font-size: 27px;
+}
+
+#fraccion25 {
+    top: 553px;
+    left: 767px;
+    position: absolute;
+    font-size: 27px;
+}

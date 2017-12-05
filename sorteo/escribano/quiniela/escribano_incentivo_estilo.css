@@ -1,0 +1,54 @@
+body{
+	font-family: Verdana;
+}
+#incentivo,
+#tipo_incentivo{
+	width: 1080px;
+	height: 600px;
+	margin: 0 auto;
+	position: relative;
+}
+
+#incentivo{
+	background-image: url(escribano_img/incentivo_2013_4667.png);
+}
+
+
+#tipo_incentivo{
+	top: 195px;
+	left: 290px;
+	position: absolute;
+	width: 1000px;
+	height: 300px;
+	font-size: 50px;
+}
+
+#aleatorio{
+	top: 490px;
+	left: 120px;
+	position: absolute;
+	width: 300px;
+	height: 300px;
+	font-size: 60px;
+}
+
+#agencia{
+	top: 360px;
+	left: 430px;
+	position: absolute;
+	font-size: 28px;
+}
+
+#sucursal{
+	top: 435px;
+	left: 430px;
+	position: absolute;
+	font-size: 28px;
+}
+
+#localidad{
+	top: 510px;
+	left: 430px;
+	position: absolute;
+	font-size: 28px;
+}

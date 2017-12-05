@@ -1,0 +1,31 @@
+========================================================================
+v1.0 (aún no lanzada oficialmente)
+Revision:	---
+Fecha:		---
+
+Caracteristicas Principales:
+	* Conexion ADODB
+	* Envio de SQL o RESOURCE
+	* Envio de Variables (para evitar SQL Inyection)
+	* Titulo
+	* Sub Titulo
+	* Columnas
+		* Alineado
+		* Ancho
+		* Tipo
+		* Totalizado
+	* Columnas Padres
+	* Ajuste automatico de anchos
+	* Cortes (analogia a GROUP BY de SQL)
+	* Totalización de Columnas  (analogia al SUM() de SQL)
+	* Alineación Vertical u Horizontal
+	* AutoCentralizado
+	* Marca de Agua
+	* Contador (analogia al COUNT() de SQL)
+
+Carracteristicas Pendientes:
+	* Codigos de barra
+	* Doble Tablas
+	* Mas tipos de datos
+	* Mejorar el archivo de configuración
+========================================================================

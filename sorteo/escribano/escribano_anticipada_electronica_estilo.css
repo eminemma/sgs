@@ -1,0 +1,292 @@
+@font-face {
+    font-family: 'MyriadPro-BoldCond';
+    src: url('../../fonts/MyriadPro-BoldCond.ttf');
+}
+
+@font-face {
+    font-family: 'MyriadPro-Semibold';
+    src: url('../../fonts/MyriadPro-Semibold.otf');
+}
+
+@font-face {
+    font-family: 'MyriadPro-BoldCond';
+    src: url('../../fonts/MyriadPro-BoldCond.otf');
+}
+
+body {
+    font-family: Verdana;
+         overflow-x: hidden;
+     overflow-y: hidden;
+         margin: 0;
+}
+
+#incentivo,
+#tipo_incentivo,
+#resumen {
+    width: 1024px;
+    height: 767px;
+    margin: 0 auto;
+    position: relative;
+        font-family: 'MyriadPro-BoldCond';
+            color: #484847;
+}
+
+#tipo_incentivo {
+    top: 169px;
+    left: 70px;
+    position: absolute;
+    width: 430px;
+    height: 45px;
+    font-size: 20px;
+    text-align: center;
+    font-size: 100%;
+}
+
+#aleatorio_entero {
+     top: 395px;
+    left: 107px;
+    position: absolute;
+    text-align: center;
+    font-size: 97px;
+    
+}
+
+#aleatorio_fraccion {
+    top: 395px;
+    left: 465px;
+    position: absolute;
+    text-align: center;
+    font-size: 97px;
+}
+
+#sucursal {
+    top: 395px;
+    left: 140px;
+    position: absolute;
+    font-size: 20px;
+}
+
+#agencia {
+    top: 530px;
+    left: 101px;
+    position: absolute;
+    font-size: 23px;
+    text-align: center;
+}
+
+#nombre_d {
+top: 530px;
+    left: 157px;
+    position: absolute;
+    font-size: 23px;
+    text-align: center;
+}
+
+#localidad_d {
+    top: 577px;
+    left: 161px;
+    position: absolute;
+    font-size: 25px;
+    text-align: center;
+}
+
+#billete_d {
+    top: 395px;
+    left: 107px;
+    position: absolute;
+    text-align: center;
+    font-size: 97px;
+}
+
+#fraccion_d {
+    top: 395px;
+    left: 465px;
+    position: absolute;
+    text-align: center;
+    font-size: 97px;
+}
+
+#prescripcion_d {
+    top: 608px;
+    left: 519px;
+    position: absolute;
+    text-align: center;
+    font-size: 27px;
+}
+
+#prox_sorteo_d {
+    top: 608px;
+    left: 720px;
+    position: absolute;
+    text-align: center;
+    font-size: 27px;
+}
+
+#premio_prox_sorteo_d {
+    top: 454px;
+    left: 805px;
+    position: absolute;
+    text-align: center;
+    font-size: 15px;
+    width: 211px;
+}
+
+#jefe_sorteo_d {
+    top: 647px;
+    left: 656px;
+    position: absolute;
+    text-align: center;
+    font-size: 14px;
+    width: 138px;
+    /* border: 1px solid; */
+}
+
+#escribano_d {
+    top: 648px;
+    left: 820px;
+    position: absolute;
+    text-align: center;
+    font-size: 14px;
+    width: 138px;
+    /* border: 1px solid; */
+}
+
+#orden {
+    position: absolute;
+    top: 307px;
+    left: 143px;
+    font-size: 30px;
+}
+
+#ganadores {
+    position: absolute;
+    top: 210px;
+    left: 303px;
+}
+
+.billete {
+width: 110px;
+    height: 100%;
+    font-size: 32px;
+    float: left;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.fraccion {
+    width: 106px;
+    font-size: 32px;
+    float: left;
+    text-align: center;
+}
+.premio_r{
+    width: 145px;
+    font-size: 18px;
+    float: left;
+    text-align: center;
+    line-height: 18px;
+}
+.ganador {
+    height: 66px;
+    line-height: 41px;
+    vertical-align: middle;
+}
+
+#sorteo_r{
+    position: absolute;
+    top: 60px;
+    left: 93px;
+    font-size: 22px;
+}
+
+#fecha_sorteo_r{
+    position: absolute;
+    top: 60px;
+    left: 236px;
+    font-size: 22px;
+}
+
+.premio {
+    font-size: 11px;
+    float: left;
+    text-align: center;
+    margin: 10px 0px 0 0;
+}
+
+.agencia {
+    width: 122px;
+    font-size: 29px;
+    float: left;
+    text-align: center;
+    vertical-align: middle;
+    /* position: relative; */
+    left: 100px;
+}
+
+.sucursal {
+    width: 204px;
+    font-size: 16px;
+    float: left;
+    /* text-align: center; */
+    vertical-align: middle;
+    position: relative;
+    left: -1px;
+    top: -3px;
+    height: 51px;
+    line-height: 16px;
+}
+
+#jefe_sorteo_r {
+position: absolute;
+    top: 689px;
+    left: 647px;
+    text-align: center;
+    font-size: 14px;
+    width: 138px;
+    /* border: 1px solid; */
+
+}
+
+#escribano_r {
+     position: absolute;
+    top: 690px;
+    left: 839px;
+    position: absolute;
+    text-align: center;
+    font-size: 14px;
+    width: 138px;
+}
+
+#prescripcion_r {
+    position: absolute;
+    top: 617px;
+    left: 445px;
+    font-size: 27px;
+}
+
+#premio_prox_sorteo_r {
+position: absolute;
+    top: 617px;
+    left: 619px;
+    font-size: 27px;
+}
+.premios{
+    position: absolute;
+    top: 602px;
+    left: 781px;
+}
+#premio{
+    position: absolute;
+    top: 309px;
+    left: 236px;
+    font-size: 27px;
+    width: 334px;
+    text-align: center;
+}
+
+#fecha_sorteo{
+position: absolute;
+    left: 505px;
+    top: 231px;
+    font-size: 22px;
+}
