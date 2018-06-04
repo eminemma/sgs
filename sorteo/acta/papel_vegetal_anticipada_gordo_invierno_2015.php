@@ -173,8 +173,8 @@ while ($row_ganador = siguiente($res_ganador)) {
     if ($row_ganador->NOMBRE == 'VENTA CONTADO CASA CENTRAL') {
         $pdf->SetFont('Arial', 'B', 20);
         $pdf->Cell(35, 17, '9001', 0, 0, 'C');
-        $pdf->setXY(218, 51 + $y);
-        $pdf->SetFont('Arial', 'B', 11);
+        $pdf->setXY(218, 52 + $y);
+        $pdf->SetFont('Arial', 'B', 13);
         $pdf->Cell(75, 17, 'CORDOBA', 0, 0, 'L');
     } else if ($row_ganador->NOMBRE == 'VENTA CONTADO') {
         if ($row_ganador->SUCURSAL == 'CASA CENTRAL') {
@@ -184,16 +184,16 @@ while ($row_ganador = siguiente($res_ganador)) {
         }
         $pdf->SetFont('Arial', 'B', 20);
         $pdf->Cell(35, 17, '9001', 0, 0, 'C');
-        $pdf->setXY(218, 51 + $y);
-        $pdf->SetFont('Arial', 'B', 11);
+        $pdf->setXY(218, 52 + $y);
+        $pdf->SetFont('Arial', 'B', 13);
         $pdf->Cell(75, 17, $localidad, 0, 0, 'L');
 
     } else {
         //$pdf->setXY(203, 58 + $y);
         $pdf->SetFont('Arial', 'B', 35);
         $pdf->Cell(35, 17, str_pad($row_ganador->AGENCIA, 4, 0, STR_PAD_LEFT), 0, 0, 'C');
-        $pdf->setXY(219, 56 + $y);
-        $pdf->SetFont('Arial', 'B', 11);
+        $pdf->setXY(219, 57 + $y);
+        $pdf->SetFont('Arial', 'B', 13);
         $pdf->MultiCell(75, 5, utf8_decode($row_ganador->LOCALIDAD), 0, 'L');
 
     }
@@ -252,7 +252,7 @@ if ($semana != $cantidad_semanas) {
 
     $y_premio = -5;
     $pdf->SetFont('Arial', 'B', 12);
-    $pdf->SetXY($x + 160, $y - 16);
+    $pdf->SetXY($x + 160, $y - 14);
     while ($row_premio = siguiente($res_premios)) {
         if ($row_premio->CANTIDAD == 1) {
             $premio = $row_premio->PREMIO;
