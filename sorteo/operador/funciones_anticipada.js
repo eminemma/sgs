@@ -9,9 +9,10 @@ function preparaAnticipada() {
     for (var i = 0; i < loteria_anticipada.premios.length; i++) {
 
         var orden = loteria_anticipada.premios[i].orden;
+/*        console.log("#fanticipada"+$('#semana_' + loteria_anticipada.semana + '_' + orden).attr("id").substring(6,12));*/
         $('#semana_' + loteria_anticipada.semana + '_' + orden).click(function() {
 
-            $.post('sorteo/operador/loteria_anticipada_ajax.php', $("#fanticipada"+$(this).attr("id").substring(6,10)).serialize(), function(data) { mostrarMensaje(data) });
+            $.post('sorteo/operador/loteria_anticipada_ajax.php', $("#fanticipada"+$(this).attr("id").substring(6,12)).serialize(), function(data) { mostrarMensaje(data) });
 
         });
 

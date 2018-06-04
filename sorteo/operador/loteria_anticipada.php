@@ -112,20 +112,6 @@ if ($_SESSION['tipo_usuario'] != 'ROL_JEFE_SORTEO' && $_SESSION['tipo_usuario'] 
                     tipo: 'semana_7',
                     orden: orden
                 };
-            }else if (classN == 'ver_semana_8') {
-                accion = 'sorteo/operador/loteria_anticipada_ajax.php';
-                param2 = {
-                    accion: 'mostrar_extracto',
-                    tipo: 'semana_8',
-                    orden: orden
-                };
-            }else if (classN == 'ver_semana_9') {
-                accion = 'sorteo/operador/loteria_anticipada_ajax.php';
-                param2 = {
-                    accion: 'mostrar_extracto',
-                    tipo: 'semana_9',
-                    orden: orden
-                };
             }
 
             if (typeof param2 === 'object') {
@@ -222,9 +208,9 @@ if ($_SESSION['tipo_usuario'] != 'ROL_JEFE_SORTEO' && $_SESSION['tipo_usuario'] 
 
 <body>
     <div id="contenedor_general" class="container">
-        <h3 class="titulo"><img width="40" border="0" src="img/logo_loteria_peque.png"><?php echo $_SESSION['juego'] ?> <?php echo $_SESSION['sorteo'] ?> <span style="font-size:11px"><i class="icon-user"></i><?php echo $_SESSION['nombre_usuario'] . ' (' . $_SESSION['tipo_usuario'] . ')'; ?></span></h3>
+        <h3 class="titulo"><img width="40" border="0" src="img/logo_loteria_peque.png"><?php echo $_SESSION['juego'] ?> Sorteo Compra Anticipada <?php echo $_SESSION['sorteo'] ?> <span style="font-size:11px"><i class="icon-user"></i><?php echo $_SESSION['nombre_usuario'] . ' (' . $_SESSION['tipo_usuario'] . ')'; ?></span></h3>
         <div class="bar" style="width: 40%"></div>
-        <div>
+<!--         <div>
             <div class="row-fluid show-grid">
                 <div class="navbar">
                     <div class="navbar-inner">
@@ -238,7 +224,7 @@ if ($_SESSION['tipo_usuario'] != 'ROL_JEFE_SORTEO' && $_SESSION['tipo_usuario'] 
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <div id="juego"></div>
         <div id="error" class="alert alert-error" style="display:none">
             <button type="button" class="close" onclick="$('.alert').slideUp('slow');">x</button>

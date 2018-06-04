@@ -5,7 +5,6 @@ include_once dirname(__FILE__) . '/../../db.php';
 ?>
     <div class="row-fluid show-grid">
         <div id="contendio_juego" class="well form-inline text-center">
-            <h4 style="margin-bottom:50px;">Lotería - sorteo anticipada</h4>
             <?php
 
 try {
@@ -22,17 +21,16 @@ try {
     $tabindex = 1;
     $cantidad = $lista_anticipada->RecordCount();
     while ($row_anticipada = siguiente($lista_anticipada)) {
+
         ?>
                 <form class="form-inline" action="#" id="fanticipada_<?php echo $row_anticipada->SEMANA; ?>_<?php echo $row_anticipada->ORDEN; ?>">
                     <table align="center" width="90%">
                         <tr>
-                            <td align="left" style="padding-right:40px;" width="60%">
+                            <td align="left" width="80%">
                                 <a href="#" class="ver_semana_<?php echo $row_anticipada->SEMANA; ?>" onclick="cambiar_juego(this.className,<?php echo $row_anticipada->ORDEN; ?>); return false;"><img src="img/icono_screen.png" width="25" height="25" border="0" style="vertical-align: middle;">Semana <b><?php echo $row_anticipada->SEMANA; ?> Premio <?php echo $row_anticipada->ORDEN; ?></b> (
                                     <?php echo date('d/m/Y', strtotime(str_replace("/", "-", $row_anticipada->FECHA_SORTEO))); ?>)
                                     <?php echo $row_anticipada->PREMIO; ?>
                                 </a>
-                            </td>
-                            <td align="left">
                             </td>
                             <td align="left">
                                 <input type="button" id="semana_<?php echo $row_anticipada->SEMANA; ?>_<?php echo $row_anticipada->ORDEN; ?>" name="semana_<?php echo $row_anticipada->SEMANA; ?>_<?php echo $row_anticipada->ORDEN; ?>" Value="Sortear" <?php if ($row_anticipada->FECHA_SORTEO != $today) {;?>disabled
@@ -48,7 +46,7 @@ try {
                             <?php
 if ($cantidad == $lista_anticipada->CurrentRow()) {
             ?>
-<a href="#" onclick="mostrar_resumen('<?php echo $row_anticipada->SEMANA; ?>'); return false;"><img src="img/icono_screen.png" width="25" height="25" border="0" style="vertical-align: middle;">Resumen Semana <b><?php echo $row_anticipada->SEMANA; ?></a>
+<a href="#" onclick="mostrar_resumen('<?php echo $row_anticipada->SEMANA; ?>'); return false;"><img src="img/icono_screen.png" width="25" height="25" border="0" style="vertical-align: middle;">Resumen </a>
 <?php
 }
         ?>

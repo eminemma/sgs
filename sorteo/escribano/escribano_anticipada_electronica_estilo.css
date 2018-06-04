@@ -23,12 +23,12 @@ body {
 #incentivo,
 #tipo_incentivo,
 #resumen {
-    width: 1024px;
+    width: 1366px;
     height: 767px;
     margin: 0 auto;
     position: relative;
-        font-family: 'MyriadPro-BoldCond';
-            color: #484847;
+    font-family: 'MyriadPro-BoldCond';
+    color: #484847;
 }
 
 #tipo_incentivo {
@@ -43,17 +43,16 @@ body {
 }
 
 #aleatorio_entero {
-     top: 395px;
-    left: 107px;
+    top: 434px;
+    left: 217px;
     position: absolute;
     text-align: center;
     font-size: 97px;
-    
 }
 
 #aleatorio_fraccion {
-    top: 395px;
-    left: 465px;
+    top: 434px;
+    left: 586px;
     position: absolute;
     text-align: center;
     font-size: 97px;
@@ -67,40 +66,34 @@ body {
 }
 
 #agencia {
-    top: 530px;
-    left: 101px;
+    top: 590px;
+    left: 124px;
     position: absolute;
-    font-size: 23px;
+    font-size: 43px;
     text-align: center;
 }
 
-#nombre_d {
-top: 530px;
-    left: 157px;
-    position: absolute;
-    font-size: 23px;
-    text-align: center;
-}
+#nombre_d {top: 590px;left: 217px;position: absolute;font-size: 43px;text-align: center;}
 
 #localidad_d {
-    top: 577px;
-    left: 161px;
+    top: 685px;
+    left: 131px;
     position: absolute;
-    font-size: 25px;
+    font-size: 43px;
     text-align: center;
 }
 
 #billete_d {
-    top: 395px;
-    left: 107px;
+top: 434px;
+    left: 217px;
     position: absolute;
     text-align: center;
     font-size: 97px;
 }
 
 #fraccion_d {
-    top: 395px;
-    left: 465px;
+  top: 434px;
+    left: 586px;
     position: absolute;
     text-align: center;
     font-size: 97px;
@@ -132,8 +125,8 @@ top: 530px;
 }
 
 #jefe_sorteo_d {
-    top: 647px;
-    left: 656px;
+        top: 647px;
+    left: 870px;
     position: absolute;
     text-align: center;
     font-size: 14px;
@@ -142,68 +135,72 @@ top: 530px;
 }
 
 #escribano_d {
-    top: 648px;
-    left: 820px;
+        top: 647px;
+    left: 1035px;
+
     position: absolute;
     text-align: center;
-    font-size: 14px;
     width: 138px;
+    font-size: 14px;
     /* border: 1px solid; */
 }
 
 #orden {
     position: absolute;
-    top: 307px;
-    left: 143px;
-    font-size: 30px;
+    top: 324px;
+    left: 184px;
+    font-size: 59px;
 }
 
-#ganadores {
-    position: absolute;
-    top: 210px;
-    left: 303px;
-}
+#ganadores {position: absolute;top: 140px;left: 140px;}
 
 .billete {
-width: 110px;
-    height: 100%;
-    font-size: 32px;
+    width: 108px;
+    /* height: 60%; */
+    font-size: 39px;
     float: left;
     text-align: center;
     vertical-align: middle;
+    position: relative;
 }
 
 .fraccion {
-    width: 106px;
-    font-size: 32px;
+    width: 94px;
+    font-size: 39px;
     float: left;
     text-align: center;
 }
-.premio_r{
-    width: 145px;
-    font-size: 18px;
-    float: left;
-    text-align: center;
-    line-height: 18px;
-}
+.premio_r{width: 165px;font-size: 14px;float: left;text-align: center;line-height: 24px;padding-top: 4px;}
 .ganador {
-    height: 66px;
-    line-height: 41px;
+    height: 50.7px;
+    line-height: 46px;
     vertical-align: middle;
+    /* border: 1px solid #020202; */
+    margin-bottom: 4px;
+    /* position: relative; */
+    /* display: block; */
+}
+
+.ganador {}
+#sorteo{
+    position: absolute;
+    left: 975px;
+    top: 199px;
+    font-size: 39px;
 }
 
 #sorteo_r{
     position: absolute;
-    top: 60px;
-    left: 93px;
-    font-size: 22px;
+    top: 223px;
+    left: 1068px;
+    font-size: 29px;
 }
 
 #fecha_sorteo_r{
     position: absolute;
-    top: 60px;
-    left: 236px;
-    font-size: 22px;
+    top: 58px;
+    left: 686px;
+    font-size: 32px;
 }
 
 .premio {
@@ -214,46 +211,26 @@ width: 110px;
 }
 
 .agencia {
-    width: 122px;
-    font-size: 29px;
-    float: left;
-    text-align: center;
-    vertical-align: middle;
-    /* position: relative; */
-    left: 100px;
+     width: 102px;
+     font-size: 39px;
+     float: left;
+     text-align: center;
+     vertical-align: middle;
+     /* position: relative; */
+     left: 100px;
 }
 
-.sucursal {
-    width: 204px;
-    font-size: 16px;
-    float: left;
-    /* text-align: center; */
-    vertical-align: middle;
-    position: relative;
-    left: -1px;
-    top: -3px;
-    height: 51px;
-    line-height: 16px;
-}
+.sucursal {width: 209px;font-size: 23px;float: left;/* text-align: center; */vertical-align: middle;position: relative;left: 4px;top: 3px;height: 47px;line-height: 16px;}
 
-#jefe_sorteo_r {
-position: absolute;
-    top: 689px;
-    left: 647px;
-    text-align: center;
-    font-size: 14px;
-    width: 138px;
-    /* border: 1px solid; */
-
-}
+#jefe_sorteo_r {position: absolute;top: 704px;left: 278px;text-align: center;font-size: 13px;width: 138px;/* border: 1px solid; */}
 
 #escribano_r {
-     position: absolute;
-    top: 690px;
-    left: 839px;
+    position: absolute;
+    top: 704px;
+    left: 399px;
     position: absolute;
     text-align: center;
-    font-size: 14px;
+    font-size: 13px;
     width: 138px;
 }
 
@@ -277,16 +254,16 @@ position: absolute;
 }
 #premio{
     position: absolute;
-    top: 309px;
-    left: 236px;
-    font-size: 27px;
-    width: 334px;
+    top: 328px;
+    left: 308px;
+    font-size: 21px;
+    width: 421px;
     text-align: center;
 }
 
 #fecha_sorteo{
-position: absolute;
-    left: 505px;
-    top: 231px;
-    font-size: 22px;
+ position: absolute;
+ left: 591px;
+ top: 231px;
+ font-size: 32px;
 }

@@ -119,6 +119,7 @@ $jefe_sorteo        = $row->JEFE_SORTEO;
 $retorno            = array(
     'incentivoMostrando' => $valor,
     'orden'              => $orden,
+    'sorteo'             => $row->SORTEO,
     'descIncentivo'      => $descIncentivo,
     'maximoAleatorio'    => $maximoAleatorio,
     'prescripcion'       => date('d/m/Y', strtotime(str_replace("/", "-", $prescripcion))),
@@ -136,6 +137,7 @@ if ((int) $row->SEMANA == $row->CANTIDAD_SEMANAS) {
     $retorno = array(
         'incentivoMostrando' => $valor,
         'orden'              => $orden,
+        'sorteo'             => $row->SORTEO,
         'descIncentivo'      => $descIncentivo,
         'maximoAleatorio'    => $maximoAleatorio,
         'prescripcion'       => date('d/m/Y', strtotime(str_replace("/", "-", $prescripcion))),

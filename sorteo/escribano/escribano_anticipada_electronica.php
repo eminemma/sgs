@@ -11,7 +11,8 @@
 
 <body>
     <div id="incentivo">
-         <div id="fecha_sorteo"></div>
+        <div id="sorteo"></div>
+        <div id="fecha_sorteo"></div>
         <div id="orden"></div>
         <div id="premio"></div>
         <div id="tipo_incentivo"></div>
@@ -26,14 +27,14 @@
         <div id="prescripcion_d"></div>
         <div id="prox_sorteo_d"></div>
         <div id="premio_prox_sorteo_d"></div>
-        <div id="escribano_d"></div>
-        <div id="jefe_sorteo_d"></div>
+<!--         <div id="escribano_d"></div>
+        <div id="jefe_sorteo_d"></div> -->
     </div>
     <div id="resumen">
         <div id="sorteo_r"></div>
         <div id="fecha_sorteo_r"></div>
-        <div id="escribano_r"></div>
-        <div id="jefe_sorteo_r"></div>
+<!--         <div id="escribano_r"></div>
+        <div id="jefe_sorteo_r"></div> -->
         <div id="prox_sorteo_r"></div>
         <div id="premio_prox_sorteo_r"></div>
         <div id="prescripcion_r"></div>
@@ -44,7 +45,7 @@
     $(document).ready(
         function() {
             buscar_informacion();
-         setInterval(buscar_informacion, 1300);
+           setInterval(buscar_informacion, 1300);
         }
     );
     var datos_incentivo = [];
@@ -60,43 +61,34 @@
                 aleatorio = data.cantFracciones;
                 switch (incentivoMostrando) {
                     case ('1'):
-                        $('#incentivo').css("background-image", "url(escribano_img/gordo_navidad_2017_semana1_blanco.jpg)");
+                        $('#incentivo').css("background-image", "url(escribano_img/gordo_invierno_2018_semana1_blanco.jpg)");
                         buscar_ganador(data);
                         break;
                     case ('2'):
-                        $('#incentivo').css("background-image", "url(escribano_img/gordo_navidad_2017_semana2_blanco.jpg)");
+                        $('#incentivo').css("background-image", "url(escribano_img/gordo_invierno_2018_semana1_blanco.jpg)");
                         buscar_ganador(data);
                         break;
                     case ('3'):
-                        $('#incentivo').css("background-image", "url(escribano_img/gordo_navidad_2017_semana3_blanco.jpg)");
+                        $('#incentivo').css("background-image", "url(escribano_img/gordo_invierno_2018_semana1_blanco.jpg)");
                         buscar_ganador(data);
                         break;
                     case ('4'):
-                        $('#incentivo').css("background-image", "url(escribano_img/gordo_navidad_2017_semana4_blanco.jpg)");
+                        $('#incentivo').css("background-image", "url(escribano_img/gordo_invierno_2018_semana1_blanco.jpg)");
                         buscar_ganador(data);
                         break;
                     case ('5'):
-                        $('#incentivo').css("background-image", "url(escribano_img/gordo_navidad_2017_semana5_blanco.jpg)");
+                        $('#incentivo').css("background-image", "url(escribano_img/gordo_invierno_2018_semana1_blanco.jpg)");
                         buscar_ganador(data);
                         break;
                     case ('6'):
-                        $('#incentivo').css("background-image", "url(escribano_img/gordo_navidad_2017_semana6_blanco.jpg)");
+                        $('#incentivo').css("background-image", "url(escribano_img/gordo_invierno_2018_semana1_blanco.jpg)");
                         buscar_ganador(data);
                         break;
                     case ('7'):
-                        $('#incentivo').css("background-image", "url(escribano_img/gordo_navidad_2017_semana7_blanco.jpg)");
+                        $('#incentivo').css("background-image", "url(escribano_img/gordo_invierno_2018_semana1_blanco.jpg)");
                         buscar_ganador(data);
-                        break;
-                    case ('8'):
-                        $('#incentivo').css("background-image", "url(escribano_img/gordo_navidad_2017_semana8_blanco.jpg)");
-                        buscar_ganador(data);
-                        break;
-                    case ('9'):
-                        $('#incentivo').css("background-image", "url(escribano_img/gordo_navidad_2017_semana9_blanco.jpg)");
-                        buscar_ganador(data);
-                        break;
                     case ('resumen'):
-                        $('#resumen').css("background-image", "url(escribano_img/gordo_navidad_2017_semana"+data.semana+"_resumen.jpg)");
+                        $('#resumen').css("background-image", "url(escribano_img/gordo_invierno_2018_semana1_resumen.jpg)");
                         mostrar_resumen(data);
                         break;
                 }
@@ -112,8 +104,17 @@
         $('#resumen div').html('');
 
 
-        $('#orden').html(pad(data.orden,2));
+        $('#orden').html(pad(data.orden, 2));
         $('#fecha_sorteo').html(data.fecha_sorteo);
+        $('#sorteo').html(data.sorteo);
+        $('#premio').css('font-size','26.5px');
+
+        if(data.descIncentivo.length <=10){
+            $('#premio').css('font-size','54px');
+        }
+        if(data.descIncentivo.length >10 && data.descIncentivo.length <=26){
+            $('#premio').css('font-size','35px');
+        }
         $('#premio').html(data.descIncentivo);
         $('#escribano_d').html(data.escribano);
         $('#jefe_sorteo_d').html(data.jefe_sorteo);
@@ -127,14 +128,14 @@
             $('#aleatorio_fraccion').html('');
 
             /*$('#agencia').html(data.datosIncentivo[0].id_agencia);*/
-            if(data.datosIncentivo[0].nombre == 'VENTA CONTADO CASA CENTRAL')
+            if (data.datosIncentivo[0].nombre == 'VENTA CONTADO CASA CENTRAL')
                 $('#localidad_d').html('CORDOBA');
-            else if(data.datosIncentivo[0].nombre == 'VENTA CONTADO'){
-                if(data.datosIncentivo[0].desc_sucursal == 'CASA CENTRAL')
+            else if (data.datosIncentivo[0].nombre == 'VENTA CONTADO') {
+                if (data.datosIncentivo[0].desc_sucursal == 'CASA CENTRAL')
                     $('#localidad_d').html('CORDOBA');
                 else
                     $('#localidad_d').html(data.datosIncentivo[0].desc_sucursal);
-            }else  if(data.datosIncentivo[0].id_agencia != null){
+            } else if (data.datosIncentivo[0].id_agencia != null) {
                 $('#localidad_d').html(data.datosIncentivo[0].localidad);
             }
 
@@ -143,21 +144,21 @@
             $('#billete_d').html(data.datosIncentivo[0].billete);
             $('#fraccion_d').html(data.datosIncentivo[0].fraccion);
 
+
             /*$('#sucursal').html(data.datosIncentivo[0].desc_sucursal);
             $('#agencia').html((data.datosIncentivo[0].desc_agencia));*/
 
 
-            if(data.datosIncentivo[0].nombre == 'VENTA CONTADO CASA CENTRAL'){
-               $('#agencia').html('');
-               $('#nombre_d').html('9001 CORDOBA');
-            }
-            else if(data.datosIncentivo[0].nombre == 'VENTA CONTADO'){
-               $('#agencia').html('');
-               $('#nombre_d').html('9001 '+data.datosIncentivo[0].desc_sucursal);
-            }else  if(data.datosIncentivo[0].id_agencia != null){
+            if (data.datosIncentivo[0].nombre == 'VENTA CONTADO CASA CENTRAL') {
+                $('#agencia').html('');
+                $('#nombre_d').html('9001 CORDOBA');
+            } else if (data.datosIncentivo[0].nombre == 'VENTA CONTADO') {
+                $('#agencia').html('');
+                $('#nombre_d').html('9001 ' + data.datosIncentivo[0].desc_sucursal);
+            } else if (data.datosIncentivo[0].id_agencia != null) {
 
-               $('#agencia').html(pad(data.datosIncentivo[0].id_agencia,4));
-               $('#nombre_d').html(data.datosIncentivo[0].nombre);
+                $('#agencia').html(pad(data.datosIncentivo[0].id_agencia, 4));
+                $('#nombre_d').html(data.datosIncentivo[0].nombre);
             }
 
             intervalo_para_aleatorio = undefined;
@@ -184,7 +185,7 @@
     }
 
     function mostrar_resumen(data) {
-    	if (typeof intervalo_para_aleatorio != 'undefined') {
+        if (typeof intervalo_para_aleatorio != 'undefined') {
             intervalo_para_aleatorio = clearInterval(intervalo_para_aleatorio);
         }
         $('#incentivo').hide();
@@ -192,8 +193,8 @@
         $('#incentivo div').html('');
         $('#jefe_sorteo_r').html(data.jefe_sorteo);
         $('#escribano_r').html(data.escribano);
-/*        $('#prescripcion_r').html(data.prescripcion);*/
-/*        $('#premio_prox_sorteo_r').html(data.prox_sorteo);*/
+        /*        $('#prescripcion_r').html(data.prescripcion);*/
+        /*        $('#premio_prox_sorteo_r').html(data.prox_sorteo);*/
 
         $('#sorteo_r').html(data.sorteo);
         $('#fecha_sorteo_r').html(data.fecha_sorteo);
@@ -201,24 +202,28 @@
         $('#premios').html('');
         for (var i = 0; i < data.ganadores.length; i++) {
 
-            if(data.ganadores[i].NOMBRE == 'VENTA CONTADO CASA CENTRAL')
-               $('#ganadores').append('<div class="ganador"><div class="billete">'+pad(data.ganadores[i].BILLETE,5)+'</div><div class="fraccion">'+pad(data.ganadores[i].FRACCION,2)+'</div><div class="premio_r">'+data.ganadores[i].PREMIO+'</div><div class="agencia">9001</div><div class="sucursal">CORDOBA</div></div>');
-            else if(data.ganadores[i].NOMBRE == 'VENTA CONTADO'){
-               var localidad;
-               if(data.ganadores[i].SUCURSAL == 'CASA CENTRAL'){
-                   localidad = 'CORDOBA';
-               } else{
-                   localidad = data.ganadores[i].SUCURSAL;
-               }
-               $('#ganadores').append('<div class="ganador"><div class="billete">'+pad(data.ganadores[i].BILLETE,5)+'</div><div class="fraccion">'+pad(data.ganadores[i].FRACCION,2)+'</div><div class="premio_r">'+data.ganadores[i].PREMIO+'</div><div class="agencia">9001</div><div class="sucursal">'+localidad+'</div></div>');
+            if (data.ganadores[i].NOMBRE == 'VENTA CONTADO CASA CENTRAL')
+                $('#ganadores').append('<div class="ganador"><div class="billete">' + pad(data.ganadores[i].BILLETE, 5) + '</div><div class="fraccion">' + pad(data.ganadores[i].FRACCION, 2) + '</div><div class="premio_r" id="premio_r_'+i+'">' + data.ganadores[i].PREMIO + '</div><div class="agencia">9001</div><div class="sucursal">CORDOBA</div></div>');
+            else if (data.ganadores[i].NOMBRE == 'VENTA CONTADO') {
+                var localidad;
+                if (data.ganadores[i].SUCURSAL == 'CASA CENTRAL') {
+                    localidad = 'CORDOBA';
+                } else {
+                    localidad = data.ganadores[i].SUCURSAL;
+                }
+                $('#ganadores').append('<div class="ganador"><div class="billete">' + pad(data.ganadores[i].BILLETE, 5) + '</div><div class="fraccion">' + pad(data.ganadores[i].FRACCION, 2) + '</div><div class="premio_r" id="premio_r_'+i+'">' + data.ganadores[i].PREMIO + '</div><div class="agencia">9001</div><div class="sucursal">' + localidad + '</div></div>');
+            } else if (data.ganadores[i].AGENCIA != null)
+                $('#ganadores').append('<div class="ganador"><div class="billete">' + pad(data.ganadores[i].BILLETE, 5) + '</div><div class="fraccion">' + pad(data.ganadores[i].FRACCION, 2) + '</div><div class="premio_r" id="premio_r_'+i+'">' + data.ganadores[i].PREMIO + '</div><div class="agencia">' + pad(data.ganadores[i].AGENCIA, 4) + '</div><div class="sucursal">' + data.ganadores[i].LOCALIDAD + '</div></div>');
+
+                            $('#premio_r_'+i).css('font-size','18px');
+            if( data.ganadores[i].PREMIO.length <=10){
+                $('#premio_r_'+i).css('font-size','40px');
             }
-           else if(data.ganadores[i].AGENCIA != null)
-                $('#ganadores').append('<div class="ganador"><div class="billete">'+pad(data.ganadores[i].BILLETE,5)+'</div><div class="fraccion">'+pad(data.ganadores[i].FRACCION,2)+'</div><div class="premio_r">'+data.ganadores[i].PREMIO+'</div><div class="agencia">'+pad(data.ganadores[i].AGENCIA,4)+'</div><div class="sucursal">'+data.ganadores[i].LOCALIDAD+'</div></div>');
         }
 
-/*        for (var i = 0; i < data.premios.length; i++) {
-            $('#premios').append('<div class="premio">'+data.premios[i].PREMIO+'</div></br>');
-        }*/
+        /*        for (var i = 0; i < data.premios.length; i++) {
+                    $('#premios').append('<div class="premio">'+data.premios[i].PREMIO+'</div></br>');
+                }*/
     }
 
     function animar_aleatorio() {

@@ -392,14 +392,14 @@ while ($row_extraccion_incentivo = $rs_extraccion_incentivo->FetchNextObject($to
     }
 
     ?>
-<table class="table table-striped table-bordered">
+<table class="table table-striped table-bordered table-condensed" style="font-size: 12px">
   <thead>
     <tr>
-      <th>Semana</th>
-      <th>Orden</th>
+<!--       <th>Semana</th> -->
+      <th>#</th>
       <th>Premio</th>
       <th>Billete</th>
-      <th>Fraccion</th>
+      <th>Frac.</th>
       <th>Agencia</th>
       <th>Localidad</th>
       <th>Eliminar</th>
@@ -432,7 +432,7 @@ while ($row_extraccion_incentivo = $rs_extraccion_incentivo->FetchNextObject($to
 
         ?>
     <tr>
-      <td class="centerCell"><?php echo $row_extraccion_incentivo->SEMANA; ?></td>
+<!--       <td class="centerCell"><?php echo $row_extraccion_incentivo->SEMANA; ?></td> -->
       <td class="centerCell"><?php echo $row_extraccion_incentivo->ORDEN; ?></td>
       <td class="leftCell"><?php echo $row_extraccion_incentivo->PREMIO; ?></td>
       <td class="centerCell"><?php echo $row_extraccion_incentivo->BILLETE; ?></td>
