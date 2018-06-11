@@ -6,6 +6,7 @@
     <title>Sorteador Loteria de Cordoba S.E.</title>
     <link href="escribano_anticipada_electronica_estilo.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="../../librerias/jquery/jquery-1.10.1.js"></script>
+    <script type="text/javascript" src="../../js/loadingoverlay.js"></script>
     <script type="text/javascript" src="../../js/funciones.js"></script>
 </head>
 
@@ -42,15 +43,75 @@
         <div id="premios" class="premios"></div>
     </div>
     <script type="text/javascript">
-    $(document).ready(
+     $(document).ready(
         function() {
-            buscar_informacion();
-           setInterval(buscar_informacion, 1300);
+            mostrar_datos();
+            buscar_participantes();
         }
     );
     var datos_incentivo = [];
     var incentivoMostrando = '1';
     var aleatorio = null;
+    var billete_participantes = null;
+
+    function mostrar_datos(){
+        $.getJSON(
+            'escribano_anticipada_electronica_ajax.php?ale=' + parseInt(Math.random() * 1000000000),
+            function(data) {
+                var incentivoMostrando = data.incentivoMostrando;
+                switch (incentivoMostrando) {
+                    case ('1'):
+                        $('#incentivo').css("background-image", "url(escribano_img/gordo_invierno_2018_semana1_blanco.jpg)");
+                        break;
+                    case ('2'):
+                        $('#incentivo').css("background-image", "url(escribano_img/gordo_invierno_2018_semana1_blanco.jpg)");
+                        break;
+                    case ('3'):
+                        $('#incentivo').css("background-image", "url(escribano_img/gordo_invierno_2018_semana1_blanco.jpg)");
+                        break;
+                    case ('4'):
+                        $('#incentivo').css("background-image", "url(escribano_img/gordo_invierno_2018_semana1_blanco.jpg)");
+                        break;
+                    case ('5'):
+                        $('#incentivo').css("background-image", "url(escribano_img/gordo_invierno_2018_semana1_blanco.jpg)");
+                        break;
+                    case ('6'):
+                        $('#incentivo').css("background-image", "url(escribano_img/gordo_invierno_2018_semana1_blanco.jpg)");
+                        break;
+                    case ('7'):
+                        $('#incentivo').css("background-image", "url(escribano_img/gordo_invierno_2018_semana1_blanco.jpg)");
+                    case ('resumen'):
+                        $('#resumen').css("background-image", "url(escribano_img/gordo_invierno_2018_semana1_resumen.jpg)");
+                        break;
+                }
+
+            }
+        );
+    }
+
+    function buscar_participantes() {
+        $.LoadingOverlay("show", {
+            image: "",
+            text: "Cargando Numeros Vendidos..."
+        });
+        $.getJSON(
+            'billetes_participantes_ajax.php',
+            function(data) {
+                buscar_informacion();
+                billete_participantes = data;
+                setInterval(buscar_informacion, 1300);
+
+            }
+        ).complete(
+            function() {
+                $.LoadingOverlay("hide");
+
+            }
+        );
+    }
+
+
+
 
     function buscar_informacion() {
         $.getJSON(
@@ -69,26 +130,26 @@
                         buscar_ganador(data);
                         break;
                     case ('3'):
-                        $('#incentivo').css("background-image", "url(escribano_img/gordo_invierno_2018_semana1_blanco.jpg)");
+                    $('#incentivo').css("background-image", "url(escribano_img/gordo_invierno_2018_semana1_blanco.jpg)");
                         buscar_ganador(data);
                         break;
                     case ('4'):
-                        $('#incentivo').css("background-image", "url(escribano_img/gordo_invierno_2018_semana1_blanco.jpg)");
+                    $('#incentivo').css("background-image", "url(escribano_img/gordo_invierno_2018_semana1_blanco.jpg)");
                         buscar_ganador(data);
                         break;
                     case ('5'):
-                        $('#incentivo').css("background-image", "url(escribano_img/gordo_invierno_2018_semana1_blanco.jpg)");
+                    $('#incentivo').css("background-image", "url(escribano_img/gordo_invierno_2018_semana1_blanco.jpg)");
                         buscar_ganador(data);
                         break;
                     case ('6'):
-                        $('#incentivo').css("background-image", "url(escribano_img/gordo_invierno_2018_semana1_blanco.jpg)");
+                    $('#incentivo').css("background-image", "url(escribano_img/gordo_invierno_2018_semana1_blanco.jpg)");
                         buscar_ganador(data);
                         break;
                     case ('7'):
-                        $('#incentivo').css("background-image", "url(escribano_img/gordo_invierno_2018_semana1_blanco.jpg)");
+                    $('#incentivo').css("background-image", "url(escribano_img/gordo_invierno_2018_semana1_blanco.jpg)");
                         buscar_ganador(data);
                     case ('resumen'):
-                        $('#resumen').css("background-image", "url(escribano_img/gordo_invierno_2018_semana1_resumen.jpg)");
+                    $('#resumen').css("background-image", "url(escribano_img/gordo_invierno_2018_semana1_resumen.jpg)");
                         mostrar_resumen(data);
                         break;
                 }
@@ -107,13 +168,13 @@
         $('#orden').html(pad(data.orden, 2));
         $('#fecha_sorteo').html(data.fecha_sorteo);
         $('#sorteo').html(data.sorteo);
-        $('#premio').css('font-size','26.5px');
+        $('#premio').css('font-size', '26.5px');
 
-        if(data.descIncentivo.length <=10){
-            $('#premio').css('font-size','54px');
+        if (data.descIncentivo.length <= 10) {
+            $('#premio').css('font-size', '54px');
         }
-        if(data.descIncentivo.length >10 && data.descIncentivo.length <=26){
-            $('#premio').css('font-size','35px');
+        if (data.descIncentivo.length > 10 && data.descIncentivo.length <= 26) {
+            $('#premio').css('font-size', '35px');
         }
         $('#premio').html(data.descIncentivo);
         $('#escribano_d').html(data.escribano);
@@ -127,7 +188,6 @@
             $('#aleatorio_entero').html('');
             $('#aleatorio_fraccion').html('');
 
-            /*$('#agencia').html(data.datosIncentivo[0].id_agencia);*/
             if (data.datosIncentivo[0].nombre == 'VENTA CONTADO CASA CENTRAL')
                 $('#localidad_d').html('CORDOBA');
             else if (data.datosIncentivo[0].nombre == 'VENTA CONTADO') {
@@ -143,11 +203,6 @@
 
             $('#billete_d').html(data.datosIncentivo[0].billete);
             $('#fraccion_d').html(data.datosIncentivo[0].fraccion);
-
-
-            /*$('#sucursal').html(data.datosIncentivo[0].desc_sucursal);
-            $('#agencia').html((data.datosIncentivo[0].desc_agencia));*/
-
 
             if (data.datosIncentivo[0].nombre == 'VENTA CONTADO CASA CENTRAL') {
                 $('#agencia').html('');
@@ -193,8 +248,6 @@
         $('#incentivo div').html('');
         $('#jefe_sorteo_r').html(data.jefe_sorteo);
         $('#escribano_r').html(data.escribano);
-        /*        $('#prescripcion_r').html(data.prescripcion);*/
-        /*        $('#premio_prox_sorteo_r').html(data.prox_sorteo);*/
 
         $('#sorteo_r').html(data.sorteo);
         $('#fecha_sorteo_r').html(data.fecha_sorteo);
@@ -203,7 +256,7 @@
         for (var i = 0; i < data.ganadores.length; i++) {
 
             if (data.ganadores[i].NOMBRE == 'VENTA CONTADO CASA CENTRAL')
-                $('#ganadores').append('<div class="ganador"><div class="billete">' + pad(data.ganadores[i].BILLETE, 5) + '</div><div class="fraccion">' + pad(data.ganadores[i].FRACCION, 2) + '</div><div class="premio_r" id="premio_r_'+i+'">' + data.ganadores[i].PREMIO + '</div><div class="agencia">9001</div><div class="sucursal">CORDOBA</div></div>');
+                $('#ganadores').append('<div class="ganador"><div class="billete">' + pad(data.ganadores[i].BILLETE, 5) + '</div><div class="fraccion">' + pad(data.ganadores[i].FRACCION, 2) + '</div><div class="premio_r" id="premio_r_' + i + '">' + data.ganadores[i].PREMIO + '</div><div class="agencia">9001</div><div class="sucursal">CORDOBA</div></div>');
             else if (data.ganadores[i].NOMBRE == 'VENTA CONTADO') {
                 var localidad;
                 if (data.ganadores[i].SUCURSAL == 'CASA CENTRAL') {
@@ -211,26 +264,21 @@
                 } else {
                     localidad = data.ganadores[i].SUCURSAL;
                 }
-                $('#ganadores').append('<div class="ganador"><div class="billete">' + pad(data.ganadores[i].BILLETE, 5) + '</div><div class="fraccion">' + pad(data.ganadores[i].FRACCION, 2) + '</div><div class="premio_r" id="premio_r_'+i+'">' + data.ganadores[i].PREMIO + '</div><div class="agencia">9001</div><div class="sucursal">' + localidad + '</div></div>');
+                $('#ganadores').append('<div class="ganador"><div class="billete">' + pad(data.ganadores[i].BILLETE, 5) + '</div><div class="fraccion">' + pad(data.ganadores[i].FRACCION, 2) + '</div><div class="premio_r" id="premio_r_' + i + '">' + data.ganadores[i].PREMIO + '</div><div class="agencia">9001</div><div class="sucursal">' + localidad + '</div></div>');
             } else if (data.ganadores[i].AGENCIA != null)
-                $('#ganadores').append('<div class="ganador"><div class="billete">' + pad(data.ganadores[i].BILLETE, 5) + '</div><div class="fraccion">' + pad(data.ganadores[i].FRACCION, 2) + '</div><div class="premio_r" id="premio_r_'+i+'">' + data.ganadores[i].PREMIO + '</div><div class="agencia">' + pad(data.ganadores[i].AGENCIA, 4) + '</div><div class="sucursal">' + data.ganadores[i].LOCALIDAD + '</div></div>');
+                $('#ganadores').append('<div class="ganador"><div class="billete">' + pad(data.ganadores[i].BILLETE, 5) + '</div><div class="fraccion">' + pad(data.ganadores[i].FRACCION, 2) + '</div><div class="premio_r" id="premio_r_' + i + '">' + data.ganadores[i].PREMIO + '</div><div class="agencia">' + pad(data.ganadores[i].AGENCIA, 4) + '</div><div class="sucursal">' + data.ganadores[i].LOCALIDAD + '</div></div>');
 
-                            $('#premio_r_'+i).css('font-size','18px');
-            if( data.ganadores[i].PREMIO.length <=10){
-                $('#premio_r_'+i).css('font-size','40px');
+            $('#premio_r_' + i).css('font-size', '18px');
+            if (data.ganadores[i].PREMIO.length <= 10) {
+                $('#premio_r_' + i).css('font-size', '40px');
             }
         }
 
-        /*        for (var i = 0; i < data.premios.length; i++) {
-                    $('#premios').append('<div class="premio">'+data.premios[i].PREMIO+'</div></br>');
-                }*/
     }
 
     function animar_aleatorio() {
-        var maximo = parseInt(99999);
-        $('#aleatorio_entero').html(pad(Math.floor((Math.random() * maximo) + 1), 5));
-        var maximo_fraccion = parseInt(aleatorio);
-        $('#aleatorio_fraccion').html(pad(Math.floor((Math.random() * maximo_fraccion) + 1), 2));
+        $('#aleatorio_entero').html(billete_participantes[Math.floor(Math.random() * billete_participantes.length)].billete);
+        $('#aleatorio_fraccion').html(billete_participantes[Math.floor(Math.random() * billete_participantes.length)].fraccion);
     }
 
     function pad(n, width, z) {

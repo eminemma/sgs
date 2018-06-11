@@ -160,7 +160,7 @@ while ($row_ganador = siguiente($res_ganador)) {
     }
     if (strlen($row_ganador->PREMIO) > 27 && strlen($row_ganador->PREMIO) <= 37) {
         $pdf->SetFont('Arial', 'B', 13);
-        $linea_ancho = 6;
+        $linea_ancho = 4.5;
     }
 
     if (strlen($row_ganador->PREMIO) > 37) {
@@ -228,7 +228,7 @@ $pdf->Cell(0, 0, utf8_decode($localidad1), 0, 'L', 1);*/
 $x = 30;
 $y = 105;
 
-$pdf->SetFont('Arial', 'B', 9);
+$pdf->SetFont('Arial', 'B', 10);
 
 $pdf->SetXY($x + 14, $y - 13);
 $pdf->Cell(35, 10, $usuario, 0, 0, 'C');
