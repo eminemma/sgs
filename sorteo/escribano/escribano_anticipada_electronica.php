@@ -205,11 +205,11 @@
             $('#fraccion_d').html(data.datosIncentivo[0].fraccion);
 
             if (data.datosIncentivo[0].nombre == 'VENTA CONTADO CASA CENTRAL') {
-                $('#agencia').html('');
-                $('#nombre_d').html('9001 CORDOBA');
+                $('#agencia').html('9001');
+                $('#nombre_d').html('CORDOBA');
             } else if (data.datosIncentivo[0].nombre == 'VENTA CONTADO') {
-                $('#agencia').html('');
-                $('#nombre_d').html('9001 ' + data.datosIncentivo[0].desc_sucursal);
+                $('#agencia').html('9001');
+                $('#nombre_d').html(data.datosIncentivo[0].desc_sucursal);
             } else if (data.datosIncentivo[0].id_agencia != null) {
 
                 $('#agencia').html(pad(data.datosIncentivo[0].id_agencia, 4));
@@ -277,8 +277,9 @@
     }
 
     function animar_aleatorio() {
-        $('#aleatorio_entero').html(billete_participantes[Math.floor(Math.random() * billete_participantes.length)].billete);
-        $('#aleatorio_fraccion').html(billete_participantes[Math.floor(Math.random() * billete_participantes.length)].fraccion);
+        billete = billete_participantes[Math.floor(Math.random() * billete_participantes.length)];
+        $('#aleatorio_entero').html(billete.billete);
+        $('#aleatorio_fraccion').html(billete.fraccion);
     }
 
     function pad(n, width, z) {

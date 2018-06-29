@@ -171,7 +171,7 @@ while ($row_ganador = siguiente($res_ganador)) {
     $pdf->setXY(182, 55 + $y);
 
     if ($row_ganador->NOMBRE == 'VENTA CONTADO CASA CENTRAL') {
-        $pdf->SetFont('Arial', 'B', 20);
+        $pdf->SetFont('Arial', 'B', 35);
         $pdf->Cell(35, 17, '9001', 0, 0, 'C');
         $pdf->setXY(218, 52 + $y);
         $pdf->SetFont('Arial', 'B', 13);
@@ -182,7 +182,7 @@ while ($row_ganador = siguiente($res_ganador)) {
         } else {
             $localidad = $row_ganador->SUCURSAL;
         }
-        $pdf->SetFont('Arial', 'B', 20);
+        $pdf->SetFont('Arial', 'B', 35);
         $pdf->Cell(35, 17, '9001', 0, 0, 'C');
         $pdf->setXY(218, 52 + $y);
         $pdf->SetFont('Arial', 'B', 13);
@@ -238,13 +238,14 @@ $pdf->SetXY($x + 124, $y - 12);
 $pdf->SetFont('Arial', 'B', 30);
 $pdf->Cell(10, 10, $fecha_prescripcion, 0, 0, 'C');
 
-$res_premios = sql("SELECT PREMIO,COUNT(*) AS CANTIDAD
+$res_premios = sql("SELECT PREMIO,COUNT(*)AS CANTIDAD,MAX(ORDEN) ORDEN
 FROM
    SGS.T_ANTICIPADA
 WHERE ID_JUEGO    = ?
 AND SORTEO       = ?
 AND SEMANA       = ?
-GROUP BY PREMIO", array($_SESSION['id_juego'], $_SESSION['sorteo'], ($semana + 1)));
+GROUP BY PREMIO
+ORDER BY ORDEN", array($_SESSION['id_juego'], $_SESSION['sorteo'], ($semana + 1)));
 
 if ($semana != $cantidad_semanas) {
     $pdf->SetXY($x + 187, $y - 12);
