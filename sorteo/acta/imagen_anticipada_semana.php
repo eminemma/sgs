@@ -49,7 +49,12 @@ WHERE
     die($db->ErrorMsg());
 
 }
-
+$row           = siguiente($rsgordo);
+$ultima_semana = false;
+if ($row->SEMANA == $row->CANTIDAD_SEMANAS) {
+    $ultima_semana = true;
+}
+$rsgordo->MoveFirst();
 while ($row = siguiente($rsgordo)) {
 
     $escribano        = utf8_decode($row->ESCRIBANO);
@@ -105,7 +110,12 @@ $pdf->SetAutoPageBreak(true, 1);
 $pdf->SetFont('Arial', 'B', 8);
 $pdf->setXY(10, 10);
 /*$pdf->Image('../escribano/escribano_img/gordo_invierno_2018_semana' . $semana . '_extracto.jpg', 0, 0, 300, 210);*/
-$pdf->Image('../escribano/escribano_img/gordo_invierno_2018_semana1_extracto_digital.jpg', 0, 0, 355, 215);
+if (!$ultima_semana) {
+    $pdf->Image('../escribano/escribano_img/gordo_invierno_2018_semana1_extracto_digital.jpg', 0, 0, 355, 215);
+} else {
+    $pdf->Image('../escribano/escribano_img/gordo_invierno_2018_semana1_extracto_digital_ultima.jpg', 0, 0, 355, 215);
+}
+
 //----------------------- 1º Pagina ------------------------------------
 
 $pdf->SetFont('Arial', 'B', 15);
@@ -143,12 +153,12 @@ $res_ganador = sql("SELECT TG.ID_JUEGO,
 $y = 0;
 while ($row_ganador = siguiente($res_ganador)) {
     $pdf->SetFont('Arial', 'B', 25);
-    $pdf->setXY(50, 35 + $y);
+    $pdf->setXY(50, 37 + $y);
     $pdf->Cell(20, 10, str_pad($row_ganador->BILLETE, 5, 0, STR_PAD_LEFT), 0, 0, 'C');
-    $pdf->setXY(80, 35 + $y);
+    $pdf->setXY(80, 37 + $y);
     $pdf->Cell(20, 10, str_pad($row_ganador->FRACCION, 2, 0, STR_PAD_LEFT), 0, 0, 'C');
     $pdf->SetFont('Arial', 'B', 11);
-    $pdf->setXY(105, 35 + $y);
+    $pdf->setXY(105, 37 + $y);
     $pdf->SetFont('Arial', 'B', 9);
     $linea_ancho = 3;
     if (strlen($row_ganador->PREMIO) <= 10) {
@@ -167,7 +177,7 @@ while ($row_ganador = siguiente($res_ganador)) {
     }
 
     $pdf->MultiCell(43, $linea_ancho, $row_ganador->PREMIO, 0, 'C');
-    $pdf->setXY(150, 35.5 + $y);
+    $pdf->setXY(150, 36.5 + $y);
 
     if ($row_ganador->NOMBRE == 'VENTA CONTADO CASA CENTRAL') {
         $pdf->SetFont('Arial', 'B', 20);
@@ -218,11 +228,11 @@ $y = 200;
 
 $pdf->SetFont('Arial', 'B', 8);
 
-$pdf->SetXY($x + 14, $y - 13);
+$pdf->SetXY($x + 28, $y - 13);
 $pdf->Cell(35, 10, $usuario, 0, 0, 'C');
-$pdf->SetXY($x + 47, $y - 13);
+$pdf->SetXY($x + 77, $y - 13);
 $pdf->Cell(43, 10, $escribano, 0, 0, 'C');
-$pdf->SetXY($x + 108, $y - 12);
+$pdf->SetXY($x + 155, $y - 12);
 $pdf->SetFont('Arial', 'B', 20);
 $pdf->Cell(10, 10, $fecha_prescripcion, 0, 0, 'C');
 

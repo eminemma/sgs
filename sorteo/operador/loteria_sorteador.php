@@ -264,11 +264,11 @@ if ($_SESSION['juego_tipo'] != 'ORDINARIA') {
 
 
 
-
+<!--
                       <li>
                         <a href="#" class="tercer_juego" onclick="cambiar_juego(this.className); return false;">Sorteo de Entero</a>
                       </li>
-
+ -->
 
                       <li>
                         <a href="#" class="ver_tradicional" onclick="cambiar_juego(this.className); return false;"><img src="img/icono_screen.png" width="19" height="19" border="0" style="vertical-align: middle;">(Tradicional)</a>
@@ -278,9 +278,9 @@ if ($_SESSION['juego_tipo'] != 'ORDINARIA') {
                       </li>
  -->
 
-                      <li>
+           <!--            <li>
                         <a href="#" class="ver_sorteo_entero" onclick="cambiar_juego(this.className); return false;"><img src="img/icono_screen.png" width="19" height="19" border="0" style="vertical-align: middle;">(Sorteo Entero)</a>
-                      </li>
+                      </li> -->
 
 
 
@@ -295,9 +295,9 @@ if ($_SESSION['juego_tipo'] != 'ORDINARIA') {
 <?php
 if ($_SESSION['juego_tipo'] != 'ORDINARIA') {
     ?>
-                       <li>
+<!--                        <li>
                         <a href="sorteo/escribano/escribano_resumen.php" target="_blank"><img src="img/icono_screen.png" width="19" height="19" border="0" style="vertical-align: middle;">(Sorteo)</a>
-                      </li>
+                      </li> -->
 <?php
 }
 ?>

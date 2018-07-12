@@ -148,6 +148,7 @@
                     case ('7'):
                     $('#incentivo').css("background-image", "url(escribano_img/gordo_invierno_2018_semana1_blanco.jpg)");
                         buscar_ganador(data);
+                        break;
                     case ('resumen'):
                     $('#resumen').css("background-image", "url(escribano_img/gordo_invierno_2018_semana1_resumen.jpg)");
                         mostrar_resumen(data);

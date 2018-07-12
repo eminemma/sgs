@@ -2,6 +2,17 @@
 session_start();
 header("Content-type: text/css; charset: UTF-8");
 ?>
+@font-face {
+    font-family: 'MyriadPro-Bold';
+    src: url('../../fonts/MyriadPro-Bold.ttf');
+}
+
+
+@font-face {
+    font-family: 'Impact';
+    src: url('../../fonts/impact.ttf');
+}
+
 body{
     font-family: Verdana;
 }
@@ -68,24 +79,24 @@ font-size: 21px;
 #zona3,
 #zona4,
 #escribano_resumen{
-    width: 1080px;
-    height: 600px;
+    width: 1366px;
+    height: 768px;
     margin: 0 auto;
     position: relative;
 }
 
 #zona1{
     background-image: url(escribano_img/zona1_<?php echo date('Y') ?>_<?php echo $_SESSION['sorteo'] ?>.png);
-	background-size: 1080px 600px;
+   background-size: 1366px 768px;
 }
 #zona2{
     background-image: url(escribano_img/zona2_<?php echo date('Y') ?>_<?php echo $_SESSION['sorteo'] ?>.png);
-	background-size: 1080px 600px;
+	 background-size: 1366px 768px;
     display: none;
 }
 #zona3{
     background-image: url(escribano_img/zona3_<?php echo date('Y') ?>_<?php echo $_SESSION['sorteo'] ?>.png);
-	background-size: 1080px 600px;
+	 background-size: 1366px 768px;
     display: none;
 }
 
@@ -99,187 +110,189 @@ font-size: 21px;
     border: 0px solid #000;
     text-align: center;
     position: absolute;
+    font-family: 'MyriadPro-Bold';
 }
 
 #primer_premio{
-    background-size: 303px 47px;
-    top: 59px;
-    left: 106px;
+    background-size: 303px 60px;
+    top: 224px;
+    left: 129px;
     position: absolute;
     width: 305px;
-    height: 52px;
+    height: 60px;
 }
 
 #primer_premio_resumen{
-    background-size: 303px 47px;
-    top: 124px;
-    left: 97px;
+    background-size: 338px 77px;
+    top: 184px;
+    left: 112px;
     position: absolute;
-    width: 305px;
-    height: 52px;
+    width: 338px;
+    height: 72px;
 }
 #resultado_primer_premio{
-    display: block;
-    background-size: 303px 47px;
-    top: 115px;
-    left: 106px;
+display: block;
+    background-size: 248px 63px;
+    top: 246px;
+    left: 161px;
     position: absolute;
-    width: 305px;
-    height: 49px;
+    width: 250px;
+    height: 62px;
 }
 
 
 /*SOLO PARA EL RESUMEN*/
 #escribano_resumen{
     background-image: url(escribano_img/resumen_<?php echo $_SESSION['sorteo'] ?>.png);
-	background-size: 1080px 600px;
+	background-size: 1024px 768px;
 }
 
 #bola01{
-   font-size: 95px;
-    left: 97px;
+    font-size: 144px;
+    left: 79px;
     position: absolute;
-    top: 173px;
+    top: 219px;
 }
 
 #progresion{
-    top: 219px;
-    left: 820px;
+    top: 347px;
+    left: 884px;
     position: absolute;
-    font-size: 42px;
+    font-size: 48px;
+    font-family: 'MyriadPro-Bold';
 }
 
 
 #bola02{
-    top: 380px;
-    left: 66px;
+    top: 470px;
+    left: 89px;
     position: absolute;
     font-size: 47px;
 }
 
 #bola03{
-    top: 380px;
-    left: 286px;
+    top: 473px;
+    left: 335px;
     position: absolute;
     font-size: 47px;
 }
 
 #bola04{
-    top: 523px;
-    left: 66px;
+    top: 593px;
+    left: 87px;
     position: absolute;
     font-size: 47px;
 }
 
 #bola05{
-    top: 523px;
-    left: 286px;
+    top: 592px;
+    left: 333px;
     position: absolute;
     font-size: 47px;
 }
 
 #bola06{
-    top: 115px;
-    left: 597px;
+    top: 206px;
+    left: 642px;
     position: absolute;
     font-size: 32px;
 }
 
 #bola07{
-    top: 146px;
-    left: 597px;
+top: 243px;
+    left: 644px;
     position: absolute;
     font-size: 32px;
 }
 
 #bola08{
-    top: 177px;
-    left: 597px;
+    top: 280px;
+    left: 643px;
     position: absolute;
     font-size: 32px;
 }
 
 #bola09{
-    top: 208px;
-    left: 597px;
+    top: 317px;
+    left: 642px;
     position: absolute;
     font-size: 32px;
 }
 
 #bola10{
-    top: 239px;
-    left: 597px;
+    top: 354px;
+    left: 642px;
     position: absolute;
     font-size: 32px;
 }
 
 
 #bola11{
-    top: 330px;
-    left: 599px;
+top: 456px;
+    left: 639px;
     position: absolute;
     font-size: 32px;
 }
 
 #bola12{
-    top: 365px;
-    left: 599px;
+ top: 497px;
+    left: 639px;
     position: absolute;
     font-size: 32px;
 }
 
 #bola13{
-    top: 398px;
-    left: 599px;
+    top: 538px;
+    left: 639px;
     position: absolute;
     font-size: 32px;
 }
 
 #bola14{
-    top: 431px;
-    left: 599px;
+    top: 579px;
+    left: 639px;
     position: absolute;
     font-size: 32px;
 }
 
 #bola15{
-    top: 463px;
-    left: 599px;
+top: 619px;
+    left: 638px;
     position: absolute;
     font-size: 32px;
 }
 
 #bola16{
-    top: 330px;
-    left: 830px;
+top: 457px;
+    left: 856px;
     position: absolute;
     font-size: 32px;
 }
 
 #bola17{
-    top: 365px;
-    left: 830px;
+    top: 498px;
+    left: 856px;
     position: absolute;
     font-size: 32px;
 }
 
 #bola18{
-    top: 398px;
-    left: 830px;
+    top: 540px;
+    left: 856px;
     position: absolute;
     font-size: 32px;
 }
 
 #bola19{
-    top: 432px;
-    left: 830px;
+    top: 580px;
+    left: 856px;
     position: absolute;
     font-size: 32px;
 }
 
 #bola20{
-    top: 462px;
-    left: 830px;
+    top: 621px;
+    left: 856px;
     position: absolute;
     font-size: 32px;
 }
@@ -368,10 +381,11 @@ font-size: 21px;
 
 
 #bola27{
-    top: 542px;
-    left: 686px;
+    top: 685px;
+    left: 802px;
     position: absolute;
     font-size: 42px;
+    font-family: 'MyriadPro-Bold';
 }
 
 
@@ -380,9 +394,9 @@ font-size: 21px;
 
 
 #premio_sorteo_entero{
-    top: 337px;
+    top: 390px;
     font-size: 174px;
-    left: 448px;
+    left: 91px;
 }
 
 #agencia_sorteo_entero{

@@ -230,11 +230,11 @@ $y = 105;
 
 $pdf->SetFont('Arial', 'B', 10);
 
-$pdf->SetXY($x + 14, $y - 13);
+$pdf->SetXY($x + 30, $y - 15);
 $pdf->Cell(35, 10, $usuario, 0, 0, 'C');
-$pdf->SetXY($x + 52, $y - 13);
+$pdf->SetXY($x + 87, $y - 15);
 $pdf->Cell(43, 10, $escribano, 0, 0, 'C');
-$pdf->SetXY($x + 124, $y - 12);
+$pdf->SetXY($x + 177, $y - 12);
 $pdf->SetFont('Arial', 'B', 30);
 $pdf->Cell(10, 10, $fecha_prescripcion, 0, 0, 'C');
 

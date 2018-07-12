@@ -43,7 +43,7 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
         </div> -->
 
 
-        <!--<div id="primer_premio" style="background-image:url('escribano_img/primer_premio_4813.png');"></div>-->
+     <!--    <div id="primer_premio" style="background-image:url('escribano_img/primer_premio_4862.png');"></div> -->
 
 
         <div id="resultado_primer_premio" ></div>
@@ -84,8 +84,8 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
         <div id="zona1"><div id="primer_premio"></div></div>
         <div id="zona2"></div>
         <div id="zona3"></div> -->
-        <div id="zona4"><div id="sorteo"><?php echo $_SESSION['sorteo']; ?></div>
-            <div id="fecha_sorteo"><?php echo $fecha_sorteo ?></div></div>
+        <div id="zona4"><!-- <div id="sorteo"><?php echo $_SESSION['sorteo']; ?></div>
+            <div id="fecha_sorteo"><?php echo $fecha_sorteo ?></div> --></div>
     <!-- The Modal -->
 
 
@@ -93,7 +93,7 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
     <div id="ventana_primer_premio_vendido" class="w3-modal">
         <div class="w3-modal-content">
             <header class="w3-container w3-green">
-                <h2 style="font-size: 17px;">Sorteo Reyes - Resultado  </h2>
+                <h2 style="font-size: 17px;">Sorteo <?php echo $_SESSION['sorteo'] ?> - Vendido En Agencia  </h2>
             </header>
             <div class="w3-container">
                 <table id="ganadores_primer_premio" class="w3-table w3-bordered w3-striped w3-border test w3-hoverable">
@@ -138,188 +138,188 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
             var posicionZona1 = {
                 '01': {
                     inicial: {
-                        top: '225px',
-                        left: '258px'
+                        top: '288px',
+                        left: '329px'
                     },
                     final: {
-                        height: '100px'
+                        height: '143px'
                     }
                 },
                 '02': {
                     inicial: {
-                        top: '384px',
-                        left: '147px'
+                        top: '517px',
+                        left: '190px'
                     },
                     final: {
-                        height: '48px'
+                        height: '68px'
                     }
                 },
                 '03': {
                     inicial: {
-                        top: '384px',
-                        left: '369px'
+                        top: '517px',
+                        left: '470px'
                     },
                     final: {
-                        height: '48px'
+                        height: '68px'
                     }
                 },
                 '04': {
                     inicial: {
-                        top: '532px',
-                        left: '150px'
+                        top: '700px',
+                        left: '190px'
                     },
                     final: {
-                        height: '48px'
+                        height: '68px'
                     }
                 },
                 '05': {
                     inicial: {
-                        top: '532px',
-                        left: '369px'
+                        top: '700px',
+                        left: '470px'
                     },
                     final: {
-                        height: '48px'
+                        height: '68px'
                     }
                 },
                 '06': {
                     inicial: {
-                        top: '145px',
-                        left: '650px'
+                        top: '198px',
+                        left: '845px'
                     },
                     final: {
-                        height: '32px'
+                        height: '55px'
                     }
                 },
                 '07': {
                     inicial: {
-                        top: '181px',
-                        left: '650px'
+                        top: '245px',
+                        left: '845px'
                     },
                     final: {
-                        height: '32px'
+                        height: '55px'
                     }
                 },
                 '08': {
                     inicial: {
-                        top: '217px',
-                        left: '650px'
+                        top: '290px',
+                        left: '845px'
                     },
                     final: {
-                        height: '32px'
+                        height: '55px'
                     }
                 },
                 '09': {
                     inicial: {
-                        top: '253px',
-                        left: '650px'
+                        top: '340px',
+                        left: '845px'
                     },
                     final: {
-                        height: '32px'
+                        height: '55px'
                     }
                 },
                 '10': {
                     inicial: {
-                        top: '289px',
-                        left: '650px'
+                        top: '389px',
+                        left: '845px'
                     },
                     final: {
-                        height: '32px'
+                        height: '55px'
                     }
                 },
                 '11': {
                     inicial: {
-                        top: '400px',
-                        left: '650px'
+                        top: '520px',
+                        left: '830px'
                     },
                     final: {
-                        height: '32px'
+                        height: '55px'
                     }
                 },
                 '12': {
                     inicial: {
-                        top: '436px',
-                        left: '650px'
+                        top: '570px',
+                        left: '830px'
                     },
                     final: {
-                        height: '32px'
+                        height: '55px'
                     }
                 },
                 '13': {
                     inicial: {
-                        top: '472px',
-                        left: '650px'
+                        top: '620px',
+                        left: '830px'
                     },
                     final: {
-                        height: '32px'
+                        height: '55px'
                     }
                 },
                 '14': {
                     inicial: {
-                        top: '510px',
-                        left: '650px'
+                        top: '668px',
+                        left: '830px'
                     },
                     final: {
-                        height: '32px'
+                        height: '55px'
                     }
                 },
                 '15': {
                     inicial: {
-                        top: '546px',
-                        left: '650px'
+                        top: '715px',
+                        left: '830px'
                     },
                     final: {
-                        height: '32px'
+                        height: '55px'
                     }
                 },
                 '16': {
                     inicial: {
-                        top: '400px',
-                        left: '900px'
+                        top: '520px',
+                        left: '1150px'
                     },
                     final: {
-                        height: '32px'
+                        height: '55px'
                     }
                 },
                 '17': {
                     inicial: {
-                        top: '436px',
-                        left: '900px'
+                        top: '570px',
+                        left: '1150px'
                     },
                     final: {
-                        height: '32px'
+                        height: '55px'
                     }
                 },
                 '18': {
                     inicial: {
-                        top: '472px',
-                        left: '900px'
+                        top: '620px',
+                        left: '1150px'
                     },
                     final: {
-                        height: '32px'
+                        height: '55px'
                     }
                 },
                 '19': {
                     inicial: {
-                        top: '508px',
-                        left: '900px'
+                        top: '668px',
+                        left: '1150px'
                     },
                     final: {
-                        height: '32px'
+                        height: '55px'
                     }
                 },
                 '20': {
                     inicial: {
-                        top: '547px',
-                        left: '900px'
+                        top: '715px',
+                        left: '1150px'
                     },
                     final: {
-                        height: '32px'
+                        height: '55px'
                     }
                 },
                 'progresion': {
-                    top: '254px',
-                    left: '860px',
-                    height: '46px'
+                    top: '330px',
+                    left: '1000px',
+                    height: '60px'
                 }
             };
 
@@ -450,11 +450,11 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
             var posicionZona3 = {
                 '01': {
                     inicial: {
-                        top: '395px',
-                        left: '350px'
+                        top: '470px',
+                        left: '370px'
                     },
                     final: {
-                        height: '160px'
+                        height: '230px'
                     }
                 }
             };
@@ -565,6 +565,7 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                         } else if (zonaMostrando == 'zona4') {
                             primerElementoZona4 = data.parametroZona4.primer_elemento;
                             ultimoElementoZona4 = data.parametroZona4.ultimo_elemento;
+
                             if (intervaloSorteoEntero == null)
                                 intervaloSorteoEntero = setInterval("dibujarSorteoEntero()", 100);
                             animarZona4(data);
@@ -597,8 +598,12 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                                     $('#resultado_primer_premio').fadeOut('slow',
                                         function() {
 //CODIGO PARA MOSTRAR GANADORES EN EL SORTEOS SALE O SALE
-                                            //$('#resultado_primer_premio').css('background-image', 'url(escribano_img/no_vendido_4813.png)');
-                                            //$('#resultado_primer_premio').fadeIn();
+                                            $('#primer_premio').css('background-image', '');
+/*                                            $('#resultado_primer_premio').css('background-size', '248px 63px');
+                                            $('#resultado_primer_premio').css('top', '246px');
+                                            $('#resultado_primer_premio').css('height', '62px');
+                                            $('#resultado_primer_premio').css('background-image', 'url(escribano_img/no_vendido_4862.png)');
+                                            $('#resultado_primer_premio').fadeIn();*/
                                         }
                                     );
                                     $( "body").unbind( "keydown" );
@@ -606,16 +611,18 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                                 } else {
                                     $('#resultado_primer_premio').fadeOut('slow',
                                         function() {
-//CODIGO PARA MOSTRAR GANADORES EN EL SORTEOS SALE O SALE
-                                            //$('#resultado_primer_premio').css('background-image', 'url(escribano_img/vendido_4813.png)');
-                                            //$('#resultado_primer_premio').fadeIn();
+                                        //CODIGO PARA MOSTRAR GANADORES EN EL SORTEOS SALE O SALE
+/*                                            $('#resultado_primer_premio').css('background-size', '250px 50px');
+                                            $('#resultado_primer_premio').css('top', '279px');
+                                            $('#resultado_primer_premio').css('height', '50px');
+                                            $('#resultado_primer_premio').css('background-image', 'url(escribano_img/vendido_4862.png)');
+                                            $('#resultado_primer_premio').fadeIn();*/
                                         }
                                     );
 
-/*
-CODIGO PARA MOSTRAR GANADORES EN EL SORTEOS SALE O SALE
-                                   $("body").keydown(function(event) {
-                                        console.log(data.billetesZona3);
+
+                                //CODIGO PARA MOSTRAR GANADORES EN EL SORTEOS SALE O SALE
+                                   /*$("body").keydown(function(event) {
                                          if (event.ctrlKey && data.zonaMostrando == 'zona1') {
                                         clearInterval(tiempoPrimerPremio);
                                         setTimeout(function() { $('#ventana_primer_premio_vendido').fadeIn("slow"); }, 3000);
@@ -633,12 +640,12 @@ CODIGO PARA MOSTRAR GANADORES EN EL SORTEOS SALE O SALE
                                                     $( "#ganadores_primer_premio" ).addClass( "w3-large" );
                                                 }
                                                 if(this['localidad'].length > 12){
-                                                    $( "#ganadores_primer_premio" ).addClass( "w3-tiny" );
+                                                    $( "#ganadores_primer_premio" ).css("font-size" ,"17px!important" );
                                                 }
 
                                                 $('#ganadores_primer_premio > tbody').empty();
                                                 for (j = 0; j < this['localidad'].length; j++) {
-                                                    var elemento = '<tr><td>' + (j + 1) + '</td><td>' + this['localidad'][j] + '</td></tr>';
+                                                    var elemento = '<tr><td>' + this['localidad'][j] + '</td></tr>';
                                                     $('#ganadores_primer_premio > tbody').append(elemento);
 
                                                 }
@@ -705,7 +712,7 @@ CODIGO PARA MOSTRAR GANADORES EN EL SORTEOS SALE O SALE
                         if (indice == '01') {
                             $('#zona1 #progresion').remove();
                             $('#resultado_primer_premio').css('background-image','url()');
-                            //$('#primer_premio').css('background-image','url(escribano_img/primero_premio.png)');
+                            $('#primer_premio').css('background-image','url(escribano_img/primer_premio_4862.png)');
                         }
                     }
                 }
@@ -938,7 +945,7 @@ CODIGO PARA MOSTRAR GANADORES EN EL SORTEOS SALE O SALE
 
                 $('#zona3 #localidad').remove();
                 if(sortea_hasta_sale_ganadores[sortea_hasta_sale_resumenContador] != undefined){
-                    var estilo = { top: '315px', left: '656px', width: '366px', height: '100px', 'font-size': '25px', 'text-align': 'left' };
+                    var estilo = { top: '315px', left: '730px', width: '230px', height: '300px', 'font-size': '30px', 'text-align': 'left' };
                     var elemento = $('<span id="localidad" class="billete">' + sortea_hasta_sale_ganadores[sortea_hasta_sale_resumenContador] + '<br> </span>').css(estilo);
                     $('#zona3').append(elemento);
 
@@ -959,12 +966,12 @@ CODIGO PARA MOSTRAR GANADORES EN EL SORTEOS SALE O SALE
                             $( "#ganadores_primer_premio" ).addClass( "w3-large" );
                         }
                         if(sortea_hasta_sale_ganadores.length > 12){
-                            $( "#ganadores_primer_premio" ).addClass( "w3-tiny" );
+                            $( "#ganadores_primer_premio" ).css("font-size" ,"17px!important" );
                         }
 
                         $('#ganadores_primer_premio > tbody').empty();
                         for (j = 0; j < sortea_hasta_sale_ganadores.length; j++) {
-                            var elemento = '<tr><td>' + (j + 1) + '</td><td>' + sortea_hasta_sale_ganadores[j] + '</td></tr>';
+                            var elemento = '<tr><td>' + sortea_hasta_sale_ganadores[j] + '</td></tr>';
                             $('#ganadores_primer_premio > tbody').append(elemento);
 
                         }
