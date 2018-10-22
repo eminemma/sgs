@@ -103,13 +103,13 @@ $pdf->SetAutoPageBreak(true, 1);
 $pdf->SetFont('Arial', 'B', 8);
 $pdf->setXY(10, 10);
 
-/*$pdf->Image('../escribano/escribano_img/gordo_invierno_2018_semana1_extracto.jpg', 0, 0, 430, 340);*/
+/*$pdf->Image('../escribano/escribano_img/gordo_navidad_2018_semana1_extracto.jpg', 0, 0, 430, 340);*/
 //----------------------- 1º Pagina ------------------------------------
 
 $pdf->SetFont('Arial', 'B', 23);
-$pdf->SetXY(255, 28);
+$pdf->SetXY(255, 49);
 $pdf->Cell(20, 0, $sorteo, 0, 'L', 1);
-$pdf->SetXY(192, 28);
+$pdf->SetXY(192, 49);
 $pdf->Cell(20, 0, $fecha_sorteo, 0, 'L', 1);
 
 if (strlen($premio1) > 40) {
@@ -138,7 +138,7 @@ $res_ganador = sql("SELECT TG.ID_JUEGO,
                             AND TG.SEMANA     =TA.SEMANA
                             AND TG.ORDEN      =TA.ORDEN
                             ORDER BY TG.ORDEN", array($_SESSION['id_juego'], $_SESSION['sorteo'], $semana));
-$y        = 0;
+$y        = 18;
 $cantiGan = 0;
 while ($row_ganador = siguiente($res_ganador)) {
     $pdf->SetFont('Arial', 'B', 35);
@@ -154,11 +154,11 @@ while ($row_ganador = siguiente($res_ganador)) {
         $pdf->SetFont('Arial', 'B', 20);
         $linea_ancho = 17;
     }
-    if (strlen($row_ganador->PREMIO) > 10 && strlen($row_ganador->PREMIO) <= 27) {
-        $pdf->SetFont('Arial', 'B', 14);
+    if (strlen($row_ganador->PREMIO) > 10 && strlen($row_ganador->PREMIO) <= 29) {
+        $pdf->SetFont('Arial', 'B', 13);
         $linea_ancho = 8;
     }
-    if (strlen($row_ganador->PREMIO) > 27 && strlen($row_ganador->PREMIO) <= 37) {
+    if (strlen($row_ganador->PREMIO) > 29 && strlen($row_ganador->PREMIO) <= 37) {
         $pdf->SetFont('Arial', 'B', 13);
         $linea_ancho = 4.5;
     }
@@ -198,10 +198,11 @@ while ($row_ganador = siguiente($res_ganador)) {
 
     }
     $pdf->SetFont('Arial', 'B', 25);
-    $y += 19.5;
+    $y += 18.8;
     $cantiGan += 1;
-    if ($cantiGan == 8) {
+    if ($cantiGan == 7) {
         $pdf->AddPage();
+        /*$pdf->Image('../escribano/escribano_img/gordo_invierno_2018_semana1_extracto_2.jpg', 0, 0, 430, 0);*/
         $pdf->SetAutoPageBreak(true, 1);
         $pdf->SetFont('Arial', 'B', 8);
         $pdf->setXY(10, 10);
@@ -230,11 +231,11 @@ $y = 105;
 
 $pdf->SetFont('Arial', 'B', 10);
 
-$pdf->SetXY($x + 30, $y - 15);
+$pdf->SetXY($x + 15, $y - 10);
 $pdf->Cell(35, 10, $usuario, 0, 0, 'C');
-$pdf->SetXY($x + 87, $y - 15);
+$pdf->SetXY($x + 50, $y - 10);
 $pdf->Cell(43, 10, $escribano, 0, 0, 'C');
-$pdf->SetXY($x + 177, $y - 12);
+$pdf->SetXY($x + 125, $y - 12);
 $pdf->SetFont('Arial', 'B', 30);
 $pdf->Cell(10, 10, $fecha_prescripcion, 0, 0, 'C');
 
@@ -252,8 +253,8 @@ if ($semana != $cantidad_semanas) {
     $pdf->Cell(10, 10, $fecha_proximo, 0, 0, 'C');
 
     $y_premio = -5;
-    $pdf->SetFont('Arial', 'B', 12);
-    $pdf->SetXY($x + 160, $y - 14);
+    $pdf->SetFont('Arial', 'B', 9);
+    $pdf->SetXY($x + 160, $y - 10);
     while ($row_premio = siguiente($res_premios)) {
         if ($row_premio->CANTIDAD == 1) {
             $premio = $row_premio->PREMIO;

@@ -12,7 +12,7 @@
 
 <body>
     <div id="incentivo">
-        <div id="sorteo"></div>
+       <!--  <div id="sorteo"></div> -->
         <div id="fecha_sorteo"></div>
         <div id="orden"></div>
         <div id="premio"></div>
@@ -32,7 +32,7 @@
         <div id="jefe_sorteo_d"></div> -->
     </div>
     <div id="resumen">
-        <div id="sorteo_r"></div>
+        <!-- <div id="sorteo_r"></div> -->
         <div id="fecha_sorteo_r"></div>
 <!--         <div id="escribano_r"></div>
         <div id="jefe_sorteo_r"></div> -->
@@ -60,28 +60,11 @@
             function(data) {
                 var incentivoMostrando = data.incentivoMostrando;
                 switch (incentivoMostrando) {
-                    case ('1'):
-                        $('#incentivo').css("background-image", "url(escribano_img/gordo_invierno_2018_semana1_blanco.jpg)");
-                        break;
-                    case ('2'):
-                        $('#incentivo').css("background-image", "url(escribano_img/gordo_invierno_2018_semana1_blanco.jpg)");
-                        break;
-                    case ('3'):
-                        $('#incentivo').css("background-image", "url(escribano_img/gordo_invierno_2018_semana1_blanco.jpg)");
-                        break;
-                    case ('4'):
-                        $('#incentivo').css("background-image", "url(escribano_img/gordo_invierno_2018_semana1_blanco.jpg)");
-                        break;
-                    case ('5'):
-                        $('#incentivo').css("background-image", "url(escribano_img/gordo_invierno_2018_semana1_blanco.jpg)");
-                        break;
-                    case ('6'):
-                        $('#incentivo').css("background-image", "url(escribano_img/gordo_invierno_2018_semana1_blanco.jpg)");
-                        break;
-                    case ('7'):
-                        $('#incentivo').css("background-image", "url(escribano_img/gordo_invierno_2018_semana1_blanco.jpg)");
                     case ('resumen'):
-                        $('#resumen').css("background-image", "url(escribano_img/gordo_invierno_2018_semana1_resumen.jpg)");
+                        $('#resumen').css("background-image", "url(escribano_img/gordo_navidad_2018_semana1_resumen.jpg)");
+                        break;
+                    default:
+                     $('#incentivo').css("background-image", "url(escribano_img/gordo_navidad_2018_semana1_blanco.jpg)");
                         break;
                 }
 
@@ -121,37 +104,13 @@
                 var incentivoMostrando = data.incentivoMostrando;
                 aleatorio = data.cantFracciones;
                 switch (incentivoMostrando) {
-                    case ('1'):
-                        $('#incentivo').css("background-image", "url(escribano_img/gordo_invierno_2018_semana1_blanco.jpg)");
-                        buscar_ganador(data);
-                        break;
-                    case ('2'):
-                        $('#incentivo').css("background-image", "url(escribano_img/gordo_invierno_2018_semana1_blanco.jpg)");
-                        buscar_ganador(data);
-                        break;
-                    case ('3'):
-                    $('#incentivo').css("background-image", "url(escribano_img/gordo_invierno_2018_semana1_blanco.jpg)");
-                        buscar_ganador(data);
-                        break;
-                    case ('4'):
-                    $('#incentivo').css("background-image", "url(escribano_img/gordo_invierno_2018_semana1_blanco.jpg)");
-                        buscar_ganador(data);
-                        break;
-                    case ('5'):
-                    $('#incentivo').css("background-image", "url(escribano_img/gordo_invierno_2018_semana1_blanco.jpg)");
-                        buscar_ganador(data);
-                        break;
-                    case ('6'):
-                    $('#incentivo').css("background-image", "url(escribano_img/gordo_invierno_2018_semana1_blanco.jpg)");
-                        buscar_ganador(data);
-                        break;
-                    case ('7'):
-                    $('#incentivo').css("background-image", "url(escribano_img/gordo_invierno_2018_semana1_blanco.jpg)");
-                        buscar_ganador(data);
-                        break;
-                    case ('resumen'):
-                    $('#resumen').css("background-image", "url(escribano_img/gordo_invierno_2018_semana1_resumen.jpg)");
+                     case ('resumen'):
+                        $('#resumen').css("background-image", "url(escribano_img/gordo_navidad_2018_semana1_resumen.jpg)");
                         mostrar_resumen(data);
+                        break;
+                    default:
+                     $('#incentivo').css("background-image", "url(escribano_img/gordo_navidad_2018_semana1_blanco.jpg)");
+                     buscar_ganador(data);
                         break;
                 }
 
@@ -174,7 +133,7 @@
         if (data.descIncentivo.length <= 10) {
             $('#premio').css('font-size', '54px');
         }
-        if (data.descIncentivo.length > 10 && data.descIncentivo.length <= 26) {
+        if (data.descIncentivo.length > 10 && data.descIncentivo.length <= 29) {
             $('#premio').css('font-size', '35px');
         }
         $('#premio').html(data.descIncentivo);

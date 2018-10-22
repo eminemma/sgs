@@ -111,17 +111,17 @@ $pdf->SetFont('Arial', 'B', 8);
 $pdf->setXY(10, 10);
 /*$pdf->Image('../escribano/escribano_img/gordo_invierno_2018_semana' . $semana . '_extracto.jpg', 0, 0, 300, 210);*/
 if (!$ultima_semana) {
-    $pdf->Image('../escribano/escribano_img/gordo_invierno_2018_semana1_extracto_digital.jpg', 0, 0, 355, 215);
+    $pdf->Image('../escribano/escribano_img/gordo_navidad_2018_semana1_extracto_digital.jpg', 0, 0, 355, 215);
 } else {
-    $pdf->Image('../escribano/escribano_img/gordo_invierno_2018_semana1_extracto_digital_ultima.jpg', 0, 0, 355, 215);
+    $pdf->Image('../escribano/escribano_img/gordo_navidad_2018_semana1_extracto_digital_ultima.jpg', 0, 0, 355, 215);
 }
 
 //----------------------- 1º Pagina ------------------------------------
 
 $pdf->SetFont('Arial', 'B', 15);
-$pdf->SetXY(213, 17.4);
+$pdf->SetXY(213, 31);
 $pdf->Cell(20, 0, $sorteo, 0, 'L', 1);
-$pdf->SetXY(160, 17.4);
+$pdf->SetXY(160, 31);
 $pdf->Cell(20, 0, $fecha_sorteo, 0, 'L', 1);
 
 if (strlen($premio1) > 40) {
@@ -150,7 +150,7 @@ $res_ganador = sql("SELECT TG.ID_JUEGO,
                             AND TG.SEMANA     =TA.SEMANA
                             AND TG.ORDEN      =TA.ORDEN
                             ORDER BY TG.ORDEN", array($_SESSION['id_juego'], $_SESSION['sorteo'], $semana));
-$y = 0;
+$y = 9;
 while ($row_ganador = siguiente($res_ganador)) {
     $pdf->SetFont('Arial', 'B', 25);
     $pdf->setXY(50, 37 + $y);
@@ -228,11 +228,11 @@ $y = 200;
 
 $pdf->SetFont('Arial', 'B', 8);
 
-$pdf->SetXY($x + 28, $y - 13);
+$pdf->SetXY($x + 16, $y - 13);
 $pdf->Cell(35, 10, $usuario, 0, 0, 'C');
-$pdf->SetXY($x + 77, $y - 13);
+$pdf->SetXY($x + 45, $y - 13);
 $pdf->Cell(43, 10, $escribano, 0, 0, 'C');
-$pdf->SetXY($x + 155, $y - 12);
+$pdf->SetXY($x + 107, $y - 12);
 $pdf->SetFont('Arial', 'B', 20);
 $pdf->Cell(10, 10, $fecha_prescripcion, 0, 0, 'C');
 
@@ -250,7 +250,7 @@ if ($semana != $cantidad_semanas) {
     $pdf->Cell(10, 10, $fecha_proximo, 0, 0, 'C');
 
     $y_premio = 0;
-    $pdf->SetFont('Arial', 'B', 9);
+    $pdf->SetFont('Arial', 'B', 8);
     $pdf->SetXY($x + 160, $y - 16);
     while ($row_premio = siguiente($res_premios)) {
         if ($row_premio->CANTIDAD == 1) {

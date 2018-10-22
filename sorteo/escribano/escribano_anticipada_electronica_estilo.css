@@ -43,16 +43,15 @@ body {
 }
 
 #aleatorio_entero {
-    top: 434px;
-    left: 217px;
+    top: 376px;left: 217px;
     position: absolute;
     text-align: center;
     font-size: 97px;
 }
 
 #aleatorio_fraccion {
-    top: 434px;
-    left: 586px;
+    top: 375px;
+    left: 617px;
     position: absolute;
     text-align: center;
     font-size: 97px;
@@ -66,37 +65,31 @@ body {
 }
 
 #agencia {
-    top: 590px;
+    top: 540px;
     left: 124px;
     position: absolute;
     font-size: 43px;
     text-align: center;
 }
 
-#nombre_d {top: 590px;left: 217px;position: absolute;font-size: 43px;text-align: center;}
+#nombre_d {top: 540px;left: 217px;position: absolute;font-size: 43px;text-align: center;}
 
 #localidad_d {
-    top: 685px;
+    top: 655px;
     left: 131px;
     position: absolute;
     font-size: 43px;
     text-align: center;
 }
 
-#billete_d {
-top: 434px;
-    left: 217px;
-    position: absolute;
-    text-align: center;
-    font-size: 97px;
-}
+#billete_d {top: 376px;left: 217px;position: absolute;text-align: center;font-size: 97px;}
 
 #fraccion_d {
-  top: 434px;
-    left: 586px;
-    position: absolute;
-    text-align: center;
-    font-size: 97px;
+  top: 375px;
+  left: 617px;
+  position: absolute;
+  text-align: center;
+  font-size: 97px;
 }
 
 #prescripcion_d {
@@ -147,8 +140,8 @@ top: 434px;
 
 #orden {
     position: absolute;
-    top: 324px;
-    left: 184px;
+    top: 240px;
+    left: 140px;
     font-size: 59px;
 }
 
@@ -170,15 +163,16 @@ top: 434px;
     float: left;
     text-align: center;
 }
-.premio_r{width: 165px;font-size: 14px;float: left;text-align: center;line-height: 24px;padding-top: 4px;}
+.premio_r{width: 165px;font-size: 14px;float: left;text-align: center;line-height: 18px;padding-top: 4px;/* border: 1px solid; */}
 .ganador {
-    height: 50.7px;
+    height: 52px;
     line-height: 46px;
     vertical-align: middle;
     /* border: 1px solid #020202; */
     margin-bottom: 4px;
     /* position: relative; */
     /* display: block; */
+    /* border: 1px solid; */
 }
 
 .ganador {}
@@ -254,16 +248,17 @@ position: absolute;
 }
 #premio{
     position: absolute;
-    top: 328px;
-    left: 308px;
+    top: 243px;
+    left: 297px;
     font-size: 21px;
-    width: 421px;
+    width: 452px;
     text-align: center;
+    /*border: 1px solid;*/
 }
 
 #fecha_sorteo{
  position: absolute;
- left: 591px;
- top: 231px;
+ left: 786px;
+ top: 100px;
  font-size: 32px;
 }
