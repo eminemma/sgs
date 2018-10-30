@@ -112,6 +112,20 @@ if ($_SESSION['tipo_usuario'] != 'ROL_JEFE_SORTEO' && $_SESSION['tipo_usuario'] 
                     tipo: 'semana_7',
                     orden: orden
                 };
+            }else if (classN == 'ver_semana_8') {
+                accion = 'sorteo/operador/loteria_anticipada_ajax.php';
+                param2 = {
+                    accion: 'mostrar_extracto',
+                    tipo: 'semana_8',
+                    orden: orden
+                };
+            }else if (classN == 'ver_semana_9') {
+                accion = 'sorteo/operador/loteria_anticipada_ajax.php';
+                param2 = {
+                    accion: 'mostrar_extracto',
+                    tipo: 'semana_9',
+                    orden: orden
+                };
             }
 
             if (typeof param2 === 'object') {

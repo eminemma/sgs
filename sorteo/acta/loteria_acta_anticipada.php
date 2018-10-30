@@ -182,9 +182,13 @@ while ($row = siguiente($res)) {
     $pdf->SetX(30);
     $pdf->SetX(30);
     if ($nombre_agencia == 'VENTA CONTADO') {
+        if ($sucursal == 'CASA CENTRAL') {
+            $sucursal = 'CORDOBA';
+        }
+
         $pdf->Cell(100, 5, utf8_decode('Comercializado por 9001 ' . $sucursal), 0, 1, 'L');
         $pdf->SetX(30);
-        $pdf->Cell(100, 5, utf8_decode('de la Localidad de : ' . $localidad_agencia . ', Delegación:' . $sucursal), 0, 1, 'L');
+        $pdf->Cell(100, 5, utf8_decode('de la Localidad de : ' . $sucursal . ', Delegación:' . $sucursal), 0, 1, 'L');
         $pdf->SetX(30);
         $pdf->Cell(100, 5, utf8_decode('Premio : ' . $premio), 0, 1, 'L');
         $pdf->SetX(10);

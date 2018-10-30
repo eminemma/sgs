@@ -225,14 +225,27 @@ $pdf->Cell(0, 0, utf8_decode($localidad1), 0, 'L', 1);*/
 
 $x = 18;
 $y = 200;
-
+if ($ultima_semana) {
+    $x = 25;
+    $y = 195;
+}
 $pdf->SetFont('Arial', 'B', 8);
 
 $pdf->SetXY($x + 16, $y - 13);
 $pdf->Cell(35, 10, $usuario, 0, 0, 'C');
-$pdf->SetXY($x + 45, $y - 13);
+$x_escribano = $x + 47;
+if ($ultima_semana) {
+    $x_escribano = $x + 70;
+}
+$pdf->SetXY($x_escribano, $y - 13);
 $pdf->Cell(43, 10, $escribano, 0, 0, 'C');
-$pdf->SetXY($x + 107, $y - 12);
+
+$x_pres = $x + 107;
+if ($ultima_semana) {
+    $x_pres = $x + 140;
+}
+
+$pdf->SetXY($x_pres, $y - 12);
 $pdf->SetFont('Arial', 'B', 20);
 $pdf->Cell(10, 10, $fecha_prescripcion, 0, 0, 'C');
 
