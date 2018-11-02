@@ -373,7 +373,7 @@ $db_kanban->debug = true;*/
 
             $row_id_programa_premios_antic = siguiente_kanban($rs_id_programa_premios_antic);
 
-            $rs_premio = sql_kanban("   SELECT IMPORTE, DESCRIPCION AS PREMIO,ID_TIPO_PREMIO,ID_TIPO_PREMIO
+            $rs_premio = sql_kanban("   SELECT IMPORTE, DESCRIPCION AS PREMIO,ID_TIPO_PREMIO,ID_TIPO_PREMIO,ID_DESCRIPCION_ESPECIA
 										  	FROM KANBAN.T_PROGRAMA_PREMIOS_ANTIC
 								         	WHERE ID_PROGRAMA_PREMIOS_ANTIC = ?", array($row_id_programa_premios_antic->ID_PROGRAMA_PREMIOS_ANTIC));
 
@@ -410,14 +410,15 @@ $db_kanban->debug = true;*/
                 $rs_ID = $rs->FetchNextObject($toupper = true);
 
                 $id_descripcion = $rs_ID->ID_DESCRIPCION;
-
+                $especie        = null;
                 if ((int) $row_premio->ID_TIPO_PREMIO == 1) {
                     $importe_con_ley = null;
+                    $especie         = null;
                 }
 
                 $rs = sql_kanban("INSERT INTO KANBAN.T_PREMIOS (FRACCION,IMPORTE, ID_DESCRIPCION,BILLETE,ID_JUEGO,SORTEO,SERIE, CONCEPTO,SUC_BAN,NRO_AGEN,
-														FECHA_ALTA,ID_SORTEO_ANTICIPADO,OCR,USUARIO)
-						VALUES (?,?,?,?,?,?,?,?,?,?,TO_DATE(?,'dd/mm/yyyy'),?,?,?)",
+														FECHA_ALTA,ID_SORTEO_ANTICIPADO,OCR,USUARIO,ESPECIE)
+						VALUES (?,?,?,?,?,?,?,?,?,?,TO_DATE(?,'dd/mm/yyyy'),?,?,?,?)",
                     array(
                         $fraccion,
                         $importe_con_ley,
@@ -433,20 +434,26 @@ $db_kanban->debug = true;*/
                         $rs_seq->ID_PREMIOS_ANTICIPADA,
                         $rowValidacion->OCR,
                         'DU' . $_SESSION['dni'],
+                        $row_premio->ID_DESCRIPCION_ESPECIA,
                     )
                 );
 
-                $rs_estimulo = sql_kanban("		SELECT  PP.ID_DESCRIPCION,
+                $rs_estimulo = sql_kanban("		SELECT      PD.ORDEN,
+                                                            PP.ID_DESCRIPCION,
 														    PD.DESCRIPCION
 														    ||' '
 														    ||PD.DESCRIPCION AS ESTIMULO,
 														    PP.ID_PREMIO_AFECTA_ESTIMULO,
 														    PP.TIPO_PREMIO,
-														    PP.PREMIO_EFECTIVO AS IMPORTE
+														    PP.PREMIO_EFECTIVO AS IMPORTE,
+                                                            PP.PREMIO_ID_ESPECIAS,
+                                                            TE.DESCRIPCION_ESPECIA
 													FROM 	KANBAN.T_PROGRAMA_PREMIOS PP,
-													  		KANBAN.T_PROGRAMA_PREMIOS_ANTIC PD
+													  		KANBAN.T_PROGRAMA_PREMIOS_ANTIC PD,
+                                                            KANBAN.T_DESCRIPCION_ESPECIAS TE
 													WHERE PP.ID_PREMIO_AFECTA_ESTIMULO  = ?
 													AND PP.ID_PREMIO_AFECTA_ESTIMULO 	= PD.ID_PROGRAMA_PREMIOS_ANTIC
+                                                    AND PP.PREMIO_ID_ESPECIAS = TE.ID_DESCRIPCION_ESPECIA
 													AND PD.SORTEO                    	= ?
 													AND PD.ID_JUEGO                  	= ?
 													AND PD.SERIE                     	= ?
@@ -460,7 +467,15 @@ $db_kanban->debug = true;*/
                 );
 
                 $row_estimulo = $rs_estimulo->FetchNextObject($toupper = true);
-                $importe      = $row_estimulo->IMPORTE;
+                $importe      = null;
+                $especie      = null;
+                $desc_especie = null;
+                if ($row_estimulo->TIPO_PREMIO == 'ESPECIE') {
+                    $especie      = $row_estimulo->PREMIO_ID_ESPECIAS;
+                    $desc_especie = $row_estimulo->DESCRIPCION_ESPECIA;
+                } else {
+                    $importe = $row_estimulo->IMPORTE;
+                }
 
                 if ($rs_estimulo->RowCount() != 0) {
 
@@ -472,8 +487,8 @@ $db_kanban->debug = true;*/
                     $id_estimulo = $rs->ID_DESCRIPCION;
 
                     $rs = sql_kanban("INSERT INTO KANBAN.T_PREMIOS (FRACCION,IMPORTE, ID_DESCRIPCION,BILLETE,	ID_JUEGO,SORTEO,SERIE, CONCEPTO,SUC_BAN,NRO_AGEN,
-														FECHA_ALTA,ID_SORTEO_ANTICIPADO,OCR)
-														VALUES (?,?,?,?,?,?,?,?,?,?,TO_DATE(?,'dd/mm/yyyy'),?,?)",
+														FECHA_ALTA,ID_SORTEO_ANTICIPADO,OCR,ESPECIE)
+														VALUES (?,?,?,?,?,?,?,?,?,?,TO_DATE(?,'dd/mm/yyyy'),?,?,?)",
                         array(
                             $fraccion,
                             $importe,
@@ -482,12 +497,13 @@ $db_kanban->debug = true;*/
                             $_SESSION['id_juego'],
                             $_SESSION['sorteo'],
                             $_SESSION['serie'],
-                            'ESTIMULO - ' . $row_premio->PREMIO,
+                            'ESTIMULO - SEM. ' . $semana . ' - PREMIO Nº ' . $row_estimulo->ORDEN . ' - ' . $desc_especie,
                             $suc_ban,
                             $nro_agen,
                             $_POST['fecha_desde'],
                             $rs_seq->ID_PREMIOS_ANTICIPADA,
                             $rowValidacion->OCR,
+                            $especie,
                         )
                     );
 
