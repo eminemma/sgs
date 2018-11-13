@@ -10,7 +10,7 @@
 	<div id="contendio_juego" class="well form-inline text-center">
     <form class="form-inline" id="sorteo_entero" name="sorteo_entero" action="#" style="position:relative" 
           onsubmit="$.post('sorteo/operador/loteria_sorteador_ajax.php',{'juego':3,'accion':'control_ingreso',posicion:21}, function(data){$('#numero_1').focus(); $('#juego4').html(data); }); return false;">
-		<h4>NISSAN MARCH</h4>
+		<h4>NISSAN NOTE</h4>
 		<input id="numero_1" name="numero" type="submit" size="8" value="Detener" style="text-align:center;width: 250px;height: 50px;font-size:36px">
 	</form>
 	
@@ -28,10 +28,11 @@
 	
 	<form class="form-inline" id="sorteo_entero" name="sorteo_entero" action="#" style="position:relative" 
           onsubmit="$.post('sorteo/operador/loteria_sorteador_ajax.php',{'juego':3,'accion':'control_ingreso',posicion:24}, function(data){$('#numero_4').focus(); $('#juego4').html(data); });  return false;">
-		<h4>MOTO HONDA XR 150 </h4>
+		<h4>VIAJE A CUBA</h4>
 		<input id="numero_4" name="numero" type="submit" size="8" value="Detener" style="text-align:center;width: 250px;height: 50px;font-size:36px">
 	</form>
 	
+	<!--
 	<form class="form-inline" id="sorteo_entero" name="sorteo_entero" action="#" style="position:relative" 
           onsubmit="$.post('sorteo/operador/loteria_sorteador_ajax.php',{'juego':3,'accion':'control_ingreso',posicion:25}, function(data){$('#numero_5').focus(); $('#juego4').html(data); }); return false;">
 		<h4>MOTO HONDA XR 150 </h4>
@@ -43,7 +44,7 @@
 		<h4>MOTO HONDA XR 150 </h4>
 		<input id="numero_6" name="numero" type="submit" size="8" value="Detener" style="text-align:center;width: 250px;height: 50px;font-size:36px">
 	</form>
-	
+	-->
 	
 	</div>
 </div>

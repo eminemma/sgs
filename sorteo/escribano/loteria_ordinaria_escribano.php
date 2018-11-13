@@ -28,7 +28,7 @@
 								'01':	{
 											inicial:	{
 															top: '252px',
-															left: '234px'
+															left: '317px'
 														},
 											final:		{
 															height: '150px'
@@ -38,7 +38,7 @@
 								'02':	{
 											inicial:	{
 															top: '200px',
-															left: '581px'
+															left: '781px'
 														},
 											final:		{
 															height: '70px'
@@ -48,7 +48,7 @@
 								'03':	{
 											inicial:	{
 															top: '200px',
-															left: '860px'
+															left: '1140px'
 														},
 											final:		{
 															height: '70px'
@@ -58,7 +58,7 @@
 								'04':	{
 											inicial:	{
 															top: '330px',
-															left: '581px'
+															left: '781px'
 														},
 											final:		{
 															height: '70px'
@@ -68,7 +68,7 @@
 								'05':	{
 											inicial:	{
 															top: '330px',
-															left: '860px'
+															left: '1140px'
 														},
 											final:		{
 															height: '70px'
@@ -78,7 +78,7 @@
 								'06':	{
 											inicial:	{
 															top: '472px',
-															left: '170px'
+															left: '229px'
 														},
 											final:		{
 															height: '55px'
@@ -88,7 +88,7 @@
 								'07':	{
 											inicial:	{
 															top: '534px',
-															left: '170px'
+															left: '229px'
 														},
 											final:		{
 															height: '55px'
@@ -98,7 +98,7 @@
 								'08':	{
 											inicial:	{
 															top: '596px',
-															left: '170px'
+															left: '229px'
 														},
 											final:		{
 															height: '55px'
@@ -108,7 +108,7 @@
 								'09':	{
 											inicial:	{
 															top: '656px',
-															left: '170px'
+															left: '229px'
 														},
 											final:		{
 															height: '55px'
@@ -118,7 +118,7 @@
 								'10':	{
 											inicial:	{
 															top: '718px',
-															left: '170px'
+															left: '229px'
 														},
 											final:		{
 															height: '55px'
@@ -128,7 +128,7 @@
 								'11':	{
 											inicial:	{
 															top: '472px',
-															left: '435px'
+															left: '583px'
 														},
 											final:		{
 															height: '55px'
@@ -138,7 +138,7 @@
 								'12':	{
 											inicial:	{
 															top: '534px',
-															left: '435px'
+															left: '583px'
 														},
 											final:		{
 															height: '55px'
@@ -148,7 +148,7 @@
 								'13':	{
 											inicial:	{
 															top: '596px',
-															left: '435px'
+															left: '583px'
 														},
 											final:		{
 															height: '55px'
@@ -158,7 +158,7 @@
 								'14':	{
 											inicial:	{
 															top: '656px',
-															left: '435px'
+															left: '583px'
 														},
 											final:		{
 															height: '55px'
@@ -168,7 +168,7 @@
 								'15':	{
 											inicial:	{
 															top: '718px',
-															left: '435px'
+															left: '583px'
 														},
 											final:		{
 															height: '55px'
@@ -178,7 +178,7 @@
 								'16':	{
 											inicial:	{
 															top: '472px',
-															left: '700px'
+															left: '930px'
 														},
 											final:		{
 															height: '55px'
@@ -188,7 +188,7 @@
 								'17':	{
 											inicial:	{
 															top: '534px',
-															left: '700px'
+															left: '930px'
 														},
 											final:		{
 															height: '55px'
@@ -198,7 +198,7 @@
 								'18':	{
 											inicial:	{
 															top: '596px',
-															left: '700px'
+															left: '930px'
 														},
 											final:		{
 															height: '55px'
@@ -208,7 +208,7 @@
 								'19':	{
 											inicial:	{
 															top: '656px',
-															left: '700px'
+															left: '930px'
 														},
 											final:		{
 															height: '55px'
@@ -218,7 +218,7 @@
 								'20':	{
 											inicial:	{
 															top: '718px',
-															left: '700px'
+															left: '930px'
 														},
 											final:		{
 															height: '55px'
@@ -227,7 +227,7 @@
 
 								'progresion':	{
 													top: '449px',
-													left: '773px',
+													left: '1073px',
 													height: '90px'
 												}
 							};

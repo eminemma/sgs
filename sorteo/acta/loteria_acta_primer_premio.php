@@ -121,14 +121,14 @@ if (!is_null($row->DISTRIBUIDOEN)) {
         if ($i == 0) {
             $agencia = $row_fraccion->DESCRIPCION_AGENCIA;
             //$distribuido.=$row_fraccion->DESCRIPCION_AGENCIA.',';
-            $distribuido = $row_fraccion->DESCRIPCION_AGENCIA;
+            $distribuido = utf8_decode($row_fraccion->DESCRIPCION_AGENCIA);
 
             $distribuido = str_pad($row_fraccion->ID_AGENCIA, 5, "0", STR_PAD_LEFT) . '-' . $distribuido . ' ' . str_pad($row_fraccion->ID_SUCURSAL, 2, "0", STR_PAD_LEFT) . '-' . $row_fraccion->DESCRIPCION_SUCURSAL . ' ' . $row_fraccion->PROVINCIA;
 
             $i = 1;
         }
         if ($row_fraccion->DESCRIPCION_AGENCIA != $agencia) {
-            $distribuido = $row_fraccion->DESCRIPCION_AGENCIA;
+            $distribuido = utf8_decode($row_fraccion->DESCRIPCION_AGENCIA);
 
             $distribuido = str_pad($row_fraccion->ID_AGENCIA, 5, "0", STR_PAD_LEFT) . '-' . $distribuido . ' ' . str_pad($row_fraccion->ID_SUCURSAL, 2, "0", STR_PAD_LEFT) . '-' . $row_fraccion->DESCRIPCION_SUCURSAL . ' ' . $row_fraccion->PROVINCIA;
 
@@ -146,15 +146,15 @@ if (!is_null($row->DISTRIBUIDOEN)) {
 
 if (!is_null($row->DISTRIBUIDOEN)) {
     $pdf->SetFont('Times', 'B', 10);
-    $pdf->SetX(24);
-    $pdf->Cell(80, 8, 'DETALLE DE FRACCIONES CON PREMIO', 0, 1, 'L');
-    $pdf->SetX(24);
+    $pdf->SetX(10);
+    $pdf->Cell(15, 8, 'DETALLE DE FRACCIONES CON PREMIO', 0, 1, 'L');
+    $pdf->SetX(10);
     $pdf->SetFont('Times', 'B', 8);
     $pdf->Cell(18, 5, 'FRACCION', 1, 0, 'R');
-    $pdf->Cell(100, 5, 'AGENCIA', 1, 0, 'C');
+    $pdf->Cell(110, 5, 'AGENCIA', 1, 0, 'C');
     $pdf->Cell(60, 5, 'LOCALIDAD', 1, 1, 'C');
     try {
-        $rs_fracciones = sql(" SELECT LPAD(FRACCION,2,0) AS FRACCION,DESCRIPCION_AGENCIA,LOCALIDAD,ID_AGENCIA,ID_SUCURSAL,DESCRIPCION_SUCURSAL
+        $rs_fracciones = sql(" SELECT LPAD(FRACCION,2,0) AS FRACCION,DESCRIPCION_AGENCIA,LOCALIDAD,ID_AGENCIA,ID_SUCURSAL,DESCRIPCION_SUCURSAL,PROVINCIA
               FROM sgs.t_billetes_participantes
               WHERE SORTEO = ?
               AND ID_JUEGO = ?
@@ -162,13 +162,25 @@ if (!is_null($row->DISTRIBUIDOEN)) {
     } catch (exception $e) {die($db->ErrorMsg());}
     while ($row_fraccion = $rs_fracciones->FetchNextObject($toupper = true)) {
         $distribuido = '';
-        $pdf->SetX(24);
+        $pdf->SetX(10);
         $pdf->Cell(18, 5, $row_fraccion->FRACCION, 1, 0, 'C');
-        $distribuido = $row_fraccion->DESCRIPCION_AGENCIA;
+        $distribuido = utf8_decode($row_fraccion->DESCRIPCION_AGENCIA);
 
         $distribuido = str_pad($row_fraccion->ID_AGENCIA, 5, "0", STR_PAD_LEFT) . '- ' . $distribuido . ' ' . str_pad($row_fraccion->ID_SUCURSAL, 2, "0", STR_PAD_LEFT) . '-' . $row_fraccion->DESCRIPCION_SUCURSAL . ' ' . $row_fraccion->PROVINCIA;
-        $pdf->Cell(100, 5, $distribuido, 1, 0, 'L');
-        $pdf->Cell(60, 5, $row_fraccion->LOCALIDAD, 1, 1, 'L');
+        $localidad   = $row_fraccion->LOCALIDAD;
+        if ($row_fraccion->DESCRIPCION_AGENCIA == 'VENTA CONTADO CASA CENTRAL') {
+            $distribuido = '09001 - ' . $row_fraccion->PROVINCIA;
+            $localidad   = $row_fraccion->PROVINCIA;
+        } else if ($row_fraccion->DESCRIPCION_AGENCIA == 'VENTA CONTADO') {
+            if ($row_fraccion->ID_SUCURSAL == 1) {
+                $localidad = $row_fraccion->PROVINCIA;
+            } else {
+                $localidad = $row_fraccion->DESCRIPCION_SUCURSAL;
+            }
+            $distribuido = '09001 - ' . $row_fraccion->DESCRIPCION_SUCURSAL;
+        }
+        $pdf->Cell(110, 5, $distribuido, 1, 0, 'L');
+        $pdf->Cell(60, 5, $localidad, 1, 1, 'L');
     }
 }
 

@@ -146,8 +146,8 @@ if (!is_null($row->DISTRIBUIDOEN)) {
     while ($row_fraccion = $rs_fracciones->FetchNextObject($toupper = true)) {
 
         if ($i == 0) {
-            $agencia     = utf8_decode($row_fraccion->DESCRIPCION_AGENCIA);
-            $distribuido = str_pad($row_fraccion->ID_AGENCIA, 5, "0", STR_PAD_LEFT) . '- ' . $agencia . ' ' . str_pad($row_fraccion->ID_SUCURSAL, 2, "0", STR_PAD_LEFT) . '-' . $row_fraccion->DESCRIPCION_SUCURSAL . ' ' . $row_fraccion->PROVINCIA;
+            $agencia     = $row_fraccion->DESCRIPCION_AGENCIA;
+            $distribuido = str_pad($row_fraccion->ID_AGENCIA, 5, "0", STR_PAD_LEFT) . '- ' . $distribuido . ' ' . str_pad($row_fraccion->ID_SUCURSAL, 2, "0", STR_PAD_LEFT) . '-' . $row_fraccion->DESCRIPCION_SUCURSAL . ' ' . $row_fraccion->PROVINCIA;
             $localidad   = $row_fraccion->LOCALIDAD;
             if ($row_fraccion->DESCRIPCION_AGENCIA == 'VENTA CONTADO CASA CENTRAL') {
                 $localidad   = $row_fraccion->PROVINCIA;
@@ -163,9 +163,8 @@ if (!is_null($row->DISTRIBUIDOEN)) {
             }
             $i = 1;
         }
-        if (utf8_decode($row_fraccion->DESCRIPCION_AGENCIA) != $agencia) { 
-            $agencia = $row_fraccion->DESCRIPCION_AGENCIA;
-            $distribuido = str_pad($row_fraccion->ID_AGENCIA, 5, "0", STR_PAD_LEFT) . '- ' . $agencia . ' ' . str_pad($row_fraccion->ID_SUCURSAL, 2, "0", STR_PAD_LEFT) . '-' . $row_fraccion->DESCRIPCION_SUCURSAL . ' ' . $row_fraccion->PROVINCIA;
+        if ($row_fraccion->DESCRIPCION_AGENCIA != $agencia) {
+            $distribuido = str_pad($row_fraccion->ID_AGENCIA, 5, "0", STR_PAD_LEFT) . '- ' . $distribuido . ' ' . str_pad($row_fraccion->ID_SUCURSAL, 2, "0", STR_PAD_LEFT) . '-' . $row_fraccion->DESCRIPCION_SUCURSAL . ' ' . $row_fraccion->PROVINCIA;
             $localidad   = $row_fraccion->LOCALIDAD;
             if ($row_fraccion->DESCRIPCION_AGENCIA == 'VENTA CONTADO CASA CENTRAL') {
                 $localidad   = $row_fraccion->PROVINCIA;
@@ -179,14 +178,14 @@ if (!is_null($row->DISTRIBUIDOEN)) {
                 }
                 $distribuido = '09001 - ' . $row_fraccion->DESCRIPCION_SUCURSAL . ', ' . $localidad;
             }
-           
+            $agencia = $row_fraccion->DESCRIPCION_AGENCIA;
         }
 
     }
 
-//    $pdf->MultiCell(180, 5, 'DISTRIBUIDO A: ' . $distribuido, 0, 'L');
+    $pdf->MultiCell(180, 5, 'DISTRIBUIDO A: ' . $distribuido, 0, 'L');
 } else {
-//    $pdf->Cell(30, 0, $row->DISTRIBUIDOEN, 0, 0, 'l');
+    $pdf->Cell(30, 0, $row->DISTRIBUIDOEN, 0, 0, 'l');
 }
 
 /*if (!is_null($row->DISTRIBUIDOEN)){

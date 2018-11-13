@@ -5,6 +5,9 @@ Se quito el campo estado al traer el programa asociado al sorteo. Emmanuel Quatt
 
 ##41208## Reunion 09/08/2017
 Se importa el horario del sorteo recibido del kanban. Emmanuel Quattropani (10/08/2017)
+
+##47029## Gordo Navidad 2017
+Se modifica la importación final para tomar los datos por medio de dblink.
  */
 
 error_reporting(E_ERROR);
@@ -43,8 +46,8 @@ switch ($accion) {
 													AND R.NRO_AGEN 		= 	A.NRO_AGEN(+)
 													AND R.SUC_BAN  		= 	S.ID_SUCURSAL(+)
                   									AND S.ID_PROVINCIA	=	P.ID_PROVINCIA(+)
-													AND R.ID_JUEGO      =	?
-													AND R.SORTEO        =	?
+													AND R.ID_JUEGO      =	$id_juego
+													AND R.SORTEO        =	$sorteo
 													AND R.AGENCIA       =	'S'
 													AND (
 														R.SUC_BAN_DEVUELVE  IS NULL
@@ -54,8 +57,8 @@ switch ($accion) {
 										SELECT COUNT(*) AS CANTIDAD
 										FROM 	KANBAN.T_REPARTO_INTELIGENTE R,
 												GESTION.T_SUCURSAL S
-										WHERE 	R.ID_JUEGO 	=	?
-											AND R.SORTEO    =	?
+										WHERE 	R.ID_JUEGO 	=	$id_juego
+											AND R.SORTEO    =	$sorteo
 											AND R.SUC_BAN   =	S.ID_SUCURSAL(+)
 											AND R.VENTA_EMPLEADO IS NOT NULL
 										UNION
@@ -68,13 +71,13 @@ switch ($accion) {
 											AND S.ID_PROVINCIA   =	P.ID_PROVINCIA(+)
 											AND P.ID_PROVINCIA   =	L.ID_PROVINCIA(+)
 											AND L.DEFECTO(+)     =	1
-											AND R.ID_JUEGO       =	?
-											AND R.SORTEO         =	?
-											AND R.VENTA_CONTADO IS NOT NULL)"
-                , array($id_juego, $sorteo, $id_juego, $sorteo, $id_juego, $sorteo));
+											AND R.ID_JUEGO       =	$id_juego
+											AND R.SORTEO         =	$sorteo
+											AND R.VENTA_CONTADO IS NOT NULL)");
 
             $row_venta_neta = siguiente_kanban($rs_venta_neta);
             $venta_neta     = $row_venta_neta->CANTIDAD;
+            ComenzarTransaccion($db);
             info('CANTIDAD DE REGISTROS A MIGRAR: ' . $venta_neta . ' Fecha ' . date('d/m/Y H:i:s'));
 
             sql('DELETE FROM sgs.t_billetes_participantes WHERE SORTEO=? AND ID_JUEGO=?', array($sorteo, $id_juego));
@@ -83,27 +86,24 @@ switch ($accion) {
             $row_sorteo          = siguiente_kanban($rs);
             $cantidad_fracciones = (int) $row_sorteo->FRACCIONES;
             /*$db_kanban->debug    = true;*/
-            $sql_migrar_entero = "SELECT 'INSERT
-											INTO SGS.T_BILLETES_PARTICIPANTES
-											  (
-												ID_JUEGO,
-												SORTEO,
-												BILLETE,
-												ID_SUCURSAL,
-												ID_AGENCIA,
-												DESCRIPCION_AGENCIA,
-												LOCALIDAD,
-												PROVINCIA,
-												FRACCION,
-												PROGRESION,
-												SERIE,
-												DESCRIPCION_SUCURSAL,
-												PARTICIPA_ENTERO,
-												MODALIDAD
-											  )
-							  				VALUES
-							  				('||ID_JUEGO||','||SORTEO||','||BILLETE||','||DECODE(SUC_BAN,NULL,'NULL',SUC_BAN)||','||NRO_AGEN||','''||DESCRIPCION_AGENCIA||''','''||LOCALIDAD||''','''||PROVINCIA||''','||FRACCION||','||PROGRESION||','||SERIE||','''||DESCRIPCION_SUCURSAL||''','''||PARTICIPA_ENTERO||''','''||MODALIDAD||''')' AS EXEC
-                							FROM (
+            $sql_migrar_entero = " INSERT /*+ APPEND */
+										  INTO SGS.T_BILLETES_PARTICIPANTES
+										    (
+										      ID_JUEGO,
+										      SORTEO,
+										      BILLETE,
+										      ID_SUCURSAL,
+										      ID_AGENCIA,
+										      DESCRIPCION_AGENCIA,
+										      LOCALIDAD,
+										      PROVINCIA,
+										      FRACCION,
+										      PROGRESION,
+										      SERIE,
+										      DESCRIPCION_SUCURSAL,
+										      PARTICIPA_ENTERO,
+										      MODALIDAD
+										    )
 										  			SELECT R.ID_JUEGO ID_JUEGO,
 													       R.SORTEO SORTEO,
 													       R.BILLETE BILLETE,
@@ -118,7 +118,7 @@ switch ($accion) {
 													       A.DELEGACION DESCRIPCION_SUCURSAL,
 													        Nvl((
 													        SELECT DECODE(COUNT(TI.BILLETE),$cantidad_fracciones,'SI','NO')
-													        FROM KANBAN.T_REPARTO_INTELIGENTE TI
+													        FROM KANBAN.T_REPARTO_INTELIGENTE@KANBAN_ANTICIPADA TI
 													        WHERE TI.BILLETE  = R.BILLETE
 													          AND TI.SORTEO   = R.SORTEO
 													          AND TI.ID_JUEGO = R.ID_JUEGO
@@ -130,16 +130,16 @@ switch ($accion) {
 													        GROUP BY BILLETE
 													      ),'NO') AS PARTICIPA_ENTERO,
 													       DECODE(OCR,NULL,'VENTA AGENCIA','BILLETE DIGITAL') AS MODALIDAD
-													FROM KANBAN.T_REPARTO_INTELIGENTE R,
-													     JUEGOS.V_AGENCIA A,
-													     GESTION.T_SUCURSAL S,
-													     GESTION.T_PROVINCIA P
+													FROM KANBAN.T_REPARTO_INTELIGENTE@KANBAN_ANTICIPADA R,
+													     JUEGOS.V_AGENCIA@KANBAN_ANTICIPADA A,
+													     GESTION.T_SUCURSAL@KANBAN_ANTICIPADA S,
+													     GESTION.T_PROVINCIA@KANBAN_ANTICIPADA P
 													WHERE R.SUC_BAN          = A.SUC_BAN(+)
 													  AND R.NRO_AGEN           = A.NRO_AGEN(+)
 													  AND R.SUC_BAN            = S.ID_SUCURSAL(+)
 													  AND S.ID_PROVINCIA       = P.ID_PROVINCIA(+)
-													  AND R.ID_JUEGO           = ?
-													  AND R.SORTEO             = ?
+													  AND R.ID_JUEGO           = $id_juego
+													  AND R.SORTEO             = $sorteo
 													  AND R.AGENCIA            = 'S'
 													  AND (R.SUC_BAN_DEVUELVE IS NULL
 													        OR R.NRO_AGEN_DEVUELVE  IS NULL )
@@ -158,7 +158,7 @@ switch ($accion) {
 													        S.DESCRIPCION DESCRIPCION_SUCURSAL,
 														     Nvl((
 													        SELECT DECODE(COUNT(TI.BILLETE),$cantidad_fracciones,'SI','NO')
-													        FROM KANBAN.T_REPARTO_INTELIGENTE TI
+													        FROM KANBAN.T_REPARTO_INTELIGENTE@KANBAN_ANTICIPADA TI
 													        WHERE TI.BILLETE  = R.BILLETE
 													          AND TI.SORTEO   = R.SORTEO
 													          AND TI.ID_JUEGO = R.ID_JUEGO
@@ -166,10 +166,10 @@ switch ($accion) {
 													        GROUP BY BILLETE
 													      ),'NO') AS PARTICIPA_ENTERO,
 													      'VENTA CONTADO CASA CENTRAL' AS MODALIDAD
-													FROM KANBAN.T_REPARTO_INTELIGENTE R,
-													  GESTION.T_SUCURSAL S
-													WHERE R.ID_JUEGO      	= ?
-													  AND R.SORTEO          = ?
+													FROM KANBAN.T_REPARTO_INTELIGENTE@KANBAN_ANTICIPADA R,
+													  GESTION.T_SUCURSAL@KANBAN_ANTICIPADA S
+													WHERE R.ID_JUEGO      	= $id_juego
+													  AND R.SORTEO          = $sorteo
 													  AND R.SUC_BAN         = S.ID_SUCURSAL(+)
 													  AND R.VENTA_EMPLEADO IS NOT NULL
 													UNION
@@ -187,7 +187,7 @@ switch ($accion) {
 													        S.DESCRIPCION DESCRIPCION_SUCURSAL,
 													        Nvl((
 													        SELECT DECODE(COUNT(TI.BILLETE),$cantidad_fracciones,'SI','NO')
-													        FROM KANBAN.T_REPARTO_INTELIGENTE TI
+													        FROM KANBAN.T_REPARTO_INTELIGENTE@KANBAN_ANTICIPADA TI
 													        WHERE TI.BILLETE  = R.BILLETE
 													          AND TI.SORTEO   = R.SORTEO
 													          AND TI.ID_JUEGO = R.ID_JUEGO
@@ -196,33 +196,21 @@ switch ($accion) {
 													        GROUP BY BILLETE
 													      ),'NO') AS PARTICIPA_ENTERO,
 													       'VENTA CONTADO' AS MODALIDAD
-													FROM  KANBAN.T_REPARTO_INTELIGENTE R,
-													      GESTION.T_SUCURSAL S,
-													      GESTION.T_LOCALIDAD L,
-													      GESTION.T_PROVINCIA P
+													FROM  KANBAN.T_REPARTO_INTELIGENTE@KANBAN_ANTICIPADA R,
+													      GESTION.T_SUCURSAL@KANBAN_ANTICIPADA S,
+													      GESTION.T_LOCALIDAD@KANBAN_ANTICIPADA L,
+													      GESTION.T_PROVINCIA@KANBAN_ANTICIPADA P
 													WHERE R.SUC_BAN      = S.ID_SUCURSAL(+)
 													  AND S.ID_PROVINCIA   = P.ID_PROVINCIA(+)
 													  AND P.ID_PROVINCIA   = L.ID_PROVINCIA(+)
 													  AND L.DEFECTO(+)     = 1
-													  AND R.ID_JUEGO       = ?
-													  AND R.SORTEO         = ?
-													  AND R.VENTA_CONTADO IS NOT NULL)
+													  AND R.ID_JUEGO       = $id_juego
+													  AND R.SORTEO         = $sorteo
+													  AND R.VENTA_CONTADO IS NOT NULL
 										";
 
-            $rs_billetes_kanban = sql_kanban($sql_migrar_entero, array($id_juego, $sorteo, $id_juego, $sorteo, $id_juego, $sorteo));
-            $i                  = 0;
-            //die('EMMA'.$rs_billetes_kanban->RecordCount());
-            ComenzarTransaccion($db);
-            while ($row_billetes_kanban = siguiente_kanban($rs_billetes_kanban)) {
-                sql($row_billetes_kanban->EXEC);
-                $i += 1;
-                if ($i == 10000) {
-                    FinalizarTransaccion($db);
-                    ComenzarTransaccion($db);
-                    $i = 0;
-                }
-                //if ($i==10000) break;
-            }
+            sql($sql_migrar_entero);
+
             FinalizarTransaccion($db);
             //}
 

@@ -105,7 +105,7 @@ $pdf->SetX(24);
 $pdf->SetFont('Times', 'B', 8);
 $pdf->Cell(40, 5, 'PREMIO', 1, 0, 'C');
 $pdf->Cell(50, 5, 'CERTIFICADO', 1, 0, 'C');
-$pdf->Cell(50, 5, 'COMERCIALIZADO', 1, 1, 'C');
+$pdf->Cell(50, 5, 'ESTADO', 1, 1, 'C');
 
 while ($row_fraccion = $rs_fracciones->FetchNextObject($toupper = true)) {
     $pdf->SetX(24);
@@ -133,7 +133,17 @@ while ($row_fraccion = $rs_fracciones->FetchNextObject($toupper = true)) {
         $distribuido = utf8_decode($row_dist->DESCRIPCION_AGENCIA);
 
         $distribuido = str_pad($row_dist->ID_AGENCIA, 5, "0", STR_PAD_LEFT) . '-' . $distribuido . ' ' . str_pad($row_dist->ID_SUCURSAL, 2, "0", STR_PAD_LEFT) . '-' . $row_dist->DESCRIPCION_SUCURSAL . ' ' . $row_dist->PROVINCIA;
-
+        if ($row_dist->DESCRIPCION_AGENCIA == 'VENTA CONTADO CASA CENTRAL') {
+            $localidad   = $row_dist->PROVINCIA;
+            $distribuido = '09001 - ' . $row_dist->PROVINCIA . ', ' . $localidad;
+        } else if ($row_dist->DESCRIPCION_AGENCIA == 'VENTA CONTADO') {
+            if ($row_dist->ID_SUCURSAL == 1) {
+                $localidad = $row_dist->PROVINCIA;
+            } else {
+                $localidad = $row_dist->DESCRIPCION_SUCURSAL;
+            }
+            $distribuido = '09001 - ' . $row_dist->DESCRIPCION_SUCURSAL . ', ' . $localidad;
+        }
         $pdf->MultiCell(160, 5, 'Distribuido En:' . $distribuido, 0, 1);
     }
 
@@ -234,7 +244,7 @@ $pdf->SetX(24);
 $pdf->SetFont('Times', 'B', 8);
 $pdf->Cell(45, 5, 'PREMIO', 1, 0, 'C');
 $pdf->Cell(50, 5, 'BILLETE', 1, 0, 'C');
-$pdf->Cell(50, 5, 'COMERCIALIZADO', 1, 1, 'C');
+$pdf->Cell(50, 5, 'ESTADO', 1, 1, 'C');
 
 while ($row_fraccion = $rs_fracciones->FetchNextObject($toupper = true)) {
     $pdf->SetX(24);

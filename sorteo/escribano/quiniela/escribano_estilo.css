@@ -19,28 +19,28 @@ body {
 #zona2,
 #zona3,
 #escribano_resumen {
-    width: 1080px;
+    width: 1366px;
     height: 768px;
     margin: 0 auto;
     position: relative;
 }
 
 .escribano {
-    border: 0 solid #000000;
+border: 0 solid #000000;
     position: absolute;
     text-align: center;
-    left: 180px;
-    top: 699px;
+    left: 205px;
+    top: 702px;
     font-size: 20px;
     font-family: 'MyriadPro-Semibold';
 }
 
 .jefe {
-    border: 0 solid #000000;
+border: 0 solid #000000;
     position: absolute;
     text-align: center;
-    left: 796px;
-    top: 699px;
+    left: 1026px;
+    top: 702px;
     font-size: 20px;
     font-family: 'MyriadPro-Semibold';
 }
@@ -61,7 +61,7 @@ body {
 .nrosorteo {
 border: 0 solid #000000;
     font-size: 35px;
-    left: 456px;
+    left: 606px;
     position: absolute;
     text-align: center;
     top: 167px;
@@ -71,7 +71,7 @@ border: 0 solid #000000;
 .fechasorteo {
     border: 0 solid #000000;
     font-size: 22px;
-    left: 653px;
+    left: 874px;
     position: absolute;
     text-align: center;
     top: 176px;
@@ -81,7 +81,7 @@ border: 0 solid #000000;
 .lfechasorteo {
     border: 0 solid #000000;
     font-size: 20px;
-    left: 582px;
+    left: 782px;
     position: absolute;
     text-align: center;
     top: 178px;
@@ -93,7 +93,7 @@ border: 0 solid #000000;
 .horasorteo {
     border: 0 solid #000000;
     font-size: 22px;
-    left: 886px;
+    left: 1176px;
     position: absolute;
     text-align: center;
     top: 176px;
@@ -103,7 +103,7 @@ border: 0 solid #000000;
 .lhorasorteo {
 	border: 0 solid #000000;
     font-size: 20px;
-    left: 809px;
+    left: 1079px;
     position: absolute;
     text-align: center;
     top: 179px;
@@ -115,7 +115,7 @@ border: 0 solid #000000;
 .tipo_juego_lado {
     border: 0 solid #000000;
     font-size: 22px;
-    left: -103px;
+    left: -87px;
     position: absolute;
     text-align: center;
     top: 417px;
@@ -132,7 +132,7 @@ border: 0 solid #000000;
 .tipo_juego_lado_1 {
     border: 0 solid #000000;
     font-size: 22px;
-    left: 839px;
+    left: 1162px;
     position: absolute;
     text-align: center;
     top: 417px;
@@ -147,7 +147,7 @@ border: 0 solid #000000;
 */}
 
 #zona1 {
-    background-image: url(escribano_img/quiniela_1024_768.png);
+    background-image: url(escribano_img/quiniela_1366_768.png);
     background-repeat: no-repeat;
 }
 

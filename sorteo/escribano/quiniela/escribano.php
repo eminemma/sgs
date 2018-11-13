@@ -25,7 +25,7 @@
 								'01':	{
 											inicial:	{
 															top: '292px',
-															left: '200px'
+															left: '260px'
 														},
 											final:		{
 															height: '60px'
@@ -35,7 +35,7 @@
 								'02':	{
 											inicial:	{
 															top: '360px',
-															left: '200px'
+															left: '260px'
 														},
 											final:		{
 															height: '60px'
@@ -45,7 +45,7 @@
 								'03':	{
 											inicial:	{
 															top: '428px',
-															left: '200px'
+															left: '260px'
 														},
 											final:		{
 															height: '60px'
@@ -55,7 +55,7 @@
 								'04':	{
 											inicial:	{
 															top: '496px',
-															left: '200px'
+															left: '260px'
 														},
 											final:		{
 															height: '60px'
@@ -65,7 +65,7 @@
 								'05':	{
 											inicial:	{
 															top: '564px',
-															left: '200px'
+															left: '260px'
 														},
 											final:		{
 															height: '60px'
@@ -75,7 +75,7 @@
 								'06':	{
 											inicial:	{
 															top: '292px',
-															left: '425px'
+															left: '560px'
 														},
 											final:		{
 															height: '60px'
@@ -85,7 +85,7 @@
 								'07':	{
 											inicial:	{
 															top: '360px',
-															left: '425px'
+															left: '560px'
 														},
 											final:		{
 															height: '60px'
@@ -95,7 +95,7 @@
 								'08':	{
 											inicial:	{
 															top: '428px',
-															left: '425px'
+															left: '560px'
 														},
 											final:		{
 															height: '60px'
@@ -105,7 +105,7 @@
 								'09':	{
 											inicial:	{
 															top: '496px',
-															left: '425px'
+															left: '560px'
 														},
 											final:		{
 															height: '60px'
@@ -115,7 +115,7 @@
 								'10':	{
 											inicial:	{
 															top: '564px',
-															left: '425px'
+															left: '560px'
 														},
 											final:		{
 															height: '60px'
@@ -125,7 +125,7 @@
 								'11':	{
 											inicial:	{
 															top: '292px',
-															left: '650px'
+															left: '860px'
 														},
 											final:		{
 															height: '60px'
@@ -135,7 +135,7 @@
 								'12':	{
 											inicial:	{
 															top: '360px',
-															left: '650px'
+															left: '860px'
 														},
 											final:		{
 															height: '60px'
@@ -145,7 +145,7 @@
 								'13':	{
 											inicial:	{
 															top: '428px',
-															left: '650px'
+															left: '860px'
 														},
 											final:		{
 															height: '60px'
@@ -155,7 +155,7 @@
 								'14':	{
 											inicial:	{
 															top: '496px',
-															left: '650px'
+															left: '860px'
 														},
 											final:		{
 															height: '60px'
@@ -165,7 +165,7 @@
 								'15':	{
 											inicial:	{
 															top: '564px',
-															left: '650px'
+															left: '860px'
 														},
 											final:		{
 															height: '60px'
@@ -175,7 +175,7 @@
 								'16':	{
 											inicial:	{
 															top: '292px',
-															left: '875px'
+															left: '1160px'
 														},
 											final:		{
 															height: '60px'
@@ -185,7 +185,7 @@
 								'17':	{
 											inicial:	{
 															top: '360px',
-															left: '875px'
+															left: '1160px'
 														},
 											final:		{
 															height: '60px'
@@ -195,7 +195,7 @@
 								'18':	{
 											inicial:	{
 															top: '428px',
-															left: '875px'
+															left: '1160px'
 														},
 											final:		{
 															height: '60px'
@@ -205,7 +205,7 @@
 								'19':	{
 											inicial:	{
 															top: '496px',
-															left: '875px'
+															left: '1160px'
 														},
 											final:		{
 															height: '60px'
@@ -215,7 +215,7 @@
 								'20':	{
 											inicial:	{
 															top: '564px',
-															left: '875px'
+															left: '1160px'
 														},
 											final:		{
 															height: '60px'

@@ -18,14 +18,14 @@ body {
 #zona2,
 #zona3,
 #escribano_resumen {
-    width: 1080px;
+    width: 1366px;
     height: 768px;
     margin: 0 auto;
     position: relative;
 }
 
 #zona1 {
-    background-image: url(loteria_ordinaria_escribano_img/zona1_1024_768_02.png);
+    background-image: url(loteria_ordinaria_escribano_img/zona1_1366_768_03.png);
     background-repeat: no-repeat;
 }
 
@@ -283,15 +283,15 @@ body {
 
 #sorteo {
     top: 60px;
-    left: 621px;
+    left: 849px;
     position: absolute;
     font-size: 38px;
     font-family: 'MyriadPro-Semibold';
 }
 
 #fecha_sorteo {
-    top: 73px;
-    left: 740px;
+top: 73px;
+    left: 1007px;
     position: absolute;
     font-size: 20px;
     font-family: 'MyriadPro-Semibold';
@@ -299,7 +299,7 @@ body {
 
 #hora_sorteo {
     top: 72px;
-    left: 897px;
+    left: 1207px;
     position: absolute;
     font-size: 20px;
     font-family: 'MyriadPro-Semibold';
@@ -307,7 +307,7 @@ body {
 
 #premio1 {
     top: 145px;
-    left: 78px;
+    left: 157px;
     height: 134px;
     font-size: 25px;
     position: absolute;
@@ -316,8 +316,8 @@ body {
 }
 
 #premio2 {
-    top: 137px;
-    left: 477px;
+      top: 137px;
+    left: 667px;
     height: 134px;
     font-size: 21px;
     position: absolute;
@@ -326,8 +326,8 @@ body {
 }
 
 #premio3 {
-    top: 137px;
-    left: 754px;
+top: 137px;
+    left: 1044px;
     height: 134px;
     font-size: 21px;
     /* width: 402px; */
@@ -337,8 +337,8 @@ body {
 }
 
 #premio4 {
-    top: 265px;
-    left: 489px;
+top: 265px;
+    left: 669px;
     height: 134px;
     font-size: 21px;
     /* width: 402px; */
@@ -348,8 +348,8 @@ body {
 }
 
 #premio5 {
-    top: 265px;
-    left: 762px;
+top: 265px;
+    left: 1062px;
     height: 134px;
     font-size: 21px;
     /* width: 402px; */
@@ -360,7 +360,7 @@ body {
 
 #premio6 {
     top: 400px;
-    left: 45px;
+    left: 95px;
     height: 134px;
     font-size: 24px;
     position: absolute;
@@ -369,8 +369,8 @@ body {
 }
 
 #premio7 {
-    top: 401px;
-    left: 425px;
+top: 401px;
+    left: 615px;
     height: 134px;
     font-size: 24px;
     position: absolute;
@@ -380,7 +380,7 @@ body {
 
 #premio8 {
     top: 405px;
-    left: 848px;
+    left: 1158px;
     height: 134px;
     font-size: 13px;
     position: absolute;

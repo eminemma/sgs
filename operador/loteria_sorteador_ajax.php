@@ -281,11 +281,12 @@ if ($accion == 'control_ingreso') {
                 $fraccion    = (isset($fraccion) || empty($fraccion)) ? $fraccion : null;
                 //$db->debug=true;
                 /*        var_dump($siempre_sale);*/
-                $usuario        = 'DU' . $_SESSION['dni'];
-                $siempre_sale_p = 0;
+                $usuario      = 'DU' . $_SESSION['dni'];
+                $siempre_sale = 0;
                 if ($existe_posicion && $existe_bola) {
-                    $siempre_sale_p = ($siempre_sale == 'true') ? '1' : '0';
+                    $siempre_sale = ($siempre_sale == 'true') ? 1 : 0;
                 }
+
                 $cantidadGanadores = 0;
                 $stmt              = $db->PrepareSP("BEGIN SGS.PR_INGRESAR_NUMERO(:a1, :a2, :a3, :a4, :a5, :a6, :a7, :a8,:a9,:a10); END;");
                 $db->InParameter($stmt, $juego, 'a1');
@@ -295,7 +296,7 @@ if ($accion == 'control_ingreso') {
                 $db->InParameter($stmt, $posicion, 'a5');
                 $db->InParameter($stmt, $fraccion, 'a6');
                 $db->InParameter($stmt, $tipo_sorteo, 'a7');
-                $db->InParameter($stmt, $siempre_sale_p, 'a8');
+                $db->InParameter($stmt, $siempre_sale, 'a8');
                 $db->InParameter($stmt, $usuario, 'a9');
                 $db->OutParameter($stmt, $cantidadGanadores, 'a10');
                 $ok = $db->Execute($stmt);
@@ -307,7 +308,7 @@ if ($accion == 'control_ingreso') {
                  */
                 /*  $existe_posicion = false;
                 $existe_bola     = true;*/
-                if ($siempre_sale_p == '1') {
+                if ($siempre_sale == '1') {
 
                     //    Valido las bolas ingresadas de ambos usuarios si coinciden (LO HACE EL PROCEDURE)
                     //    Si coinciden grabo la extraccion (LO HACE EL PROCEDURE)
@@ -357,7 +358,7 @@ if ($accion == 'control_ingreso') {
                             sql("DELETE FROM sgs.TEMP_CTRL_INGRESO_NUMERO");
                         }
                     }
-                } else if ($siempre_sale_p == '0') {
+                } else if ($siempre_sale == '0') {
                     //    No afecta a siempre sale (JUEGO 2)
                     if (!$ok) {
                         $mensaje = array("mensaje" => "Error al insertar: " . $db->ErrorMsg(), "tipo" => "error");

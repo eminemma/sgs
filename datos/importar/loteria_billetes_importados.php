@@ -5,8 +5,9 @@
 include_once dirname(__FILE__) . '/../../db.php';
 require dirname(__FILE__) . '/../../sorteo/acta/header_listado.php';
 //require(dirname(__FILE__).'/../../librerias/pdf/fpdf.php');
-$sorteo   = $_SESSION['sorteo'];
-$id_juego = $_SESSION['id_juego'];
+$sorteo       = $_SESSION['sorteo'];
+$id_juego     = $_SESSION['id_juego'];
+$fecha_sorteo = null;
 try {
     $rs_modalidad = sql("	SELECT COUNT(*) AS CANTIDAD,MODALIDAD,to_char(min(FECHA_IMPORTACION),'dd/mm/yyyy hh24:mi:ss') as FECHA_IMPORTACION
 						FROM SGS.T_BILLETES_PARTICIPANTES
@@ -247,25 +248,23 @@ $rs              = sql('SELECT FRACCIONES FROM SGS.T_SORTEO WHERE SORTEO = ? AND
 $row_sorteo      = siguiente($rs);
 $cant_fracciones = (int) $row_sorteo->FRACCIONES;
 
-/*if ($_SESSION['juego_tipo'] == 'EXTRAORDINARIA') {
-try {
-
-$rs_enteros = sql("     SELECT
-COUNT(distinct billete) AS CANTIDAD
-FROM SGS.T_BILLETES_PARTICIPANTES
-WHERE SORTEO=?
-AND ID_JUEGO=?
-AND PARTICIPA_ENTERO='SI'
-", array($sorteo, $id_juego));
-} catch (exception $e) {
-die($db->ErrorMsg());
+if ($_SESSION['juego_tipo'] == 'EXTRAORDINARIA' && $fecha_sorteo == date('d/m/Y')) {
+    try {
+        $rs_enteros = sql(" SELECT
+                                COUNT(distinct billete) AS CANTIDAD
+                            FROM SGS.T_BILLETES_PARTICIPANTES
+                            WHERE SORTEO=?
+                            AND ID_JUEGO=?
+                            AND PARTICIPA_ENTERO='SI'", array($sorteo, $id_juego));
+    } catch (exception $e) {
+        die($db->ErrorMsg());
+    }
+    $row = $rs_enteros->FetchNextObject($toupper = true);
+    $pdf->ln(5);
+    $pdf->SetX(10);
+    $pdf->SetFont('Arial', 'B', 7);
+    $pdf->Cell(100, 4, 'CANTIDAD DE BILLETES QUE PARTICIPAN EN SORTEO POR ENTERO:', 1, 1, 'L', 1);
+    $pdf->SetFont('Arial', '', 7);
+    $pdf->Cell(100, 4, number_format($row->CANTIDAD, 0, ',', '.'), 1, 0, 'L');
 }
-$row = $rs_enteros->FetchNextObject($toupper = true);
-$pdf->ln(5);
-$pdf->SetX(10);
-$pdf->SetFont('Arial', 'B', 7);
-$pdf->Cell(100, 4, 'CANTIDAD DE BILLETES QUE PARTICIPAN EN SORTEO POR ENTERO:', 1, 1, 'L', 1);
-$pdf->SetFont('Arial', '', 7);
-$pdf->Cell(100, 4, number_format($row->CANTIDAD, 0, ',', '.'), 1, 0, 'L');
-}*/
 $pdf->Output();

@@ -115,9 +115,9 @@ if ($res->RecordCount() > 0) {
         $posicion = $row->POSICION;
 
         if ($row->DESCRIPCION_AGENCIA == 'VENTA CONTADO CASA CENTRAL') {
-            $localidad[] = 'VENTA CONTADO CASA CENTRAL, ' . $row->PROVINCIA;
+            $localidad[] = '09001 - ' . $row->PROVINCIA;
         } else if ($row->DESCRIPCION_AGENCIA == 'VENTA CONTADO') {
-            $localidad[] = 'VENTA CONTADO, ' . $row->PROVINCIA;
+            $localidad[] = '09001 - ' . $row->DESCRIPCION_SUCURSAL;
         } else {
             /*$localidad[] = utf8_encode(str_pad($row->ID_AGENCIA, 5, "0", STR_PAD_LEFT) . ' - ' . $row->DESCRIPCION_AGENCIA . ', ' . $row->LOCALIDAD . ', ' . $row->PROVINCIA);*/
             $localidad[] = str_pad($row->ID_AGENCIA, 5, "0", STR_PAD_LEFT) . ' - ' . $row->DESCRIPCION_AGENCIA . ', ' . $row->LOCALIDAD . ', ' . $row->PROVINCIA;

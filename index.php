@@ -7,6 +7,7 @@ if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.
 //$url = $protocolo . '://' . $_SERVER['SERVER_NAME'] . '/desa';
 {
     $url = $protocolo . '://' . $_SERVER['SERVER_NAME'] . '/app';
+    $url = $protocolo . '://' . $_SERVER['SERVER_NAME'] . '/';
 } else if ($_SERVER['SERVER_NAME'] == 'desa.loteriadecordoba.com.ar' || $_SERVER['SERVER_NAME'] == 'svn.loteriadecordoba.com.ar') {
     $url = $protocolo . '://' . $_SERVER['SERVER_NAME'] . '/';
 } else {
@@ -163,6 +164,9 @@ if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.
                                     <li><a href="#" onclick="p('sorteo/acta/loteria_acta_primer_premio.php');">Acta Primer Premio Extracto (Distribucion)</a></li>
                                     <li><a href="#" onclick="p('sorteo/acta/loteria_acta_primer_premio_solo.php');">Acta Primer Premio Extracto</a></li>
                                     <li><a href="#" onclick="p('sorteo/acta/loteria_acta_premios_extraordinarios.php');">Acta Premios Extraordinarios</a></li>
+                                    <li><a href="#" onclick="p('sorteo/acta/loteria_acta_premios_extraordinarios_ext.php');">Acta Premios Extraordinarios extendido</a></li>
+									
+									
                                     <li><a href="#" onclick="p('sorteo/acta/loteria_acta_cinco_primeros_premios.php');">Acta Cinco Primeras Extracciones</a></li>
                                     <li><a href="#" onclick="p('sorteo/acta/loteria_acta_final_zonas.php');">Acta Final Extracciones</a></li>
                                     <li class="divider"></li>
@@ -171,13 +175,13 @@ if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.
                                     <li><a href="#" onclick="p('sorteo/acta/loteria_informe_enteros_participantes.php');">Billetes Participantes del Sorteo de Entero</a></li>
                                     <li class="divider"></li>
 
-									<!--
+
 									<li class="nav-header">Actas Sale o Sale</li>
                                     <li><a href="#" onclick="p('sorteo/acta/loteria_acta_sale_o_sale.php');">Acta Extracciones Sale o Sale</a></li>
                                     <li><a href="#" onclick="p('sorteo/acta/loteria_acta_primer_premio_sale_sale.php');">Acta Primer Premio Sale o Sale</a></li>
                                     <li><a href="#" onclick="p('sorteo/acta/loteria_acta_primer_premio_sale_sale_s_det.php');">Acta Primer Premio Sale o Sale s/ Detalle</a></li>
                                     <li class="divider"></li>
-                                    -->
+
 
 									<li class="nav-header">Actas Incentivo</li>
                                     <li><a href="#" onclick="p('sorteo/acta/loteria_acta_incentivo_final.php');">Acta Final Incentivos</a></li>
