@@ -253,10 +253,10 @@ try {
 <?php
 if ($_SESSION['juego_tipo'] != 'ORDINARIA') {
     ?>
-                      <!--<li>
+                      <li>
                         <a href="#" class="segundo_juego" onclick="cambiar_juego(this.className); return false;">Sortea Hasta Que Sale</a>
                       </li>
-						-->
+
 					         <!--     <li>
                         <a href="#" class="cuarto_juego" onclick="cambiar_juego(this.className); return false;">Sorteo Extraordinario</a>
                       </li>
@@ -294,10 +294,12 @@ if ($_SESSION['juego_tipo'] != 'ORDINARIA') {
 ?>
 <?php
 if ($_SESSION['juego_tipo'] != 'ORDINARIA') {
-    ?>
-<!--                        <li>
-                        <a href="sorteo/escribano/escribano_resumen.php" target="_blank"><img src="img/icono_screen.png" width="19" height="19" border="0" style="vertical-align: middle;">(Sorteo)</a>
-                      </li> -->
+    ?>  <li>
+                        <a href="#" class="ver_siempre_sale" onclick="cambiar_juego(this.className); return false;"><img src="img/icono_screen.png" width="19" height="19" border="0" style="vertical-align: middle;">(Hasta que sale)</a>
+                      </li>
+                        <li>
+                        <!-- <a href="sorteo/escribano/escribano_resumen.php" target="_blank"><img src="img/icono_screen.png" width="19" height="19" border="0" style="vertical-align: middle;">(Sorteo)</a> -->
+                      </li>
 <?php
 }
 ?>

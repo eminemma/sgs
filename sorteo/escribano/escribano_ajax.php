@@ -97,7 +97,15 @@ $res = sql("SELECT
 				PROVINCIA,
 				DESCRIPCION_AGENCIA,
 				DESCRIPCION_SUCURSAL,
-				ID_SUCURSAL
+				ID_SUCURSAL,
+				(SELECT
+				COUNT(*)
+			FROM
+				sgs.T_EXTRACCION
+			WHERE
+					ID_JUEGO = ?
+				AND SORTEO = ?
+				AND ZONA_JUEGO = 2) AS EXTRACCIONES
 			FROM
 				sgs.T_GANADORES
 			WHERE
@@ -106,13 +114,14 @@ $res = sql("SELECT
 				AND ID_PREMIO_DESCRIPCION = 1
         GROUP BY BILLETE,ID_AGENCIA,ID_PREMIO_DESCRIPCION,LOCALIDAD,PROVINCIA,DESCRIPCION_AGENCIA,DESCRIPCION_SUCURSAL,ID_SUCURSAL
         ORDER BY ID_AGENCIA",
-    array($_SESSION['id_juego'], $_SESSION['sorteo']));
+    array($_SESSION['id_juego'], $_SESSION['sorteo'], $_SESSION['id_juego'], $_SESSION['sorteo']));
 
 if ($res->RecordCount() > 0) {
     $localidad = array();
     while ($row = siguiente($res)) {
-        $billete  = $row->BILLETE;
-        $posicion = $row->POSICION;
+        $billete      = $row->BILLETE;
+        $posicion     = $row->POSICION;
+        $extracciones = $row->EXTRACCIONES;
 
         if ($row->DESCRIPCION_AGENCIA == 'VENTA CONTADO CASA CENTRAL') {
             $localidad[] = '09001 - ' . $row->PROVINCIA;
@@ -127,6 +136,7 @@ if ($res->RecordCount() > 0) {
     $retorno['billetesZona3'][] = array('numero' => $billete,
         'posicion'                                   => $posicion,
         'localidad'                                  => $localidad,
+        'extracciones'                               => $extracciones,
     );
 }
 

@@ -43,7 +43,7 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
         </div> -->
 
 
-     <!--    <div id="primer_premio" style="background-image:url('escribano_img/primer_premio_4862.png');"></div> -->
+       <div id="primer_premio" style="background-image:url('escribano_img/primer_premio_4910.png');"></div>
 
 
         <div id="resultado_primer_premio" ></div>
@@ -138,8 +138,8 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
             var posicionZona1 = {
                 '01': {
                     inicial: {
-                        top: '288px',
-                        left: '329px'
+                        top: '280px',
+                        left: '340px'
                     },
                     final: {
                         height: '143px'
@@ -147,8 +147,8 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                 },
                 '02': {
                     inicial: {
-                        top: '517px',
-                        left: '190px'
+                        top: '514px',
+                        left: '193px'
                     },
                     final: {
                         height: '68px'
@@ -156,8 +156,8 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                 },
                 '03': {
                     inicial: {
-                        top: '517px',
-                        left: '470px'
+                        top: '514px',
+                        left: '478px'
                     },
                     final: {
                         height: '68px'
@@ -165,8 +165,8 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                 },
                 '04': {
                     inicial: {
-                        top: '700px',
-                        left: '190px'
+                        top: '697px',
+                        left: '193px'
                     },
                     final: {
                         height: '68px'
@@ -174,8 +174,8 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                 },
                 '05': {
                     inicial: {
-                        top: '700px',
-                        left: '470px'
+                        top: '697px',
+                        left: '478px'
                     },
                     final: {
                         height: '68px'
@@ -183,7 +183,7 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                 },
                 '06': {
                     inicial: {
-                        top: '198px',
+                        top: '191px',
                         left: '845px'
                     },
                     final: {
@@ -192,7 +192,7 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                 },
                 '07': {
                     inicial: {
-                        top: '245px',
+                        top: '241px',
                         left: '845px'
                     },
                     final: {
@@ -201,7 +201,7 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                 },
                 '08': {
                     inicial: {
-                        top: '290px',
+                        top: '288px',
                         left: '845px'
                     },
                     final: {
@@ -210,7 +210,7 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                 },
                 '09': {
                     inicial: {
-                        top: '340px',
+                        top: '336px',
                         left: '845px'
                     },
                     final: {
@@ -219,7 +219,7 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                 },
                 '10': {
                     inicial: {
-                        top: '389px',
+                        top: '386px',
                         left: '845px'
                     },
                     final: {
@@ -317,9 +317,9 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                     }
                 },
                 'progresion': {
-                    top: '330px',
+                    top: '325px',
                     left: '1000px',
-                    height: '60px'
+                    height: '65px'
                 }
             };
 
@@ -450,8 +450,8 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
             var posicionZona3 = {
                 '01': {
                     inicial: {
-                        top: '470px',
-                        left: '370px'
+                        top: '540px',
+                        left: '460px'
                     },
                     final: {
                         height: '230px'
@@ -531,7 +531,7 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                         }
 
                         if (zonaMostrando == 'zona1') {
-                            $('#primer_premio').fadeIn();
+                            //$('#primer_premio').fadeIn();
                             animarZona1(data);
                         } else if (zonaMostrando == 'zona2'){
 
@@ -598,12 +598,13 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                                     $('#resultado_primer_premio').fadeOut('slow',
                                         function() {
 //CODIGO PARA MOSTRAR GANADORES EN EL SORTEOS SALE O SALE
-                                            $('#primer_premio').css('background-image', '');
-/*                                            $('#resultado_primer_premio').css('background-size', '248px 63px');
-                                            $('#resultado_primer_premio').css('top', '246px');
+                                             $('#primer_premio').fadeOut();
+                                            $('#resultado_primer_premio').css('background-size', '248px 63px');
+                                            $('#resultado_primer_premio').css('top', '145px');
                                             $('#resultado_primer_premio').css('height', '62px');
-                                            $('#resultado_primer_premio').css('background-image', 'url(escribano_img/no_vendido_4862.png)');
-                                            $('#resultado_primer_premio').fadeIn();*/
+                                            $('#resultado_primer_premio').css('left', '211px');
+                                            $('#resultado_primer_premio').css('background-image', 'url(escribano_img/no_vendido_<?php echo $_SESSION['sorteo']; ?>.png)');
+                                            $('#resultado_primer_premio').fadeIn();
                                         }
                                     );
                                     $( "body").unbind( "keydown" );
@@ -612,17 +613,19 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                                     $('#resultado_primer_premio').fadeOut('slow',
                                         function() {
                                         //CODIGO PARA MOSTRAR GANADORES EN EL SORTEOS SALE O SALE
-/*                                            $('#resultado_primer_premio').css('background-size', '250px 50px');
-                                            $('#resultado_primer_premio').css('top', '279px');
+                                            $('#primer_premio').fadeOut();
+                                            $('#resultado_primer_premio').css('background-size', '250px 50px');
+                                            $('#resultado_primer_premio').css('top', '145px');
                                             $('#resultado_primer_premio').css('height', '50px');
-                                            $('#resultado_primer_premio').css('background-image', 'url(escribano_img/vendido_4862.png)');
-                                            $('#resultado_primer_premio').fadeIn();*/
+                                            $('#resultado_primer_premio').css('left', '211px');
+                                            $('#resultado_primer_premio').css('background-image', 'url(escribano_img/vendido_<?php echo $_SESSION['sorteo']; ?>.png)');
+                                            $('#resultado_primer_premio').fadeIn();
                                         }
                                     );
 
 
                                 //CODIGO PARA MOSTRAR GANADORES EN EL SORTEOS SALE O SALE
-                                   /*$("body").keydown(function(event) {
+                                   $("body").keydown(function(event) {
                                          if (event.ctrlKey && data.zonaMostrando == 'zona1') {
                                         clearInterval(tiempoPrimerPremio);
                                         setTimeout(function() { $('#ventana_primer_premio_vendido').fadeIn("slow"); }, 3000);
@@ -670,7 +673,7 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
 
 
                                         }
-                                    });*/
+                                    });
 
                                 }
 
@@ -712,7 +715,8 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                         if (indice == '01') {
                             $('#zona1 #progresion').remove();
                             $('#resultado_primer_premio').css('background-image','url()');
-                            $('#primer_premio').css('background-image','url(escribano_img/primer_premio_4862.png)');
+                            $('#primer_premio').fadeIn();
+                           // $('#primer_premio').css('background-image','url(escribano_img/primer_premio_4910.png)');
                         }
                     }
                 }
@@ -904,16 +908,15 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                     function() {
                         if (billetesZona3[this.posicion] == undefined || billetesZona3[this.posicion].numero != this.numero) {
                             billetesZona3[this.posicion] = this;
-                            crearAnimacionNuevoBillete(3, this, posicionZona3);
 
-                            //Localidad
-                            $('#zona3 #localidad').remove();
+                            if(this.extracciones != "0"){
+                                crearAnimacionNuevoBillete(3, this, posicionZona3);
 
-                            sortea_hasta_sale_ganadores = this['localidad'];
-
-                            intervalo_sortea_hasta_sale = setInterval("animarZona3Ganador();", 3000);
-
-
+                                //Localidad
+                                $('#zona3 #localidad').remove();
+                                sortea_hasta_sale_ganadores = this['localidad'];
+                                intervalo_sortea_hasta_sale = setInterval("animarZona3Ganador();", 3000);
+                            }
 
 
                             return false;
@@ -945,7 +948,7 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
 
                 $('#zona3 #localidad').remove();
                 if(sortea_hasta_sale_ganadores[sortea_hasta_sale_resumenContador] != undefined){
-                    var estilo = { top: '315px', left: '730px', width: '230px', height: '300px', 'font-size': '30px', 'text-align': 'left' };
+                    var estilo = { top: '500px', left: '940px', width: '230px', height: '220px', 'font-size': '30px', 'text-align': 'left' };
                     var elemento = $('<span id="localidad" class="billete">' + sortea_hasta_sale_ganadores[sortea_hasta_sale_resumenContador] + '<br> </span>').css(estilo);
                     $('#zona3').append(elemento);
 

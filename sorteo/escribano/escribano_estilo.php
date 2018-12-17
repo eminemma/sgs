@@ -1,8 +1,7 @@
 <?php
 session_start();
 header("Content-type: text/css; charset: UTF-8");
-?>
-@font-face {
+?>@font-face {
     font-family: 'MyriadPro-Bold';
     src: url('../../fonts/MyriadPro-Bold.ttf');
 }
@@ -124,8 +123,8 @@ font-size: 21px;
 
 #primer_premio_resumen{
     background-size: 338px 77px;
-    top: 184px;
-    left: 112px;
+    top: 138px;
+    left: 162px;
     position: absolute;
     width: 338px;
     height: 72px;
@@ -149,152 +148,132 @@ display: block;
 
 #bola01{
     font-size: 144px;
-    left: 79px;
+    left: 139px;
     position: absolute;
-    top: 219px;
+    top: 195px;
 }
 
 #progresion{
-    top: 347px;
-    left: 884px;
+    top: 312px;
+    left: 1063px;
     position: absolute;
-    font-size: 48px;
+    font-size: 72px;
     font-family: 'MyriadPro-Bold';
 }
 
 
 #bola02{
-    top: 470px;
-    left: 89px;
+    top: 474px;
+    left: 101px;
     position: absolute;
-    font-size: 47px;
+    font-size: 67px;
 }
 
 #bola03{
     top: 473px;
-    left: 335px;
+    left: 387px;
     position: absolute;
-    font-size: 47px;
+    font-size: 67px;
 }
 
 #bola04{
-    top: 593px;
-    left: 87px;
+    top: 657px;
+    left: 103px;
     position: absolute;
-    font-size: 47px;
+    font-size: 67px;
 }
 
 #bola05{
-    top: 592px;
-    left: 333px;
+    top: 657px;
+    left: 389px;
     position: absolute;
-    font-size: 47px;
+    font-size: 67px;
 }
 
 #bola06{
-    top: 206px;
-    left: 642px;
+    top: 163px;
+    left: 782px;
     position: absolute;
-    font-size: 32px;
+    font-size: 48px;
 }
 
-#bola07{
-top: 243px;
-    left: 644px;
-    position: absolute;
-    font-size: 32px;
-}
+#bola07{top: 213px;left: 782px;position: absolute;font-size: 48px;}
 
 #bola08{
-    top: 280px;
-    left: 643px;
+    top: 260px;
+    left: 782px;
     position: absolute;
-    font-size: 32px;
+    font-size: 48px;
 }
 
 #bola09{
-    top: 317px;
-    left: 642px;
+    top: 307px;
+    left: 782px;
     position: absolute;
-    font-size: 32px;
+    font-size: 48px;
 }
 
 #bola10{
     top: 354px;
-    left: 642px;
+    left: 782px;
     position: absolute;
-    font-size: 32px;
+    font-size: 48px;
 }
 
 
-#bola11{
-top: 456px;
-    left: 639px;
-    position: absolute;
-    font-size: 32px;
-}
+#bola11{top: 494px;left: 769px;position: absolute;font-size: 48px;}
 
 #bola12{
- top: 497px;
-    left: 639px;
-    position: absolute;
-    font-size: 32px;
+ top: 541px;
+ left: 769px;
+ position: absolute;
+ font-size: 48px;
 }
 
 #bola13{
-    top: 538px;
-    left: 639px;
+    top: 588px;
+    left: 769px;
     position: absolute;
-    font-size: 32px;
+    font-size: 48px;
 }
 
 #bola14{
-    top: 579px;
-    left: 639px;
+    top: 639px;
+    left: 769px;
     position: absolute;
-    font-size: 32px;
+    font-size: 48px;
 }
 
-#bola15{
-top: 619px;
-    left: 638px;
-    position: absolute;
-    font-size: 32px;
-}
+#bola15{top: 689px;left: 768px;position: absolute;font-size: 48px;}
 
-#bola16{
-top: 457px;
-    left: 856px;
-    position: absolute;
-    font-size: 32px;
-}
+#bola16{top: 492px;left: 1066px;position: absolute;font-size: 48px;}
 
 #bola17{
-    top: 498px;
-    left: 856px;
+    top: 541px;
+    left: 1066px;
     position: absolute;
-    font-size: 32px;
+    font-size: 48px;
 }
 
 #bola18{
-    top: 540px;
-    left: 856px;
+    top: 590px;
+    left: 1066px;
     position: absolute;
-    font-size: 32px;
+    font-size: 48px;
 }
 
 #bola19{
-    top: 580px;
-    left: 856px;
+    top: 640px;
+    left: 1066px;
     position: absolute;
-    font-size: 32px;
+    font-size: 48px;
 }
 
 #bola20{
-    top: 621px;
-    left: 856px;
+    top: 687px;
+    left: 1066px;
     position: absolute;
-    font-size: 32px;
+    font-size: 48px;
 }
 
 #bola21{
