@@ -501,6 +501,8 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
 			var intervalo_para_aleatorio_26 = null;
 			var flag_intervalo_para_aleatorio_26 = false;
 
+            var intervalPrimeroPremio = null;
+
             var primerElementoZona4 = null;
             var ultimoElementoZona4 = null;
 
@@ -613,13 +615,14 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                                     $('#resultado_primer_premio').fadeOut('slow',
                                         function() {
                                         //CODIGO PARA MOSTRAR GANADORES EN EL SORTEOS SALE O SALE
-                                            $('#primer_premio').fadeOut();
+                                            /*$('#primer_premio').fadeOut();
                                             $('#resultado_primer_premio').css('background-size', '250px 50px');
                                             $('#resultado_primer_premio').css('top', '145px');
                                             $('#resultado_primer_premio').css('height', '50px');
                                             $('#resultado_primer_premio').css('left', '211px');
                                             $('#resultado_primer_premio').css('background-image', 'url(escribano_img/vendido_<?php echo $_SESSION['sorteo']; ?>.png)');
-                                            $('#resultado_primer_premio').fadeIn();
+                                            $('#resultado_primer_premio').fadeIn();*/
+                                            mostrarPrimerPremio();
                                         }
                                     );
 
@@ -716,6 +719,7 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                             $('#zona1 #progresion').remove();
                             $('#resultado_primer_premio').css('background-image','url()');
                             $('#primer_premio').fadeIn();
+                            clearInterval(intervalPrimeroPremio);
                            // $('#primer_premio').css('background-image','url(escribano_img/primer_premio_4910.png)');
                         }
                     }
@@ -1180,6 +1184,27 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                         clearInterval(tiempoPrimerPremio);
                     }
                 }, 1000);
+            }
+
+            function mostrarPrimerPremio(){
+                primer_premio = true;
+                intervalPrimeroPremio = setInterval(function(data){
+                    if(primer_premio == true){
+                        $('#primer_premio').fadeOut();
+                        $('#resultado_primer_premio').css('background-size', '250px 50px');
+                        $('#resultado_primer_premio').css('top', '145px');
+                        $('#resultado_primer_premio').css('height', '50px');
+                        $('#resultado_primer_premio').css('left', '211px');
+                        $('#resultado_primer_premio').css('background-image', 'url(escribano_img/vendido_<?php echo $_SESSION['sorteo']; ?>.png)');
+                        $('#resultado_primer_premio').fadeIn();
+                        primer_premio = false;
+                    }else{
+                        $('#primer_premio').fadeIn();
+                        $('#resultado_primer_premio').fadeOut();
+                        primer_premio = true;
+                    }
+                },2000);
+
             }
 
 

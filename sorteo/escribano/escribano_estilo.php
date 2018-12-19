@@ -38,6 +38,7 @@ font-size: 21px;
     top: 16px;
 
 }
+
 #fecha_sorteo_resumen{
     font-size: 16px;
     left: 260px;
@@ -113,11 +114,11 @@ font-size: 21px;
 }
 
 #primer_premio{
-    background-size: 303px 60px;
-    top: 224px;
-    left: 129px;
+    background-size: 319px 60px;
+    top: 142px;
+    left: 169px;
     position: absolute;
-    width: 305px;
+    width: 319px;
     height: 60px;
 }
 
