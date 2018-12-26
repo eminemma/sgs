@@ -56,7 +56,47 @@ $res = sql("SELECT
     array($_SESSION['id_juego'], $_SESSION['sorteo']));
 
 while ($row = siguiente($res)) {
-    $retorno['billetesZona1'][] = array('numero' => $row->NUMERO, 'posicion' => $row->POSICION, 'vendido' => $row->VENDIDO);
+    if ($row->POSICION == '01') {
+        $res_ag = sql("SELECT
+
+				LPAD(BILLETE, 5, 0) AS BILLETE,
+				--LPAD(FRACCION, 2, 0) AS FRACCION,
+				LPAD(ID_AGENCIA, 4, 0) AS ID_AGENCIA,
+				LPAD(ID_PREMIO_DESCRIPCION, 2, 0) AS POSICION,
+				LOCALIDAD,
+				PROVINCIA,
+				DESCRIPCION_AGENCIA,
+				DESCRIPCION_SUCURSAL,
+				ID_SUCURSAL
+			FROM
+				sgs.T_GANADORES
+			WHERE
+					ID_JUEGO = ?
+				AND SORTEO = ?
+				AND ID_PREMIO_DESCRIPCION = 1
+        GROUP BY BILLETE,ID_AGENCIA,ID_PREMIO_DESCRIPCION,LOCALIDAD,PROVINCIA,DESCRIPCION_AGENCIA,DESCRIPCION_SUCURSAL,ID_SUCURSAL
+        ORDER BY ID_AGENCIA",
+            array($_SESSION['id_juego'], $_SESSION['sorteo']));
+
+        $localidad = array();
+        while ($row_ag = siguiente($res_ag)) {
+
+            if ($row_ag->DESCRIPCION_AGENCIA == 'VENTA CONTADO CASA CENTRAL') {
+                $localidad[] = '09001 - ' . $row_ag->PROVINCIA;
+            } else if ($row_ag->DESCRIPCION_AGENCIA == 'VENTA CONTADO') {
+                $localidad[] = '09001 - ' . $row_ag->DESCRIPCION_SUCURSAL;
+            } else {
+                /*$localidad[] = utf8_encode(str_pad($row->ID_AGENCIA, 5, "0", STR_PAD_LEFT) . ' - ' . $row->DESCRIPCION_AGENCIA . ', ' . $row->LOCALIDAD . ', ' . $row->PROVINCIA);*/
+                $localidad[] = str_pad($row_ag->ID_AGENCIA, 5, "0", STR_PAD_LEFT) . ' - ' . $row_ag->DESCRIPCION_AGENCIA . ', ' . $row_ag->LOCALIDAD . ', ' . $row_ag->PROVINCIA;
+            }
+        }
+
+        $retorno['billetesZona1'][] = array('numero' => $row->NUMERO, 'posicion' => $row->POSICION, 'vendido' => $row->VENDIDO, 'localidad' => $localidad);
+
+    } else {
+        $retorno['billetesZona1'][] = array('numero' => $row->NUMERO, 'posicion' => $row->POSICION, 'vendido' => $row->VENDIDO);
+    }
+
 }
 
 /**

@@ -629,13 +629,13 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
 
                                 //CODIGO PARA MOSTRAR GANADORES EN EL SORTEOS SALE O SALE
                                    $("body").keydown(function(event) {
-                                         if (event.ctrlKey && data.zonaMostrando == 'zona1') {
+                                        if (event.ctrlKey && data.zonaMostrando == 'zona1') {
                                         clearInterval(tiempoPrimerPremio);
                                         setTimeout(function() { $('#ventana_primer_premio_vendido').fadeIn("slow"); }, 3000);
 
                                         var j = 0;
 
-                                        $(data.billetesZona3).each(
+                                        $(data.billetesZona1).each(
 
                                             function() {
                                                 $( "#ganadores_primer_premio" ).removeClass( "w3-xlarge w3-large w3-tiny" );
