@@ -638,26 +638,26 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                                         $(data.billetesZona1).each(
 
                                             function() {
-                                                $( "#ganadores_primer_premio" ).removeClass( "w3-xlarge w3-large w3-tiny" );
-                                                if(this['localidad'].length<=6){
-                                                    $( "#ganadores_primer_premio" ).addClass( "w3-xlarge" );
+                                                if(this['posicion'] == '01' && this['vendido'] == 'SI'){
+                                                    $( "#ganadores_primer_premio" ).removeClass( "w3-xlarge w3-large w3-tiny" );
+                                                    if(this['localidad'].length<=6){
+                                                        $( "#ganadores_primer_premio" ).addClass( "w3-xlarge" );
+                                                    }
+                                                    if(this['localidad'].length>6 && this['localidad'].length<=12){
+                                                        $( "#ganadores_primer_premio" ).addClass( "w3-large" );
+                                                    }
+                                                    if(this['localidad'].length > 12){
+                                                        $( "#ganadores_primer_premio" ).css("font-size" ,"17px!important" );
+                                                    }
+
+                                                    $('#ganadores_primer_premio > tbody').empty();
+                                                    for (j = 0; j < this['localidad'].length; j++) {
+                                                        var elemento = '<tr><td>' + this['localidad'][j] + '</td></tr>';
+                                                        $('#ganadores_primer_premio > tbody').append(elemento);
+
+                                                    }
+
                                                 }
-                                                if(this['localidad'].length>6 && this['localidad'].length<=12){
-                                                    $( "#ganadores_primer_premio" ).addClass( "w3-large" );
-                                                }
-                                                if(this['localidad'].length > 12){
-                                                    $( "#ganadores_primer_premio" ).css("font-size" ,"17px!important" );
-                                                }
-
-                                                $('#ganadores_primer_premio > tbody').empty();
-                                                for (j = 0; j < this['localidad'].length; j++) {
-                                                    var elemento = '<tr><td>' + this['localidad'][j] + '</td></tr>';
-                                                    $('#ganadores_primer_premio > tbody').append(elemento);
-
-                                                }
-
-
-
                                             }
                                         );
 
