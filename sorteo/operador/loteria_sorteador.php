@@ -251,12 +251,15 @@ try {
                       <li class="divider-vertical"></li>
 
 <?php
-if ($_SESSION['juego_tipo'] != 'ORDINARIA') {
+if ($_SESSION['juego_tipo'] != 'ORDINARIA' && $_SESSION['sale_o_sale'] == 'SI') {
     ?>
                       <li>
                         <a href="#" class="segundo_juego" onclick="cambiar_juego(this.className); return false;">Sortea Hasta Que Sale</a>
                       </li>
-
+<?php
+}
+if ($_SESSION['juego_tipo'] != 'ORDINARIA') {
+    ?>
 					         <!--     <li>
                         <a href="#" class="cuarto_juego" onclick="cambiar_juego(this.className); return false;">Sorteo Extraordinario</a>
                       </li>
@@ -293,7 +296,7 @@ if ($_SESSION['juego_tipo'] != 'ORDINARIA') {
 }
 ?>
 <?php
-if ($_SESSION['juego_tipo'] != 'ORDINARIA') {
+if ($_SESSION['juego_tipo'] != 'ORDINARIA' && $_SESSION['sale_o_sale'] == 'SI') {
     ?>  <li>
                         <a href="#" class="ver_siempre_sale" onclick="cambiar_juego(this.className); return false;"><img src="img/icono_screen.png" width="19" height="19" border="0" style="vertical-align: middle;">(Hasta que sale)</a>
                       </li>

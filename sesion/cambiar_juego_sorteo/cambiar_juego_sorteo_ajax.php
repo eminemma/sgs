@@ -156,6 +156,22 @@ getPaginadorLinks('#contenedor_sorteos');
     $_SESSION['serie']              = 1;
     $_SESSION['descripcion_sorteo'] = 'EXTRAORDINARIO';
     $_SESSION['juego_tipo']         = $_GET['tipo_juego'];
+    $_SESSION['sale_o_sale']        = 'NO';
+
+    $sql = "	SELECT COUNT(*) AS CANTIDAD
+				FROM 	SGS.T_SORTEO TS,
+ 						SGS.T_PROGRAMA_PREMIOS TPP
+				WHERE       TS.SORTEO     	=  ?
+					AND 	TS.ID_JUEGO     =  ?
+					AND 	TPP.ID_PROGRAMA = TS.ID_PROGRAMA
+				GROUP BY 	TPP.SALE_O_SALE
+				HAVING 		 UPPER(TPP.SALE_O_SALE) = 'SI'";
+    $res = sql($sql, array($_SESSION['sorteo'], $_SESSION['id_juego']));
+    var_dump($res->RecordCount());
+    if ($res->RecordCount() > 0) {
+        $_SESSION['sale_o_sale'] = 'SI';
+    }
+
 }
 
 //var_dump($_SESSION);

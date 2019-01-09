@@ -43,7 +43,7 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
         </div> -->
 
 
-       <div id="primer_premio" style="background-image:url('escribano_img/primer_premio_4910.png');"></div>
+      <!--  <div id="primer_premio" style="background-image:url('escribano_img/primer_premio_4910.png');"></div> -->
 
 
         <div id="resultado_primer_premio" ></div>
@@ -139,7 +139,7 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                 '01': {
                     inicial: {
                         top: '280px',
-                        left: '340px'
+                        left: '328px'
                     },
                     final: {
                         height: '143px'
@@ -593,13 +593,13 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
 
                             crearAnimacionNuevoBillete(1, this, posicionZona1);
 
-                            if (this.posicion == '01') {
+                            if (this.posicion == '01' && this.sale_o_sale == 'SI') {
 
                                 if (billetesZona1[this.posicion].vendido == 'NO') {
 
                                     $('#resultado_primer_premio').fadeOut('slow',
                                         function() {
-//CODIGO PARA MOSTRAR GANADORES EN EL SORTEOS SALE O SALE
+                                            //CODIGO PARA MOSTRAR GANADORES EN EL SORTEOS SALE O SALE
                                              $('#primer_premio').fadeOut();
                                             $('#resultado_primer_premio').css('background-size', '248px 63px');
                                             $('#resultado_primer_premio').css('top', '145px');
@@ -682,7 +682,11 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
 
 
 
-                                $('#zona1 #progresion').remove();
+
+                            }
+
+                            if (this.posicion == '01'){
+                                 $('#zona1 #progresion').remove();
 
                                 var estilo = posicionZona1['progresion'];
                                 estilo.width = getAnchoByAlto(estilo.height);

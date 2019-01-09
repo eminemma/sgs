@@ -43,7 +43,15 @@ $res = sql("SELECT
 				LPAD(NUMERO, 5, 0) AS NUMERO,
 				LPAD(POSICION, 2, 0) AS POSICION,
         		(	SELECT decode(COUNT(*),0,'NO','SI')
-        			FROM sgs.T_BILLETES_PARTICIPANTES WHERE ID_JUEGO=te.id_juego and SORTEO=te.sorteo and billete=te.numero) AS VENDIDO
+        			FROM sgs.T_BILLETES_PARTICIPANTES WHERE ID_JUEGO=te.id_juego and SORTEO=te.sorteo and billete=te.numero) AS VENDIDO,
+				(	SELECT
+  						TPP.SALE_O_SALE
+					FROM T_SORTEO TS,T_PROGRAMA_PREMIOS TPP
+					WHERE
+						TS.SORTEO 		   = TE.SORTEO
+					AND TS.ID_JUEGO 	   = TE.ID_JUEGO
+					AND TPP.ID_PROGRAMA    = TS.ID_PROGRAMA
+					AND TPP.ID_DESCRIPCION = TE.POSICION) AS SALE_O_SALE
 
 			FROM
 				sgs.T_EXTRACCION te
@@ -91,7 +99,7 @@ while ($row = siguiente($res)) {
             }
         }
 
-        $retorno['billetesZona1'][] = array('numero' => $row->NUMERO, 'posicion' => $row->POSICION, 'vendido' => $row->VENDIDO, 'localidad' => $localidad);
+        $retorno['billetesZona1'][] = array('numero' => $row->NUMERO, 'posicion' => $row->POSICION, 'sale_o_sale' => strtoupper($row->SALE_O_SALE), 'vendido' => $row->VENDIDO, 'localidad' => $localidad);
 
     } else {
         $retorno['billetesZona1'][] = array('numero' => $row->NUMERO, 'posicion' => $row->POSICION, 'vendido' => $row->VENDIDO);
