@@ -1,4 +1,5 @@
 <?php
+//eee
 session_start();
 
 $protocolo = isset($_SERVER['HTTPS']) ? 'https' : 'http';
