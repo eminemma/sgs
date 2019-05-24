@@ -12,7 +12,7 @@
 
 <body>
     <div id="incentivo">
-       <!--  <div id="sorteo"></div> -->
+        <div id="sorteo"></div>
         <div id="fecha_sorteo"></div>
         <div id="orden"></div>
         <div id="premio"></div>
@@ -32,7 +32,7 @@
         <div id="jefe_sorteo_d"></div> -->
     </div>
     <div id="resumen">
-        <!-- <div id="sorteo_r"></div> -->
+        <div id="sorteo_r"></div>
         <div id="fecha_sorteo_r"></div>
 <!--         <div id="escribano_r"></div>
         <div id="jefe_sorteo_r"></div> -->
@@ -64,7 +64,7 @@
                         $('#resumen').css("background-image", "url(escribano_img/gordo_navidad_2018_semana1_resumen.jpg)");
                         break;
                     default:
-                     $('#incentivo').css("background-image", "url(escribano_img/gordo_navidad_2018_semana1_blanco.jpg)");
+                     $('#incentivo').css("background-image", "url(escribano_img/gordo_invierno_2019_semana1_blanco.jpg)");
                         break;
                 }
 
@@ -105,11 +105,11 @@
                 aleatorio = data.cantFracciones;
                 switch (incentivoMostrando) {
                      case ('resumen'):
-                        $('#resumen').css("background-image", "url(escribano_img/gordo_navidad_2018_semana1_resumen.jpg)");
+                        $('#resumen').css("background-image", "url(escribano_img/gordo_invierno_2019_semana1_resumen.jpg)");
                         mostrar_resumen(data);
                         break;
                     default:
-                     $('#incentivo').css("background-image", "url(escribano_img/gordo_navidad_2018_semana1_blanco.jpg)");
+                     $('#incentivo').css("background-image", "url(escribano_img/gordo_invierno_2019_semana1_blanco.jpg)");
                      buscar_ganador(data);
                         break;
                 }
@@ -161,8 +161,8 @@
 
             $('#nombre_d').html(data.datosIncentivo[0].nombre);
 
-            $('#billete_d').html(data.datosIncentivo[0].billete);
-            $('#fraccion_d').html(data.datosIncentivo[0].fraccion);
+            $('#aleatorio_entero').html(data.datosIncentivo[0].billete);
+            $('#aleatorio_fraccion').html(data.datosIncentivo[0].fraccion);
 
             if (data.datosIncentivo[0].nombre == 'VENTA CONTADO CASA CENTRAL') {
                 $('#agencia').html('9001');

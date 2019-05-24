@@ -43,15 +43,15 @@ body {
 }
 
 #aleatorio_entero {
-    top: 376px;left: 217px;
+    top: 436px;left: 217px;
     position: absolute;
     text-align: center;
     font-size: 97px;
 }
 
 #aleatorio_fraccion {
-    top: 375px;
-    left: 617px;
+    top: 438px;
+    left: 585px;
     position: absolute;
     text-align: center;
     font-size: 97px;
@@ -65,17 +65,17 @@ body {
 }
 
 #agencia {
-    top: 540px;
+    top: 590px;
     left: 124px;
     position: absolute;
     font-size: 43px;
     text-align: center;
 }
 
-#nombre_d {top: 540px;left: 217px;position: absolute;font-size: 43px;text-align: center;}
+#nombre_d {top: 590px;left: 217px;position: absolute;font-size: 43px;text-align: center;}
 
 #localidad_d {
-    top: 655px;
+    top: 695px;
     left: 131px;
     position: absolute;
     font-size: 43px;
@@ -140,12 +140,12 @@ body {
 
 #orden {
     position: absolute;
-    top: 240px;
-    left: 140px;
+       top: 326px;
+    left: 171px;
     font-size: 59px;
 }
 
-#ganadores {position: absolute;top: 140px;left: 140px;}
+#ganadores {position: absolute;top: 139px;left: 140px;}
 
 .billete {
     width: 108px;
@@ -165,8 +165,8 @@ body {
 }
 .premio_r{width: 165px;font-size: 14px;float: left;text-align: center;line-height: 18px;padding-top: 4px;/* border: 1px solid; */}
 .ganador {
-    height: 52px;
-    line-height: 46px;
+    height: 74px;
+    /* line-height: 46px; */
     vertical-align: middle;
     /* border: 1px solid #020202; */
     margin-bottom: 4px;
@@ -185,14 +185,14 @@ body {
 
 #sorteo_r{
     position: absolute;
-    top: 223px;
+    top: 216px;
     left: 1068px;
     font-size: 29px;
 }
 
 #fecha_sorteo_r{
     position: absolute;
-    top: 58px;
+    top: 51px;
     left: 686px;
     font-size: 32px;
 }
@@ -248,7 +248,7 @@ position: absolute;
 }
 #premio{
     position: absolute;
-    top: 243px;
+    top: 331px;
     left: 297px;
     font-size: 21px;
     width: 452px;
@@ -258,7 +258,7 @@ position: absolute;
 
 #fecha_sorteo{
  position: absolute;
- left: 786px;
- top: 100px;
+ left: 589px;
+ top: 235px;
  font-size: 32px;
 }
