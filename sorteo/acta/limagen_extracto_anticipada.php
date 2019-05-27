@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 include_once dirname(__FILE__) . '/../../db.php';
 conectar_db();
 
