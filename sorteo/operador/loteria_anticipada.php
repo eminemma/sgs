@@ -10,7 +10,7 @@ if (!isset($_SESSION['sorteo'])) {
 $protocolo = isset($_SERVER['HTTPS']) ? 'https' : 'http';
 
 if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.0.1') {
-    $url = $protocolo . '://' . $_SERVER['SERVER_NAME'] . '/app/';
+    $url = $protocolo . '://' . $_SERVER['SERVER_NAME'] . '/desa/';
 } else if ($_SERVER['SERVER_NAME'] == 'desa.loteriadecordoba.com.ar' || $_SERVER['SERVER_NAME'] == 'svn.loteriadecordoba.com.ar' || $_SERVER['SERVER_NAME'] == 'desa.local') {
     $url = $protocolo . '://' . $_SERVER['SERVER_NAME'] . '/';
 } else {

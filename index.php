@@ -6,8 +6,7 @@ $protocolo = isset($_SERVER['HTTPS']) ? 'https' : 'http';
 if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.0.1' || $_SERVER['SERVER_NAME'] == 'desa.local')
 //$url = $protocolo . '://' . $_SERVER['SERVER_NAME'] . '/desa';
 {
-    $url = $protocolo . '://' . $_SERVER['SERVER_NAME'] . '/app';
-    $url = $protocolo . '://' . $_SERVER['SERVER_NAME'] . '/';
+    $url = $protocolo . '://' . $_SERVER['SERVER_NAME'] . '/desa';
 } else if ($_SERVER['SERVER_NAME'] == 'desa.loteriadecordoba.com.ar' || $_SERVER['SERVER_NAME'] == 'svn.loteriadecordoba.com.ar') {
     $url = $protocolo . '://' . $_SERVER['SERVER_NAME'] . '/';
 } else {
@@ -165,8 +164,8 @@ if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.
                                     <li><a href="#" onclick="p('sorteo/acta/loteria_acta_primer_premio_solo.php');">Acta Primer Premio Extracto</a></li>
                                     <li><a href="#" onclick="p('sorteo/acta/loteria_acta_premios_extraordinarios.php');">Acta Premios Extraordinarios</a></li>
                                     <li><a href="#" onclick="p('sorteo/acta/loteria_acta_premios_extraordinarios_ext.php');">Acta Premios Extraordinarios extendido</a></li>
-									
-									
+
+
                                     <li><a href="#" onclick="p('sorteo/acta/loteria_acta_cinco_primeros_premios.php');">Acta Cinco Primeras Extracciones</a></li>
                                     <li><a href="#" onclick="p('sorteo/acta/loteria_acta_final_zonas.php');">Acta Final Extracciones</a></li>
                                     <li class="divider"></li>
