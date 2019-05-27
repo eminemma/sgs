@@ -116,7 +116,7 @@ $pdf->SetFont('Arial', 'B', 10);
 $pdf->Cell(0, 7, $texto_sorteo . ' SORTEO (' . $fecha . ')', 0, 1, 'C');
 
 $pdf->SetFont('Arial', '', 10);
-$pdf->MultiCell(0, 7, utf8_decode('En la Ciudad de Córdoba, Capital de la Provincia del mismo nombre, República Argentina, a los ' . $dia . ' días del mes de ' . $mes . ' del año ' . date('Y', strtotime(str_replace('/', '-', $row->FECHA_SORTEO))) . ', se reúnen en Salón de Sorteos de Lotería de la Provincia de Córdoba, sita en calle 27 de Abril 185 de ésta Ciudad, el Sr/a. Jefe de Sorteo ' . $jefe_sorteo . ' y el Escribano/a ' . $escribano . ', a efectos de la realización del ' . $texto_sorteo . ' SORTEO por Compra Anticipada de Billetes de Lotería correspondientes a la Emisión Nº ' . $_SESSION['sorteo'] . ' "Gordo de Navidad 2018", el cual se efectuará a través de Sistema Informático con el total de fracciones vendidas y cuyos datos (número de billete y fracción) han sido ingresados al sistema correspondiente a los fines de la realización de dicho sorteo, cuyo premio consiste en:'));
+$pdf->MultiCell(0, 7, utf8_decode('En la Ciudad de Córdoba, Capital de la Provincia del mismo nombre, República Argentina, a los ' . $dia . ' días del mes de ' . $mes . ' del año ' . date('Y', strtotime(str_replace('/', '-', $row->FECHA_SORTEO))) . ', se reúnen en Salón de Sorteos de Lotería de la Provincia de Córdoba, sita en calle 27 de Abril 185 de ésta Ciudad, el Sr/a. Jefe de Sorteo ' . $jefe_sorteo . ' y el Escribano/a ' . $escribano . ', a efectos de la realización del ' . $texto_sorteo . ' SORTEO por Compra Anticipada de Billetes de Lotería correspondientes a la Emisión Nº ' . $_SESSION['sorteo'] . ' "Gordito de Invierno 2019", el cual se efectuará a través de Sistema Informático con el total de fracciones vendidas y cuyos datos (número de billete y fracción) han sido ingresados al sistema correspondiente a los fines de la realización de dicho sorteo, cuyo premio consiste en:'));
 $sql = "SELECT PREMIO,COUNT(*)AS CANTIDAD,MAX(ORDEN) ORDEN
 FROM
    SGS.T_ANTICIPADA
@@ -128,9 +128,9 @@ ORDER BY ORDEN";
 $res = sql($sql, array($_SESSION['id_juego'], $_SESSION['sorteo'], $semana));
 while ($row = siguiente($res)) {
     if ($row->CANTIDAD == 1) {
-        $premio = $row->PREMIO;
+        $premio = '' . $row->CANTIDAD . ' PREMIO DE ' . $row->PREMIO;
     } else {
-        $premio = '(' . $row->CANTIDAD . ') PREMIOS DE ' . $row->PREMIO;
+        $premio = '' . $row->CANTIDAD . ' PREMIOS DE ' . $row->PREMIO;
     }
     $premio_real = str_replace('$', '', trim($row->PREMIO));
     $premio_real = str_replace('EN EFECTIVO', '', $premio_real);
@@ -213,6 +213,14 @@ while ($row = siguiente($res)) {
 }
 $pdf->SetFont('Arial', '', 10);
 $pdf->MultiCell(0, 7, utf8_decode('Siendo las ............... horas, se da por finalizado el Acto, previa lectura y ratificación de los actuantes, firman la presente ante mí Escribano/a ' . $escribano . ', de todo lo que certifico, doy fe.-'));
+$pdf->SetFont('Times', 'B', 11);
+$pdf->SetXY(25, 250);
+$pdf->Cell(20, 0, utf8_decode('Consta en escritura Nº_________Sección_________ - Doy fe'), 0, 0, 1);
 
+$pdf->SetFont('Times', 'B', 9);
+$pdf->SetXY(25, 263);
+$pdf->Cell(150, 5, '___________________                                      _________________________', 0, 1, 'J');
+$pdf->SetXY(25, 268);
+$pdf->Cell(150, 5, '      Jefe de Sorteos                                               Firma Escribano Actuante', 0, 0, 'J');
 $pdf->SetFont('Arial', '', 10);
 $pdf->Output();
