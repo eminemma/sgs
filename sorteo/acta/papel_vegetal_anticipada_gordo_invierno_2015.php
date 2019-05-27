@@ -260,7 +260,7 @@ if ($semana != $cantidad_semanas) {
     $pdf->SetXY($x + 140, $y - 5);
     while ($row_premio = siguiente($res_premios)) {
         if ($row_premio->CANTIDAD == 1) {
-            $premio = $row_premio->PREMIO;
+            $premio = $row_premio->CANTIDAD . ' PREMIO DE ' . $row_premio->PREMIO;
         } else {
             $premio = str_replace('$', '', trim($row_premio->PREMIO));
             $premio = str_replace('EN EFECTIVO', '', $premio);

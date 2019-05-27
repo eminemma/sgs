@@ -209,13 +209,13 @@ $pdf->setXY(10, 188);
 $pdf->SetFont('Arial', 'I', 8);
 $pdf->setXY(06, 47);
 $pdf->Cell(25, 7, $semana, 0, 0, 'C');
-$pdf->setXY(06, 195);
+$pdf->setXY(06, 193);
 $pdf->Cell(25, 7, $semana, 0, 0, 'C');
 
-$pdf->SetFont('Arial', 'BI', 6);
+$pdf->SetFont('Arial', 'BI', 5);
 $pdf->setXY(65, 47);
 $pdf->Cell(72, 7, strtoupper($distribuyo), 0, 0, 'C');
-$pdf->setXY(66, 195);
+$pdf->setXY(66, 193);
 $pdf->Cell(72, 7, strtoupper($distribuyo), 0, 0, 'C');
 $pdf->SetFont('Arial', 'I', 6);
 
