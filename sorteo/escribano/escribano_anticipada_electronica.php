@@ -82,7 +82,7 @@
             function(data) {
                 buscar_informacion();
                 billete_participantes = data;
-                setInterval(buscar_informacion, 1300);
+                //setInterval(buscar_informacion, 1300);
 
             }
         ).complete(
