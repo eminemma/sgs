@@ -15,9 +15,9 @@
 
 body {
     font-family: Verdana;
-         overflow-x: hidden;
-     overflow-y: hidden;
-         margin: 0;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    margin: 0;
 }
 
 #incentivo,
@@ -43,7 +43,8 @@ body {
 }
 
 #aleatorio_entero {
-    top: 436px;left: 217px;
+    top: 436px;
+    left: 217px;
     position: absolute;
     text-align: center;
     font-size: 97px;
@@ -72,7 +73,13 @@ body {
     text-align: center;
 }
 
-#nombre_d {top: 590px;left: 217px;position: absolute;font-size: 43px;text-align: center;}
+#nombre_d {
+    top: 590px;
+    left: 217px;
+    position: absolute;
+    font-size: 43px;
+    text-align: center;
+}
 
 #localidad_d {
     top: 695px;
@@ -82,14 +89,20 @@ body {
     text-align: center;
 }
 
-#billete_d {top: 376px;left: 217px;position: absolute;text-align: center;font-size: 97px;}
+#billete_d {
+    top: 376px;
+    left: 217px;
+    position: absolute;
+    text-align: center;
+    font-size: 97px;
+}
 
 #fraccion_d {
-  top: 375px;
-  left: 617px;
-  position: absolute;
-  text-align: center;
-  font-size: 97px;
+    top: 375px;
+    left: 617px;
+    position: absolute;
+    text-align: center;
+    font-size: 97px;
 }
 
 #prescripcion_d {
@@ -118,7 +131,7 @@ body {
 }
 
 #jefe_sorteo_d {
-        top: 647px;
+    top: 647px;
     left: 870px;
     position: absolute;
     text-align: center;
@@ -128,7 +141,7 @@ body {
 }
 
 #escribano_d {
-        top: 647px;
+    top: 647px;
     left: 1035px;
 
     position: absolute;
@@ -140,61 +153,96 @@ body {
 
 #orden {
     position: absolute;
-       top: 326px;
+    top: 326px;
     left: 171px;
     font-size: 59px;
 }
 
-#ganadores {position: absolute;top: 139px;left: 140px;}
+#ganadores {
+    position: absolute;
+    top: 135px;
+    left: 140px;
+}
 
 .billete {
     width: 108px;
-    /* height: 60%; */
-    font-size: 39px;
+
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+
+    font-size: 42px;
     float: left;
     text-align: center;
     vertical-align: middle;
     position: relative;
 }
 
+
 .fraccion {
-    width: 94px;
-    font-size: 39px;
+    width: 97px;
+    font-size: 42px;
     float: left;
     text-align: center;
+
+    margin: 0;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+        vertical-align: middle;
+    position: relative;
 }
-.premio_r{width: 165px;font-size: 14px;float: left;text-align: center;line-height: 18px;padding-top: 4px;/* border: 1px solid; */}
+
+.premio_r {
+    width: 161px;
+    font-size: 14px;
+    float: left;
+    text-align: center;
+    line-height: 49px;
+    /* padding-top: 4px; */
+    /* border: 1px solid; */
+        margin: 0;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+        vertical-align: middle;
+    position: relative;
+}
+
 .ganador {
-    height: 74px;
+    height: 65px;
     /* line-height: 46px; */
     vertical-align: middle;
     /* border: 1px solid #020202; */
-    margin-bottom: 4px;
+    margin-bottom: 2px;
     /* position: relative; */
     /* display: block; */
-    /* border: 1px solid; */
+    /*border: 1px solid;*/
 }
 
 .ganador {}
-#sorteo{
+
+#sorteo {
     position: absolute;
     left: 975px;
     top: 199px;
     font-size: 39px;
 }
 
-#sorteo_r{
+#sorteo_r {
     position: absolute;
     top: 216px;
-    left: 1068px;
-    font-size: 29px;
+    left: 1073px;
+    font-size: 27px;
 }
 
-#fecha_sorteo_r{
+#fecha_sorteo_r {
     position: absolute;
     top: 51px;
     left: 686px;
-    font-size: 32px;
+        font-size: 30px;
 }
 
 .premio {
@@ -205,18 +253,47 @@ body {
 }
 
 .agencia {
-     width: 102px;
-     font-size: 39px;
-     float: left;
-     text-align: center;
-     vertical-align: middle;
-     /* position: relative; */
-     left: 100px;
+    width: 102px;
+    font-size: 42px;
+    float: left;
+    text-align: center;
+    vertical-align: middle;
+    /* position: relative; */
+   
+    margin: 0;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+        vertical-align: middle;
+    position: relative;
 }
 
-.sucursal {width: 209px;font-size: 23px;float: left;/* text-align: center; */vertical-align: middle;position: relative;left: 4px;top: 3px;height: 47px;line-height: 16px;}
+.sucursal {
+    width: 209px;
+    font-size: 23px;
+    float: left;
+    /* text-align: center; */
+    vertical-align: middle;
+    position: relative;
+    left: 3px;
+    top: 9px;
+    height: 47px;   
+     margin: 0;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+        vertical-align: middle;
+    position: relative;}
 
-#jefe_sorteo_r {position: absolute;top: 704px;left: 278px;text-align: center;font-size: 13px;width: 138px;/* border: 1px solid; */}
+#jefe_sorteo_r {
+    position: absolute;
+    top: 704px;
+    left: 278px;
+    text-align: center;
+    font-size: 13px;
+    width: 138px;
+    /* border: 1px solid; */
+}
 
 #escribano_r {
     position: absolute;
@@ -228,6 +305,7 @@ body {
     width: 138px;
 }
 
+
 #prescripcion_r {
     position: absolute;
     top: 617px;
@@ -236,17 +314,19 @@ body {
 }
 
 #premio_prox_sorteo_r {
-position: absolute;
+    position: absolute;
     top: 617px;
     left: 619px;
     font-size: 27px;
 }
-.premios{
+
+.premios {
     position: absolute;
     top: 602px;
     left: 781px;
 }
-#premio{
+
+#premio {
     position: absolute;
     top: 331px;
     left: 297px;
@@ -256,9 +336,9 @@ position: absolute;
     /*border: 1px solid;*/
 }
 
-#fecha_sorteo{
- position: absolute;
- left: 589px;
- top: 235px;
- font-size: 32px;
+#fecha_sorteo {
+    position: absolute;
+    left: 589px;
+    top: 235px;
+    font-size: 32px;
 }
