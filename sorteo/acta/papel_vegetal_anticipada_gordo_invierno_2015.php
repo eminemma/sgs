@@ -230,7 +230,7 @@ $pdf->SetXY(50, 158);
 $pdf->Cell(0, 0, utf8_decode($localidad1), 0, 'L', 1);*/
 
 $x = 13;
-$y = 195;
+$y = 190;
 
 $pdf->SetFont('Arial', 'B', 10);
 
