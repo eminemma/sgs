@@ -106,10 +106,10 @@ $pdf->setXY(10, 10);
 //$pdf->Image('../escribano/escribano_img/gordo_invierno_2019_semana1_extracto_digital.jpg', 0, 0, 297, 215);
 //----------------------- 1º Pagina ------------------------------------
 
-$pdf->SetFont('Arial', 'B', 17);
-$pdf->SetXY(235, 55);
+$pdf->SetFont('Arial', 'B', 13);
+$pdf->SetXY(238, 55);
 $pdf->Cell(20, 0, $sorteo, 0, 'L', 1);
-$pdf->SetXY(170, 11);
+$pdf->SetXY(173, 11);
 $pdf->Cell(20, 0, $fecha_sorteo, 0, 'L', 1);
 
 if (strlen($premio1) > 40) {
@@ -138,10 +138,10 @@ $res_ganador = sql("SELECT TG.ID_JUEGO,
                             AND TG.SEMANA     =TA.SEMANA
                             AND TG.ORDEN      =TA.ORDEN
                             ORDER BY TG.ORDEN", array($_SESSION['id_juego'], $_SESSION['sorteo'], $semana));
-$y        = 18;
+$y        = 17;
 $cantiGan = 0;
 while ($row_ganador = siguiente($res_ganador)) {
-    $pdf->SetFont('Arial', 'B', 25);
+    $pdf->SetFont('Arial', 'B', 20);
     $pdf->setXY(33, 8 + $y);
     $pdf->Cell(32, 16, str_pad($row_ganador->BILLETE, 5, 0, STR_PAD_LEFT), 0, 0, 'C');
     $pdf->setXY(58, 8 + $y);
@@ -175,7 +175,7 @@ while ($row_ganador = siguiente($res_ganador)) {
         $pdf->Cell(35, 17, '9001', 0, 0, 'C');
         $pdf->setXY(150, 2 + $y);
         $pdf->SetFont('Arial', 'B', 13);
-        $pdf->Cell(75, 17, 'CORDOBA', 0, 0, 'L');
+        $pdf->Cell(50, 17, 'CORDOBA', 0, 0, 'L');
     } else if ($row_ganador->NOMBRE == 'VENTA CONTADO') {
         if ($row_ganador->SUCURSAL == 'CASA CENTRAL') {
             $localidad = 'CORDOBA';
@@ -186,15 +186,15 @@ while ($row_ganador = siguiente($res_ganador)) {
         $pdf->Cell(35, 17, '9001', 0, 0, 'C');
         $pdf->setXY(150, 2 + $y);
         $pdf->SetFont('Arial', 'B', 13);
-        $pdf->Cell(75, 17, $localidad, 0, 0, 'L');
+        $pdf->Cell(50, 17, $localidad, 0, 0, 'L');
 
     } else {
         //$pdf->setXY(203, 58 + $y);
-        $pdf->SetFont('Arial', 'B', 25);
+        $pdf->SetFont('Arial', 'B', 20);
         $pdf->Cell(35, 17, str_pad($row_ganador->AGENCIA, 4, 0, STR_PAD_LEFT), 0, 0, 'C');
-        $pdf->setXY(150, 8 + $y);
-        $pdf->SetFont('Arial', 'B', 13);
-        $pdf->MultiCell(75, 5, utf8_decode($row_ganador->LOCALIDAD), 0, 'L');
+        $pdf->setXY(150, 11 + $y);
+        $pdf->SetFont('Arial', 'B', 11);
+        $pdf->MultiCell(50, 5, utf8_decode($row_ganador->LOCALIDAD), 0, 'L');
 
     }
     $pdf->SetFont('Arial', 'B', 25);
@@ -230,7 +230,7 @@ $pdf->SetXY(50, 158);
 $pdf->Cell(0, 0, utf8_decode($localidad1), 0, 'L', 1);*/
 
 $x = 13;
-$y = 190;
+$y = 192;
 
 $pdf->SetFont('Arial', 'B', 10);
 
