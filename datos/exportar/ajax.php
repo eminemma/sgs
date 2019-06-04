@@ -438,44 +438,73 @@ $db_kanban->debug = true;*/
                     )
                 );
 
-                $rs_estimulo = sql_kanban("		SELECT      PD.ORDEN,
-                                                            PP.ID_DESCRIPCION,
-														    PD.DESCRIPCION
-														    ||' '
-														    ||PD.DESCRIPCION AS ESTIMULO,
-														    PP.ID_PREMIO_AFECTA_ESTIMULO,
-														    PP.TIPO_PREMIO,
-														    PP.PREMIO_EFECTIVO AS IMPORTE,
-                                                            PP.PREMIO_ID_ESPECIAS,
-                                                            TE.DESCRIPCION_ESPECIA
-													FROM 	KANBAN.T_PROGRAMA_PREMIOS PP,
-													  		KANBAN.T_PROGRAMA_PREMIOS_ANTIC PD,
-                                                            KANBAN.T_DESCRIPCION_ESPECIAS TE
-													WHERE PP.ID_PREMIO_AFECTA_ESTIMULO  = ?
-													AND PP.ID_PREMIO_AFECTA_ESTIMULO 	= PD.ID_PROGRAMA_PREMIOS_ANTIC
-                                                    AND PP.PREMIO_ID_ESPECIAS = TE.ID_DESCRIPCION_ESPECIA
-													AND PD.SORTEO                    	= ?
-													AND PD.ID_JUEGO                  	= ?
-													AND PD.SERIE                     	= ?
-													ORDER BY PD.SEMANA ASC",
-                    array(
-                        $row_id_programa_premios_antic->ID_PROGRAMA_PREMIOS_ANTIC,
-                        $_SESSION['sorteo'],
-                        $_SESSION['id_juego'],
-                        $_SESSION['serie'],
-                    )
-                );
-
-                $row_estimulo = $rs_estimulo->FetchNextObject($toupper = true);
+                //PREMIO ESPECIE
                 $importe      = null;
                 $especie      = null;
                 $desc_especie = null;
-                if ($row_estimulo->TIPO_PREMIO == 'ESPECIE') {
+
+                //$db_kanban->debug = true;
+                 $rs_estimulo = null;
+                if ((int) $row_premio->ID_TIPO_PREMIO == 1) {
+                    $rs_estimulo = sql_kanban("		SELECT      PD.ORDEN,
+                                                                PP.ID_DESCRIPCION,
+    														    PD.DESCRIPCION
+    														    ||' '
+    														    ||PD.DESCRIPCION AS ESTIMULO,
+    														    PP.ID_PREMIO_AFECTA_ESTIMULO,
+    														    PP.PREMIO_EFECTIVO AS IMPORTE,
+                                                                PP.PREMIO_ID_ESPECIAS,
+                                                                TE.DESCRIPCION_ESPECIA
+    													FROM 	KANBAN.T_PROGRAMA_PREMIOS PP,
+    													  		KANBAN.T_PROGRAMA_PREMIOS_ANTIC PD,
+                                                                KANBAN.T_DESCRIPCION_ESPECIAS TE
+    													WHERE PP.ID_PREMIO_AFECTA_ESTIMULO  = ?
+    													AND PP.ID_PREMIO_AFECTA_ESTIMULO 	= PD.ID_PROGRAMA_PREMIOS_ANTIC
+                                                        AND PP.PREMIO_ID_ESPECIAS = TE.ID_DESCRIPCION_ESPECIA
+    													AND PD.SORTEO                    	= ?
+    													AND PD.ID_JUEGO                  	= ?
+    													AND PD.SERIE                     	= ?
+    													ORDER BY PD.SEMANA ASC",
+                        array(
+                            $row_id_programa_premios_antic->ID_PROGRAMA_PREMIOS_ANTIC,
+                            $_SESSION['sorteo'],
+                            $_SESSION['id_juego'],
+                            $_SESSION['serie'],
+                        )
+                    );
+
+                    $row_estimulo = $rs_estimulo->FetchNextObject($toupper = true);
                     $especie      = $row_estimulo->PREMIO_ID_ESPECIAS;
                     $desc_especie = $row_estimulo->DESCRIPCION_ESPECIA;
-                } else {
+                }else{
+                    $rs_estimulo = sql_kanban("    SELECT      PD.ORDEN,
+                                                            PP.ID_DESCRIPCION,
+                                                            PD.DESCRIPCION
+                                                            ||' '
+                                                            ||PD.DESCRIPCION AS ESTIMULO,
+                                                            PP.ID_PREMIO_AFECTA_ESTIMULO,
+                                                            PP.PREMIO_EFECTIVO AS IMPORTE,
+                                                            PP.PREMIO_ID_ESPECIAS
+                                                    FROM    KANBAN.T_PROGRAMA_PREMIOS PP,
+                                                            KANBAN.T_PROGRAMA_PREMIOS_ANTIC PD
+                                                    WHERE PP.ID_PREMIO_AFECTA_ESTIMULO  = ?
+                                                    AND PP.ID_PREMIO_AFECTA_ESTIMULO    = PD.ID_PROGRAMA_PREMIOS_ANTIC
+                                                    AND PD.SORTEO                       = ?
+                                                    AND PD.ID_JUEGO                     = ?
+                                                    AND PD.SERIE                        = ?
+                                                    ORDER BY PD.SEMANA ASC",
+                        array(
+                            $row_id_programa_premios_antic->ID_PROGRAMA_PREMIOS_ANTIC,
+                            $_SESSION['sorteo'],
+                            $_SESSION['id_juego'],
+                            $_SESSION['serie'],
+                        )
+                    );
+                    $row_estimulo = $rs_estimulo->FetchNextObject($toupper = true);
+                    $desc_especie = 'EFECTIVO';
                     $importe = $row_estimulo->IMPORTE;
                 }
+               
 
                 if ($rs_estimulo->RowCount() != 0) {
 
