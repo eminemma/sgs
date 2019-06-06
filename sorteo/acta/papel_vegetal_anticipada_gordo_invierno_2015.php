@@ -237,7 +237,7 @@ $pdf->SetFont('Arial', 'B', 10);
 $pdf->SetXY($x + 15, $y - 10);
 $pdf->Cell(35, 10, $usuario, 0, 0, 'C');
 $pdf->SetXY($x + 47, $y - 10);
-$pdf->Cell(43, 10, $escribano, 0, 0, 'C');
+$pdf->Cell(49, 10, $escribano, 0, 0, 'C');
 $pdf->SetXY($x + 113, $y - 10);
 $pdf->SetFont('Arial', 'B', 20);
 $pdf->Cell(10, 10, $fecha_prescripcion, 0, 0, 'C');
