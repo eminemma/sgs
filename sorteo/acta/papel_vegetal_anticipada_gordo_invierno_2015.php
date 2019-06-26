@@ -249,7 +249,7 @@ if($semana == $cantidad_semanas){
 $pdf->Cell(35, 10, $usuario, 0, 0, 'C');
 
 if($semana == $cantidad_semanas){
-    $pdf->SetXY($x + 57, $y - 11);
+    $pdf->SetXY($x + 61, $y - 11);
 }else{
     $pdf->SetXY($x + 47, $y - 10);
 }
