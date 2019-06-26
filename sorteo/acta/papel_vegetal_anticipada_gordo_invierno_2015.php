@@ -140,6 +140,9 @@ $res_ganador = sql("SELECT TG.ID_JUEGO,
                             ORDER BY TG.ORDEN", array($_SESSION['id_juego'], $_SESSION['sorteo'], $semana));
 $y        = 17;
 $cantiGan = 0;
+if($semana == $cantidad_semanas){
+    $y        = 20;
+}
 while ($row_ganador = siguiente($res_ganador)) {
     $pdf->SetFont('Arial', 'B', 20);
     $pdf->setXY(33, 8 + $y);
@@ -198,7 +201,12 @@ while ($row_ganador = siguiente($res_ganador)) {
 
     }
     $pdf->SetFont('Arial', 'B', 25);
-    $y += 18;
+
+    if($semana == $cantidad_semanas){
+        $y += 17.1;
+    }else{
+        $y += 18;
+    }
     /*
 CORTE PARA A4 DISEÑO
 
@@ -233,12 +241,24 @@ $x = 13;
 $y = 192;
 
 $pdf->SetFont('Arial', 'B', 10);
-
-$pdf->SetXY($x + 15, $y - 10);
+if($semana == $cantidad_semanas){
+    $pdf->SetXY($x + 20, $y - 11);
+}else{
+    $pdf->SetXY($x + 15, $y - 10);
+}
 $pdf->Cell(35, 10, $usuario, 0, 0, 'C');
-$pdf->SetXY($x + 47, $y - 10);
+
+if($semana == $cantidad_semanas){
+    $pdf->SetXY($x + 57, $y - 11);
+}else{
+    $pdf->SetXY($x + 47, $y - 10);
+}
 $pdf->Cell(49, 10, $escribano, 0, 0, 'C');
-$pdf->SetXY($x + 113, $y - 10);
+if($semana == $cantidad_semanas){
+    $pdf->SetXY($x + 130, $y - 10);
+}else{    
+    $pdf->SetXY($x + 113, $y - 10);
+}
 $pdf->SetFont('Arial', 'B', 20);
 $pdf->Cell(10, 10, $fecha_prescripcion, 0, 0, 'C');
 
