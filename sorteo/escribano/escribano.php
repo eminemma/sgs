@@ -139,7 +139,7 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                 '01': {
                     inicial: {
                         top: '280px',
-                        left: '328px'
+                        left: '332px'
                     },
                     final: {
                         height: '143px'
@@ -192,7 +192,7 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                 },
                 '07': {
                     inicial: {
-                        top: '241px',
+                        top: '239px',
                         left: '845px'
                     },
                     final: {
