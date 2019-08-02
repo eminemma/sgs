@@ -131,6 +131,22 @@ function sql_sorteo()
     return $sql;
 }
 
+function sql_quiniela_asociadas()
+{
+    $sql = "SELECT
+                    ID_SORTEO,
+                    SORTEO
+            FROM
+                    SGS.T_SORTEO
+            WHERE  ID_JUEGO                = 2
+                AND    TRUNC(FECHA_SORTEO) = TRUNC(SYSDATE)
+                OR SORTEO=?
+            ORDER BY FECHA_SORTEO DESC";
+
+
+    return $sql;
+}
+
 function sql_operador()
 {
     $sql = "SELECT ID_USUARIO ,DESCRIPCION FROM SUPERUSUARIO.USUARIOS

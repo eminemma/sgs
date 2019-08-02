@@ -68,7 +68,9 @@ if ($accion == 'exportar') {
 
             //Importar Extractos al KANBAN
             $id_programa = $row_sorteo_local->ID_PROGRAMA;
-
+            if($id_juego == 32){
+                sql_kanban("DELETE FROM kanban.t_premio_extracto WHERE sorteo = ? and id_juego = ?",array($sorteo,$id_juego));
+            }
             $rs_extractos_local = sql('	SELECT * FROM SGS.T_PREMIO_EXTRACTO WHERE ID_JUEGO=? AND SORTEO=?', array($id_juego, $sorteo));
             if ($rs_extractos_local->RecordCount() == 0) {
                 error('No existen datos enla tabla t_premio_extracto (SORTEADOR)');
@@ -128,6 +130,7 @@ if ($accion == 'exportar') {
                         if ($row_ganador->GANADOR > 0) {
                             $ganador = 'S';
                         }
+
                         sql_kanban("	INSERT
 										  INTO KANBAN.T_EXTRACTO_SALEOSALE
 											(
@@ -157,6 +160,58 @@ if ($accion == 'exportar') {
 											)");
                     }
                 } else {
+                    if($id_juego == 32){
+
+                         $fraccion = $row_extractos_local->FRACCION;
+                        if (is_null($row_extractos_local->FRACCION)) {
+                            $fraccion = 'null';
+                        }
+
+                        $importe = $row_extractos_local->IMPORTE;
+                        if (is_null($row_extractos_local->IMPORTE)) {
+                            $importe = 'null';
+                        }
+                        $progresion = $row_extractos_local->PROGRESION;
+                        if (is_null($row_extractos_local->PROGRESION)) {
+                            $progresion = 'null';
+                        }
+
+                        $sorteo_asoc = $row_extractos_local->SORTEO_ASOC;
+                        if (is_null($row_extractos_local->SORTEO_ASOC)) {
+                            $sorteo_asoc = 'null';
+                        }
+
+
+                        sql_kanban("INSERT
+                                        INTO KANBAN.T_PREMIO_EXTRACTO
+                                          (
+                                            ID_DESCRIPCION,
+                                            BILLETE,
+                                            SORTEO,
+                                            ID_JUEGO,
+                                            SERIE,
+                                            ID_USUARIO,
+                                            FRACCION,
+                                            PROGRESION,
+                                            HORAEXTRACCION,
+                                            IMPORTE,
+                                            SORTEO_ASOC
+                                          )
+                                          VALUES
+                                          (
+                                           $row_extractos_local->ID_DESCRIPCION,
+                                           $row_extractos_local->BILLETE,
+                                           $sorteo,
+                                            $id_juego,
+                                            1,
+                                            'DU" . $_SESSION['dni'] . "',
+                                            $fraccion,
+                                            $progresion,
+                                            to_date('" . date('d/m/Y', strtotime($row_extractos_local->HORAEXTRACCION)) . "','dd/mm/yyyy'),
+                                            $importe,
+                                            '$sorteo_asoc'
+                                          )");    
+                    }else{
                     $rs_extracto = sql_kanban('	SELECT COUNT(*) as CANTIDAD_EXTRACTO
 													FROM KANBAN.T_PREMIO_EXTRACTO
 													WHERE ID_JUEGO=?
@@ -173,6 +228,10 @@ if ($accion == 'exportar') {
                         if (is_null($row_extractos_local->IMPORTE)) {
                             $importe = 'null';
                         }
+                        $progresion = $row_extractos_local->PROGRESION;
+                        if (is_null($row_extractos_local->PROGRESION)) {
+                            $progresion = 'null';
+                        }
 
                         sql_kanban("UPDATE KANBAN.T_PREMIO_EXTRACTO
 										SET
@@ -182,7 +241,7 @@ if ($accion == 'exportar') {
 											SERIE=1,
 											ID_USUARIO='DU" . $_SESSION['dni'] . "',
 											FRACCION=$fraccion,
-											PROGRESION=$row_extractos_local->PROGRESION,
+											PROGRESION=$progresion,
 											HORAEXTRACCION= to_date('" . date('d/m/Y', strtotime($row_extractos_local->HORAEXTRACCION)) . "','dd/mm/yyyy'),
 											IMPORTE=$importe
 									WHERE ID_JUEGO=?
@@ -197,6 +256,10 @@ if ($accion == 'exportar') {
                         $importe = $row_extractos_local->IMPORTE;
                         if (is_null($row_extractos_local->IMPORTE)) {
                             $importe = 'null';
+                        }
+                        $progresion = $row_extractos_local->PROGRESION;
+                        if (is_null($row_extractos_local->PROGRESION)) {
+                            $progresion = 'null';
                         }
 
                         sql_kanban("INSERT
@@ -222,13 +285,13 @@ if ($accion == 'exportar') {
 											1,
 											'DU" . $_SESSION['dni'] . "',
 											$fraccion,
-											$row_extractos_local->PROGRESION,
+											$progresion,
 											to_date('" . date('d/m/Y', strtotime($row_extractos_local->HORAEXTRACCION)) . "','dd/mm/yyyy'),
 											$importe
 										  )");
+                        }
                     }
                 }
-
             }
 
             /*verifico si existe quiniela asociada y genero*/
@@ -306,8 +369,7 @@ if ($accion == 'exportar_anticipada') {
 
         conectar_db();
         conectar_db_kanban();
-/*        $db->debug        = true;
-$db_kanban->debug = true;*/
+
         $db_kanban->StartTrans();
         $db->StartTrans();
         $rs_validacion = sql_kanban(" 	SELECT SUC_BAN, NRO_AGEN, VENTA_CONTADO, VENTA_EMPLEADO, OCR
@@ -555,5 +617,9 @@ $db_kanban->debug = true;*/
         error('Anticipados Error: -' . $db_kanban->ErrorMsg() . ' - ' . $db->ErrorMsg());
         die();
     }
+
+}
+
+if($accion == 'exportar_quiniela_poceada'){
 
 }

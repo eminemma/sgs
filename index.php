@@ -79,11 +79,22 @@ if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.
                                                     g('administracion/administrar_sorteos/quiniela_administrar_sorteos.php');
                                                 else if (data.id_juego == '3')
                                                     g('administracion/administrar_incentivos/loteria_administrar_incentivos.php');
-
+                                                else if (data.id_juego == '32')
+                                                    g('administracion/administrar_sorteos/quiniela_poceada_administrar_sorteos.php');
+                                                else if (data.id_juego !== 'null')
+                                                    alert('Este juego no esta contemplado para esta opción');
 												else
                                                     alert('Es necesario seleccionar un Juego');
                                             });">Administrar Sorteos</a></li>
-                                    <li><a href="#" onclick="g('administracion/administrar_incentivos/loteria_administrar_incentivos.php');">Administrar Incentivos</a></li>
+                                    <li><a href="#" onclick="$.get('juego/ajax.php?accion=obtener_juego', function(data) {
+                                         if (data.id_juego == '1')
+                                             g('administracion/administrar_incentivos/loteria_administrar_incentivos.php');
+                                         else if (data.id_juego !== 'null')
+                                            alert('Este juego no esta contemplado para esta opción');
+                                         else
+                                            alert('Es necesario seleccionar un Juego');
+                                        });
+                                        ">Administrar Incentivos</a></li>
                                     <li><a href="#" onclick="g('version.php');">Auditoria</a></li>
                             		<li><a href="#" onclick="g('version_alta.php');">Version</a></li>
                                     <!-- <li><a href="#" onclick="g('administracion/administrar_anticipada/loteria_administrar_anticipada.php');">Administrar Anticipada</a></li> -->
@@ -101,7 +112,11 @@ if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.
                                                     p('sorteo/escribano/quiniela/escribano.php');
                                                 else if (data.id_juego == '1' && data.tipo_juego == 'ORDINARIA') {
                                                     p('sorteo/escribano/loteria_ordinaria_escribano.php');
-                                                }
+                                                }         
+                                                else if (data.id_juego == '32')
+                                                    p('sorteo/escribano/quiniela_poceada/escribano.php');                                       
+                                                else if (data.id_juego !== 'null')
+                                                    alert('Este juego no esta contemplado para esta opción');
                                                 else
                                                     alert('Es necesario seleccionar un Juego');
                                             });">Escribano</a></li>
@@ -111,6 +126,10 @@ if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.
                                                     p('sorteo/operador/loteria_sorteador.php');
                                                 else if (data.id_juego == '2')
                                                     p('sorteo/operador/quiniela/quiniela_sorteador.php');
+                                                else if (data.id_juego == '32')
+                                                    p('sorteo/operador/quiniela_poceada/quiniela_poceada_sorteador.php');
+                                                else if (data.id_juego !== 'null')
+                                                    alert('Este juego no esta contemplado para esta opción');
                                                 else
                                                     alert('Es necesario seleccionar un Juego');
                                             });">Operador</a></li>
@@ -126,11 +145,21 @@ if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.
 							<li class="dropdown">
                                 <a data-toggle="dropdown" class="dropdown-toggle" href="#"><i class="icon-briefcase icon-white"></i> Anticipada <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="#" onclick="p('sorteo/escribano/escribano_anticipada_electronica.php');">Escribano</a></li>
+                                    <li><a href="#" onclick="
+                                    $.get('juego/ajax.php?accion=obtener_juego', function(data) {
+                                    if (data.id_juego == '1')
+                                       p('sorteo/escribano/escribano_anticipada_electronica.php');
+                                    else if (data.id_juego !== 'null')
+                                        alert('Este juego no esta contemplado para esta opción');
+                                    else
+                                        alert('Es necesario seleccionar un Juego');
+                                    });">Escribano</a></li>
                                     <li class="divider"></li>
                                     <li><a href="#" onclick="$.get('juego/ajax.php?accion=obtener_juego', function(data) {
                                                 if (data.id_juego == '1')
                                                     p('sorteo/operador/loteria_anticipada.php');
+                                                else if (data.id_juego !== 'null')
+                                                    alert('Este juego no esta contemplado para esta opción');
                                                 else
                                                     alert('Es necesario seleccionar un Juego');
                                             });">Operador</a></li>
@@ -144,9 +173,25 @@ if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.
                             <li class="dropdown">
                                 <a data-toggle="dropdown" class="dropdown-toggle" href="#"><i class="icon-briefcase icon-white"></i> Incentivo <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="#" onclick="p('sorteo/escribano/escribano_incentivo.php');">Escribano</a></li>
+                                    <li><a href="#" onclick="$.get('juego/ajax.php?accion=obtener_juego', function(data) {
+                                                if (data.id_juego == '1')
+                                                   p('sorteo/escribano/escribano_incentivo.php');
+                                                else if (data.id_juego !== 'null')
+                                                    alert('Este juego no esta contemplado para esta opción');
+                                                else
+                                                    alert('Es necesario seleccionar un Juego');
+                                            });"
+                                        >Escribano</a></li>
                                     <li class="divider"></li>
-                                    <li><a href="#" onclick="p('sorteo/operador/loteria_incentivo.php');">Operador</a></li>
+                                    <li><a href="#" onclick="$.get('juego/ajax.php?accion=obtener_juego', function(data) {
+                                                if (data.id_juego == '1')
+                                                   p('sorteo/operador/loteria_incentivo.php');
+                                                else if (data.id_juego !== 'null')
+                                                    alert('Este juego no esta contemplado para esta opción');
+                                                else
+                                                    alert('Es necesario seleccionar un Juego');
+                                            });"
+                                        >Operador</a></li>
                                     <li class="divider"></li>
                                     <li class="nav-header">Datos</li>
                                     <li><a href="#" onclick="if (confirm('¿Desea mezclar los rangos asignados al Incentivo del sorteo <?php echo $_SESSION['sorteo']; ?>?'))
@@ -199,6 +244,18 @@ if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.
                                 </ul>
 
                             </li>
+
+                            <li class="dropdown">
+                                <a data-toggle="dropdown" class="dropdown-toggle" href="#"><i class="icon-briefcase icon-white"></i> Poceada Cordobesa <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li class="divider"></li>
+                                    <li class="nav-header">Actas Generales</li>
+                                    <li><a href="#" onclick="p('sorteo/acta/quiniela_poceada_acta_extracto.php');">Acta Sorteo</a></li>
+                                    <li><a href="#" onclick="p('sorteo/acta/quiniela_poceada_acta_final.php');">Acta Extracciones</a></li>
+                                    <li class="divider"></li>
+                                </ul>
+
+                            </li>
                             <li class="dropdown">
                                 <a data-toggle="dropdown" class="dropdown-toggle" href="#"><i class="icon-briefcase icon-white"></i> Datos <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
@@ -207,21 +264,55 @@ if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.
                                                     g('datos/importar/loteria_importar_datos.php');
                                                 else if (data.id_juego == 2)
                                                     g('datos/importar/quiniela_importar_datos.php');
+                                                else if (data.id_juego == 32)
+                                                    g('datos/importar/quiniela_poceada_importar_datos.php');
+                                                else if (data.id_juego !== 'null')
+                                                    alert('Este juego no esta contemplado para esta opción');
+                                                else
+                                                    alert('Es necesario seleccionar un Juego');
+                                                quiniela_poceada_importar_datos
                                             })">Importar</a></li>
                                     <li><a href="#" onclick="$.get('juego/ajax.php?accion=obtener_juego', function(data) {
                                                 if (data.id_juego == 1)
                                                     p('datos/importar/loteria_billetes_importados.php');
                                                 else if (data.id_juego == 2)
                                                     p('datos/importar/loteria_billetes_importados.php');
+                                                else if (data.id_juego == 32)
+                                                    p('datos/importar/quiniela_poceada_importados.php');
+                                                else if (data.id_juego !== 'null')
+                                                    alert('Este juego no esta contemplado para esta opción');
+                                                else
+                                                    alert('Es necesario seleccionar un Juego');
                                             })">Datos Importados</a></li>
                                     <li><a href="#" onclick="$.get('juego/ajax.php?accion=obtener_juego', function(data) {
                                                 if (data.id_juego == 1)
                                                     if (confirm('¿Desea generar archivo csv del sorteo <?php echo $_SESSION['sorteo']; ?>?'))
                                                     p('datos/importar/loteria_anticiapda_datos.php');
                                             })">Importados en formato CSV</a></li>
-                                    <li><a href="#" onclick="g('datos/exportar/loteria_exportar_datos.php');">Exportar</a></li>
+                                    <li><a href="#" onclick="
+                                    $.get('juego/ajax.php?accion=obtener_juego', function(data) {
+                                        if (data.id_juego == 1 || data.id_juego == 2)
+                                            g('datos/exportar/loteria_exportar_datos.php');
+                                        if (data.id_juego == 32)
+                                            g('datos/exportar/quiniela_poceada_exportar_datos.php');
+                                        else if (data.id_juego !== 'null')
+                                           alert('Este juego no esta contemplado para esta opción');
+                                        else
+                                            alert('Es necesario seleccionar un Juego');
+                                        })
 
-                                    <li><a href="#" onclick="g('datos/exportar/loteria_exportar_anticipada.php');">Exportar Anticipados</a></li>
+                                    ">Exportar</a></li>
+
+                                    <li><a href="#" onclick="
+                                    $.get('juego/ajax.php?accion=obtener_juego', function(data) {
+                                        if (data.id_juego == 1)
+                                            g('datos/exportar/loteria_exportar_anticipada.php');
+                                        else if (data.id_juego !== 'null')
+                                           alert('Este juego no esta contemplado para esta opción');
+                                        else
+                                            alert('Es necesario seleccionar un Juego');
+                                        })
+                                    ">Exportar Anticipados</a></li>
                                 </ul>
                             </li>
 
