@@ -9,7 +9,21 @@
 </head>
 <body>
 
-	<div id="zona1"><div id="primer_premio"></div></div>
+	<div id="zona1">
+		<div id="c1"></div>
+	</div>
+	<div id="zona2">
+		<div id="c2"></div>
+	</div>
+	<div id="zona3">
+		<div id="c3"></div>
+		<div id="cantidad_ganadores_8_aciertos" class="cantidad_ganadores">Cantidad Ganadores 60</div>
+	</div>
+	<div id="zona4">
+		<div id="c4"></div>
+		<div id="cantidad_ganadores_7_aciertos" class="cantidad_ganadores">Cantidad Ganadores 10</div>
+		<div id="cantidad_ganadores_6_aciertos" class="cantidad_ganadores">Cantidad Ganadores 20</div>
+	</div>
 	<script type="text/javascript">
 		$(document).ready(
 			function(){
@@ -21,61 +35,61 @@
 		var posicionZona1 =	{
 								'01':	{
 											inicial:	{
-															top: '292px',
-															left: '260px'
+															top: '280px',
+															left: '280px'
 														},
 											final:		{
-															height: '60px'
+															height: '75px'
 														}
 										},
 
 								'02':	{
 											inicial:	{
 															top: '360px',
-															left: '260px'
+															left: '280px'
 														},
 											final:		{
-															height: '60px'
+															height: '75px'
 														}
 										},
 
 								'03':	{
 											inicial:	{
-															top: '428px',
-															left: '260px'
+															top: '445px',
+															left: '280px'
 														},
 											final:		{
-															height: '60px'
+															height: '75px'
 														}
 										},
 
 								'04':	{
 											inicial:	{
-															top: '496px',
-															left: '260px'
+															top: '520px',
+															left: '280px'
 														},
 											final:		{
-															height: '60px'
+															height: '75px'
 														}
 										},
 
 								'05':	{
 											inicial:	{
-															top: '564px',
-															left: '260px'
+															top: '600px',
+															left: '280px'
 														},
 											final:		{
-															height: '60px'
+															height: '75px'
 														}
 										},
 
 								'06':	{
 											inicial:	{
-															top: '292px',
+															top: '280px',
 															left: '560px'
 														},
 											final:		{
-															height: '60px'
+															height: '75px'
 														}
 										},
 
@@ -85,144 +99,176 @@
 															left: '560px'
 														},
 											final:		{
-															height: '60px'
+															height: '75px'
 														}
 										},
 
 								'08':	{
 											inicial:	{
-															top: '428px',
+															top: '445px',
 															left: '560px'
 														},
 											final:		{
-															height: '60px'
+															height: '75px'
 														}
 										},
 
 								'09':	{
 											inicial:	{
-															top: '496px',
+															top: '520px',
 															left: '560px'
 														},
 											final:		{
-															height: '60px'
+															height: '75px'
 														}
 										},
 
 								'10':	{
 											inicial:	{
-															top: '564px',
+															top: '600px',
 															left: '560px'
 														},
 											final:		{
-															height: '60px'
+															height: '75px'
 														}
 										},
 
 								'11':	{
 											inicial:	{
-															top: '292px',
-															left: '860px'
+															top: '280px',
+															left: '850px'
 														},
 											final:		{
-															height: '60px'
+															height: '75px'
 														}
 										},
 
 								'12':	{
 											inicial:	{
 															top: '360px',
-															left: '860px'
+															left: '850px'
 														},
 											final:		{
-															height: '60px'
+															height: '75px'
 														}
 										},
 
 								'13':	{
 											inicial:	{
-															top: '428px',
-															left: '860px'
+															top: '445px',
+															left: '850px'
 														},
 											final:		{
-															height: '60px'
+															height: '75px'
 														}
 										},
 
 								'14':	{
 											inicial:	{
-															top: '496px',
-															left: '860px'
+															top: '520px',
+															left: '850px'
 														},
 											final:		{
-															height: '60px'
+															height: '75px'
 														}
 										},
 
 								'15':	{
 											inicial:	{
-															top: '564px',
-															left: '860px'
+															top: '600px',
+															left: '850px'
 														},
 											final:		{
-															height: '60px'
+															height: '75px'
 														}
 										},
 
 								'16':	{
 											inicial:	{
-															top: '292px',
-															left: '1160px'
+															top: '280px',
+															left: '1140px'
 														},
 											final:		{
-															height: '60px'
+															height: '75px'
 														}
 										},
 
 								'17':	{
 											inicial:	{
 															top: '360px',
-															left: '1160px'
+															left: '1140px'
 														},
 											final:		{
-															height: '60px'
+															height: '75px'
 														}
 										},
 
 								'18':	{
 											inicial:	{
-															top: '428px',
-															left: '1160px'
+															top: '445px',
+															left: '1140px'
 														},
 											final:		{
-															height: '60px'
+															height: '75px'
 														}
 										},
 
 								'19':	{
 											inicial:	{
-															top: '496px',
-															left: '1160px'
+															top: '520px',
+															left: '1140px'
 														},
 											final:		{
-															height: '60px'
+															height: '75px'
 														}
 										},
 
 								'20':	{
 											inicial:	{
-															top: '564px',
-															left: '1160px'
+															top: '600px',
+															left: '1140px'
 														},
 											final:		{
-															height: '60px'
+															height: '75px'
 														}
 										},
 							};
 
-		
+	  var posicionZona3 =	{
+								'PRIMER_PREMIO':	{
+									inicial:	{
+										top: '430px',
+										left: '690px'
+									},
+									final:	{
+										height: '140px'
+									}
+								}
+							};
+
+		 var posicionZona4 =	{
+								'SEGUNDO_PREMIO':	{
+									inicial:	{
+										top: '430px',
+										left: '410px'
+									},
+									final:	{
+										height: '90px'
+									}
+								},
+								'TERCER_PREMIO':	{
+									inicial:	{
+										top: '430px',
+										left: '950px'
+									},
+									final:	{
+										height: '90px'
+									}
+								}
+							};
 
 		var billetesZona1 = [];
+		var pozoZona4 = false;
 
 		var zonaMostrando = 'zona1';
 
@@ -231,45 +277,87 @@
 				'escribano_ajax.php?ale='+parseInt(Math.random() * 1000000000),
 				function(data){
 
-					if(data.zonaMostrando == 'zona1' && zonaMostrando != 'zona1'){
-						$('#zona2, #zona3').hide();
+					if(data.zonaMostrando == 'zona1'){
+						$('#zona2, #zona3, #zona4').hide();
 						$('#zona1').fadeIn();
+						$('#c2, #c3, #c4').empty();
 						zonaMostrando = 'zona1';
-
 					}
-
+					if(data.zonaMostrando == 'zona2'){
+						$('#zona1, #zona3, #zona4').hide();
+						$('#zona2').fadeIn();
+						$('#zona1').find('*:not("#c1")').empty();
+						$('#c1, #c3, #c4').empty();
+						zonaMostrando = 'zona2';
+					}
+					if(data.zonaMostrando == 'zona3'){
+						$('#zona1, #zona2, #zona4').hide();
+						$('#zona3').fadeIn();
+						$('#zona1').find('*:not("#c1")').empty();
+						$('#c1, #c2, #c4').empty();
+						zonaMostrando = 'zona3';
+					}
+					if(data.zonaMostrando == 'zona4'){
+						$('#zona1, #zona2, #zona3').hide();
+						$('#zona4').fadeIn();
+						$('#zona1').find('*:not("#c1")').empty();
+						$('#c1, #c2, #c3').empty();
+						zonaMostrando = 'zona4';
+					}
 					if(zonaMostrando == 'zona1'){
-						$('#primer_premio').fadeIn();
+						primerVez2 = true;
+						pozoPrimerPremioEncontrado = null;
+						pozoSegundoPremioEncontrado = null;
+						pozoTercerPremioEncontrado = null;
+						cantidadPrimerPremioEncontrado = null;
 						animarZona1(data);
+					}
+					if(zonaMostrando == 'zona2'){
+						primerVez = true;
+						pozoPrimerPremioEncontrado = null;
+						pozoSegundoPremioEncontrado = null;
+						pozoTercerPremioEncontrado = null;
+						cantidadPrimerPremioEncontrado = null;
+						billetesZona1 = [];
+						animarZona2(data);
+					}
+					if(zonaMostrando == 'zona3'){
+						primerVez2 = true;
+						primerVez = true;
+						pozoSegundoPremioEncontrado = null;
+						pozoTercerPremioEncontrado = null;
+
+						billetesZona1 = [];
+						animarZona3(data);
+					}
+					if(zonaMostrando == 'zona4'){
+						primerVez2 = true;
+						primerVez = true;
+						pozoPrimerPremioEncontrado = null;
+						cantidadPrimerPremioEncontrado = null;
+						billetesZona1 = [];
+						animarZona4(data);
 					}
 				}
 			);
 		}
 		var primerVez = true;
-
+		var primerVez2 = true;
+		function datosCompartidos(zona,data){
+			console.log(data);
+			var elemento = $('<div class="escribano">'+data.escribano+'</div>');
+				$('#c'+zona).append(elemento);
+				elemento = $('<div class="jefe">'+data.jefe+'</div>');
+				$('#c'+zona).append(elemento);
+				elemento = $('<div class="nrosorteo">'+data.sorteo+'</div>');
+				$('#c'+zona).append(elemento);
+				elemento = $('<div class="fechasorteo">'+data.fecha_sorteo+'</div>');
+				$('#c'+zona).append(elemento);
+		}
 		function animarZona1(data){
 			var posicionesEncontradas = [];
 			if(primerVez){
-				var elemento = $('<div class="escribano">'+data.escribano+'</div>');
-				$('#zona1').append(elemento);
-				elemento = $('<div class="jefe">'+data.jefe+'</div>');
-				$('#zona1').append(elemento);
-				elemento = $('<div class="tipo_juego">CONCURSO '+data.juego+'</div>');
-				$('#zona1').append(elemento);
-				elemento = $('<div class="nrosorteo">'+data.sorteo+'</div>');
-				$('#zona1').append(elemento);
-				elemento = $('<div class="lfechasorteo">FECHA</div>');
-				$('#zona1').append(elemento);
-				elemento = $('<div class="fechasorteo">'+data.fecha_sorteo+'</div>');
-				$('#zona1').append(elemento);
-				elemento = $('<div class="lhorasorteo">HORA</div>');
-				$('#zona1').append(elemento);
-				elemento = $('<div class="horasorteo">'+data.hora_sorteo+'</div>');
-				$('#zona1').append(elemento);
-				elemento = $('<div class="tipo_juego_lado"> '+data.juego+'</div>');
-				$('#zona1').append(elemento);
-				elemento = $('<div class="tipo_juego_lado_1"> '+data.juego+'</div>');
-				$('#zona1').append(elemento);
+				datosCompartidos(1,data);
 				primerVez = false;
 			}
 			$(data.billetesZona1).each(
@@ -279,7 +367,7 @@
 
 						crearAnimacionNuevoBillete(1, this, posicionZona1);
 
-						
+
 						return false;
 					}
 				}
@@ -299,64 +387,136 @@
 					billetesZona1[indice] = undefined;
 					$('#zona1 #billete1_'+indice).remove();
 
-					if(indice == '01'){
-						$('#zona1 #progresion').remove();
-					}
+
 				}
 			}
 		}
 
-	
-		function crearAnimacionNuevoBillete(zona, billete, posiciones){
-			if(zona == 2){
+		function animarZona2(data){
+			if(primerVez2){
+				datosCompartidos(2,data);
+				primerVez2 = false;
+			}
+		}
 
-				//BILLETE
-				var id = 'billete'+zona+'_'+billete.posicion;
-				$('#'+id).remove();
+		var pozoPrimerPremioEncontrado = null;
+		var cantidadPrimerPremioEncontrado = null;
+		function animarZona3(data){
+			if(cantidadPrimerPremioEncontrado == null){
+				datosCompartidos(3,data);
+			}
+			if(data.pozos[0].pozo_8_aciertos != pozoPrimerPremioEncontrado || data.pozos[0].cantidad_ganadores_8_aciertos != cantidadPrimerPremioEncontrado){
+				pozoPrimerPremioEncontrado = data.pozos[0].pozo_8_aciertos;
+				cantidadPrimerPremioEncontrado = data.pozos[0].cantidad_ganadores_8_aciertos;
+				crearAnimacionPrimerPremio(3, data.pozos,posicionZona3);
+			}
+		}
 
-				var elemento = $('<span id="'+id+'" class="billete">'+billete.numero+'</span>');
+		var pozoSegundoPremioEncontrado = null;
+		var pozoTercerPremioEncontrado = null;
+		var cantidadSegundoPremioEncontrado = null;
+		var cantidadTercerPremioEncontrado = null;
+		function animarZona4(data){
+			if(pozoSegundoPremioEncontrado == null){
+				datosCompartidos(4,data);
+			}
+			if(data.pozos[1].pozo_7_aciertos != pozoSegundoPremioEncontrado || data.pozos[2].pozo_6_aciertos != pozoTercerPremioEncontrado || data.pozos[1].cantidad_ganadores_7_aciertos != cantidadSegundoPremioEncontrado || data.pozos[2].cantidad_ganadores_6_aciertos != cantidadTercerPremioEncontrado){
+				pozoSegundoPremioEncontrado = data.pozos[1].pozo_7_aciertos;
+				pozoTercerPremioEncontrado = data.pozos[2].pozo_6_aciertos;
+				cantidadSegundoPremioEncontrado = data.pozos[1].cantidad_ganadores_7_aciertos;
+				cantidadTercerPremioEncontrado = data.pozos[2].cantidad_ganadores_6_aciertos;
+				crearAnimacionPozos67(4, data.pozos,posicionZona4);
+			}
+		}
 
-				$('#zona'+zona).append(elemento);
-				var inicial = posiciones[billete.posicion].billete.inicial;
+		function crearAnimacionPozos67(zona, pozos, posiciones){
+			var id = 'pozo'+zona+'_7_aciertos';
+			$('#'+id).remove();
+			elemento = $('<span id="'+id+'" class="pozo_7_aciertos">'+pozos[1].pozo_7_aciertos+'</span>');
+
+			$('#zona'+zona).append(elemento);
+			var inicial =  posiciones['SEGUNDO_PREMIO'].inicial;
 					inicial.height = '0px';
 					inicial['font-size'] = '0px';
 
-				$('#'+id).css(inicial);
+			$('#'+id).css(inicial);
 
-				var final = posiciones[billete.posicion].billete.final;
-					final.width = getAnchoByAlto(final.height);
-					final.top = (parseInt(inicial.top) - (parseInt(final.height) / 2))+'px';
-					final.left = (parseInt(inicial.left) - (parseInt(final.width) / 2))+'px';
-					final['font-size'] = getTamanioTextoByAlto(final.height);
+			var final =  posiciones['SEGUNDO_PREMIO'].final;
+			final.width = getAnchoByAlto2(final.height);
+			final.top = (parseInt(inicial.top) - (parseInt(final.height) / 2))+'px';
+			final.left = (parseInt(inicial.left) - (parseInt(final.width) / 2))+'px';
+			final['font-size'] = getTamanioTextoByAlto(final.height);
 
-				$('#'+id).animate(final, 1000);
+			$('#'+id).animate(final, 1000);
+			if(pozos[1].cantidad_ganadores_7_aciertos == '0')
+				$('#cantidad_ganadores_7_aciertos').html('Pozo Vacante ');
+			else
+				$('#cantidad_ganadores_7_aciertos').html(pozos[1].cantidad_ganadores_7_aciertos);
 
-				//FRACCION
-				id = 'billete'+zona+'_'+billete.posicion+'_fraccion';
-				$('#'+id).remove();
 
-				elemento = $('<span id="'+id+'" class="billete">'+billete.fraccion+'</span>');
+			var id = 'pozo'+zona+'_6_aciertos';
+			$('#'+id).remove();
+			elemento = $('<span id="'+id+'" class="pozo_6_aciertos">'+pozos[2].pozo_6_aciertos+'</span>');
 
-				$('#zona'+zona).append(elemento);
+			$('#zona'+zona).append(elemento);
+			var inicial =  posiciones['TERCER_PREMIO'].inicial;
+					inicial.height = '0px';
+					inicial['font-size'] = '0px';
 
-				inicial = posiciones[billete.posicion].fraccion.inicial;
-				inicial.height = '0px';
-				inicial['font-size'] = '0px';
+			$('#'+id).css(inicial);
 
-				$('#'+id).css(inicial);
+			var final =  posiciones['TERCER_PREMIO'].final;
+			final.width = getAnchoByAlto2(final.height);
+			final.top = (parseInt(inicial.top) - (parseInt(final.height) / 2))+'px';
+			final.left = (parseInt(inicial.left) - (parseInt(final.width) / 2))+'px';
+			final['font-size'] = getTamanioTextoByAlto(final.height);
 
-				final = posiciones[billete.posicion].fraccion.final;
-				final.width = getAnchoByAlto(final.height);
-				final.top = (parseInt(inicial.top) - (parseInt(final.height) / 2))+'px';
-				final.left = (parseInt(inicial.left) - (parseInt(final.width) / 2))+'px';
-				final['font-size'] = getTamanioTextoByAlto(final.height);
+			$('#'+id).animate(final, 1000);
+			if(pozos[2].cantidad_ganadores_6_aciertos == '0')
+				$('#cantidad_ganadores_6_aciertos').html('Pozo Vacante ');
+			else
+				$('#cantidad_ganadores_6_aciertos').html(pozos[2].cantidad_ganadores_6_aciertos);
 
-				$('#'+id).animate(final, 1000);
-			}else{
+
+		}
+
+		function crearAnimacionPrimerPremio(zona, pozos, posiciones){
+			var id = 'pozo'+zona+'_8_aciertos';
+			$('#'+id).remove();
+			elemento = $('<span id="'+id+'" class="pozo_8_aciertos">'+pozos[0].pozo_8_aciertos+'</span>');
+
+			$('#zona'+zona).append(elemento);
+			var inicial =  posiciones['PRIMER_PREMIO'].inicial;
+					inicial.height = '0px';
+					inicial['font-size'] = '0px';
+
+			$('#'+id).css(inicial);
+
+			var final =  posiciones['PRIMER_PREMIO'].final;
+			final.width = getAnchoByAlto2(final.height);
+			final.top = (parseInt(inicial.top) - (parseInt(final.height) / 2))+'px';
+			final.left = (parseInt(inicial.left) - (parseInt(final.width) / 2))+'px';
+			final['font-size'] = getTamanioTextoByAlto(final.height);
+
+			$('#'+id).animate(final, 1000);
+
+			if(pozos[0].cantidad_ganadores_8_aciertos == '0')
+				$('#cantidad_ganadores_8_aciertos').html('Pozo Vacante ');
+			else
+				$('#cantidad_ganadores_8_aciertos').html(pozos[0].cantidad_ganadores_8_aciertos);
+		}
+		function crearAnimacionNuevoBillete(zona, billete, posiciones){
+
 				var id = 'billete'+zona+'_'+billete.posicion;
 				$('#'+id).remove();
+				var elemento = null;
+				if(billete.estado == '2')
+					elemento = $('<span id="'+id+'" class="billete" >'+billete.numero+'</span>');
+				else if(billete.estado == '1')
+					elemento = $('<span id="'+id+'" class="billete" style="color:red">'+billete.numero+'</span>');
+				else
+					elemento = $('<span id="'+id+'" class="billete">'+billete.numero+'</span>');
 
-				var elemento = $('<span id="'+id+'" class="billete">'+billete.numero+'</span>');
 
 				$('#zona'+zona).append(elemento);
 
@@ -373,11 +533,15 @@
 					final['font-size'] = getTamanioTextoByAlto(final.height);
 
 				$('#'+id).animate(final, 1000);
-			}
+
 		}
 
 		function getAnchoByElement(elemento){
 			return (parseInt($(elemento).css('height')) * 3) + 'px';
+		}
+
+		function getAnchoByAlto2(alto){
+			return (parseInt(alto) * 5) + 'px';
 		}
 
 		function getAnchoByAlto(alto){

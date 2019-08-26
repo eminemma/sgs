@@ -45,7 +45,7 @@ try {
 						WHERE TE.POSICION =TD.ID_PREMIO_DESC
 							AND TE.SORTEO = ?
 							AND TE.ID_JUEGO = ?
-                            AND TE.SORTEO_ASOC NOT LIKE '%COINCIDE%'
+                            AND (SORTEO_ASOC LIKE ('%QUINIELA ASOCIADA%') OR SORTEO_ASOC LIKE ('%VALIDA%'))
 						ORDER BY TE.POSICION", array($_SESSION['sorteo'], $_SESSION['id_juego']));
 } catch (exception $e) {
     die($db->ErrorMsg());
@@ -91,7 +91,7 @@ $pdf->Cell(30, 5, $row_sorteo->FECHA_CADUCIDAD, 1, 0, 'C');
 
 $fechasorteo = $row_sorteo->FECHA_SORTEO;
 $escribano   = $row_sorteo->ESCRIBANO;
-$texto1      = "En la Ciudad de Córdoba, República Argentina, a los " . substr($fechasorteo, 0, 2) . " días del Mes de " . nombre_meses(substr($fechasorteo, 3, 2)) . " del año " . substr($fechasorteo, 6, 4) . " presentes en el Salón de Sorteos de la 'LOTERIA DE LA PROVINCIA DE CORDOBA S.E.', sito en calle 27 de Abril 185, de esta Ciudad, los agentes de la Institución: el Sr. " . $row_sorteo->JEFE . " en su carácter de Jefe de Sorteos en representación de la Subgerencia Departamental de Operaciones y el Sr. " . $row_sorteo->OPERADOR . " en su calidad de operador, siendo las     :     horas, con el objeto de realizar el Sorteo " . $_SESSION['juego_tipo'] . " programado. Iniciado el sorteo, se verifica en forma alternativa y conforme a la Reglamentación vigente, los veinte premios por extracción, lo que como resultado se consignan a continuación:";
+$texto1      = "En la Ciudad de Córdoba, República Argentina, a los " . substr($fechasorteo, 0, 2) . " días del Mes de " . nombre_meses(substr($fechasorteo, 3, 2)) . " del año " . substr($fechasorteo, 6, 4) . " presentes en el Salón de Sorteos de la 'LOTERIA DE LA PROVINCIA DE CORDOBA S.E.', sito en calle 27 de Abril 185, de esta Ciudad, los agentes de la Institución: el Sr. " . $row_sorteo->JEFE . " en su carácter de Jefe de Sorteos en representación de la Subgerencia Departamental de Operaciones y el Sr. " . $row_sorteo->OPERADOR . " en su calidad de operador, siendo las     :     horas, con el objeto de realizar el Sorteo 'Quiniela Poceada' programado. Iniciado el sorteo, se verifica en forma alternativa y conforme a la Reglamentación vigente, los veinte premios por extracción, lo que como resultado se consignan a continuación:";
 $texto2      = "Con lo que se da por terminado el acto, previa lectura y ratificación de los actuantes, firman la presente por ante mí " . $escribano . " doy fe Escribano Autorizante, de todo lo que certifico; siendo las ............... hs., se da por finalizado el Sorteo.";
 
 $pdf->SetFont('Times', '', 11);

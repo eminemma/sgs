@@ -24,7 +24,7 @@ if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.
     <base href="<?php echo $url; ?>/sgs/">
     <link rel="stylesheet" type="text/css" href="librerias/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/estilo.css">
-    <link rel="stylesheet" type="text/css" href="sorteo/operador/quiniela/estilo_sorteador.css">
+    <link rel="stylesheet" type="text/css" href="sorteo/operador/quiniela_poceada/estilo_sorteador.css">
     <script type="text/javascript" src="librerias/jquery/jquery-1.10.1.js"></script>
     <script type="text/javascript" src="librerias/bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="librerias/bootstrap/js/bootstrap-fileupload.min.js"></script>
@@ -66,97 +66,93 @@ try {
 }
 
 ?>
-    <script type="text/javascript">
-      var param;
-      param = {
-                accion  : 'mostrar',
-                juego   : 'primer_juego'
-              };      
-      var intervalo2;
-      var intervalo1;
-      var Ajax1;
-      var Ajax2;
+<script type="text/javascript">
+var param;
 
-     var buscarGanadores1= function buscarGanadores(){
-        param={accion:'mostrar',juego:param.juego};
-        $.post('sorteo/operador/quiniela_poceada/quiniela_poceada_listado_ganadores.php?buscarGanadores='+parseInt(Math.random() * 1000000000),
-                param
-        ).done(
-                function(data){
-                  $('#ganadores').html(data);
+ param = {
+     accion: 'mostrar',
+     juego: 'primer_juego'
+ };
 
-                }
-        );
-      }
 
-      function habilitarJuegos(){
-        $("#entero").prop('disabled', false);
-        $("#fraccion").prop('disabled', false);
 
-      }
+ function cargar_juego(classN) {
+     $.get('sorteo/operador/quiniela_poceada/quiniela_poceada_sorteador_ajax.php', {
+         accion: 'mostrar_extracto',
+         tipo: classN
+     });
+ };
 
-      var controlGanadores2= function controlGanadores(){
-          param={
-                  accion:'control_ganador',
-                  juego:param.juego
-                };
-          Ajax2=  $.post('sorteo/operador/quiniela_poceada/quiniela_poceada_sorteador_ajax.php?controlGanador=1',
-                   param
-                  ).done(
-                    function(data){
-                      if(data.mensaje=='No Finalizo'){
-                        habilitarJuegos();
-                      }
-                      if(data.mensaje=='Finalizo' && param.juego=='primer_juego'){
-                        $("#warning_juego2.alert").slideDown("slow");
-                        $('#warning_juego2 > .contenido_error').html('Finalizo la extraccion de todos los numeros sorteados');
-                        deshabilitarJuegos();
-                      } else if(data.tipo=='database'){
-                        $("#error_juego.alert").slideDown("slow");
-                        $('#error_juego >.contenido_error').html(data.mensaje);
+ var buscarGanadores = function buscarGanadores() {
+     $.post('sorteo/operador/quiniela_poceada/quiniela_poceada_listado_ganadores.php?buscarGanadores=' + parseInt(Math.random() * 1000000000), {
+         accion: 'mostrar',
+         juego: param.juego
+     }).done(
+         function(data) {
+             $('#ganadores').html(data);
+         }
+     );
+ }
+
+ function habilitarJuegos() {
+     $("#entero").prop('disabled', false);
+     $("#fraccion").prop('disabled', false);
+ }
+
+ var controlGanadores = function controlGanadores() {
+     Ajax2 = $.post('sorteo/operador/quiniela_poceada/quiniela_poceada_sorteador_ajax.php?controlGanador=1', {
+         accion: 'control_ganador',
+         juego: param.juego
+     }).done(
+         function(data) {
+             if (data.mensaje == 'No Finalizo') {
+              $("#finalizar_sorteo").css("display", "none");
+                 habilitarJuegos();
+             }
+             if (data.mensaje == 'Finalizo' && param.juego == 'primer_juego') {
+                 $("#warning_juego2.alert").slideDown("slow");
+                 $('#warning_juego2 > .contenido_error').html('Finalizo la extraccion de todos los numeros sorteados');
+                 $("#finalizar_sorteo").css("display", "inline");
+                 deshabilitarJuegos();
+             } else if (data.tipo == 'database') {
+                 $("#error_juego.alert").slideDown("slow");
+                 $('#error_juego >.contenido_error').html(data.mensaje);
+             } else if ((typeof data.coincidencia != 'undefined' || typeof data.reinicio != 'undefined')) {
+                 if (data.tipo == 'success' || data.tipo == 'info') {
+                     if (data.coincidencia == 'VALIDA') {
+                         cargarConfiguracion({ accion: "configuracion", juego: "primer_juego" });
+                         if (buscar_valor_por_campo('sorteado', false, 'posicion') !== undefined) {
+                             $("#posicion").val('');
+                             $("#posicion").val(buscar_valor_por_campo('sorteado', false, 'posicion'));
+                             var e = $.Event("keypress", { which: 13 });
+                             $("#posicion").trigger(e);
+                         }
+                     } else if (data.reinicio == 'SI') {
+                         cargarConfiguracion({ accion: "configuracion", juego: "primer_juego" });
+                     } else {
+                         $("#success_juego.alert").slideDown("slow");
+                         $('#success_juego > .contenido_error').html(data.coincidencia);
                      }
-
-                      if((typeof data.coincidencia != 'undefined' || typeof data.reinicio != 'undefined')){
-                        if(data.tipo == 'success' || data.tipo == 'info'){
-                          if(data.coincidencia == 'VALIDA'){
-                            
-                            marcar_extraccion_sorteada($('#posicion').val(), true);
-                            if(buscar_valor_por_campo('sorteado',false,'posicion') !== undefined){
-                              $("#posicion").val('');
-                              $("#posicion").val(buscar_valor_por_campo('sorteado',false,'posicion'));
-                              var e = $.Event( "keypress", { which: 13 } );
-                              $( "#posicion" ).trigger(e);
-                            }
-                          }else if(data.reinicio == 'SI'){
-                            cargarConfiguracion({accion: "configuracion",juego:"primer_juego"}); 
-                          }else {
-                             $("#success_juego.alert").slideDown("slow");
-                             $('#success_juego > .contenido_error').html(data.coincidencia);
-                          }                           
-                            
-                            
-                        }else {
-                          $("#error_juego.alert").slideDown("slow");
-                          $('#error_juego > .contenido_error').html(data.coincidencia);
-                        }
-                      }
+                 } else {
+                     $("#error_juego.alert").slideDown("slow");
+                     $('#error_juego > .contenido_error').html(data.coincidencia);
+                 }
+             }
 
 
-                    }
-                );
-        }
+         }
+     );
+ }
 
 
-      $(document).ready(
-        function() {
-
-          cargarConfiguracion({accion: "configuracion",juego:"primer_juego"}); 
-
-          buscarGanadores1();
-          controlGanadores2();
-          setInterval(buscarGanadores1,2000);
-          setInterval(controlGanadores2,1000);
-        });
+ $(document).ready(
+     function() {
+         cargarConfiguracion({ accion: "configuracion", juego: "primer_juego" });
+         buscarGanadores();
+         controlGanadores();
+         setInterval(buscarGanadores, 2000);
+         setInterval(controlGanadores, 1000);
+     });
     </script>
   </head>
   <body>
@@ -169,7 +165,19 @@ try {
                   <div class="navbar-inner">
                     <ul class="nav juegos">
                       <li class="active">
-                        <a href="#" class="primer_juego" onclick="cambiar_juego(this.className); return false;"><?php echo $_SESSION['juego_tipo']; ?></a>
+                        <a href="#" class="primer_juego"><?php echo $_SESSION['juego_tipo']; ?></a>
+                      </li>
+                      <li>
+                        <a href="#" class="ver_sorteo" onclick="cargar_juego(this.className); return false;"><img src="img/icono_screen.png" width="19" height="19" border="0" style="vertical-align: middle;">Pantalla Sorteo</a>
+                      </li>
+                      <li>
+                        <a href="#" class="ver_buscando" onclick="cargar_juego(this.className); return false;"><img src="img/icono_screen.png" width="19" height="19" border="0" style="vertical-align: middle;">Pantalla Buscando Ganadores...</a>
+                      </li>
+                      <li>
+                        <a href="#" class="ver_pozo_8_aciertos" onclick="cargar_juego(this.className); return false;"><img src="img/icono_screen.png" width="19" height="19" border="0" style="vertical-align: middle;">Pantalla Pozo 8 Aciertos</a>
+                      </li>
+                      <li>
+                        <a href="#" class="ver_pozo_67_aciertos" onclick="cargar_juego(this.className); return false;"><img src="img/icono_screen.png" width="19" height="19" border="0" style="vertical-align: middle;">Pantalla Pozos 6 y 7 Aciertos</a>
                       </li>
                       <li class="divider-vertical"></li>
                     </ul>
@@ -178,22 +186,32 @@ try {
 
             </div>
           </div>
-          <div class="row-fluid show-grid">   
+          <div class="row-fluid show-grid">
           <div id="contendio_juego" class="well form-inline text-center">
             <h4>Juego <?php echo $_SESSION['juego_tipo']; ?></h4>
             <div class="subtitulo_juego label label-info" style="display:none">Primer Premio</div>
             <form class="form-inline" action="#">
-              <span class="texto_sorteo">Posicion</span> 
-                <input type="text" id="posicion"  disabled="disabled"  name="posicion" class="input-small bola" size="1" tabindex="0"> 
+              <span class="texto_sorteo">Posicion</span>
+                <input type="text" id="posicion"  disabled="disabled"  name="posicion" class="input-small bola" size="1" tabindex="0">
               <span id="entero_div">
-                <span class="texto_sorteo">Numero</span> 
+                <span class="texto_sorteo">Numero</span>
                   <input type="text" id="entero"name="entero" class="input-medium bola" size="1" tabindex="1">
               </span>
-            <span id="fraccion_div" style="display:none">
-                <span class="texto_sorteo">Fraccion</span> 
-                  <input type="text" id="fraccion" name="fraccion" class="input-small bola" size="1" tabindex="2">
-              </span>    
+              <span id="fraccion_div" style="display:none">
+                <span class="texto_sorteo">Fraccion</span>
+                  <input type="text" id="fraccion" name="fraccion" class="input-small bola" size="1" tabindex="2" >
+              </span>
+
             </form>
+          </div>
+          <div>
+             <input type="button" id="finalizar_sorteo" style="display:none; float: right;" onclick="if(confirm('¿Desea Finalizar el Sorteo <?php echo $_SESSION['sorteo'] ?>?')){
+                            $.get('sorteo/operador/quiniela_poceada/procesar_finalizar_sorteo.php?sorteo=<?php echo $_SESSION['sorteo'] ?>&id_juego=<?php echo $_SESSION['id_juego'] ?>&accion=finalizar_sorteo',
+                              function(data){
+                                mostrarMensaje(data);
+                               }
+                            );
+              }" value="Finalizar Sorteo" />
           </div>
         </div>
         <div id="error_juego" class="alert alert-error" style="display:none">
@@ -205,17 +223,17 @@ try {
             <button type="button" class="close" onclick="$('#success_juego.alert').slideUp('slow');">x</button>
             <span><i class="icon-ok"></i></span>
             <span class="contenido_error"></span>
-        </div>    
+        </div>
         <div id="warning_juego" class="alert alert-info" style="display:none">
-              <button type="button" class="close" onclick="$('#warning_juego.alert').slideUp('slow');">×</button> 
+              <button type="button" class="close" onclick="$('#warning_juego.alert').slideUp('slow');">×</button>
               <span><i class="icon-info-sign"></i></span>
-              <span class="contenido_error"></span>     
+              <span class="contenido_error"></span>
         </div>
 
         <div id="warning_juego2" class="alert alert-info" style="display:none">
-              <button type="button" class="close" onclick="$('#warning_juego2.alert').slideUp('slow');">×</button> 
+              <button type="button" class="close" onclick="$('#warning_juego2.alert').slideUp('slow');">×</button>
               <span><i class="icon-info-sign"></i></span>
-              <span class="contenido_error"></span>     
+              <span class="contenido_error"></span>
         </div>
           <div id="error" class="alert alert-error" style="display:none">
             <button type="button" class="close" onclick="$('.alert').slideUp('slow');">x</button>

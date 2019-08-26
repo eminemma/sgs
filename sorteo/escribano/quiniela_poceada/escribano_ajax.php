@@ -35,6 +35,26 @@ $res = sql("SELECT
 
 $row = siguiente($res);
 
+
+$res_rec = sql("SELECT
+				    TOTAL_PREMIOS_8_ACIERTOS,
+				    TOTAL_PREMIOS_7_ACIERTOS,
+				    TOTAL_PREMIOS_6_ACIERTOS,
+				    (SELECT COUNT(*) FROM KANBAN.T_PREMIOS@KANBAN_ANTICIPADA WHERE SORTEO=REC.SORTEO AND ID_JUEGO=REC.ID_JUEGO AND ID_DESCRIPCION = 82) AS CANTIDAD_GANADORES_8,
+				    (SELECT COUNT(*) FROM KANBAN.T_PREMIOS@KANBAN_ANTICIPADA WHERE SORTEO=REC.SORTEO AND ID_JUEGO=REC.ID_JUEGO AND ID_DESCRIPCION = 83) AS CANTIDAD_GANADORES_7,
+				    (SELECT COUNT(*) FROM KANBAN.T_PREMIOS@KANBAN_ANTICIPADA WHERE SORTEO=REC.SORTEO AND ID_JUEGO=REC.ID_JUEGO AND ID_DESCRIPCION = 84) AS CANTIDAD_GANADORES_6
+				FROM
+				    KANBAN.T_TT_RECAUDACION@KANBAN_ANTICIPADA REC
+				WHERE
+				    SORTEO       = ?
+				    AND ID_JUEGO = ?",
+    array($_SESSION['sorteo'],$_SESSION['id_juego']));
+
+$row_rec = siguiente($res_rec);
+
+$pozos['pozos'][]= array('pozo_8_aciertos' => '$'.number_format($row_rec->TOTAL_PREMIOS_8_ACIERTOS,0,',','.'), 'cantidad_ganadores_8_aciertos' => (($row_rec->CANTIDAD_GANADORES_8 == 0) ? 'Pozo Vacante' : ($row_rec->CANTIDAD_GANADORES_8 > 1 ? $row_rec->CANTIDAD_GANADORES_8.' Ganadores con $'.number_format(($row_rec->TOTAL_PREMIOS_8_ACIERTOS/$row_rec->CANTIDAD_GANADORES_8),0,',','.').' c/u ' : $row_rec->CANTIDAD_GANADORES_8.' Ganador con $'.number_format(($row_rec->TOTAL_PREMIOS_8_ACIERTOS/$row_rec->CANTIDAD_GANADORES_8),0,',','.'))));
+$pozos['pozos'][]= array('pozo_7_aciertos' => '$'.number_format($row_rec->TOTAL_PREMIOS_7_ACIERTOS,0,',','.'), 'cantidad_ganadores_7_aciertos' => (($row_rec->CANTIDAD_GANADORES_7 == 0) ? 'Pozo Vacante' :($row_rec->CANTIDAD_GANADORES_7 > 1 ? $row_rec->CANTIDAD_GANADORES_7.' Ganadores con $'.number_format(($row_rec->TOTAL_PREMIOS_7_ACIERTOS/$row_rec->CANTIDAD_GANADORES_7),0,',','.').' c/u' : $row_rec->CANTIDAD_GANADORES_7.' Ganador con $'.number_format(($row_rec->TOTAL_PREMIOS_7_ACIERTOS/$row_rec->CANTIDAD_GANADORES_7),0,',','.'))));
+$pozos['pozos'][]= array('pozo_6_aciertos' => '$'.number_format($row_rec->TOTAL_PREMIOS_6_ACIERTOS,0,',','.'), 'cantidad_ganadores_6_aciertos' => (($row_rec->CANTIDAD_GANADORES_6 == 0) ? 'Pozo Vacante' : ($row_rec->CANTIDAD_GANADORES_6 > 1 ? $row_rec->CANTIDAD_GANADORES_6.' Ganadores con $'.number_format(($row_rec->TOTAL_PREMIOS_6_ACIERTOS/$row_rec->CANTIDAD_GANADORES_6),0,',','.').' c/u ' : $row_rec->CANTIDAD_GANADORES_6.' Ganador con $'.number_format(($row_rec->TOTAL_PREMIOS_6_ACIERTOS/$row_rec->CANTIDAD_GANADORES_6),0,',','.'))));
 $retorno = array(
     'zonaMostrando' => 'zona' . (int) $row->VALOR,
     'escribano'     => ($row_sorteo->ESCRIBANO == null) ? '' : $row_sorteo->ESCRIBANO,
@@ -45,10 +65,8 @@ $retorno = array(
     'fecha_sorteo'  => ($row_sorteo->FECHA_SORTEO == null) ? '' : $row_sorteo->FECHA_SORTEO,
     'hora_sorteo'   => ($row_sorteo->HORA_SORTEO == null) ? '' : $row_sorteo->HORA_SORTEO,
     'billetesZona1' => array(),
-    'billetesZona2' => array(),
-    'billetesZona3' => array(),
+    'pozos'         => $pozos['pozos'],
 );
-
 /**
 BUSCAMOS LAS EXTRACCIONES DE LA ZONA 1
  */
@@ -56,11 +74,17 @@ BUSCAMOS LAS EXTRACCIONES DE LA ZONA 1
 $res = sql("SELECT
 				LPAD(NUMERO, 2, 0) AS NUMERO,
 				LPAD(POSICION, 2, 0) AS POSICION,
-        		(	SELECT decode(COUNT(*),0,'NO','SI')
-        			FROM sgs.T_BILLETES_PARTICIPANTES WHERE ID_JUEGO=te.id_juego and SORTEO=te.sorteo and billete=te.numero) AS VENDIDO
-
+        		(	SELECT DECODE(COUNT(*),0,'NO','SI')
+        			FROM SGS.T_BILLETES_PARTICIPANTES WHERE ID_JUEGO=TE.ID_JUEGO AND SORTEO=TE.SORTEO AND BILLETE=TE.NUMERO) AS VENDIDO,
+                (
+                CASE 
+                		WHEN SORTEO_ASOC LIKE 'QUINIELA DUPLICADO%' THEN 1
+                		WHEN SORTEO_ASOC LIKE 'VALIDA%' THEN 2
+            	ELSE 0
+            	END) AS ESTADO
+        
 			FROM
-				sgs.T_EXTRACCION te
+				SGS.T_EXTRACCION TE
 			WHERE
 					ID_JUEGO = ?
 				AND SORTEO = ?
@@ -70,13 +94,34 @@ $res = sql("SELECT
 				ORDEN",
     array($_SESSION['id_juego'], $_SESSION['sorteo']));
 
+$estado = array();
 while ($row = siguiente($res)) {
-    $retorno['billetesZona1'][] = array('numero' => $row->NUMERO, 'posicion' => $row->POSICION, 'vendido' => $row->VENDIDO);
+	if($row->ESTADO == '1'){
+		$estado[$row->POSICION] = array('duplicado' => 'SI');
+	}
+	if($row->ESTADO == '2'){
+		$estados = &$estado[$row->POSICION];
+		$estados['valida'] = 'SI';
+	}
+  
+}
+$res->MoveFirst();
+while ($row = siguiente($res)) {
+	if($estado[$row->POSICION]['duplicado'] == 'SI' && $estado[$row->POSICION]['valida'] == 'SI'){
+		if($row->ESTADO=='2'){
+			$retorno['billetesZona1'][] = array('numero' => $row->NUMERO, 'posicion' => $row->POSICION, 'vendido' => $row->VENDIDO, 'estado' => $row->ESTADO);
+		}
+	}else if($estado[$row->POSICION]['duplicado'] == 'SI'){
+		if($row->ESTADO=='1'){
+			$retorno['billetesZona1'][] = array('numero' => $row->NUMERO, 'posicion' => $row->POSICION, 'vendido' => $row->VENDIDO, 'estado' => $row->ESTADO);
+		}
+	}else{
+		$retorno['billetesZona1'][] = array('numero' => $row->NUMERO, 'posicion' => $row->POSICION, 'vendido' => $row->VENDIDO, 'estado' => $row->ESTADO);
+	}
+
 }
 
-
-
-
+  
 //var_dump($retorno['billetesZona3']);
 //header('Content-Type: text/html; charset=iso-8859-1');
 header('Content-Type: text/html; charset=utf-8');

@@ -1050,6 +1050,10 @@ function importar_datos_sorteo()
     }
 }
 
+function get_duplicates ($array) {
+    return  array_diff_assoc( $array, array_unique( $array ) );
+}
+
 
 function importar_extracto_quiniela_asociada($sorteo_kanban){
 	global $db_kanban;
@@ -1081,14 +1085,19 @@ $db->debug = true;*/
      			ID_JUEGO = ?
     		AND SORTEO = ?", array($id_juego, $sorteo));
 
-    $rs_extracto = sql_kanban("SELECT ID_DESCRIPCION,SUBSTR(LPAD(BILLETE,4,'0'),-2) AS BILLETE FROM  KANBAN.T_PREMIO_EXTRACTO WHERE SORTEO=? AND ID_JUEGO=?", array($sorteo_kanban['quiniela_asoc'], 2));
+    $rs_extracto = sql_kanban("SELECT ID_DESCRIPCION,SUBSTR(LPAD(BILLETE,4,'0'),-2) AS BILLETE,BILLETE as BILLETE_ORIGINAL FROM  KANBAN.T_PREMIO_EXTRACTO WHERE SORTEO=? AND ID_JUEGO=?", array($sorteo_kanban['quiniela_asoc'], 2));
     $extracto = array();
+    $extracto_original = array();
     while ($row_extracto = siguiente_kanban($rs_extracto)) {
     	$extracto[$row_extracto->ID_DESCRIPCION] =  $row_extracto->BILLETE;
     }
+    $rs_extracto->MoveFirst();
+	while ($row_extracto = siguiente_kanban($rs_extracto)) {
+    	$extracto_original[$row_extracto->ID_DESCRIPCION] =  $row_extracto->BILLETE_ORIGINAL;
+    }
+
 
     $resultado = array_unique($extracto);
-
 
 	ksort($resultado);
 	foreach ($resultado as $key => $value) {
@@ -1112,7 +1121,7 @@ $db->debug = true;*/
 		          ?,
 		          ?,
 		          ?
-		        )", array($id_juego, $sorteo, $key, $key,  $value,1,'QUINIELA ASOCIADA '.$sorteo_kanban['quiniela_asoc']));
+		        )", array($id_juego, $sorteo, $key, $key,  $value,1,'QUINIELA ASOCIADA '.$sorteo_kanban['quiniela_asoc'].'('.str_pad($extracto_original[$key],4,"0",STR_PAD_LEFT).')'));
 
 		sql(" INSERT
         INTO SGS.T_PREMIO_EXTRACTO
@@ -1138,9 +1147,46 @@ $db->debug = true;*/
             ?,
             ?,
             ?
-          )", array( $key,$value,'DU'.$_SESSION['dni'],$sorteo,1,$id_juego,1,'QUINIELA ASOCIADA '.$sorteo_kanban['quiniela_asoc']));
+          )", array( $key,$value,'DU'.$_SESSION['dni'],$sorteo,1,$id_juego,1,'QUINIELA ASOCIADA '.$sorteo_kanban['quiniela_asoc'].'('.str_pad($extracto_original[$key],4,"0",STR_PAD_LEFT).')'));
 
 		
 	}
+
+	$duplicados = get_duplicates($extracto);
+	
+	foreach ($duplicados as $key => $value) {
+
+		sql("INSERT
+		      INTO SGS.T_EXTRACCION
+		        (
+		          ID_JUEGO,
+		          SORTEO,
+		          ORDEN,
+		          POSICION,
+		          NUMERO,
+		          ZONA_JUEGO,
+		          SORTEO_ASOC
+		        )
+		        VALUES
+		        (
+		          ?,
+		          ?,
+		          ?,
+		          ?,
+		          ?,
+		          ?,
+		          ?
+		        )", array($id_juego, $sorteo, $key, $key,  $value,1,'QUINIELA DUPLICADO '.$sorteo_kanban['quiniela_asoc'].'('.str_pad($extracto_original[$key],4,"0",STR_PAD_LEFT).')'));
+		/*$posicion =array_search($value, $extracto);
+
+			sql("	UPDATE SGS.T_EXTRACCION
+					SET
+    					DUPLICADO = DUPLICADO||','||?
+					WHERE
+				     ID_JUEGO = ?
+				    AND SORTEO = ?
+				    AND POSICION = ?", array($key,$id_juego, $sorteo, $posicion ));*/
+	}
+
 
 }
