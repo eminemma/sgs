@@ -47,7 +47,7 @@ if ($row_sorteo = $rs_sorteo->FetchNextObject($toupper = true)) {
     //$estado_sorteo=$row_sorteo->ESTADO_SORTEO;
     $monto_fraccion = $row_sorteo->MONTO_FRACCION;
     $sorteo         = $row_sorteo->NRO;
-    $quiniela_asoc         = $row_sorteo->QUINIELA_ASOC;
+    $quiniela_asoc  = $row_sorteo->QUINIELA_ASOC;
     $operador       = (is_null($row_sorteo->OPERADOR)) ? 'Sin Operador' : $row_sorteo->OPERADOR;
 }
 try {
@@ -82,7 +82,7 @@ $pdf = new PDF('P');
 $pdf->AliasNbPages();
 $pdf->AddPage();
 $pdf->SetFillColor(200, 200, 200);
-$pdf->SetFont('Arial', 'IB', 10);
+$pdf->SetFont('Arial', 'B', 10);
 $pdf->SetXY(10, 43);
 $pdf->Cell(100, 8, 'Datos Sorteo - Fecha Importacion:' . $fecha_importacion, 1, 1, 'L', 1);
 $pdf->SetFont('Arial', 'B', 9);
@@ -117,7 +117,7 @@ $pdf->SetXY(70, 80);
 $pdf->Cell(30, 8, $fecha_caduca, 0, 1, 'L');
 $pdf->SetFont('Arial', 'B', 7);
 $pdf->SetXY(10, 90);
-$pdf->Cell(130, 4, 'PROGRAMA DE PREMIOS', 1, 1, 'L', 1);
+$pdf->Cell(110, 4, 'PROGRAMA DE PREMIOS', 1, 1, 'L', 1);
 try {
 
     $rs_programa_premios = sql("	SELECT ID_DESCRIPCION                                               AS POSICION,
@@ -144,21 +144,20 @@ try {
 
 } catch (exception $e) {die($db->ErrorMsg());}
 $pdf->SetX(10);
-$pdf->Cell(50, 4, 'PREMIO', 1, 0, 'L');
-$pdf->Cell(40, 4, 'TIPO PREMIO', 1, 0, 'L');
-$pdf->Cell(40, 4, 'PORCENTAJE', 1, 1, 'L');
+$pdf->SetFillColor(200, 200, 200);
+$pdf->SetFont('Arial', 'B', 7);
+$pdf->Cell(50, 4, 'CATEGORIA PREMIO', 1, 0, 'L', 1);
+$pdf->Cell(60, 4, 'PORCENTAJE', 1, 1, 'L', 1);
 $pdf->SetFont('Arial', '', 7);
 $id_programa = null;
 while ($row_programa_premios = $rs_programa_premios->FetchNextObject($toupper = true)) {
     $premio = is_numeric($row_programa_premios->PREMIO) ? number_format($row_programa_premios->PREMIO, 0, ',', '.') : $row_programa_premios->PREMIO;
     $pdf->SetX(10);
-    $pdf->Cell(50, 4, $row_programa_premios->DESCRIPCION, 1, 0, 'L');
-    $pdf->Cell(40, 4, $row_programa_premios->TIPO, 1, 0, 'L');
-    $pdf->Cell(40, 4, $row_programa_premios->PORCENTAJE, 1, 1, 'C');
+    $pdf->Cell(50, 4, $row_programa_premios->DESCRIPCION, 'B', 0, 'L');
+    $pdf->Cell(60, 4, $row_programa_premios->PORCENTAJE . ' %', 'B', 1, 'C');
     $id_programa = $row_programa_premios->ID_PROGRAMA;
 }
 $pdf->ln(4);
-
 
 //$db->debug=true;
 try {
@@ -170,17 +169,42 @@ try {
                 AND TE.SORTEO_ASOC LIKE '%QUINIELA ASOCIADA%'
         ORDER BY te.zona_juego desc ,te.ORDEN DESC", array($_SESSION['sorteo'], $_SESSION['id_juego']));
 } catch (exception $e) {die($db->ErrorMsg());}
-
-$pdf->SetFont('Times', 'B', 10);
-$pdf->Cell(10, 5, '#OR', 1, 0, 'C');
-$pdf->Cell(20, 5, 'POSICION', 1, 0, 'C');
-$pdf->Cell(20, 5, 'ENTERO', 1, 0, 'C');
-$pdf->Cell(60, 5, 'EXTRAIDO', 1, 1, 'C');
+$pdf->SetFont('Arial', 'B', 7);
+$pdf->Cell(110, 4, 'QUINIELA ASOCIADA', 1, 1, 'L', 1);
+$pdf->SetFont('Arial', 'B', 7);
+$pdf->Cell(10, 5, '#OR', 1, 0, 'C', 1);
+$pdf->Cell(20, 5, 'POSICION', 1, 0, 'C', 1);
+$pdf->Cell(20, 5, 'ENTERO', 1, 0, 'C', 1);
+$pdf->Cell(60, 5, 'EXTRAIDO', 1, 1, 'C', 1);
+$pdf->SetFont('Arial', '', 7);
 while ($row_extraccion = $rs_extracciones->FetchNextObject($toupper = true)) {
     $pdf->Cell(10, 5, $row_extraccion->ORDEN, 'B', 0, 'C');
     $pdf->Cell(20, 5, $row_extraccion->POSICION, 'B', 0, 'C');
     $pdf->Cell(20, 5, str_pad($row_extraccion->NUMERO, 2, "0", STR_PAD_LEFT), 'B', 0, 'C');
     $pdf->Cell(60, 5, ($row_extraccion->SORTEO_ASOC), 'B', 1, 'L');
 }
+$pdf->ln(1);
+try {
+    $rs_recaudacion = sql(" SELECT
+                                    RECAUDACION,
+                                    TOTAL_PREMIOS_8_ACIERTOS,
+                                    TOTAL_PREMIOS_7_ACIERTOS,
+                                    TOTAL_PREMIOS_6_ACIERTOS
+                            FROM
+                                KANBAN.T_TT_RECAUDACION@KANBAN_ANTICIPADA
+                            WHERE SORTEO = ?
+                            AND ID_JUEGO = ?", array($_SESSION['sorteo'], $_SESSION['id_juego']));
+} catch (exception $e) {die($db->ErrorMsg());}
+$row_recaudacion = $rs_recaudacion->FetchNextObject($toupper = true);
+$pdf->SetFont('Arial', 'B', 9);
+$pdf->Cell(50, 4, 'RECAUDACION', 1, 1, 'C', 1);
+$pdf->Cell(50, 5, '$ ' . number_format($row_recaudacion->RECAUDACION, 2, ',', '.'), 'B', 1, 'R');
+$pdf->Cell(50, 5, '8 ACIERTOS', 1, 0, 'C', 1);
+$pdf->Cell(50, 5, '7 ACIERTOS', 1, 0, 'C', 1);
+$pdf->Cell(50, 5, '6 ACIERTOS', 1, 1, 'C', 1);
+
+$pdf->Cell(50, 5, '$ ' . number_format($row_recaudacion->TOTAL_PREMIOS_8_ACIERTOS, 2, ',', '.'), 'B', 0, 'R');
+$pdf->Cell(50, 5, '$ ' . number_format($row_recaudacion->TOTAL_PREMIOS_7_ACIERTOS, 2, ',', '.'), 'B', 0, 'R');
+$pdf->Cell(50, 5, '$ ' . number_format($row_recaudacion->TOTAL_PREMIOS_6_ACIERTOS, 2, ',', '.'), 'B', 1, 'R');
 
 $pdf->Output();

@@ -25,7 +25,7 @@ class PDF extends FPDF
         $y_line = $this->GetY();
         $this->Cell(30, $y_line, 'LOTERIA DE CORDOBA S.E.', 0, 0, 'C');
 
-        $this->SetFont('Times', 'I', 8);
+        $this->SetFont('Times', '', 8);
         $y_line = $this->GetY();
         $this->Ln(5);
         $this->Cell(80);
@@ -39,7 +39,7 @@ class PDF extends FPDF
         //Salto de línea
         $this->Ln(-3);
         //Arial bold 15
-        $this->SetFont('Arial', 'BI', 13);
+        $this->SetFont('Arial', 'B', 13);
         $y_line = $this->GetY();
         $this->Cell(190, $y_line, $titulo, 0, 1, 'C');
 
@@ -52,7 +52,7 @@ class PDF extends FPDF
 
         }
 
-        $this->SetFont('Arial', 'BI', 13);
+        $this->SetFont('Arial', 'B', 13);
         if ($titulo2 != '') {
             $this->Ln(-15);
             $y_line = $this->GetY();
@@ -70,7 +70,7 @@ class PDF extends FPDF
             $this->SetY(-15);
             $y_line = $this->GetY();
             $this->Line(10, $y_line, 200, $y_line);
-            $this->SetFont('Arial', 'I', 8);
+            $this->SetFont('Arial', '', 8);
             $this->Cell(0, 7, 'Sistema SGS Usuario: ' . utf8_decode($_SESSION['nombre_usuario']) . '  ' . date('d/m/Y h:i:s A'), 0, 0, 'L');
             $this->Cell(0, 7, 'Pagina: ' . $this->PageNo() . "/{nb}", 0, 0, 'R');
         }

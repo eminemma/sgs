@@ -55,7 +55,8 @@ if ($accion == 'exportar') {
 									S.USUARIO_JEFE_SORTEO  	  = ?,
 									S.USUARIO_OPERADOR     	  = ?,
 									S.FECHA_HASTA_PAGO_PREMIO = to_date(?,'dd/mm/yyyy'),
-									S.QUINIELA_ASOC           = ?
+									S.QUINIELA_ASOC           = ?,
+                                    S.ESTADO_SORTEO           = 'F'
 								WHERE S.ID_JUEGO           	  = ?
 									AND S.SORTEO  			  = ?", array($row_sorteo_local->FECHA_SORTEO,
                 $row_sorteo_local->FECHA_BAJA,
@@ -68,8 +69,8 @@ if ($accion == 'exportar') {
 
             //Importar Extractos al KANBAN
             $id_programa = $row_sorteo_local->ID_PROGRAMA;
-            if($id_juego == 32){
-                sql_kanban("DELETE FROM kanban.t_premio_extracto WHERE sorteo = ? and id_juego = ?",array($sorteo,$id_juego));
+            if ($id_juego == 32) {
+                sql_kanban("DELETE FROM kanban.t_premio_extracto WHERE sorteo = ? and id_juego = ?", array($sorteo, $id_juego));
             }
             $rs_extractos_local = sql('	SELECT * FROM SGS.T_PREMIO_EXTRACTO WHERE ID_JUEGO=? AND SORTEO=?', array($id_juego, $sorteo));
             if ($rs_extractos_local->RecordCount() == 0) {
@@ -160,9 +161,9 @@ if ($accion == 'exportar') {
 											)");
                     }
                 } else {
-                    if($id_juego == 32){
+                    if ($id_juego == 32) {
 
-                         $fraccion = $row_extractos_local->FRACCION;
+                        $fraccion = $row_extractos_local->FRACCION;
                         if (is_null($row_extractos_local->FRACCION)) {
                             $fraccion = 'null';
                         }
@@ -180,7 +181,6 @@ if ($accion == 'exportar') {
                         if (is_null($row_extractos_local->SORTEO_ASOC)) {
                             $sorteo_asoc = 'null';
                         }
-
 
                         sql_kanban("INSERT
                                         INTO KANBAN.T_PREMIO_EXTRACTO
@@ -210,30 +210,30 @@ if ($accion == 'exportar') {
                                             to_date('" . date('d/m/Y', strtotime($row_extractos_local->HORAEXTRACCION)) . "','dd/mm/yyyy'),
                                             $importe,
                                             '$sorteo_asoc'
-                                          )");    
-                    }else{
-                    $rs_extracto = sql_kanban('	SELECT COUNT(*) as CANTIDAD_EXTRACTO
+                                          )");
+                    } else {
+                        $rs_extracto = sql_kanban('	SELECT COUNT(*) as CANTIDAD_EXTRACTO
 													FROM KANBAN.T_PREMIO_EXTRACTO
 													WHERE ID_JUEGO=?
 														AND SORTEO=?
 														AND ID_DESCRIPCION=?', array($id_juego, $sorteo, $row_extractos_local->ID_DESCRIPCION));
-                    $row_extracto = siguiente_kanban($rs_extracto);
-                    if ($row_extracto->CANTIDAD_EXTRACTO > 0) {
-                        $fraccion = $row_extractos_local->FRACCION;
-                        if (is_null($row_extractos_local->FRACCION)) {
-                            $fraccion = 'null';
-                        }
+                        $row_extracto = siguiente_kanban($rs_extracto);
+                        if ($row_extracto->CANTIDAD_EXTRACTO > 0) {
+                            $fraccion = $row_extractos_local->FRACCION;
+                            if (is_null($row_extractos_local->FRACCION)) {
+                                $fraccion = 'null';
+                            }
 
-                        $importe = $row_extractos_local->IMPORTE;
-                        if (is_null($row_extractos_local->IMPORTE)) {
-                            $importe = 'null';
-                        }
-                        $progresion = $row_extractos_local->PROGRESION;
-                        if (is_null($row_extractos_local->PROGRESION)) {
-                            $progresion = 'null';
-                        }
+                            $importe = $row_extractos_local->IMPORTE;
+                            if (is_null($row_extractos_local->IMPORTE)) {
+                                $importe = 'null';
+                            }
+                            $progresion = $row_extractos_local->PROGRESION;
+                            if (is_null($row_extractos_local->PROGRESION)) {
+                                $progresion = 'null';
+                            }
 
-                        sql_kanban("UPDATE KANBAN.T_PREMIO_EXTRACTO
+                            sql_kanban("UPDATE KANBAN.T_PREMIO_EXTRACTO
 										SET
 											BILLETE=$row_extractos_local->BILLETE,
 											SORTEO=$sorteo,
@@ -247,22 +247,22 @@ if ($accion == 'exportar') {
 									WHERE ID_JUEGO=?
 										AND SORTEO=?
 										AND ID_DESCRIPCION=$row_extractos_local->ID_DESCRIPCION", array($id_juego, $sorteo));
-                    } else {
-                        $fraccion = $row_extractos_local->FRACCION;
-                        if (is_null($row_extractos_local->FRACCION)) {
-                            $fraccion = 'null';
-                        }
+                        } else {
+                            $fraccion = $row_extractos_local->FRACCION;
+                            if (is_null($row_extractos_local->FRACCION)) {
+                                $fraccion = 'null';
+                            }
 
-                        $importe = $row_extractos_local->IMPORTE;
-                        if (is_null($row_extractos_local->IMPORTE)) {
-                            $importe = 'null';
-                        }
-                        $progresion = $row_extractos_local->PROGRESION;
-                        if (is_null($row_extractos_local->PROGRESION)) {
-                            $progresion = 'null';
-                        }
+                            $importe = $row_extractos_local->IMPORTE;
+                            if (is_null($row_extractos_local->IMPORTE)) {
+                                $importe = 'null';
+                            }
+                            $progresion = $row_extractos_local->PROGRESION;
+                            if (is_null($row_extractos_local->PROGRESION)) {
+                                $progresion = 'null';
+                            }
 
-                        sql_kanban("INSERT
+                            sql_kanban("INSERT
 										INTO KANBAN.T_PREMIO_EXTRACTO
 										  (
 											ID_DESCRIPCION,
@@ -506,7 +506,7 @@ if ($accion == 'exportar_anticipada') {
                 $desc_especie = null;
 
                 //$db_kanban->debug = true;
-                 $rs_estimulo = null;
+                $rs_estimulo = null;
                 if ((int) $row_premio->ID_TIPO_PREMIO == 1) {
                     $rs_estimulo = sql_kanban("		SELECT      PD.ORDEN,
                                                                 PP.ID_DESCRIPCION,
@@ -538,7 +538,7 @@ if ($accion == 'exportar_anticipada') {
                     $row_estimulo = $rs_estimulo->FetchNextObject($toupper = true);
                     $especie      = $row_estimulo->PREMIO_ID_ESPECIAS;
                     $desc_especie = $row_estimulo->DESCRIPCION_ESPECIA;
-                }else{
+                } else {
                     $rs_estimulo = sql_kanban("    SELECT      PD.ORDEN,
                                                             PP.ID_DESCRIPCION,
                                                             PD.DESCRIPCION
@@ -564,9 +564,8 @@ if ($accion == 'exportar_anticipada') {
                     );
                     $row_estimulo = $rs_estimulo->FetchNextObject($toupper = true);
                     $desc_especie = 'EFECTIVO';
-                    $importe = $row_estimulo->IMPORTE;
+                    $importe      = $row_estimulo->IMPORTE;
                 }
-               
 
                 if ($rs_estimulo->RowCount() != 0) {
 
@@ -620,6 +619,6 @@ if ($accion == 'exportar_anticipada') {
 
 }
 
-if($accion == 'exportar_quiniela_poceada'){
+if ($accion == 'exportar_quiniela_poceada') {
 
 }

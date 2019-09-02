@@ -139,10 +139,8 @@ function sql_quiniela_asociadas()
             FROM
                     SGS.T_SORTEO
             WHERE  ID_JUEGO                = 2
-                AND    TRUNC(FECHA_SORTEO) = TRUNC(SYSDATE)
-                OR SORTEO=?
+                AND  SORTEO=?
             ORDER BY FECHA_SORTEO DESC";
-
 
     return $sql;
 }

@@ -481,8 +481,28 @@ switch ($accion) {
     case 'importar_quiniela_poceada':
         $billetes   = isset($_GET['billetes']) ? $_GET['billetes'] : '';
         $solo_venta = (isset($_GET['solo_venta']) && $_GET['solo_venta'] != 'undefined') ? $_GET['solo_venta'] : 0;
+        $sorteo     = $_SESSION['sorteo'];
+        $id_juego   = $_SESSION['id_juego'];
 
-        //IMPORTACION DE DATOS DEL SORTEO (QUINIELA NO TIENE DISTRIBUCION VENTA DIRECTA EN LA AGENCIA)
+        $rs = sql("SELECT
+				    TOTAL_PREMIOS_8_ACIERTOS,
+    				TOTAL_PREMIOS_7_ACIERTOS,
+    				TOTAL_PREMIOS_6_ACIERTOS
+			FROM
+    			KANBAN.T_TT_RECAUDACION@KANBAN_ANTICIPADA
+    		WHERE SORTEO = $sorteo
+    		AND ID_JUEGO = $id_juego");
+
+        if ($rs->RecordCount() == 0) {
+            die(error('Es necesario definir los premios para cada categoria de premios antes de importar'));
+        }
+
+        if ($rs->RecordCount() > 0) {
+            $row = siguiente($rs);
+            if ($row->TOTAL_PREMIOS_8_ACIERTOS == '0' || $row->TOTAL_PREMIOS_7_ACIERTOS == '0' || $row->TOTAL_PREMIOS_6_ACIERTOS == '0') {
+                die(error('Es necesario definir los premios para cada categoria de premios antes de importar'));
+            }
+        }
 
         importar_datos_sorteo();
 
@@ -591,7 +611,7 @@ function importar_datos_sorteo()
 {
     global $db_kanban;
     global $db;
-     global $sorteo_kanban;
+    global $sorteo_kanban;
 
     if (!isset($db)) {
         conectar_db();
@@ -609,7 +629,7 @@ function importar_datos_sorteo()
     try {
 
         if ($solo_venta == 0) {
-            
+
             $rs_sorteo_kanban = sql_kanban("	SELECT 	ID_SORTEO,to_char(FECHA_SORTEO,'YYYY-MM-DD HH24:MI:SS') AS FECHA_SORTEO,FECHA_BAJA,ID_ESCRIBANO,
             											USUARIO_JEFE_SORTEO,USUARIO_OPERADOR,ID_PROGRAMA,PRIMER_ELEMENTO,
             											ULTIMO_ELEMENTO,FRACCIONES,CANTIDAD_SORTEOS_FECHA,SORTEO_UNICO,DESCRIPCION,
@@ -637,8 +657,8 @@ function importar_datos_sorteo()
             $sorteo_kanban['sorteo_unico']            = $row_sorteo_kanban->SORTEO_UNICO;
             $sorteo_kanban['descripcion']             = $row_sorteo_kanban->DESCRIPCION;
             $sorteo_kanban['monto_fraccion']          = $row_sorteo_kanban->MONTO_FRACCION;
-            $sorteo_kanban['fecha_hasta_pago_premio'] = $row_sorteo_kanban->FECHA_HASTA_PAGO_PREMIO;            
-            $sorteo_kanban['quiniela_asoc'] 		  = $row_sorteo_kanban->QUINIELA_ASOC;
+            $sorteo_kanban['fecha_hasta_pago_premio'] = $row_sorteo_kanban->FECHA_HASTA_PAGO_PREMIO;
+            $sorteo_kanban['quiniela_asoc']           = $row_sorteo_kanban->QUINIELA_ASOC;
 
             //T_PROGRAMA
             //Traigo los datos del Programa desde Kanban
@@ -794,7 +814,7 @@ function importar_datos_sorteo()
                 $programa_premios_kanban['progresion_id_especias']         = $row_prog_premios_kanban->PROGRESION_ID_ESPECIAS;
                 $programa_premios_kanban['dos_ultimas_cifras_id_especias'] = $row_prog_premios_kanban->DOS_ULTIMAS_CIFRAS_ID_ESPECIAS;
                 $programa_premios_kanban['tipo_premio']                    = $row_prog_premios_kanban->TIPO_PREMIO;
-                $programa_premios_kanban['procentaje']                    = $row_prog_premios_kanban->PORCENTAJE;
+                $programa_premios_kanban['procentaje']                     = $row_prog_premios_kanban->PORCENTAJE;
 
                 //$db->debug = true;
                 $rs_prog_premios_sgs = sql("SELECT * FROM SGS.T_PROGRAMA_PREMIOS WHERE ID_PROGRAMA=? AND ID_DESCRIPCION=?", array($sorteo_kanban['id_programa'], $programa_premios_kanban['id_descripcion']));
@@ -845,7 +865,7 @@ function importar_datos_sorteo()
                         $programa_premios_kanban['progresion_id_especias'],
                         $programa_premios_kanban['dos_ultimas_cifras_id_especias'],
                         $programa_premios_kanban['tipo_premio'],
-                        $programa_premios_kanban['procentaje']  ,
+                        $programa_premios_kanban['procentaje'],
                         $sorteo_kanban['id_programa'], $programa_premios_kanban['id_descripcion']));
                 } else {
                     //$db->debug = true;
@@ -897,7 +917,7 @@ function importar_datos_sorteo()
                         $programa_premios_kanban['progresion_id_especias'],
                         $programa_premios_kanban['dos_ultimas_cifras_id_especias'],
                         $programa_premios_kanban['tipo_premio'],
-                        $programa_premios_kanban['procentaje']  
+                        $programa_premios_kanban['procentaje'],
                     ));
                 }
             }
@@ -914,7 +934,6 @@ function importar_datos_sorteo()
                 }
             }
 
-      
             $rs_sorteo_sgs = sql("SELECT * FROM SGS.T_SORTEO WHERE ID_JUEGO=? AND SORTEO=?", array($id_juego, $sorteo));
             if ($rs_sorteo_sgs->RowCount() > 0) {
                 $fraccion = ($sorteo_kanban['fracciones'] == null) ? 0 : $sorteo_kanban['fracciones'];
@@ -993,7 +1012,7 @@ function importar_datos_sorteo()
                     $sorteo_kanban['cantidad_serie'],
                     $sorteo_kanban['monto_fraccion'],
                     $sorteo_kanban['fecha_hasta_pago_premio'],
-                	$sorteo_kanban['quiniela_asoc'],
+                    $sorteo_kanban['quiniela_asoc'],
                     $id_juego,
                     $sorteo));
             }
@@ -1050,18 +1069,19 @@ function importar_datos_sorteo()
     }
 }
 
-function get_duplicates ($array) {
-    return  array_diff_assoc( $array, array_unique( $array ) );
+function get_duplicates($array)
+{
+    return array_diff_assoc($array, array_unique($array));
 }
 
-
-function importar_extracto_quiniela_asociada($sorteo_kanban){
-	global $db_kanban;
+function importar_extracto_quiniela_asociada($sorteo_kanban)
+{
+    global $db_kanban;
     global $db;
     global $sorteo_kanban;
 
-    $sorteo     = $_SESSION['sorteo'];
-    $id_juego   = $_SESSION['id_juego'];
+    $sorteo   = $_SESSION['sorteo'];
+    $id_juego = $_SESSION['id_juego'];
 
     if (!isset($db)) {
         conectar_db();
@@ -1075,33 +1095,32 @@ function importar_extracto_quiniela_asociada($sorteo_kanban){
 /*$db_kanban->debug = true;
 $db->debug = true;*/
 
-	sql("DELETE FROM SGS.T_EXTRACCION
+    sql("DELETE FROM SGS.T_EXTRACCION
 			WHERE
      			ID_JUEGO = ?
     		AND SORTEO = ?", array($id_juego, $sorteo));
 
-		sql("DELETE FROM SGS.T_PREMIO_EXTRACTO
+    sql("DELETE FROM SGS.T_PREMIO_EXTRACTO
 			WHERE
      			ID_JUEGO = ?
     		AND SORTEO = ?", array($id_juego, $sorteo));
 
-    $rs_extracto = sql_kanban("SELECT ID_DESCRIPCION,SUBSTR(LPAD(BILLETE,4,'0'),-2) AS BILLETE,BILLETE as BILLETE_ORIGINAL FROM  KANBAN.T_PREMIO_EXTRACTO WHERE SORTEO=? AND ID_JUEGO=?", array($sorteo_kanban['quiniela_asoc'], 2));
-    $extracto = array();
+    $rs_extracto       = sql_kanban("SELECT ID_DESCRIPCION,SUBSTR(LPAD(BILLETE,4,'0'),-2) AS BILLETE,BILLETE as BILLETE_ORIGINAL FROM  KANBAN.T_PREMIO_EXTRACTO WHERE SORTEO=? AND ID_JUEGO=?", array($sorteo_kanban['quiniela_asoc'], 2));
+    $extracto          = array();
     $extracto_original = array();
     while ($row_extracto = siguiente_kanban($rs_extracto)) {
-    	$extracto[$row_extracto->ID_DESCRIPCION] =  $row_extracto->BILLETE;
+        $extracto[$row_extracto->ID_DESCRIPCION] = $row_extracto->BILLETE;
     }
     $rs_extracto->MoveFirst();
-	while ($row_extracto = siguiente_kanban($rs_extracto)) {
-    	$extracto_original[$row_extracto->ID_DESCRIPCION] =  $row_extracto->BILLETE_ORIGINAL;
+    while ($row_extracto = siguiente_kanban($rs_extracto)) {
+        $extracto_original[$row_extracto->ID_DESCRIPCION] = $row_extracto->BILLETE_ORIGINAL;
     }
-
 
     $resultado = array_unique($extracto);
 
-	ksort($resultado);
-	foreach ($resultado as $key => $value) {
-		sql("INSERT
+    ksort($resultado);
+    foreach ($resultado as $key => $value) {
+        sql("INSERT
 		      INTO SGS.T_EXTRACCION
 		        (
 		          ID_JUEGO,
@@ -1121,9 +1140,9 @@ $db->debug = true;*/
 		          ?,
 		          ?,
 		          ?
-		        )", array($id_juego, $sorteo, $key, $key,  $value,1,'QUINIELA ASOCIADA '.$sorteo_kanban['quiniela_asoc'].'('.str_pad($extracto_original[$key],4,"0",STR_PAD_LEFT).')'));
+		        )", array($id_juego, $sorteo, $key, $key, $value, 1, 'QUINIELA ASOCIADA ' . $sorteo_kanban['quiniela_asoc'] . '(' . str_pad($extracto_original[$key], 4, "0", STR_PAD_LEFT) . ')'));
 
-		sql(" INSERT
+        sql(" INSERT
         INTO SGS.T_PREMIO_EXTRACTO
           (
             ID_DESCRIPCION,
@@ -1147,16 +1166,15 @@ $db->debug = true;*/
             ?,
             ?,
             ?
-          )", array( $key,$value,'DU'.$_SESSION['dni'],$sorteo,1,$id_juego,1,'QUINIELA ASOCIADA '.$sorteo_kanban['quiniela_asoc'].'('.str_pad($extracto_original[$key],4,"0",STR_PAD_LEFT).')'));
+          )", array($key, $value, 'DU' . $_SESSION['dni'], $sorteo, 1, $id_juego, 1, 'QUINIELA ASOCIADA ' . $sorteo_kanban['quiniela_asoc'] . '(' . str_pad($extracto_original[$key], 4, "0", STR_PAD_LEFT) . ')'));
 
-		
-	}
+    }
 
-	$duplicados = get_duplicates($extracto);
-	
-	foreach ($duplicados as $key => $value) {
+    $duplicados = get_duplicates($extracto);
 
-		sql("INSERT
+    foreach ($duplicados as $key => $value) {
+
+        sql("INSERT
 		      INTO SGS.T_EXTRACCION
 		        (
 		          ID_JUEGO,
@@ -1176,17 +1194,16 @@ $db->debug = true;*/
 		          ?,
 		          ?,
 		          ?
-		        )", array($id_juego, $sorteo, $key, $key,  $value,1,'QUINIELA DUPLICADO '.$sorteo_kanban['quiniela_asoc'].'('.str_pad($extracto_original[$key],4,"0",STR_PAD_LEFT).')'));
-		/*$posicion =array_search($value, $extracto);
+		        )", array($id_juego, $sorteo, $key, $key, $value, 1, 'QUINIELA DUPLICADO ' . $sorteo_kanban['quiniela_asoc'] . '(' . str_pad($extracto_original[$key], 4, "0", STR_PAD_LEFT) . ')'));
+        /*$posicion =array_search($value, $extracto);
 
-			sql("	UPDATE SGS.T_EXTRACCION
-					SET
-    					DUPLICADO = DUPLICADO||','||?
-					WHERE
-				     ID_JUEGO = ?
-				    AND SORTEO = ?
-				    AND POSICION = ?", array($key,$id_juego, $sorteo, $posicion ));*/
-	}
-
+    sql("    UPDATE SGS.T_EXTRACCION
+    SET
+    DUPLICADO = DUPLICADO||','||?
+    WHERE
+    ID_JUEGO = ?
+    AND SORTEO = ?
+    AND POSICION = ?", array($key,$id_juego, $sorteo, $posicion ));*/
+    }
 
 }

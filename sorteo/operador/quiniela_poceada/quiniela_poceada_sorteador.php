@@ -121,12 +121,6 @@ var param;
                  if (data.tipo == 'success' || data.tipo == 'info') {
                      if (data.coincidencia == 'VALIDA') {
                          cargarConfiguracion({ accion: "configuracion", juego: "primer_juego" });
-                         if (buscar_valor_por_campo('sorteado', false, 'posicion') !== undefined) {
-                             $("#posicion").val('');
-                             $("#posicion").val(buscar_valor_por_campo('sorteado', false, 'posicion'));
-                             var e = $.Event("keypress", { which: 13 });
-                             $("#posicion").trigger(e);
-                         }
                      } else if (data.reinicio == 'SI') {
                          cargarConfiguracion({ accion: "configuracion", juego: "primer_juego" });
                      } else {
