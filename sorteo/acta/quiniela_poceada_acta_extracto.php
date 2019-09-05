@@ -3,7 +3,7 @@ session_start();
 //var_dump($_SESSION);
 include_once dirname(__FILE__) . '/../../db.php';
 
-$titulo = strtoupper('ACTA '.$_SESSION['juego']);
+$titulo = strtoupper('ACTA ' . $_SESSION['juego']);
 
 $titulo2 = strtoupper('SORTEO ' . $_SESSION['sorteo']);
 
@@ -134,7 +134,7 @@ while ($row = $rs_extracciones->FetchNextObject($toupper = true)) {
         $pdf->SetY($zy);
         $pdf->SetX($x);
         $pdf->SetFont('Times', 'I', 10);
-        $pdf->Cell(50, 0, ucwords(strtolower($row->DESCRIPCION)), 0, 1, 1);
+        $pdf->Cell(50, 0, ucwords(strtolower('POSICION ' . $row->POSICION)), 0, 1, 1);
         $pdf->SetFont('Times', 'BI', 16);
         $pdf->SetX($x + 40);
         $pdf->Cell(20, 0, $row->NUMERO, 0, 1, 1);
@@ -143,7 +143,7 @@ while ($row = $rs_extracciones->FetchNextObject($toupper = true)) {
         $pdf->SetY($zy1);
         $pdf->SetX($xx);
         $pdf->SetFont('Times', 'I', 10);
-        $pdf->Cell(50, 0, ucwords(strtolower($row->DESCRIPCION)), 0, 1, 1);
+        $pdf->Cell(50, 0, ucwords(strtolower('POSICION ' . $row->POSICION)), 0, 1, 1);
         $pdf->SetFont('Times', 'BI', 16);
         $pdf->SetX($xx + 48);
         $pdf->Cell(20, 0, $row->NUMERO, 0, 1, 1);

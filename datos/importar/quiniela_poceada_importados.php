@@ -170,15 +170,13 @@ try {
         ORDER BY te.zona_juego desc ,te.ORDEN DESC", array($_SESSION['sorteo'], $_SESSION['id_juego']));
 } catch (exception $e) {die($db->ErrorMsg());}
 $pdf->SetFont('Arial', 'B', 7);
-$pdf->Cell(110, 4, 'QUINIELA ASOCIADA', 1, 1, 'L', 1);
+$pdf->Cell(100, 4, 'QUINIELA ASOCIADA', 1, 1, 'L', 1);
 $pdf->SetFont('Arial', 'B', 7);
-$pdf->Cell(10, 5, '#OR', 1, 0, 'C', 1);
 $pdf->Cell(20, 5, 'POSICION', 1, 0, 'C', 1);
 $pdf->Cell(20, 5, 'ENTERO', 1, 0, 'C', 1);
 $pdf->Cell(60, 5, 'EXTRAIDO', 1, 1, 'C', 1);
 $pdf->SetFont('Arial', '', 7);
 while ($row_extraccion = $rs_extracciones->FetchNextObject($toupper = true)) {
-    $pdf->Cell(10, 5, $row_extraccion->ORDEN, 'B', 0, 'C');
     $pdf->Cell(20, 5, $row_extraccion->POSICION, 'B', 0, 'C');
     $pdf->Cell(20, 5, str_pad($row_extraccion->NUMERO, 2, "0", STR_PAD_LEFT), 'B', 0, 'C');
     $pdf->Cell(60, 5, ($row_extraccion->SORTEO_ASOC), 'B', 1, 'L');

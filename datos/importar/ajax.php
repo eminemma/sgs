@@ -894,7 +894,7 @@ function importar_datos_sorteo()
 														TIPO_PREMIO,
 														PORCENTAJE
 														) VALUES
-														(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,)", array($sorteo_kanban['id_programa'],
+														(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", array($sorteo_kanban['id_programa'],
                         $programa_premios_kanban['id_descripcion'],
                         $programa_premios_kanban['premio_efectivo'],
                         $programa_premios_kanban['aprox_anterior'],
