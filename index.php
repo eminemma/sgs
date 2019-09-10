@@ -271,7 +271,6 @@ if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.
                                                     alert('Este juego no esta contemplado para esta opción');
                                                 else
                                                     alert('Es necesario seleccionar un Juego');
-                                                quiniela_poceada_importar_datos
                                             })">Importar</a></li>
                                     <li><a href="#" onclick="$.get('juego/ajax.php?accion=obtener_juego', function(data) {
                                                 if (data.id_juego == 1)
