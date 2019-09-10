@@ -80,7 +80,7 @@ while ($row = siguiente($rs_programa)) {?>
 	    				<option value="<?php echo $row->ID_PROGRAMA ?>" <?php echo ($row->ID_PROGRAMA == $row_sorteo->ID_PROGRAMA) ? 'selected' : '' ?> ><?php echo $row->DESCRIPCION ?></option>
 	    			<?php }?>
 	  			</select>
-	  			<a href="javascript:void(0)" onclick="abrirPrograma();" target="_blank" title="Programa de Premios"><div class="fa fa-print fa-2x"></div></a>
+	  			<a href="javascript:void(0)" onclick="abrirPrograma();"  title="Programa de Premios"><div class="fa fa-print fa-2x"></div></a>
   			</div>
 		</div>
 		<div class="control-group">

@@ -43,6 +43,7 @@ if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.
 
         <script type="text/javascript" src="js/funciones.js"></script>
         <script type="text/javascript" src="librerias/modernizr/modernizr.js"></script>
+         <script type="text/javascript" src="js/loadingoverlay.js"></script>
         <link rel="stylesheet" href="librerias/font-awesome/css/font-awesome.min.css">
 
 
@@ -112,9 +113,9 @@ if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.
                                                     p('sorteo/escribano/quiniela/escribano.php');
                                                 else if (data.id_juego == '1' && data.tipo_juego == 'ORDINARIA') {
                                                     p('sorteo/escribano/loteria_ordinaria_escribano.php');
-                                                }         
+                                                }
                                                 else if (data.id_juego == '32')
-                                                    p('sorteo/escribano/quiniela_poceada/escribano.php');                                       
+                                                    p('sorteo/escribano/quiniela_poceada/escribano.php');
                                                 else if (data.id_juego !== 'null')
                                                     alert('Este juego no esta contemplado para esta opción');
                                                 else
@@ -351,6 +352,19 @@ if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.
                                                     g('sesion/iniciar_sesion/iniciar_sesion.php');
                                                 }
                                         );
+
+                                        $.LoadingOverlaySetup({
+                                                image       : "",
+                                                fontawesome : "fa fa-cog fa-spin",
+                                                size                    : 5
+                                        });
+
+                                        $(document).ajaxStart(function(){
+                                            $.LoadingOverlay("show");
+                                        });
+                                        $(document).ajaxStop(function(){
+                                            $.LoadingOverlay("hide");
+                                        });
         </script>
 
     </body>

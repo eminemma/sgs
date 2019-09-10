@@ -19,7 +19,6 @@ $rs_programa = sql(sql_programa(), array($_SESSION['id_juego']));
 
 $rs_quinielas_asociadas = sql(sql_quiniela_asociadas(), array($row_sorteo->QUINIELA_ASOC));
 
-
 ?>
 <div class="navbar">
   <div class="navbar-inner">
@@ -95,7 +94,7 @@ while ($row = siguiente($rs_programa)) {?>
 	    				<option value="<?php echo $row->ID_PROGRAMA ?>" <?php echo ($row->ID_PROGRAMA == $row_sorteo->ID_PROGRAMA) ? 'selected' : '' ?> ><?php echo $row->DESCRIPCION ?></option>
 	    			<?php }?>
 	  			</select>
-	  			<a href="javascript:void(0)" onclick="abrirPrograma();" target="_blank" title="Programa de Premios"><div class="fa fa-print fa-2x"></div></a>
+	  			<a href="javascript:void(0)" onclick="abrirPrograma();" title="Programa de Premios"><div class="fa fa-print fa-2x"></div></a>
   			</div>
 		</div>
 		<div class="control-group">
@@ -158,7 +157,7 @@ while ($row = siguiente($res_escribano)) {?>
 
 while ($row = siguiente($rs_quinielas_asociadas)) {
 
-	?>
+    ?>
 	    				<option value="<?php echo $row->SORTEO ?>" <?php echo ($row->SORTEO == $row_sorteo->QUINIELA_ASOC) ? 'selected' : '' ?> ><?php echo $row->SORTEO ?></option>
 	    			<?php }?>
 	  			</select>
@@ -175,7 +174,7 @@ while ($row = siguiente($rs_quinielas_asociadas)) {
 </form>
 <script type="text/javascript">
 function abrirPrograma(){
-	window.open("administracion/administrar_programa/pdf_programa.php?id_programa="+$( "#programa option:selected" ).val(), "_blank");
+	window.open("administracion/administrar_programa/pdf_programa_poceada.php?id_programa="+$( "#programa option:selected" ).val(), "_blank");
 	return false;
 }
 function inicarCombos(){

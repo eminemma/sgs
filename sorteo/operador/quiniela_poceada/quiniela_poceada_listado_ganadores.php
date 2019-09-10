@@ -67,7 +67,8 @@ while ($row_extraccion_segundo = $rs_extraccion_segundo->FetchNextObject($touppe
             $color_posicion[$row_extraccion_segundo->NUMERO] = 'YellowGreen';
         }
         ?>
-     <tr style="background-color: <?php echo $color_posicion[$row_extraccion_segundo->NUMERO] ?>">
+    <!--  <tr style="background-color: <?php echo $color_posicion[$row_extraccion_segundo->NUMERO] ?>"> -->
+      <tr>
       <td class="centerCell"><?php echo $row_extraccion_segundo->ORDEN; ?></td>
       <td class="leftCell"><?php echo $row_extraccion_segundo->DESCRIPCION; ?></td>
       <td class="leftCell"><?php echo ($row_extraccion_segundo->SORTEO_ASOC); ?></td>
