@@ -28,7 +28,7 @@ if ($_GET['accion'] == 'iniciar_sesion') {
         }
 
         if (strlen($_GET['dni']) != 8) {
-            die(error('Es necesario ingresar un documento'));
+            die(error('Es necesario ingresar un documento valido'));
         }
 
         if (!$row = siguiente($rs)) {
@@ -48,7 +48,7 @@ if ($_GET['accion'] == 'iniciar_sesion') {
         $_SESSION['nombre_usuario'] = $row->USUARIO;
 
         ok('Usuario logueado correctamente');
-        echo '<script type="text/javascript">$("#cerrar_sesion, #cambiar_juego_sorteo").show(); $("#iniciar_sesion").hide()</script>';
+        echo '<script type="text/javascript">$("#cerrar_sesion, #cambiar_juego_sorteo").show(); $("#iniciar_sesion").hide(); $(".form-signin").hide(); </script>';
     } else {
         include 'iniciar_sesion.php';
     }
