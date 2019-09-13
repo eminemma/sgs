@@ -30,7 +30,7 @@ $pdf                  = new PDF('P');
 $pdf->AliasNbPages();
 $pdf->AddPage();
 $pdf->SetFillColor(200, 200, 200);
-$pdf->SetFont('Arial', 'IB', 10);
+$pdf->SetFont('Arial', 'B', 8);
 $pdf->SetXY(10, 43);
 $pdf->Cell(190, 4, 'PROGRAMA DE PREMIOS', 1, 1, 'L', 1);
 
@@ -69,13 +69,13 @@ try {
               ORDER BY TPD.ID_PREMIO_DESC ASC,TD.IMPORTE DESC", array($id_programa));
 } catch (exception $e) {die($db->ErrorMsg());}
 if ($rs_conformacion->RecordCount() > 0) {
-    $pdf->SetFont('Arial', 'B', 7);
+    $pdf->SetFont('Arial', 'B', 8);
     $pdf->Cell(150, 4, 'CONFORMACION DE PREMIOS', 1, 1, 'L', 1);
     $pdf->SetX(10);
     $pdf->Cell(50, 4, 'PREMIO', 1, 0, 'L');
     $pdf->Cell(80, 4, 'ESPECIE', 1, 0, 'L');
     $pdf->Cell(20, 4, 'IMPORTE', 1, 1, 'L');
-    $pdf->SetFont('Arial', '', 7);
+    $pdf->SetFont('Arial', '', 8);
 
     while ($row_conformacion = $rs_conformacion->FetchNextObject($toupper = true)) {
         $pdf->SetX(10);

@@ -247,7 +247,7 @@ if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.
                             </li>
 
                             <li class="dropdown">
-                                <a data-toggle="dropdown" class="dropdown-toggle" href="#"><i class="icon-briefcase icon-white"></i> Poceada Cordobesa <b class="caret"></b></a>
+                                <a data-toggle="dropdown" class="dropdown-toggle" href="#"><i class="icon-briefcase icon-white"></i> Actas Poceada<b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     <li class="divider"></li>
                                     <li class="nav-header">Actas Generales</li>
