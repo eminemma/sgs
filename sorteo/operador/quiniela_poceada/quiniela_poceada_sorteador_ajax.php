@@ -177,13 +177,27 @@ if ($accion == 'control_ingreso') {
                     }
 
                 } else if ($existe_posicion && $existe_bola) {
-                    $mensaje = array("mensaje" => "Se cargo Correctamente la Extraccion, validada con el otro usuario", "tipo" => "success", "valida" => $valida);
-                    if ($valida === false) {
-                        sql("UPDATE SGS.t_parametro_compartido
-                                SET VALOR='VALIDA',ID_USUARIO=?
-                                 WHERE ID_JUEGO=?
-                                    AND PARAMETRO='VALIDACION'", array($_SESSION['dni'], $id_juego));
+                    if ($existe_extraccion) {
+                        $existe = ", ya existe en la posicion " . $existe_extraccion_posicion;
                     }
+                    $mensaje     = array("mensaje" => "Se cargo Correctamente la Extraccion, validada con el otro usuario" . $existe, "tipo" => "success", "valida" => $valida);
+                    $rs_usuarios = sql(" SELECT
+                                SUBSTR(ID_JEFE,3,LENGTH(ID_JEFE)) AS USUARIO1,
+                                SUBSTR(ID_OPERADOR,3,LENGTH(ID_OPERADOR)) AS USUARIO2
+                            FROM
+                                SGS.T_SORTEO
+                            WHERE SORTEO  =?
+                             AND  ID_JUEGO=?", array($sorteo, $id_juego));
+                    $row_usuarios = siguiente($rs_usuarios);
+
+                    sql("UPDATE SGS.t_parametro_compartido
+                                SET VALOR='VALIDA',
+                                    VALOR_SEGUNDO='VALIDA',
+                                    ID_USUARIO=?,
+                                    ID_USUARIO2=?
+                                 WHERE ID_JUEGO=?
+                                    AND PARAMETRO='VALIDACION'", array($row_usuarios->USUARIO1, $row_usuarios->USUARIO2, $id_juego));
+
                     sql("DELETE FROM sgs.TEMP_CTRL_INGRESO_NUMERO");
                 } else if ($existe_posicion && !$existe_bola) {
                     $mensaje = array("mensaje" => "Se cargo pero sin coincidencias", "tipo" => "error");
@@ -245,71 +259,94 @@ if ($accion == 'control_ganador' && $juego == 'primer_juego') {
             $mensaje = array("mensaje" => "Finalizo", "tipo" => "error");
         }
 
-        $rs_usuarios = sql(" SELECT
-                                SUBSTR(ID_JEFE,3,LENGTH(ID_JEFE)) AS USUARIO1,
-                                SUBSTR(ID_OPERADOR,3,LENGTH(ID_OPERADOR)) AS USUARIO2
-                            FROM
-                                SGS.T_SORTEO
-                            WHERE SORTEO  =?
-                             AND  ID_JUEGO=?", array($sorteo, $id_juego));
-        $row_usuarios = siguiente($rs_usuarios);
-
         $rs_parametro_coincidencia = sql(" SELECT VALOR,ID_USUARIO
-										FROM SGS.t_parametro_compartido TS
-										WHERE ID_JUEGO=?
-										  AND PARAMETRO='COINCIDENCIA'", array($id_juego));
+                                        FROM SGS.t_parametro_compartido TS
+                                        WHERE ID_JUEGO=?
+                                          AND PARAMETRO='COINCIDENCIA'", array($id_juego));
         $row_parametro_coincidencia = siguiente($rs_parametro_coincidencia);
 
         if (!is_null($row_parametro_coincidencia->VALOR)) {
             $mensaje['coincidencia'] = $row_parametro_coincidencia->VALOR;
-            if ($row_parametro_coincidencia->ID_USUARIO != $_SESSION['dni']) {
-                sql("UPDATE SGS.t_parametro_compartido
-                        SET VALOR=null,ID_USUARIO=null
-                     WHERE ID_JUEGO=?
-                        AND PARAMETRO='COINCIDENCIA'", array($id_juego));
-            }
+
+        }
+        if ($row_parametro_coincidencia->ID_USUARIO != $_SESSION['dni']) {
+            sql("UPDATE SGS.t_parametro_compartido
+                    SET VALOR=null,ID_USUARIO=null
+                 WHERE ID_JUEGO=?
+                    AND PARAMETRO='COINCIDENCIA'", array($id_juego));
         }
 
-        $rs_parametro_reincio = sql(" SELECT VALOR,ID_USUARIO,VALOR_SEGUNDO
+        $rs_parametro_reincio = sql(" SELECT VALOR,ID_USUARIO
                                         FROM SGS.t_parametro_compartido TS
                                         WHERE ID_JUEGO=?
-                                          AND PARAMETRO='REINICIO'", array($id_juego));
+                                          and id_usuario = ?
+                                          AND PARAMETRO='REINICIO'", array($id_juego, $_SESSION['dni']));
         $row_parametro_reinicio = siguiente($rs_parametro_reincio);
 
-        if (!is_null($row_parametro_reinicio->VALOR) || !is_null($row_parametro_reinicio->VALOR_SEGUNDO)) {
-            $mensaje['reinicio'] = (($row_usuarios->USUARIO1 == $_SESSION['dni']) ? $row_parametro_reinicio->VALOR : $row_parametro_reinicio->VALOR_SEGUNDO);
+        if ($rs_parametro_reincio->RecordCount() > 0 && !is_null($row_parametro_reinicio->VALOR)) {
+            $mensaje             = array();
             $mensaje['tipo']     = 'info';
-            if ($row_usuarios->USUARIO1 == $_SESSION['dni']) {
-                sql("UPDATE SGS.t_parametro_compartido
+            $mensaje['reinicio'] = $row_parametro_reinicio->VALOR;
+
+            sql("UPDATE SGS.t_parametro_compartido
                         SET VALOR=null,ID_USUARIO=null
                      WHERE ID_JUEGO=?
-                        AND PARAMETRO='REINICIO'", array($id_juego));
-            }
+                     and id_usuario = ?
+                        AND PARAMETRO='REINICIO'", array($id_juego, $_SESSION['dni']));
 
-            if ($row_usuarios->USUARIO2 == $_SESSION['dni']) {
-                sql("UPDATE SGS.t_parametro_compartido
-                        SET VALOR_SEGUNDO=null,ID_USUARIO=null
-                     WHERE ID_JUEGO=?
-                        AND PARAMETRO='REINICIO'", array($id_juego));
-            }
         }
 
+        $rs_parametro_reincio = sql(" SELECT ID_USUARIO2,VALOR_SEGUNDO
+                                        FROM SGS.t_parametro_compartido TS
+                                        WHERE ID_JUEGO=?
+                                          and id_usuario2 = ?
+                                          AND PARAMETRO='REINICIO'", array($id_juego, $_SESSION['dni']));
+        $row_parametro_reinicio = siguiente($rs_parametro_reincio);
+        if ($rs_parametro_reincio->RecordCount() > 0 && !is_null($row_parametro_reinicio->VALOR_SEGUNDO)) {
+            $mensaje             = array();
+            $mensaje['tipo']     = 'info';
+            $mensaje['reinicio'] = $row_parametro_reinicio->VALOR_SEGUNDO;
+            sql("UPDATE SGS.t_parametro_compartido
+                SET VALOR_SEGUNDO=null,ID_USUARIO2=null
+                WHERE ID_JUEGO=?
+                and id_usuario2 = ?
+                AND PARAMETRO='REINICIO'", array($id_juego, $_SESSION['dni']));
+        }
+        //$db->debug               = true;
         $rs_parametro_validacion = sql(" SELECT VALOR,ID_USUARIO
                                         FROM SGS.t_parametro_compartido TS
                                         WHERE ID_JUEGO=?
-                                          AND PARAMETRO='VALIDACION'", array($id_juego));
+                                        and id_usuario = ?
+                                          AND PARAMETRO='VALIDACION'", array($id_juego, $_SESSION['dni']));
         $row_parametro_validacion = siguiente($rs_parametro_validacion);
 
-        if (!is_null($row_parametro_validacion->VALOR)) {
-            $mensaje['coincidencia'] = $row_parametro_validacion->VALOR;
-            $mensaje['tipo']         = 'success';
-            if ($row_parametro_validacion->ID_USUARIO != $_SESSION['dni']) {
-                sql("UPDATE SGS.t_parametro_compartido
-                        SET VALOR=NULL,ID_USUARIO=null
-                     WHERE ID_JUEGO=?
-                        AND PARAMETRO='VALIDACION'", array($id_juego));
-            }
+        if ($rs_parametro_validacion->RecordCount() > 0 && !is_null($row_parametro_validacion->VALOR)) {
+            $mensaje['validacion'] = 'VALIDA';
+            $mensaje['usuario']    = $_SESSION['dni'];
+            $mensaje['tipo']       = 'success';
+            sql("UPDATE SGS.t_parametro_compartido
+        SET VALOR=null,ID_USUARIO=null
+        WHERE ID_JUEGO=?
+        and id_usuario = ?
+        AND PARAMETRO='VALIDACION'", array($id_juego, $_SESSION['dni']));
 
+        }
+
+        $rs_parametro_validacion2 = sql(" SELECT ID_USUARIO2,VALOR_SEGUNDO
+                                        FROM SGS.t_parametro_compartido TS
+                                        WHERE ID_JUEGO=?
+                                        and trim(id_usuario2) = ?
+                                          AND PARAMETRO='VALIDACION'", array($id_juego, $_SESSION['dni']));
+        $row_parametro_validacion2 = siguiente($rs_parametro_validacion2);
+        if ($rs_parametro_validacion2->RecordCount() > 0 && !is_null($row_parametro_validacion2->VALOR_SEGUNDO)) {
+            $mensaje['validacion'] = 'VALIDA';
+            $mensaje['usuario']    = $_SESSION['dni'];
+            $mensaje['tipo']       = 'success';
+            sql("UPDATE SGS.t_parametro_compartido
+        SET VALOR_SEGUNDO=null,ID_USUARIO2=null
+        WHERE ID_JUEGO=?
+        and id_usuario2 = ?
+        AND PARAMETRO='VALIDACION'", array($id_juego, $_SESSION['dni']));
         }
 
     } catch (exception $e) {
@@ -386,11 +423,14 @@ if ($accion == 'eliminar') {
 
         sql("UPDATE SGS.T_PARAMETRO_COMPARTIDO
 
-                        SET VALOR               = 'SI',VALOR_SEGUNDO              = 'SI',ID_USUARIO = ?
+                        SET VALOR               = 'SI',
+                            VALOR_SEGUNDO       = 'SI',
+                            ID_USUARIO = ?,
+                            ID_USUARIO2 = ?
 
                         WHERE PARAMETRO         = 'REINICIO'
 
-                            AND ID_JUEGO        = ? ", array($_SESSION['dni'], $_SESSION['id_juego']));
+                            AND ID_JUEGO        = ? ", array($row_usuarios->USUARIO1, $row_usuarios->USUARIO2, $_SESSION['id_juego']));
 
         sql('   DELETE
 				FROM SGS.T_PREMIO_EXTRACTO

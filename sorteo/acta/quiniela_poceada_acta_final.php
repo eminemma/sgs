@@ -11,7 +11,7 @@ try {
                     jefe.descripcion                                  AS JEFE,
                     operador.descripcion                              AS USUARIO,
                     ESC.DESCRIPCION                                  AS ESCRIBANO,
-                    TO_CHAR(SO.FECHA_HASTA_PAGO_PREMIO,'DD/MM/YYYY')                      AS FECHA_CADUCIDAD
+                    TO_CHAR(SO.FECHA_HASTA_PAGO_PREMIO,'DD/MM/YYYY')                      AS FECHA_CADUCIDAD,QUINIELA_ASOC
                 FROM  SGS.T_SORTEO SO,
                     SGS.T_ESCRIBANO ESC,
                     SUPERUSUARIO.usuarios jefe,
@@ -25,17 +25,18 @@ try {
     die($db->ErrorMsg());
 }
 
-$row_sor     = $rs_sorteo->FetchNextObject($toupper = true);
-$fechasorteo = $row_sor->FECHA_SORTEO;
-$fechacaduca = $row_sor->FECHA_CADUCIDAD;
-$jefe        = $row_sor->JEFE;
-$operador    = utf8_decode($row_sor->USUARIO);
-$escribano   = utf8_decode($row_sor->ESCRIBANO);
-$jefesorteo  = utf8_decode($row_sor->JEFE);
+$row_sor       = $rs_sorteo->FetchNextObject($toupper = true);
+$fechasorteo   = $row_sor->FECHA_SORTEO;
+$fechacaduca   = $row_sor->FECHA_CADUCIDAD;
+$jefe          = $row_sor->JEFE;
+$operador      = utf8_decode($row_sor->USUARIO);
+$escribano     = utf8_decode($row_sor->ESCRIBANO);
+$jefesorteo    = utf8_decode($row_sor->JEFE);
+$quiniela_asoc = $row_sor->QUINIELA_ASOC;
 
 //$db->debug=true;
 try {
-    $rs_extracciones = sql("   SELECT te.orden,te.posicion,te.numero,TE.SORTEO_ASOC
+    $rs_extracciones = sql("   SELECT te.orden,te.posicion,te.numero,TE.SORTEO_ASOC,VALIDO
                 FROM SGS.T_EXTRACCION te
                 WHERE te.SORTEO=?
                 AND te.ID_JUEGO=?
@@ -43,11 +44,9 @@ try {
         ORDER BY te.zona_juego desc ,te.ORDEN DESC", array($_SESSION['sorteo'], $_SESSION['id_juego']));
 } catch (exception $e) {die($db->ErrorMsg());}
 
-
-
 $titulo = strtoupper($_SESSION['juego']);
 
-$titulo2 = strtoupper('EMISION ' . $_SESSION['sorteo'] . ' ' . $desc);
+$titulo2 = strtoupper('SORTEO ' . $_SESSION['sorteo'] . ' ' . $desc);
 
 $pdf = new PDF('P');
 $pdf->AliasNbPages();
@@ -83,19 +82,21 @@ $pdf->SetFont('Arial', 'BI', 11);
 $pdf->SetXY(150, 64);
 $pdf->Cell(30, 8, $fechacaduca, 1, 0, 'C');
 $pdf->SetFont('Arial', 'B', 11);
-$pdf->SetXY(60, 100);
+$pdf->SetXY(40, 100);
 
 $pdf->SetFont('Times', 'B', 10);
 $pdf->Cell(10, 5, '#OR', 1, 0, 'C');
 $pdf->Cell(20, 5, 'POSICION', 1, 0, 'C');
-$pdf->Cell(20, 5, 'ENTERO', 1, 0, 'C');
-$pdf->Cell(60, 5, 'EXTRAIDO', 1, 1, 'C');
+$pdf->Cell(60, 5, 'QUINIELA ASOCIADA N' . $quiniela_asoc, 1, 0, 'C');
+$pdf->Cell(20, 5, 'NUMERO', 1, 0, 'C');
+$pdf->Cell(30, 5, 'ESTADO', 1, 1, 'C');
 while ($row_extraccion = $rs_extracciones->FetchNextObject($toupper = true)) {
-  $pdf->SetX(60);
+    $pdf->SetX(40);
     $pdf->Cell(10, 5, $row_extraccion->ORDEN, 'B', 0, 'C');
     $pdf->Cell(20, 5, $row_extraccion->POSICION, 'B', 0, 'C');
+    $pdf->Cell(60, 5, getStringBetween($row_extraccion->SORTEO_ASOC, '(', ')'), 'B', 0, 'C');
     $pdf->Cell(20, 5, str_pad($row_extraccion->NUMERO, 2, "0", STR_PAD_LEFT), 'B', 0, 'C');
-    $pdf->Cell(60, 5, ($row_extraccion->SORTEO_ASOC), 'B', 1, 'L');
+    $pdf->Cell(30, 5, ($row_extraccion->VALIDO == 'S' ? 'Valido' : ($row_extraccion->VALIDO == 'D' ? 'Duplicado' : '')), 'B', 1, 'C');
 }
 
 //hora
@@ -118,3 +119,9 @@ $pdf->Cell(25, 5, $jefesorteo, 0, 0, 'C');
 $pdf->SetXY(162, 271);
 $pdf->Cell(25, 5, $escribano, 0, 0, 'C');
 $pdf->Output();
+
+function getStringBetween($str, $from, $to)
+{
+    $sub = substr($str, strpos($str, $from) + strlen($from), strlen($str));
+    return substr($sub, 0, strpos($sub, $to));
+}

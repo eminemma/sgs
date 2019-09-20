@@ -10,20 +10,34 @@ $colores        = array('SlateGrey', 'Khaki', 'Goldenrod', 'Salmon', 'OliveDrab'
 $color_posicion = array();
 if ($accion == 'mostrar' && $juego == 'primer_juego') {
     try {
+        $rs_sorteo = sql("  SELECT QUINIELA_ASOC
+                FROM  SGS.T_SORTEO SO
+                WHERE  SORTEO           = ?
+                  AND ID_JUEGO         = ?", array($_SESSION['sorteo'], $_SESSION['id_juego']));
+    } catch (exception $e) {
+        die($db->ErrorMsg());
+    }
+
+    if ($row_sorteo = $rs_sorteo->FetchNextObject($toupper = true)) {
+        $quiniela_asoc = $row_sorteo->QUINIELA_ASOC;
+    }
+
+    try {
         $rs_extraccion_segundo = sql("  SELECT
                                                ID_EXTRACCION,
                                                ORDEN,
                                                NUMERO,
                                                POSICION,
 
-                                              CASE WHEN (SORTEO_ASOC='QUINIELA DUPLICADO%') THEN 'EXTRACCION QUINIELA '|| POSICION
+                                              CASE WHEN (SORTEO_ASOC LIKE 'QUINIELA DUPLICADO%') THEN 'EXTRACCION QUINIELA '|| POSICION
                                               WHEN SORTEO_ASOC LIKE ('QUINIELA ASOCIADA%') THEN 'EXTRACCION QUINIELA ' || POSICION
                                               ELSE
                                               'EXTRACCION ' || POSICION
                                                END  AS DESCRIPCION,
                                               'ENTERO' AS AFECTA,
                                               SORTEO_ASOC,
-                                              POSICION_DUPLICADO
+                                              POSICION_DUPLICADO,
+                                              VALIDO
                                         FROM
                                             SGS.T_EXTRACCION           TE
                                         WHERE
@@ -49,11 +63,12 @@ if ($accion == 'mostrar' && $juego == 'primer_juego') {
   <table class="table table-bordered">
   <thead>
     <tr>
-      <th># Orden</th>
-      <th>Extraccion</th>
-      <th>Tipo</th>
-      <th>Numero</th>
-      <th>Eliminar</th>
+      <th class="centerCell"># Orden</th>
+      <th class="centerCell">Extraccion</th>
+      <th class="centerCell">Quiniela Asociada Nº <?php echo $quiniela_asoc ?></th>
+      <th class="centerCell">Numero</th>
+      <th class="centerCell">Estado</th>
+      <th class="centerCell">Eliminar</th>
     </tr>
   </thead>
   <tbody>
@@ -71,8 +86,9 @@ while ($row_extraccion_segundo = $rs_extraccion_segundo->FetchNextObject($touppe
       <tr>
       <td class="centerCell"><?php echo $row_extraccion_segundo->ORDEN; ?></td>
       <td class="leftCell"><?php echo $row_extraccion_segundo->DESCRIPCION; ?></td>
-      <td class="leftCell"><?php echo ($row_extraccion_segundo->SORTEO_ASOC); ?></td>
+      <td class="centerCell"><?php echo getStringBetween($row_extraccion_segundo->SORTEO_ASOC, '(', ')'); ?></td>
       <td class="centerCell"><?php echo str_pad($row_extraccion_segundo->NUMERO, 2, "0", STR_PAD_LEFT); ?></td>
+      <td class="centerCell"><?php echo ($row_extraccion_segundo->VALIDO == 'S' ? '<div style="color:green"><i class="icon-ok"></i>Valido</div>' : ($row_extraccion_segundo->VALIDO == 'D' ? '<div style="color:red"><i class="icon-remove" style="color:red"> </i>Duplicado</div>' : '')); ?></td>
       <td class="centerCell">
         <?php if (strpos($row_extraccion_segundo->SORTEO_ASOC, 'VALIDA') !== false || strpos($row_extraccion_segundo->SORTEO_ASOC, 'COINCIDE') !== false) {?>
         <a href="#" onclick="if(confirm('Desea eliminar la posicion <?php echo $row_extraccion_segundo->POSICION; ?>?')) { $.post('sorteo/operador/quiniela_poceada/quiniela_poceada_sorteador_ajax.php',{accion:'eliminar',extraccion:<?php echo $row_extraccion_segundo->ID_EXTRACCION; ?>,posicion:<?php echo $row_extraccion_segundo->POSICION; ?>,entero:<?php echo $row_extraccion_segundo->NUMERO; ?>}).done(function(data){
@@ -94,3 +110,9 @@ while ($row_extraccion_segundo = $rs_extraccion_segundo->FetchNextObject($touppe
   </tbody>
   </table>
 <?php }
+
+function getStringBetween($str, $from, $to)
+{
+    $sub = substr($str, strpos($str, $from) + strlen($from), strlen($str));
+    return substr($sub, 0, strpos($sub, $to));
+}

@@ -1105,7 +1105,14 @@ $db->debug = true;*/
      			ID_JUEGO = ?
     		AND SORTEO = ?", array($id_juego, $sorteo));
 
-    $rs_extracto       = sql_kanban("SELECT ID_DESCRIPCION,SUBSTR(LPAD(BILLETE,4,'0'),-2) AS BILLETE,BILLETE as BILLETE_ORIGINAL FROM  KANBAN.T_PREMIO_EXTRACTO WHERE SORTEO=? AND ID_JUEGO=?", array($sorteo_kanban['quiniela_asoc'], 2));
+    $rs_extracto = sql("	SELECT
+    								ORDEN as ID_DESCRIPCION,SUBSTR(LPAD(NUMERO,4,'0'),-2) AS BILLETE,NUMERO AS BILLETE_ORIGINAL
+								FROM
+    								SGS.T_EXTRACCION
+								WHERE
+								    SORTEO = ?
+								    AND ID_JUEGO = ?
+								order by ORDEN", array($sorteo_kanban['quiniela_asoc'], 2));
     $extracto          = array();
     $extracto_original = array();
     while ($row_extracto = siguiente_kanban($rs_extracto)) {
@@ -1129,7 +1136,8 @@ $db->debug = true;*/
 		          POSICION,
 		          NUMERO,
 		          ZONA_JUEGO,
-		          SORTEO_ASOC
+		          SORTEO_ASOC,
+		          VALIDO
 		        )
 		        VALUES
 		        (
@@ -1139,7 +1147,8 @@ $db->debug = true;*/
 		          ?,
 		          ?,
 		          ?,
-		          ?
+		          ?,
+		          'S'
 		        )", array($id_juego, $sorteo, $key, $key, $value, 1, 'QUINIELA ASOCIADA ' . $sorteo_kanban['quiniela_asoc'] . '(' . str_pad($extracto_original[$key], 4, "0", STR_PAD_LEFT) . ')'));
 
         sql(" INSERT
@@ -1183,7 +1192,8 @@ $db->debug = true;*/
 		          POSICION,
 		          NUMERO,
 		          ZONA_JUEGO,
-		          SORTEO_ASOC
+		          SORTEO_ASOC,
+		          VALIDO
 		        )
 		        VALUES
 		        (
@@ -1193,7 +1203,8 @@ $db->debug = true;*/
 		          ?,
 		          ?,
 		          ?,
-		          ?
+		          ?,
+		          'D'
 		        )", array($id_juego, $sorteo, $key, $key, $value, 1, 'QUINIELA DUPLICADO ' . $sorteo_kanban['quiniela_asoc'] . '(' . str_pad($extracto_original[$key], 4, "0", STR_PAD_LEFT) . ')'));
         /*$posicion =array_search($value, $extracto);
 

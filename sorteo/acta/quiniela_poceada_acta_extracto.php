@@ -53,8 +53,8 @@ try {
 
 $zy         = 123;
 $zy1        = 123;
-$x          = 42;
-$xx         = 100;
+$x          = 60;
+$xx         = 110;
 $row_sorteo = $rs_sorteo->FetchNextObject($toupper = true);
 
 $pdf->SetFont('Times', 'I', 11);
@@ -91,7 +91,7 @@ $pdf->Cell(30, 5, $row_sorteo->FECHA_CADUCIDAD, 1, 0, 'C');
 
 $fechasorteo = $row_sorteo->FECHA_SORTEO;
 $escribano   = $row_sorteo->ESCRIBANO;
-$texto1      = "En la Ciudad de Córdoba, República Argentina, a los " . substr($fechasorteo, 0, 2) . " días del Mes de " . nombre_meses(substr($fechasorteo, 3, 2)) . " del año " . substr($fechasorteo, 6, 4) . " presentes en el Salón de Sorteos de la 'LOTERIA DE LA PROVINCIA DE CORDOBA S.E.', sito en calle 27 de Abril 185, de esta Ciudad, los agentes de la Institución: el Sr. " . $row_sorteo->JEFE . " en su carácter de Jefe de Sorteos en representación de la Subgerencia Departamental de Operaciones y el Sr. " . $row_sorteo->OPERADOR . " en su calidad de operador, siendo las     :     horas, con el objeto de realizar el Sorteo 'Quiniela Poceada' programado. Iniciado el sorteo, se verifica en forma alternativa y conforme a la Reglamentación vigente, los veinte premios por extracción, lo que como resultado se consignan a continuación:";
+$texto1      = "En la Ciudad de Córdoba, República Argentina, a los " . substr($fechasorteo, 0, 2) . " días del Mes de " . nombre_meses(substr($fechasorteo, 3, 2)) . " del año " . substr($fechasorteo, 6, 4) . " presentes en el Salón de Sorteos de la 'LOTERIA DE LA PROVINCIA DE CORDOBA S.E.', sito en calle 27 de Abril 185, de esta Ciudad, los agentes de la Institución: el Sr. " . $row_sorteo->JEFE . " en su carácter de Jefe de Sorteos en representación de la Subgerencia Departamental de Operaciones y el Sr. " . $row_sorteo->OPERADOR . " en su calidad de operador, siendo las     :     horas, con el objeto de realizar el Sorteo '" . $_SESSION['juego'] . "' programado. Iniciado el sorteo, se verifica en forma alternativa y conforme a la Reglamentación vigente, los veinte premios por extracción, lo que como resultado se consignan a continuación:";
 $texto2      = "Con lo que se da por terminado el acto, previa lectura y ratificación de los actuantes, firman la presente por ante mí " . $escribano . " doy fe Escribano Autorizante, de todo lo que certifico; siendo las ............... hs., se da por finalizado el Sorteo.";
 
 $pdf->SetFont('Times', '', 11);
@@ -104,6 +104,45 @@ $pdf->MultiCell(155, 5, utf8_decode('Hora de finalización del sorteo: .........
 /*$pdf->SetFont('Times', '', 11);
 $pdf->SetXY(25, 230);
 $pdf->MultiCell(160, 5, utf8_decode($texto2), 0, 'J', 0, 0);*/
+
+try {
+    $rs_extracciones_comp = sql("SELECT
+                                    NUMERO,VALIDO
+                                FROM
+                                    SGS.T_EXTRACCION TE
+                                WHERE
+                                    TE.SORTEO = ?
+                                    AND TE.ID_JUEGO = ?
+                                    AND TE.ZONA_JUEGO = 1
+                                    AND ( TE.SORTEO_ASOC NOT LIKE '%QUINIELA ASOCIADA%'
+                                          AND TE.SORTEO_ASOC NOT LIKE '%QUINIELA DUPLICADO%' )
+                                ORDER BY
+                                    TE.FECHA_EXTRACCION ASC", array($_SESSION['sorteo'], $_SESSION['id_juego']));
+} catch (exception $e) {
+    die($db->ErrorMsg());
+}
+$pdf->ln(2);
+$pdf->SetX(25);
+$pdf->SetFont('Times', 'U', 11);
+$pdf->Cell(50, 5, utf8_decode('Extracciones complementarias: '), 0, 0, 1);
+$pdf->SetFont('Times', '', 11);
+$y  = $pdf->GetY();
+$ln = 5;
+while ($row_extracciones_comp = $rs_extracciones_comp->FetchNextObject($toupper = true)) {
+    $x_actual = $pdf->GetX();
+    if ($x_actual >= 180) {
+        $pdf->ln($ln);
+        $pdf->setX(25);
+    }
+    $strikeout_x       = $pdf->getX() + 1;
+    $strikeout_y_start = $pdf->GetY();
+    $pdf->Cell(5, 5, $row_extracciones_comp->NUMERO, 0, 0, 1);
+    $strikeout_y = $strikeout_y_start + 2;
+    if ($row_extracciones_comp->VALIDO == 'D') {
+        $pdf->Line($strikeout_x, $strikeout_y, $strikeout_x + 3, $strikeout_y);
+    }
+
+}
 
 //registro
 $pdf->SetFont('Times', 'B', 11);
@@ -124,8 +163,8 @@ $pdf->Cell(25, 5, utf8_decode($row_sorteo->JEFE), 0, 0, 'C');
 $pdf->SetXY(162, 271);
 $pdf->Cell(25, 5, utf8_decode($row_sorteo->ESCRIBANO), 0, 0, 'C');
 
-$pdf->SetXY(35, 123);
-$pdf->Cell(130, 80, '', 1, 0, 1);
+$pdf->SetXY(45, 123);
+$pdf->Cell(115, 80, '', 1, 0, 1);
 
 while ($row = $rs_extracciones->FetchNextObject($toupper = true)) {
     $jj = $row->POSICION;
@@ -136,7 +175,7 @@ while ($row = $rs_extracciones->FetchNextObject($toupper = true)) {
         $pdf->SetFont('Times', 'I', 10);
         $pdf->Cell(50, 0, ucwords(strtolower('POSICION ' . $row->POSICION)), 0, 1, 1);
         $pdf->SetFont('Times', 'BI', 16);
-        $pdf->SetX($x + 40);
+        $pdf->SetX($x + 20);
         $pdf->Cell(20, 0, $row->NUMERO, 0, 1, 1);
     } else {
         $zy1 = $zy1 + 7;
@@ -145,7 +184,7 @@ while ($row = $rs_extracciones->FetchNextObject($toupper = true)) {
         $pdf->SetFont('Times', 'I', 10);
         $pdf->Cell(50, 0, ucwords(strtolower('POSICION ' . $row->POSICION)), 0, 1, 1);
         $pdf->SetFont('Times', 'BI', 16);
-        $pdf->SetX($xx + 48);
+        $pdf->SetX($xx + 22);
         $pdf->Cell(20, 0, $row->NUMERO, 0, 1, 1);
     }
 }

@@ -82,10 +82,10 @@ $pdf = new PDF('P');
 $pdf->AliasNbPages();
 $pdf->AddPage();
 $pdf->SetFillColor(200, 200, 200);
-$pdf->SetFont('Arial', 'B', 10);
+$pdf->SetFont('Arial', 'B', 7);
 $pdf->SetXY(10, 43);
 $pdf->Cell(100, 8, 'Datos Sorteo - Fecha Importacion:' . $fecha_importacion, 1, 1, 'L', 1);
-$pdf->SetFont('Arial', 'B', 9);
+$pdf->SetFont('Arial', 'B', 7);
 $pdf->SetXY(20, 50);
 $pdf->Cell(30, 8, 'Nro: ', 0, 0, 'L');
 $pdf->SetXY(70, 50);
@@ -161,25 +161,28 @@ $pdf->ln(4);
 
 //$db->debug=true;
 try {
-    $rs_extracciones = sql("   SELECT te.orden,te.posicion,te.numero,TE.SORTEO_ASOC
+    $rs_extracciones = sql("   SELECT te.orden,te.posicion,te.numero,TE.SORTEO_ASOC,VALIDO
                 FROM SGS.T_EXTRACCION te
                 WHERE te.SORTEO=?
                 AND te.ID_JUEGO=?
                 AND te.ZONA_JUEGO=1
-                AND TE.SORTEO_ASOC LIKE '%QUINIELA ASOCIADA%'
+                AND (TE.SORTEO_ASOC LIKE '%QUINIELA ASOCIADA%' OR TE.SORTEO_ASOC LIKE '%QUINIELA DUPLICADO%')
         ORDER BY te.zona_juego desc ,te.ORDEN DESC", array($_SESSION['sorteo'], $_SESSION['id_juego']));
 } catch (exception $e) {die($db->ErrorMsg());}
 $pdf->SetFont('Arial', 'B', 7);
-$pdf->Cell(100, 4, 'QUINIELA ASOCIADA', 1, 1, 'L', 1);
+$pdf->Cell(90, 4, 'QUINIELA ASOCIADA ' . $quiniela_asoc, 1, 1, 'L', 1);
 $pdf->SetFont('Arial', 'B', 7);
 $pdf->Cell(20, 5, 'POSICION', 1, 0, 'C', 1);
-$pdf->Cell(20, 5, 'ENTERO', 1, 0, 'C', 1);
-$pdf->Cell(60, 5, 'EXTRAIDO', 1, 1, 'C', 1);
+$pdf->Cell(20, 5, 'NUMERO', 1, 0, 'C', 1);
+$pdf->Cell(20, 5, 'TERMINACION', 1, 0, 'C', 1);
+$pdf->Cell(30, 5, 'ESTADO', 1, 1, 'C', 1);
 $pdf->SetFont('Arial', '', 7);
 while ($row_extraccion = $rs_extracciones->FetchNextObject($toupper = true)) {
     $pdf->Cell(20, 5, $row_extraccion->POSICION, 'B', 0, 'C');
+    $pdf->Cell(20, 5, getStringBetween($row_extraccion->SORTEO_ASOC, '(', ')'), 'B', 0, 'C');
     $pdf->Cell(20, 5, str_pad($row_extraccion->NUMERO, 2, "0", STR_PAD_LEFT), 'B', 0, 'C');
-    $pdf->Cell(60, 5, ($row_extraccion->SORTEO_ASOC), 'B', 1, 'L');
+    $pdf->Cell(30, 5, ($row_extraccion->VALIDO == 'S' ? 'Valido' : ($row_extraccion->VALIDO == 'D' ? 'Duplicado' : '')), 'B', 1, 'C');
+
 }
 $pdf->ln(1);
 try {
@@ -206,3 +209,9 @@ $pdf->Cell(50, 5, '$ ' . number_format($row_recaudacion->TOTAL_PREMIOS_7_ACIERTO
 $pdf->Cell(50, 5, '$ ' . number_format($row_recaudacion->TOTAL_PREMIOS_6_ACIERTOS, 2, ',', '.'), 'B', 1, 'R');
 
 $pdf->Output();
+
+function getStringBetween($str, $from, $to)
+{
+    $sub = substr($str, strpos($str, $from) + strlen($from), strlen($str));
+    return substr($sub, 0, strpos($sub, $to));
+}

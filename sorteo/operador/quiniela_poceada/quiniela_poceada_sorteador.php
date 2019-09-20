@@ -81,7 +81,11 @@ try {
         $.get('sorteo/operador/quiniela_poceada/quiniela_poceada_sorteador_ajax.php', {
             accion: 'mostrar_extracto',
             tipo: classN
-        });
+        }).done(
+                function(data){
+                    mostrarMensaje(data);
+
+              });
     };
 
     var buscarGanadores = function buscarGanadores() {
@@ -118,13 +122,13 @@ try {
                 } else if (data.tipo == 'database') {
                     $("#error_juego.alert").slideDown("slow");
                     $('#error_juego >.contenido_error').html(data.mensaje);
-                } else if ((typeof data.coincidencia != 'undefined' || typeof data.reinicio != 'undefined')) {
+                } else if ((typeof data.coincidencia != 'undefined' || typeof data.reinicio != 'undefined' || typeof data.validacion != 'undefined')) {
+                   // alert(JSON.stringify(data));
                     if (data.tipo == 'success' || data.tipo == 'info') {
-                        if (data.coincidencia == 'VALIDA') {
+
+                        if (data.validacion == 'VALIDA' || data.reinicio == 'SI') {
                             cargarConfiguracion({ accion: "configuracion", juego: "primer_juego" });
-                        } else if (data.reinicio == 'SI') {
-                            cargarConfiguracion({ accion: "configuracion", juego: "primer_juego" });
-                        } else {
+                        } else if(data.coincidencia != 'undefined' ) {
                             $("#success_juego.alert").slideDown("slow");
                             $('#success_juego > .contenido_error').html(data.coincidencia);
                         }
@@ -177,7 +181,7 @@ try {
                                 <a href="#" class="ver_pozo_8_aciertos" onclick="cargar_juego(this.className); return false;"><img src="img/icono_screen.png" width="19" height="19" border="0" style="vertical-align: middle;">Pantalla Pozo 8 Aciertos</a>
                             </li>
                             <li>
-                                <a href="#" class="ver_pozo_67_aciertos" onclick="cargar_juego(this.className); return false;"><img src="img/icono_screen.png" width="19" height="19" border="0" style="vertical-align: middle;">Pantalla Pozos 6 y 7 Aciertos</a>
+                                <a href="#" class="ver_pozo_67_aciertos" onclick="cargar_juego(this.className); return false;"><img src="img/icono_screen.png" width="19" height="19" border="0" style="vertical-align: middle;">Pantalla Pozos 7 y 6 Aciertos</a>
                             </li>
                             <li class="divider-vertical"></li>
                         </ul>
@@ -187,16 +191,17 @@ try {
         </div>
         <div class="row-fluid show-grid">
             <div id="contendio_juego" class="well form-inline text-center">
-                <h4>Juego
+                <h4>
+                    Juego
                     <?php echo $_SESSION['juego_tipo']; ?>
                 </h4>
                 <div class="subtitulo_juego label label-info" style="display:none">Primer Premio</div>
                 <form class="form-inline" action="#">
                     <span class="texto_sorteo">Posicion</span>
-                    <input type="text" id="posicion" disabled="disabled" name="posicion" class="input-small bola" size="1" tabindex="0">
+                    <input type="text" id="posicion" style="text-align: right;" disabled="disabled" name="posicion" class="input-small bola" size="1" tabindex="0">
                     <span id="entero_div">
                         <span class="texto_sorteo">Numero</span>
-                        <input type="text" id="entero" name="entero" class="input-medium bola" size="1" tabindex="1">
+                        <input type="text" id="entero" style="text-align: right;width: 70px" name="entero" class="bola" size="1" tabindex="1">
                     </span>
                     <span id="fraccion_div" style="display:none">
                         <span class="texto_sorteo">Fraccion</span>

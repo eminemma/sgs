@@ -38,7 +38,7 @@ if ((int) $_SESSION['dni'] > 0) {
                         <div class="controls">
                             <div class="input-prepend" style="width: 91%">
                                 <span class="add-on" style="height: 26px; line-height: 26px"><i class="icon-lock"></i></span>
-                                <input id="password" type="password" class="input-block-level" placeholder="Contraseña">
+                                <input id="password" autocomplete="new-password" type="password" class="input-block-level" placeholder="Contraseña">
                             </div>
                         </div>
                         <div class="control-group">

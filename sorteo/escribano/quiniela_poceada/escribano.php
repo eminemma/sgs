@@ -286,21 +286,18 @@
 					if(data.zonaMostrando == 'zona2'){
 						$('#zona1, #zona3, #zona4').hide();
 						$('#zona2').fadeIn();
-						$('#zona1').find('*:not("#c1")').empty();
 						$('#c1, #c3, #c4').empty();
 						zonaMostrando = 'zona2';
 					}
 					if(data.zonaMostrando == 'zona3'){
 						$('#zona1, #zona2, #zona4').hide();
 						$('#zona3').fadeIn();
-						$('#zona1').find('*:not("#c1")').empty();
 						$('#c1, #c2, #c4').empty();
 						zonaMostrando = 'zona3';
 					}
 					if(data.zonaMostrando == 'zona4'){
 						$('#zona1, #zona2, #zona3').hide();
 						$('#zona4').fadeIn();
-						$('#zona1').find('*:not("#c1")').empty();
 						$('#c1, #c2, #c3').empty();
 						zonaMostrando = 'zona4';
 					}
@@ -318,7 +315,7 @@
 						pozoSegundoPremioEncontrado = null;
 						pozoTercerPremioEncontrado = null;
 						cantidadPrimerPremioEncontrado = null;
-						billetesZona1 = [];
+						//billetesZona1 = [];
 						animarZona2(data);
 					}
 					if(zonaMostrando == 'zona3'){
@@ -327,7 +324,7 @@
 						pozoSegundoPremioEncontrado = null;
 						pozoTercerPremioEncontrado = null;
 
-						billetesZona1 = [];
+						//billetesZona1 = [];
 						animarZona3(data);
 					}
 					if(zonaMostrando == 'zona4'){
@@ -335,7 +332,7 @@
 						primerVez = true;
 						pozoPrimerPremioEncontrado = null;
 						cantidadPrimerPremioEncontrado = null;
-						billetesZona1 = [];
+						//billetesZona1 = [];
 						animarZona4(data);
 					}
 				}
@@ -344,11 +341,12 @@
 		var primerVez = true;
 		var primerVez2 = true;
 		function datosCompartidos(zona,data){
-			console.log(data);
+			if(zona==1){
 			var elemento = $('<div class="escribano">'+data.escribano+'</div>');
 				$('#c'+zona).append(elemento);
 				elemento = $('<div class="jefe">'+data.jefe+'</div>');
 				$('#c'+zona).append(elemento);
+				}
 				elemento = $('<div class="nrosorteo">'+data.sorteo+'</div>');
 				$('#c'+zona).append(elemento);
 				elemento = $('<div class="fechasorteo">'+data.fecha_sorteo+'</div>');
