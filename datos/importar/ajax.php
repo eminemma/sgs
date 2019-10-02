@@ -1183,6 +1183,13 @@ $db->debug = true;*/
 
     foreach ($duplicados as $key => $value) {
 
+        $rs = sql("	SELECT
+					MIN(POSICION) as POSICION_DUPLICADO
+				FROM
+    				SGS.T_EXTRACCION
+    			WHERE SORTEO=? AND ID_JUEGO=? AND NUMERO=?", array($sorteo, $id_juego, $value));
+        $row = siguiente_kanban($rs);
+
         sql("INSERT
 		      INTO SGS.T_EXTRACCION
 		        (
@@ -1193,7 +1200,8 @@ $db->debug = true;*/
 		          NUMERO,
 		          ZONA_JUEGO,
 		          SORTEO_ASOC,
-		          VALIDO
+		          VALIDO,
+		          POSICION_DUPLICADO
 		        )
 		        VALUES
 		        (
@@ -1204,8 +1212,9 @@ $db->debug = true;*/
 		          ?,
 		          ?,
 		          ?,
-		          'D'
-		        )", array($id_juego, $sorteo, $key, $key, $value, 1, 'QUINIELA DUPLICADO ' . $sorteo_kanban['quiniela_asoc'] . '(' . str_pad($extracto_original[$key], 4, "0", STR_PAD_LEFT) . ')'));
+		          'D',
+		          ?
+		        )", array($id_juego, $sorteo, $key, $key, $value, 1, 'QUINIELA DUPLICADO ' . $sorteo_kanban['quiniela_asoc'] . '(' . str_pad($extracto_original[$key], 4, "0", STR_PAD_LEFT) . ')', $row->POSICION_DUPLICADO));
         /*$posicion =array_search($value, $extracto);
 
     sql("    UPDATE SGS.T_EXTRACCION

@@ -88,7 +88,7 @@ while ($row_extraccion_segundo = $rs_extraccion_segundo->FetchNextObject($touppe
       <td class="leftCell"><?php echo $row_extraccion_segundo->DESCRIPCION; ?></td>
       <td class="centerCell"><?php echo getStringBetween($row_extraccion_segundo->SORTEO_ASOC, '(', ')'); ?></td>
       <td class="centerCell"><?php echo str_pad($row_extraccion_segundo->NUMERO, 2, "0", STR_PAD_LEFT); ?></td>
-      <td class="centerCell"><?php echo ($row_extraccion_segundo->VALIDO == 'S' ? '<div style="color:green"><i class="icon-ok"></i>Valido</div>' : ($row_extraccion_segundo->VALIDO == 'D' ? '<div style="color:red"><i class="icon-remove" style="color:red"> </i>Duplicado</div>' : '')); ?></td>
+      <td class="centerCell"><?php echo ($row_extraccion_segundo->VALIDO == 'S' ? '<div style="color:green"><i class="icon-ok"></i>Valido</div>' : ($row_extraccion_segundo->VALIDO == 'D' ? '<div style="color:red"><i class="icon-remove" style="color:red"> </i>Duplicado Con Posicion  ' . $row_extraccion_segundo->POSICION_DUPLICADO . '</div>' : '')); ?></td>
       <td class="centerCell">
         <?php if (strpos($row_extraccion_segundo->SORTEO_ASOC, 'VALIDA') !== false || strpos($row_extraccion_segundo->SORTEO_ASOC, 'COINCIDE') !== false) {?>
         <a href="#" onclick="if(confirm('Desea eliminar la posicion <?php echo $row_extraccion_segundo->POSICION; ?>?')) { $.post('sorteo/operador/quiniela_poceada/quiniela_poceada_sorteador_ajax.php',{accion:'eliminar',extraccion:<?php echo $row_extraccion_segundo->ID_EXTRACCION; ?>,posicion:<?php echo $row_extraccion_segundo->POSICION; ?>,entero:<?php echo $row_extraccion_segundo->NUMERO; ?>}).done(function(data){

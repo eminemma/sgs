@@ -161,7 +161,7 @@ $pdf->ln(4);
 
 //$db->debug=true;
 try {
-    $rs_extracciones = sql("   SELECT te.orden,te.posicion,te.numero,TE.SORTEO_ASOC,VALIDO
+    $rs_extracciones = sql("   SELECT te.orden,te.posicion,te.numero,TE.SORTEO_ASOC,VALIDO,POSICION_DUPLICADO
                 FROM SGS.T_EXTRACCION te
                 WHERE te.SORTEO=?
                 AND te.ID_JUEGO=?
@@ -170,18 +170,18 @@ try {
         ORDER BY te.zona_juego desc ,te.ORDEN DESC", array($_SESSION['sorteo'], $_SESSION['id_juego']));
 } catch (exception $e) {die($db->ErrorMsg());}
 $pdf->SetFont('Arial', 'B', 7);
-$pdf->Cell(90, 4, 'QUINIELA ASOCIADA ' . $quiniela_asoc, 1, 1, 'L', 1);
+$pdf->Cell(100, 4, 'QUINIELA ASOCIADA ' . $quiniela_asoc, 1, 1, 'L', 1);
 $pdf->SetFont('Arial', 'B', 7);
 $pdf->Cell(20, 5, 'POSICION', 1, 0, 'C', 1);
 $pdf->Cell(20, 5, 'NUMERO', 1, 0, 'C', 1);
 $pdf->Cell(20, 5, 'TERMINACION', 1, 0, 'C', 1);
-$pdf->Cell(30, 5, 'ESTADO', 1, 1, 'C', 1);
+$pdf->Cell(40, 5, 'ESTADO', 1, 1, 'C', 1);
 $pdf->SetFont('Arial', '', 7);
 while ($row_extraccion = $rs_extracciones->FetchNextObject($toupper = true)) {
     $pdf->Cell(20, 5, $row_extraccion->POSICION, 'B', 0, 'C');
     $pdf->Cell(20, 5, getStringBetween($row_extraccion->SORTEO_ASOC, '(', ')'), 'B', 0, 'C');
     $pdf->Cell(20, 5, str_pad($row_extraccion->NUMERO, 2, "0", STR_PAD_LEFT), 'B', 0, 'C');
-    $pdf->Cell(30, 5, ($row_extraccion->VALIDO == 'S' ? 'Valido' : ($row_extraccion->VALIDO == 'D' ? 'Duplicado' : '')), 'B', 1, 'C');
+    $pdf->Cell(40, 5, ($row_extraccion->VALIDO == 'S' ? 'Valido' : ($row_extraccion->VALIDO == 'D' ? 'Duplicado Con Posicion ' . $row_extraccion->POSICION_DUPLICADO : '')), 'B', 1, 'C');
 
 }
 $pdf->ln(1);
