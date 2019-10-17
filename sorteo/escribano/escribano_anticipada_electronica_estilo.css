@@ -28,7 +28,7 @@ body {
     margin: 0 auto;
     position: relative;
     font-family: 'MyriadPro-BoldCond';
-    color: #484847;
+    color: #ffffff;
 }
 
 #tipo_incentivo {
@@ -43,7 +43,7 @@ body {
 }
 
 #aleatorio_entero {
-    top: 436px;
+    top: 376px;
     left: 217px;
     position: absolute;
     text-align: center;
@@ -51,8 +51,8 @@ body {
 }
 
 #aleatorio_fraccion {
-    top: 438px;
-    left: 585px;
+    top: 378px;
+    left: 615px;
     position: absolute;
     text-align: center;
     font-size: 97px;
@@ -66,7 +66,7 @@ body {
 }
 
 #agencia {
-    top: 590px;
+    top: 550px;
     left: 124px;
     position: absolute;
     font-size: 43px;
@@ -74,7 +74,7 @@ body {
 }
 
 #nombre_d {
-    top: 590px;
+    top: 550px;
     left: 217px;
     position: absolute;
     font-size: 43px;
@@ -82,7 +82,7 @@ body {
 }
 
 #localidad_d {
-    top: 695px;
+    top: 655px;
     left: 131px;
     position: absolute;
     font-size: 43px;
@@ -153,26 +153,31 @@ body {
 
 #orden {
     position: absolute;
-    top: 326px;
-    left: 171px;
+    top: 246px;
+    left: 141px;
     font-size: 59px;
 }
 
 #ganadores {
     position: absolute;
-    top: 135px;
-    left: 140px;
+    top: 224px;
+    left: 270px;
+}
+
+#ganadores2 {
+    position: absolute;
+    top: 407px;
+    left: 270px;
+    width: 609px;
 }
 
 .billete {
     width: 108px;
-
     margin: 0;
     position: absolute;
     top: 50%;
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
-
     font-size: 42px;
     float: left;
     text-align: center;
@@ -213,10 +218,10 @@ body {
 
 .ganador {
     height: 65px;
-    /* line-height: 46px; */
+    line-height: 47px;
     vertical-align: middle;
     /* border: 1px solid #020202; */
-    margin-bottom: 2px;
+    margin-bottom: 4px;
     /* position: relative; */
     /* display: block; */
     /*border: 1px solid;*/
@@ -240,9 +245,10 @@ body {
 
 #fecha_sorteo_r {
     position: absolute;
-    top: 51px;
-    left: 686px;
-        font-size: 30px;
+    top: 104px;
+    left: 1011px;
+    font-size: 30px;
+    color: black;
 }
 
 .premio {
@@ -279,11 +285,12 @@ body {
     top: 9px;
     height: 47px;   
      margin: 0;
-    top: 50%;
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
         vertical-align: middle;
-    position: relative;}
+    position: relative;
+top: 14px;
+}
 
 #jefe_sorteo_r {
     position: absolute;
@@ -328,7 +335,7 @@ body {
 
 #premio {
     position: absolute;
-    top: 331px;
+    top: 245px;
     left: 297px;
     font-size: 21px;
     width: 452px;
@@ -338,7 +345,8 @@ body {
 
 #fecha_sorteo {
     position: absolute;
-    left: 589px;
-    top: 235px;
+    left: 1029px;
+    top: 100px;
     font-size: 32px;
+    color: black;
 }
