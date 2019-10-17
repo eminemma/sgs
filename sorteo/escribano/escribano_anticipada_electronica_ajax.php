@@ -37,7 +37,8 @@ if ($row->VALOR != null) {
                                 ID_JUEGO=?
                         AND SORTEO=?
                         AND SEMANA=?
-                        GROUP BY PREMIO", array($_SESSION['id_juego'], $_SESSION['sorteo'], ($row->VALOR + 1)));
+                        GROUP BY PREMIO
+                        ORDER BY PREMIO", array($_SESSION['id_juego'], $_SESSION['sorteo'], ($row->VALOR)));
 
     $res = sql("
             SELECT
