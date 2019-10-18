@@ -250,7 +250,7 @@ $pdf->SetXY(50, 158);
 $pdf->Cell(0, 0, utf8_decode($localidad1), 0, 'L', 1);*/
 
 $x = 5;
-$y = 190;
+$y = 185;
 
 $pdf->SetFont('Arial', 'B', 7);
 if ($semana == $cantidad_semanas) {
