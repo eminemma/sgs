@@ -118,10 +118,10 @@ if (!$ultima_semana) {
 
 //----------------------- 1º Pagina ------------------------------------
 
-$pdf->SetFont('Arial', 'B', 15);
-$pdf->SetXY(326, 38);
+$pdf->SetFont('Arial', 'B', 21);
+$pdf->SetXY(322, 38);
 $pdf->Cell(20, 0, $sorteo, 0, 'L', 1);
-$pdf->SetXY(312, 19);
+$pdf->SetXY(300, 20);
 $pdf->Cell(20, 0, $fecha_sorteo, 0, 'L', 1);
 
 if (strlen($premio1) > 40) {
@@ -155,18 +155,18 @@ if ($ultima_semana) {
     $y = 13;
 }
 while ($row_ganador = siguiente($res_ganador)) {
-    $pdf->SetFont('Arial', 'B', 25);
-    $pdf->setXY(30, 20 + $y);
-    $pdf->Cell(20, 10, str_pad($row_ganador->BILLETE, 5, 0, STR_PAD_LEFT), 0, 0, 'C');
-    $pdf->setXY(62, 20 + $y);
-    $pdf->Cell(20, 10, str_pad($row_ganador->FRACCION, 2, 0, STR_PAD_LEFT), 0, 0, 'C');
+    $pdf->SetFont('Arial', 'B', 28);
+    $pdf->setXY(22, 15 + $y);
+    $pdf->Cell(35, 17, str_pad($row_ganador->BILLETE, 5, 0, STR_PAD_LEFT), 0, 0, 'C');
+    $pdf->setXY(59, 15 + $y);
+    $pdf->Cell(29, 17, str_pad($row_ganador->FRACCION, 2, 0, STR_PAD_LEFT), 0, 0, 'C');
     $pdf->SetFont('Arial', 'B', 11);
     $pdf->setXY(90, 15 + $y);
     $pdf->SetFont('Arial', 'B', 9);
     $linea_ancho = 3;
     if (strlen($row_ganador->PREMIO) <= 10) {
-        $pdf->SetFont('Arial', 'B', 14);
-        $linea_ancho = 7;
+        $pdf->SetFont('Arial', 'B', 16);
+        $linea_ancho = 9;
     }
     if (strlen($row_ganador->PREMIO) > 10 && strlen($row_ganador->PREMIO) <= 27) {
         $linea_ancho = 5;
@@ -189,13 +189,16 @@ while ($row_ganador = siguiente($res_ganador)) {
     } else {
         $premio = $row_ganador->PREMIO . ' EN EFECTIVO ';
     }
-
-    $pdf->MultiCell(47, $linea_ancho, $premio, 0, 'C');
-    $pdf->setXY(140, 20 + $y);
+    $pdf->SetFont('Arial', 'B', 22);
+    $pdf->MultiCell(47, $linea_ancho, $row_ganador->PREMIO, 0, 'C');
+    $pdf->SetFont('Arial', 'B', 16);
+    $pdf->setX(90);
+    $pdf->MultiCell(47, $linea_ancho, ' EN EFECTIVO ', 0, 'C');
+    $pdf->setXY(140, 15 + $y);
 
     if ($row_ganador->NOMBRE == 'VENTA CONTADO CASA CENTRAL') {
-        $pdf->SetFont('Arial', 'B', 25);
-        $pdf->Cell(28, 10, '9001', 0, 0, 'C');
+        $pdf->SetFont('Arial', 'B', 28);
+        $pdf->Cell(28, 17, '9001', 0, 0, 'C');
         $pdf->setXY(172, 16 + $y);
         $pdf->SetFont('Arial', 'B', 13);
         $pdf->Cell(60, 5, 'CORDOBA', 0, 0, 'L');
@@ -205,15 +208,15 @@ while ($row_ganador = siguiente($res_ganador)) {
         } else {
             $localidad = $row_ganador->SUCURSAL;
         }
-        $pdf->SetFont('Arial', 'B', 25);
-        $pdf->Cell(28, 10, '9001', 0, 0, 'C');
+        $pdf->SetFont('Arial', 'B', 28);
+        $pdf->Cell(28, 17, '9001', 0, 0, 'C');
         $pdf->setXY(172, 16 + $y);
         $pdf->SetFont('Arial', 'B', 13);
         $pdf->Cell(60, 5, $localidad, 0, 0, 'L');
     } else {
         //$pdf->setXY(203, 58 + $y);
-        $pdf->SetFont('Arial', 'B', 25);
-        $pdf->MultiCell(28, 10, str_pad($row_ganador->AGENCIA, 4, 0, STR_PAD_LEFT), 0, 'C');
+        $pdf->SetFont('Arial', 'B', 28);
+        $pdf->MultiCell(28, 17, str_pad($row_ganador->AGENCIA, 4, 0, STR_PAD_LEFT), 0, 'C');
         $pdf->setXY(172, 16 + $y);
         $pdf->SetFont('Arial', 'B', 13);
         $pdf->MultiCell(60, 5, utf8_decode($row_ganador->LOCALIDAD), 0, 'L');
@@ -265,7 +268,7 @@ if ($ultima_semana) {
 }
 
 $pdf->SetXY($x_pres, $y - 2);
-$pdf->SetFont('Arial', 'B', 20);
+$pdf->SetFont('Arial', 'B', 26);
 $pdf->Cell(10, 10, $fecha_prescripcion, 0, 0, 'C');
 
 $res_premios = sql("SELECT PREMIO,COUNT(*)AS CANTIDAD,MAX(ORDEN) ORDEN
