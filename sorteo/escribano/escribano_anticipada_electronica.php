@@ -40,7 +40,6 @@
         <div id="premio_prox_sorteo_r"></div>
         <div id="prescripcion_r"></div>
         <div id="ganadores"></div>
-        <div id="ganadores2"></div>
         <div id="premios" class="premios"></div>
     </div>
     <script type="text/javascript">
@@ -62,10 +61,7 @@
                 var incentivoMostrando = data.incentivoMostrando;
                 switch (incentivoMostrando) {
                     case ('resumen'):
-                       if(data.premios[0].PREMIO == '$1.000.000')
                         $('#resumen').css("background-image", "url(escribano_img/gordo_navidad_2019_semana1_resumen.jpg)");
-                    else
-                        $('#resumen').css("background-image", "url(escribano_img/gordo_navidad_2019_semana1_resumen_2.jpg)");
                         break;
                     default:
                      $('#incentivo').css("background-image", "url(escribano_img/gordo_navidad_2019_semana1_blanco.jpg)");
@@ -86,7 +82,7 @@
             function(data) {
                 buscar_informacion();
                 billete_participantes = data;
-                setInterval(buscar_informacion, 1300);
+               setInterval(buscar_informacion, 1300);
 
             }
         ).complete(
@@ -109,10 +105,7 @@
                 aleatorio = data.cantFracciones;
                 switch (incentivoMostrando) {
                      case ('resumen'):
-                     if(data.premios[0].PREMIO == '$1.000.000')
                         $('#resumen').css("background-image", "url(escribano_img/gordo_navidad_2019_semana1_resumen.jpg)");
-                    else
-                        $('#resumen').css("background-image", "url(escribano_img/gordo_navidad_2019_semana1_resumen_2.jpg)");
                         mostrar_resumen(data);
                         break;
                     default:
@@ -143,7 +136,7 @@
         if (data.descIncentivo.length > 10 && data.descIncentivo.length <= 29) {
             $('#premio').css('font-size', '35px');
         }
-        $('#premio').html(data.descIncentivo);
+        $('#premio').html(data.descIncentivo+' EN EFECTIVO');
         $('#escribano_d').html(data.escribano);
         $('#jefe_sorteo_d').html(data.jefe_sorteo);
 
@@ -219,23 +212,20 @@
         $('#sorteo_r').html(data.sorteo);
         $('#fecha_sorteo_r').html(data.fecha_sorteo);
         $('#ganadores').html('');
-        $('#ganadores2').html('');
+        $('#ganadores').html('');
         $('#premios').html('');
         for (var i = 0; i < data.ganadores.length; i++) {
             if(i == 0)
                 id = '#ganadores';
             else
-                id = '#ganadores2';
+                id = '#ganadores';
             var tam = '';
-            if (i==1)
-                tam = 'style="height: 44px;"';
-
-            else if (i == 5)
+            if (i==0)
                 tam = 'style="height: 60px;"';
             else
-                tam = 'style="height: 50px;"';
+                tam = 'style="height: 69px;"';
             if (data.ganadores[i].NOMBRE == 'VENTA CONTADO CASA CENTRAL')
-                $(id).append('<div class="ganador"'+tam+'><div class="billete">' + pad(data.ganadores[i].BILLETE, 5) + '</div><div class="fraccion">' + pad(data.ganadores[i].FRACCION, 2) + '</div><div class="agencia">9001</div><div class="sucursal">CORDOBA</div></div>');
+                $('#ganadores').append('<div class="ganador"'+tam+'><div class="billete">' + pad(data.ganadores[i].BILLETE, 5) + '</div><div class="fraccion">' + pad(data.ganadores[i].FRACCION, 2) + '</div><div class="premio_r" id="premio_r_' + i + '">' + data.ganadores[i].PREMIO + ' <BR/> EN EFECTIVO</div><div class="agencia">9001</div><div class="sucursal">CORDOBA</div></div>');
             else if (data.ganadores[i].NOMBRE == 'VENTA CONTADO') {
                 var localidad;
                 if (data.ganadores[i].SUCURSAL == 'CASA CENTRAL') {
@@ -243,13 +233,13 @@
                 } else {
                     localidad = data.ganadores[i].SUCURSAL;
                 }
-                $(id).append('<div class="ganador"'+tam+'><div class="billete">' + pad(data.ganadores[i].BILLETE, 5) + '</div><div class="fraccion">' + pad(data.ganadores[i].FRACCION, 2) + '</div><div class="agencia">9001</div><div class="sucursal">' + localidad + '</div></div>');
+                $('#ganadores').append('<div class="ganador"'+tam+'><div class="billete">' + pad(data.ganadores[i].BILLETE, 5) + '</div><div class="fraccion">' + pad(data.ganadores[i].FRACCION, 2) + '</div><div class="premio_r" id="premio_r_' + i + '">' + data.ganadores[i].PREMIO + ' <BR/> EN EFECTIVO</div><div class="agencia">9001</div><div class="sucursal">' + localidad + '</div></div>');
             } else if (data.ganadores[i].AGENCIA != null)
-                $(id).append('<div class="ganador"'+tam+'><div class="billete">' + pad(data.ganadores[i].BILLETE, 5) + '</div><div class="fraccion">' + pad(data.ganadores[i].FRACCION, 2) + '</div><div class="agencia">' + pad(data.ganadores[i].AGENCIA, 4) + '</div><div class="sucursal">' + data.ganadores[i].LOCALIDAD + '</div></div>');
+                $('#ganadores').append('<div class="ganador"'+tam+'><div class="billete">' + pad(data.ganadores[i].BILLETE, 5) + '</div><div class="fraccion">' + pad(data.ganadores[i].FRACCION, 2) + '</div><div class="premio_r" id="premio_r_' + i + '">' + data.ganadores[i].PREMIO + ' <BR/> EN EFECTIVO</div><div class="agencia">' + pad(data.ganadores[i].AGENCIA, 4) + '</div><div class="sucursal">' + data.ganadores[i].LOCALIDAD + '</div></div>');
 
             $('#premio_r_' + i).css('font-size', '18px');
             if (data.ganadores[i].PREMIO.length <= 10) {
-                $('#premio_r_' + i).css('font-size', '42px');
+                $('#premio_r_' + i).css('font-size', '33px');
             }
         }
 

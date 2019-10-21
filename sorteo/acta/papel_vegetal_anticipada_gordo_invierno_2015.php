@@ -102,14 +102,14 @@ $pdf->AddPage();
 $pdf->SetAutoPageBreak(true, 1);
 $pdf->SetFont('Arial', 'B', 8);
 $pdf->setXY(10, 10);
-/*
-$pdf->Image('../escribano/escribano_img/gordo_navidad_2019_semana1_extracto_digital.jpg', 0, 0, 297, 215);*/
+
+/*$pdf->Image('../escribano/escribano_img/gordo_navidad_2019_semana1_extracto_digital.jpg', 0, 0, 297, 215);*/
 //----------------------- 1º Pagina ------------------------------------
 
-$pdf->SetFont('Arial', 'B', 19);
-$pdf->SetXY(268, 37);
+$pdf->SetFont('Arial', 'B', 18);
+$pdf->SetXY(267, 37);
 $pdf->Cell(20, 0, $sorteo, 0, 'L', 1);
-$pdf->SetXY(250, 20);
+$pdf->SetXY(249, 20);
 $pdf->Cell(20, 0, $fecha_sorteo, 0, 'L', 1);
 
 if (strlen($premio1) > 40) {
@@ -190,7 +190,7 @@ while ($row_ganador = siguiente($res_ganador)) {
     $pdf->setXY(115, 8 + $y);
 
     if ($row_ganador->NOMBRE == 'VENTA CONTADO CASA CENTRAL') {
-        $pdf->SetFont('Arial', 'B', 28);
+        $pdf->SetFont('Arial', 'B', 26);
         $pdf->Cell(28, 17, '9001', 0, 0, 'C');
         $pdf->setXY(145, 8 + $y);
         $pdf->SetFont('Arial', 'B', 13);
@@ -201,7 +201,7 @@ while ($row_ganador = siguiente($res_ganador)) {
         } else {
             $localidad = $row_ganador->SUCURSAL;
         }
-        $pdf->SetFont('Arial', 'B', 28);
+        $pdf->SetFont('Arial', 'B', 26);
         $pdf->Cell(28, 17, '9001', 0, 0, 'C');
         $pdf->setXY(145, 9 + $y);
         $pdf->SetFont('Arial', 'B', 13);
@@ -209,7 +209,7 @@ while ($row_ganador = siguiente($res_ganador)) {
 
     } else {
         //$pdf->setXY(203, 58 + $y);
-        $pdf->SetFont('Arial', 'B', 28);
+        $pdf->SetFont('Arial', 'B', 26);
         $pdf->Cell(28, 17, str_pad($row_ganador->AGENCIA, 4, 0, STR_PAD_LEFT), 0, 0, 'C');
         $pdf->setXY(145, 9 + $y);
         $pdf->SetFont('Arial', 'B', 13);
@@ -221,7 +221,7 @@ while ($row_ganador = siguiente($res_ganador)) {
     if ($semana == $cantidad_semanas) {
         $y += 17.1;
     } else {
-        $y += 19;
+        $y += 18.7;
     }
     /*
 CORTE PARA A4 DISEÑO
