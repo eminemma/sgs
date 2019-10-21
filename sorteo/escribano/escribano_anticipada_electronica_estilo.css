@@ -160,8 +160,10 @@ body {
 
 #ganadores {
     position: absolute;
-    top: 224px;
-    left: 270px;
+    top: 228px;
+    left: 87px;
+    width: 735px;
+    height: 440px;
 }
 
 #ganadores2 {
@@ -172,7 +174,7 @@ body {
 }
 
 .billete {
-    width: 108px;
+    width: 118px;
     margin: 0;
     position: absolute;
     top: 50%;
@@ -187,37 +189,36 @@ body {
 
 
 .fraccion {
-    width: 97px;
+    width: 98px;
     font-size: 42px;
     float: left;
     text-align: center;
-
     margin: 0;
     top: 50%;
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
-        vertical-align: middle;
+    vertical-align: middle;
     position: relative;
 }
 
 .premio_r {
-    width: 161px;
+    width: 176px;
     font-size: 14px;
     float: left;
     text-align: center;
-    line-height: 49px;
+    line-height: 27px;
     /* padding-top: 4px; */
     /* border: 1px solid; */
-        margin: 0;
+    margin: 0;
     top: 50%;
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
-        vertical-align: middle;
+    vertical-align: middle;
     position: relative;
 }
 
 .ganador {
-    height: 65px;
+    height: 62px;
     line-height: 47px;
     vertical-align: middle;
     /* border: 1px solid #020202; */
@@ -245,8 +246,8 @@ body {
 
 #fecha_sorteo_r {
     position: absolute;
-    top: 104px;
-    left: 1011px;
+    top: 59px;
+    left: 1051px;
     font-size: 30px;
     color: black;
 }
@@ -259,18 +260,17 @@ body {
 }
 
 .agencia {
-    width: 102px;
+    width: 109px;
     font-size: 42px;
     float: left;
     text-align: center;
     vertical-align: middle;
     /* position: relative; */
-   
     margin: 0;
     top: 50%;
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
-        vertical-align: middle;
+    vertical-align: middle;
     position: relative;
 }
 
@@ -281,15 +281,15 @@ body {
     /* text-align: center; */
     vertical-align: middle;
     position: relative;
-    left: 3px;
+    left: 8px;
     top: 9px;
-    height: 47px;   
-     margin: 0;
+    height: 47px;
+    margin: 0;
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
-        vertical-align: middle;
+    vertical-align: middle;
     position: relative;
-top: 14px;
+    top: 17px;
 }
 
 #jefe_sorteo_r {
