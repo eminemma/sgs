@@ -152,7 +152,7 @@ $res_ganador = sql("SELECT TG.ID_JUEGO,
                             ORDER BY TG.ORDEN", array($_SESSION['id_juego'], $_SESSION['sorteo'], $semana));
 $y = 30;
 if ($ultima_semana) {
-    $y = 13;
+    $y = 30;
 }
 while ($row_ganador = siguiente($res_ganador)) {
     $pdf->SetFont('Arial', 'B', 28);
@@ -248,8 +248,8 @@ $pdf->Cell(0, 0, utf8_decode($localidad1), 0, 'L', 1);*/
 $x = 10;
 $y = 182;
 if ($ultima_semana) {
-    $x = 25;
-    $y = 200;
+    $x = 19;
+    $y = 182;
 }
 $pdf->SetFont('Arial', 'B', 8);
 
@@ -257,14 +257,14 @@ $pdf->SetXY($x, $y - 2);
 $pdf->Cell(35, 10, $usuario, 0, 0, 'C');
 $x_escribano = $x + 20;
 if ($ultima_semana) {
-    $x_escribano = $x + 60;
+    $x_escribano = $x + 35;
 }
 $pdf->SetXY($x_escribano + 14, $y - 2);
 $pdf->Cell(43, 10, $escribano, 0, 0, 'C');
 
 $x_pres = $x + 95;
 if ($ultima_semana) {
-    $x_pres = $x + 150;
+    $x_pres = $x + 130;
 }
 
 $pdf->SetXY($x_pres, $y - 2);

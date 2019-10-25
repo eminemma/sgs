@@ -102,8 +102,12 @@ $pdf->AddPage();
 $pdf->SetAutoPageBreak(true, 1);
 $pdf->SetFont('Arial', 'B', 8);
 $pdf->setXY(10, 10);
+if ($semana == $cantidad_semanas) {
+    /* $pdf->Image('../escribano/escribano_img/gordo_navidad_2019_semana1_extracto_digital_ultima.jpg', 0, 0, 297, 215);*/
+} else {
+    /* $pdf->Image('../escribano/escribano_img/gordo_navidad_2019_semana1_extracto_digital.jpg', 0, 0, 297, 215);*/
+}
 
-/*$pdf->Image('../escribano/escribano_img/gordo_navidad_2019_semana1_extracto_digital.jpg', 0, 0, 297, 215);*/
 //----------------------- 1º Pagina ------------------------------------
 
 $pdf->SetFont('Arial', 'B', 18);
@@ -141,7 +145,7 @@ $res_ganador = sql("SELECT TG.ID_JUEGO,
 $y        = 38;
 $cantiGan = 0;
 if ($semana == $cantidad_semanas) {
-    $y = 20;
+    $y = 38;
 }
 while ($row_ganador = siguiente($res_ganador)) {
     $pdf->SetFont('Arial', 'B', 28);
@@ -219,7 +223,7 @@ while ($row_ganador = siguiente($res_ganador)) {
     $pdf->SetFont('Arial', 'B', 25);
 
     if ($semana == $cantidad_semanas) {
-        $y += 17.1;
+        $y += 19;
     } else {
         $y += 18.7;
     }
@@ -258,20 +262,20 @@ $y = 185;
 
 $pdf->SetFont('Arial', 'B', 7);
 if ($semana == $cantidad_semanas) {
-    $pdf->SetXY($x + 20, $y - 11);
+    $pdf->SetXY($x + 10, $y - 11);
 } else {
     $pdf->SetXY($x + 2, $y - 10);
 }
 $pdf->Cell(35, 10, $usuario, 0, 0, 'C');
 
 if ($semana == $cantidad_semanas) {
-    $pdf->SetXY($x + 61, $y - 11);
+    $pdf->SetXY($x + 51, $y - 11);
 } else {
     $pdf->SetXY($x + 25, $y - 10);
 }
 $pdf->Cell(49, 10, $escribano, 0, 0, 'C');
 if ($semana == $cantidad_semanas) {
-    $pdf->SetXY($x + 130, $y - 10);
+    $pdf->SetXY($x + 120, $y - 10);
 } else {
     $pdf->SetXY($x + 82, $y - 10);
 }
