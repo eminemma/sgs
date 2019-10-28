@@ -225,7 +225,7 @@ while ($row_ganador = siguiente($res_ganador)) {
     $pdf->SetFont('Arial', 'B', 25);
 
     if ($ultima_semana) {
-        $y += 18.9;
+        $y += 19.3;
     } else {
         $y += 19;
     }
@@ -286,7 +286,7 @@ if ($semana != $cantidad_semanas) {
 
     $y_premio = 0;
     $pdf->SetFont('Arial', 'B', 9);
-    $pdf->SetXY($x + 160, $y - 7);
+    $pdf->SetXY($x + 160, $y - 5);
     while ($row_premio = siguiente($res_premios)) {
         if ($row_premio->CANTIDAD == 1) {
             $premio = str_replace('$', '', trim($row_premio->PREMIO));
