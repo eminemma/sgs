@@ -398,8 +398,11 @@ $db_kanban->debug = true;*/
 									    WHERE ID_PROGRAMA_PREMIOS_ANTIC = ?", array($row_id_programa_premios_antic->ID_PROGRAMA_PREMIOS_ANTIC));
 
             $rs_seq = $rs_seq->FetchNextObject($toupper = true);
-
-            $importe_con_ley = ($row_premio->IMPORTE / 0.95);
+            /*
+            coeficiente ley 20630  = 0.41579732
+            coeficiente 9505       = 0.07451565
+             */
+            $importe_con_ley = ($row_premio->IMPORTE * 1.49031297);
 
             if ($row_premio->ID_TIPO_PREMIO == 2 || $row_premio->ID_TIPO_PREMIO == 1) {
 
@@ -444,7 +447,7 @@ $db_kanban->debug = true;*/
                 $desc_especie = null;
 
                 //$db_kanban->debug = true;
-                 $rs_estimulo = null;
+                $rs_estimulo = null;
                 if ((int) $row_premio->ID_TIPO_PREMIO == 1) {
                     $rs_estimulo = sql_kanban("		SELECT      PD.ORDEN,
                                                                 PP.ID_DESCRIPCION,
@@ -476,7 +479,7 @@ $db_kanban->debug = true;*/
                     $row_estimulo = $rs_estimulo->FetchNextObject($toupper = true);
                     $especie      = $row_estimulo->PREMIO_ID_ESPECIAS;
                     $desc_especie = $row_estimulo->DESCRIPCION_ESPECIA;
-                }else{
+                } else {
                     $rs_estimulo = sql_kanban("    SELECT      PD.ORDEN,
                                                             PP.ID_DESCRIPCION,
                                                             PD.DESCRIPCION
@@ -502,9 +505,8 @@ $db_kanban->debug = true;*/
                     );
                     $row_estimulo = $rs_estimulo->FetchNextObject($toupper = true);
                     $desc_especie = 'EFECTIVO';
-                    $importe = $row_estimulo->IMPORTE;
+                    $importe      = $row_estimulo->IMPORTE;
                 }
-               
 
                 if ($rs_estimulo->RowCount() != 0) {
 
