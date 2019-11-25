@@ -43,7 +43,7 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
         </div> -->
 
 
-      <!--  <div id="primer_premio" style="background-image:url('escribano_img/primer_premio_4910.png');"></div> -->
+       <div id="primer_premio" style="background-image:url('escribano_img/primer_premio_4960.png');"></div>
 
 
         <div id="resultado_primer_premio" ></div>
