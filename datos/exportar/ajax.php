@@ -419,9 +419,8 @@ $db_kanban->debug = true;*/
                     $especie         = null;
                 }
 
-                $rs = sql_kanban("INSERT INTO KANBAN.T_PREMIOS (FRACCION,IMPORTE, ID_DESCRIPCION,BILLETE,ID_JUEGO,SORTEO,SERIE, CONCEPTO,SUC_BAN,NRO_AGEN,
-														FECHA_ALTA,ID_SORTEO_ANTICIPADO,OCR,USUARIO,ESPECIE)
-						VALUES (?,?,?,?,?,?,?,?,?,?,TO_DATE(?,'dd/mm/yyyy'),?,?,?,?)",
+                $rs = sql_kanban("INSERT INTO KANBAN.T_PREMIOS (FRACCION,IMPORTE, ID_DESCRIPCION,BILLETE,ID_JUEGO,SORTEO,SERIE, CONCEPTO,SUC_BAN,NRO_AGEN,ID_SORTEO_ANTICIPADO,OCR,USUARIO,ESPECIE)
+						VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
                     array(
                         $fraccion,
                         $importe_con_ley,
@@ -433,7 +432,6 @@ $db_kanban->debug = true;*/
                         $row_premio->PREMIO,
                         $suc_ban,
                         $nro_agen,
-                        $_POST['fecha_desde'],
                         $rs_seq->ID_PREMIOS_ANTICIPADA,
                         $rowValidacion->OCR,
                         'DU' . $_SESSION['dni'],
@@ -517,9 +515,8 @@ $db_kanban->debug = true;*/
                     $rs          = $rs->FetchNextObject($toupper = true);
                     $id_estimulo = $rs->ID_DESCRIPCION;
 
-                    $rs = sql_kanban("INSERT INTO KANBAN.T_PREMIOS (FRACCION,IMPORTE, ID_DESCRIPCION,BILLETE,	ID_JUEGO,SORTEO,SERIE, CONCEPTO,SUC_BAN,NRO_AGEN,
-														FECHA_ALTA,ID_SORTEO_ANTICIPADO,OCR,ESPECIE)
-														VALUES (?,?,?,?,?,?,?,?,?,?,TO_DATE(?,'dd/mm/yyyy'),?,?,?)",
+                    $rs = sql_kanban("INSERT INTO KANBAN.T_PREMIOS (FRACCION,IMPORTE, ID_DESCRIPCION,BILLETE,	ID_JUEGO,SORTEO,SERIE, CONCEPTO,SUC_BAN,NRO_AGEN,ID_SORTEO_ANTICIPADO,OCR,ESPECIE)
+														VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
                         array(
                             $fraccion,
                             $importe,
@@ -531,7 +528,6 @@ $db_kanban->debug = true;*/
                             'ESTIMULO - SEM. ' . $semana . ' - PREMIO Nº ' . $row_estimulo->ORDEN . ' - ' . $desc_especie,
                             $suc_ban,
                             $nro_agen,
-                            $_POST['fecha_desde'],
                             $rs_seq->ID_PREMIOS_ANTICIPADA,
                             $rowValidacion->OCR,
                             $especie,
