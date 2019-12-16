@@ -50,15 +50,14 @@ function conectar_db_kanban()
      */
 
     try {
-
         $db_kanban->Connect("(DESCRIPTION =
-                        (ADDRESS =
-                    (PROTOCOL = TCP)
-                        (HOST = nscentral-scan.loteriadecordoba.com.ar)
-                        (PORT = 1521)
-                        (HASH = '" . rand(0, 99999999) . "')
-                     )
-                (CONNECT_DATA =(SERVICE_NAME = CENTRAL)))", 'sgs_importacion', 'esquema');
+                (ADDRESS =
+                (PROTOCOL = TCP)
+                (HOST = 172.16.50.18)
+                (PORT = 1521)
+                (HASH = '" . rand(0, 99999999) . "')
+                )
+                (CONNECT_DATA =(SID = desa_01)))", 'sgs_importacion', 'esquema');
 
         return true;
     } catch (Exception $e) {

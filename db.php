@@ -6,8 +6,8 @@ include_once dirname(__FILE__) . '/mensajes.php';
 
 function conectar_db()
 {
-    global $db;
-
+    global $db;  
+//
     $db = NewADOConnection('oci8po');
     //$db->SetCharSet('utf8');
     $db->charSet = 'utf8';
@@ -42,13 +42,13 @@ function conectar_db()
         (CONNECT_DATA =(SID = XE)))", 'sgs', 'esquema');
          */
         $db->PConnect("(DESCRIPTION =
-                        (ADDRESS =
-                    (PROTOCOL = TCP)
-                        (HOST = localhost)
-                        (PORT = 1521)
-                        (HASH = '1')
-                     )
-                (CONNECT_DATA =(SID = xe)))", 'sgs', 'esquema');
+						(ADDRESS =
+					(PROTOCOL = TCP)
+						(HOST = 172.16.50.18)
+						(PORT = 1521)
+						(HASH = '1')
+					 )
+				(CONNECT_DATA =(SID = desa_01)))", 'sgs', 'esquema');
 
         return true;
     } catch (Exception $e) {
@@ -76,7 +76,7 @@ function conectar_db()
     }
 }
 
-function sql($sql, $variables)
+function sql($sql, $variables = null)
 {
     global $db;
 
