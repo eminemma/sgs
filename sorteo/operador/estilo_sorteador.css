@@ -49,6 +49,7 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fffbb450', en
 .bola{
 	font-size: 50px !important;
 	height: 50px !important;
+	text-align: right;	
 }
 
 .texto_sorteo{

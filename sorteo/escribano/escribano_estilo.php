@@ -32,11 +32,11 @@ body{
 
 
 #fecha_sorteo{
-font-size: 21px;
-    left: 250px;
+    font-size: 21px;
+    left: 692px;
     position: relative;
-    top: 16px;
-
+    font-family: 'MyriadPro-Bold';
+    top: 56px;
 }
 
 #fecha_sorteo_resumen{
@@ -111,6 +111,21 @@ font-size: 21px;
     text-align: center;
     position: absolute;
     font-family: 'MyriadPro-Bold';
+}
+
+.billete2{
+    border: 0px solid #FFF;
+    text-align: center;
+    position: absolute;
+    font-family: 'MyriadPro-Bold';
+}
+
+.billete2{
+    border: 0px solid #000;
+    text-align: center;
+    position: absolute;
+    font-family: 'MyriadPro-Bold';
+    color:#fff;
 }
 
 #primer_premio{

@@ -37,13 +37,13 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
     <div id="zona1">
       <!--   <div id="sorteo">
             <?php echo $_SESSION['sorteo']; ?>
-        </div>
+        </div>-->
         <div id="fecha_sorteo">
             <?php echo $fecha_sorteo; ?>
-        </div> -->
+        </div>
 
 
-      <!--  <div id="primer_premio" style="background-image:url('escribano_img/primer_premio_4910.png');"></div> -->
+       <div id="primer_premio" style="background-image:url('escribano_img/primer_premio_4960.png');"></div>
 
 
         <div id="resultado_primer_premio" ></div>
@@ -74,8 +74,8 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
 
 
     <div id="zona3">
-        <!-- <div id="sorteo"><?php echo $_SESSION['sorteo']; ?></div>
-            <div id="fecha_sorteo">20/07/2016</div> -->
+        <!-- <div id="sorteo"><?php echo $_SESSION['sorteo']; ?></div>-->
+            <div id="fecha_sorteo" style="left: 1165px;top: 69px;"><?php echo $fecha_sorteo; ?></div>
     </div>
 
 
@@ -92,7 +92,7 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
 
     <div id="ventana_primer_premio_vendido" class="w3-modal">
         <div class="w3-modal-content">
-            <header class="w3-container w3-green">
+            <header class="w3-container" style="background-color: #881518;color: #fff!important;">
                 <h2 style="font-size: 17px;">Sorteo <?php echo $_SESSION['sorteo'] ?> - Vendido En Agencia  </h2>
             </header>
             <div class="w3-container">
@@ -103,7 +103,7 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                     </tbody>
                 </table>
             </div>
-            <footer class="w3-container w3-green">
+            <footer class="w3-container" style="background-color: #881518;color: #fff!important;">
                 <div id="tiempo_cierre" style="text-align: right;"></div>
                 <br>
             </footer>
@@ -139,10 +139,10 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                 '01': {
                     inicial: {
                         top: '280px',
-                        left: '332px'
+                        left: '333px'
                     },
                     final: {
-                        height: '143px'
+                        height: '140px'
                     }
                 },
                 '02': {
@@ -187,7 +187,7 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                         left: '845px'
                     },
                     final: {
-                        height: '55px'
+                        height: '53px'
                     }
                 },
                 '07': {
@@ -196,7 +196,7 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                         left: '845px'
                     },
                     final: {
-                        height: '55px'
+                        height: '53px'
                     }
                 },
                 '08': {
@@ -205,7 +205,7 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                         left: '845px'
                     },
                     final: {
-                        height: '55px'
+                        height: '53px'
                     }
                 },
                 '09': {
@@ -214,7 +214,7 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                         left: '845px'
                     },
                     final: {
-                        height: '55px'
+                        height: '53px'
                     }
                 },
                 '10': {
@@ -223,97 +223,97 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                         left: '845px'
                     },
                     final: {
-                        height: '55px'
+                        height: '53px'
                     }
                 },
                 '11': {
                     inicial: {
-                        top: '520px',
+                        top: '517px',
                         left: '830px'
                     },
                     final: {
-                        height: '55px'
+                        height: '53px'
                     }
                 },
                 '12': {
                     inicial: {
-                        top: '570px',
+                        top: '567px',
                         left: '830px'
                     },
                     final: {
-                        height: '55px'
+                        height: '53px'
                     }
                 },
                 '13': {
                     inicial: {
-                        top: '620px',
+                        top: '616px',
                         left: '830px'
                     },
                     final: {
-                        height: '55px'
+                        height: '53px'
                     }
                 },
                 '14': {
                     inicial: {
-                        top: '668px',
+                        top: '664px',
                         left: '830px'
                     },
                     final: {
-                        height: '55px'
+                        height: '53px'
                     }
                 },
                 '15': {
                     inicial: {
-                        top: '715px',
+                        top: '714px',
                         left: '830px'
                     },
                     final: {
-                        height: '55px'
+                        height: '53px'
                     }
                 },
                 '16': {
                     inicial: {
-                        top: '520px',
+                        top: '517px',
                         left: '1150px'
                     },
                     final: {
-                        height: '55px'
+                        height: '53px'
                     }
                 },
                 '17': {
                     inicial: {
-                        top: '570px',
+                        top: '567px',
                         left: '1150px'
                     },
                     final: {
-                        height: '55px'
+                        height: '53px'
                     }
                 },
                 '18': {
                     inicial: {
-                        top: '620px',
+                        top: '616px',
                         left: '1150px'
                     },
                     final: {
-                        height: '55px'
+                        height: '53px'
                     }
                 },
                 '19': {
                     inicial: {
-                        top: '668px',
+                        top: '664px',
                         left: '1150px'
                     },
                     final: {
-                        height: '55px'
+                        height: '53px'
                     }
                 },
                 '20': {
                     inicial: {
-                        top: '715px',
+                        top: '714px',
                         left: '1150px'
                     },
                     final: {
-                        height: '55px'
+                        height: '53px'
                     }
                 },
                 'progresion': {
@@ -450,7 +450,7 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
             var posicionZona3 = {
                 '01': {
                     inicial: {
-                        top: '540px',
+                        top: '565px',
                         left: '460px'
                     },
                     final: {
@@ -957,7 +957,7 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                 $('#zona3 #localidad').remove();
                 if(sortea_hasta_sale_ganadores[sortea_hasta_sale_resumenContador] != undefined){
                     var estilo = { top: '500px', left: '940px', width: '230px', height: '220px', 'font-size': '30px', 'text-align': 'left' };
-                    var elemento = $('<span id="localidad" class="billete">' + sortea_hasta_sale_ganadores[sortea_hasta_sale_resumenContador] + '<br> </span>').css(estilo);
+                    var elemento = $('<span id="localidad" class="billete2">' + sortea_hasta_sale_ganadores[sortea_hasta_sale_resumenContador] + '<br> </span>').css(estilo);
                     $('#zona3').append(elemento);
 
                     sortea_hasta_sale_resumenContador++;
@@ -1123,10 +1123,13 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
 
                     $('#' + id).animate(final, 1000);
                 } else {
+                    var classB = 'class="billete"';
+                    if(billete.posicion >=6 && billete.posicion <=20)
+                        var classB = 'class="billete2"';
                     var id = 'billete' + zona + '_' + billete.posicion;
                     $('#' + id).remove();
 
-                    var elemento = $('<span id="' + id + '" class="billete">' + billete.numero + '</span>');
+                    var elemento = $('<span id="' + id + '" '+classB+'>' + billete.numero + '</span>');
 
                     $('#zona' + zona).append(elemento);
 
