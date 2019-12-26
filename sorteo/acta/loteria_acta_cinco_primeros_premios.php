@@ -149,70 +149,73 @@ while ($row_fraccion = $rs_fracciones->FetchNextObject($toupper = true)) {
 
     //$pdf->MultiCell(100,5,'Distribuido En:'.$distribuido,0,1,'C');
 }
-
-$titulo = strtoupper('REPORTE DE PREMIOS EXTRAORDINARIOS DE ' . $_SESSION['juego']);
-
-$pdf->AddPage();
-
-$x_suc           = 0;
-$x_fp_nombre     = '';
-$corte           = 0;
-$total           = 0;
-$estado_anterior = 0;
-$jj              = 0;
-$zy              = 123;
-$zy1             = 123;
-$x               = 42;
-$xx              = 100;
-
-$pdf->SetFont('Arial', 'I', 11);
-$pdf->SetXY(120, 48);
-$pdf->Cell(30, 8, 'Fecha:', 0, 0, 'R');
-$pdf->SetFont('Arial', 'BI', 11);
-$pdf->SetXY(150, 48);
-$pdf->Cell(30, 8, $fechasorteo, 1, 0, 'C');
-$pdf->SetFont('Arial', 'I', 11);
-$pdf->SetXY(120, 56);
-$pdf->Cell(30, 8, 'Hora:', 0, 0, 'R');
-$pdf->SetFont('Arial', 'BI', 11);
-$pdf->SetXY(150, 56);
-$pdf->Cell(30, 8, '..............', 1, 0, 'C');
-$pdf->SetFont('Arial', 'I', 11);
-$pdf->SetXY(120, 64);
-$pdf->Cell(30, 8, 'Caducidad:', 0, 0, 'R');
-$pdf->SetFont('Arial', 'BI', 11);
-$pdf->SetXY(150, 64);
-$pdf->Cell(30, 8, $fechacaduca, 1, 0, 'C');
-$pdf->SetFont('Arial', 'B', 11);
-$pdf->SetXY(30, 80);
-$pdf->SetFont('Times', 'B', 10);
 try {
 
     $rs_fracciones = sql("
-	SELECT
-		tpd.descripcion
-		,te.numero
-		,TE.FRACCION
-		,
-	DECODE(
-	(
-	SELECT COUNT(*) FROM sgs.t_billetes_participantes
-	WHERE SORTEO 	= te.SORTEO
-	AND ID_JUEGO 	= te.ID_JUEGO
-	AND BILLETE 	= te.numero
-	AND (FRACCION 	= TE.FRACCION OR TE.POSICION=21)
+    SELECT
+        tpd.descripcion
+        ,te.numero
+        ,TE.FRACCION
+        ,
+    DECODE(
+    (
+    SELECT COUNT(*) FROM sgs.t_billetes_participantes
+    WHERE SORTEO    = te.SORTEO
+    AND ID_JUEGO    = te.ID_JUEGO
+    AND BILLETE     = te.numero
+    AND (FRACCION   = TE.FRACCION OR TE.POSICION=21)
 
-	), 0, 'NO VENDIDO', 'VENDIDO') AS COMERCIALIZADO
-	FROM SGS.T_EXTRACCION TE,SGS.T_SORTEO TS,SGS.T_PROGRAMA_PREMIOS TPP,SGS.T_PREMIO_DESCRIPCION TPD
-	WHERE  (te.zona_juego=4 OR te.zona_juego=3)
-	and te.sorteo=ts.sorteo
-	and te.id_juego=ts.id_juego
-	and ts.id_programa=tpp.id_programa
-	AND TE.POSICION=TPP.ID_DESCRIPCION
-	AND TPD.ID_PREMIO_DESC=TPP.ID_DESCRIPCION
-	and te.sorteo=?
-	AND TE.ID_JUEGO=?
-	order by posicion", array($_SESSION['sorteo'], $_SESSION['id_juego']));
+    ), 0, 'NO VENDIDO', 'VENDIDO') AS COMERCIALIZADO
+    FROM SGS.T_EXTRACCION TE,SGS.T_SORTEO TS,SGS.T_PROGRAMA_PREMIOS TPP,SGS.T_PREMIO_DESCRIPCION TPD
+    WHERE  (te.zona_juego=4 OR te.zona_juego=3)
+    and te.sorteo=ts.sorteo
+    and te.id_juego=ts.id_juego
+    and ts.id_programa=tpp.id_programa
+    AND TE.POSICION=TPP.ID_DESCRIPCION
+    AND TPD.ID_PREMIO_DESC=TPP.ID_DESCRIPCION
+    and te.sorteo=?
+    AND TE.ID_JUEGO=?
+    order by posicion", array($_SESSION['sorteo'], $_SESSION['id_juego']));
+    if ($rs_fracciones->RecordCount() == 0) {
+        $pdf->Output();
+    }
+    $titulo = strtoupper('REPORTE DE PREMIOS EXTRAORDINARIOS DE ' . $_SESSION['juego']);
+
+    $pdf->AddPage();
+
+    $x_suc           = 0;
+    $x_fp_nombre     = '';
+    $corte           = 0;
+    $total           = 0;
+    $estado_anterior = 0;
+    $jj              = 0;
+    $zy              = 123;
+    $zy1             = 123;
+    $x               = 42;
+    $xx              = 100;
+
+    $pdf->SetFont('Arial', 'I', 11);
+    $pdf->SetXY(120, 48);
+    $pdf->Cell(30, 8, 'Fecha:', 0, 0, 'R');
+    $pdf->SetFont('Arial', 'BI', 11);
+    $pdf->SetXY(150, 48);
+    $pdf->Cell(30, 8, $fechasorteo, 1, 0, 'C');
+    $pdf->SetFont('Arial', 'I', 11);
+    $pdf->SetXY(120, 56);
+    $pdf->Cell(30, 8, 'Hora:', 0, 0, 'R');
+    $pdf->SetFont('Arial', 'BI', 11);
+    $pdf->SetXY(150, 56);
+    $pdf->Cell(30, 8, '..............', 1, 0, 'C');
+    $pdf->SetFont('Arial', 'I', 11);
+    $pdf->SetXY(120, 64);
+    $pdf->Cell(30, 8, 'Caducidad:', 0, 0, 'R');
+    $pdf->SetFont('Arial', 'BI', 11);
+    $pdf->SetXY(150, 64);
+    $pdf->Cell(30, 8, $fechacaduca, 1, 0, 'C');
+    $pdf->SetFont('Arial', 'B', 11);
+    $pdf->SetXY(30, 80);
+    $pdf->SetFont('Times', 'B', 10);
+
     /*
 $rs_fracciones = sql("
 SELECT tpd.descripcion,te.numero,
