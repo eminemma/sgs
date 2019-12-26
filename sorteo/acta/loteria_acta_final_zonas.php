@@ -239,6 +239,9 @@ try {
                           ORDER BY TE.ZONA_JUEGO DESC ,
                             TE.ORDEN ASC", array($_SESSION['sorteo'], $_SESSION['id_juego']));
 } catch (exception $e) {die($db->ErrorMsg());}
+if ($rs_extracciones_zona_3->RecordCount() == 0) {
+    $pdf->Output();
+}
 
 $titulo2 = strtoupper('PREMIOS EXTRAORDINARIOS, EMISION ' . $_SESSION['sorteo'] . ' ' . $desc);
 
@@ -328,7 +331,6 @@ $pdf->Cell(25, 5, $jefesorteo, 0, 0, 'C');
 $pdf->SetXY(162, 271);
 $pdf->Cell(25, 5, $escribano, 0, 0, 'C');
 
-
 /*
 $titulo2 = strtoupper('PREMIOS EXTRAORDINARIOS, EMISION ' . $_SESSION['sorteo'] . ' ' . $desc);
 
@@ -363,18 +365,18 @@ $pdf->Cell(20, 5, 'ENTERO', 1, 0, 'C');
 $pdf->Cell(80, 5, 'PREMIO', 1, 0, 'C');
 $pdf->Cell(60, 5, 'IMPO./ESPECIAS', 1, 1, 'C');
 while ($row_extraccion = $rs_extracciones_zona_4->FetchNextObject($toupper = true)) {
-    $fraccion = (((int) $row_extraccion->FRACCION == 0) ? '--' : str_pad($row_extraccion->FRACCION, 2, "0", STR_PAD_LEFT));
-    $pdf->Cell(10, 5, $row_extraccion->ORDEN, 'B', 0, 'C');
-    $pdf->Cell(20, 5, $row_extraccion->POSICION, 'B', 0, 'C');
-    $pdf->Cell(20, 5, str_pad($row_extraccion->NUMERO, 5, "0", STR_PAD_LEFT), 'B', 0, 'C');
+$fraccion = (((int) $row_extraccion->FRACCION == 0) ? '--' : str_pad($row_extraccion->FRACCION, 2, "0", STR_PAD_LEFT));
+$pdf->Cell(10, 5, $row_extraccion->ORDEN, 'B', 0, 'C');
+$pdf->Cell(20, 5, $row_extraccion->POSICION, 'B', 0, 'C');
+$pdf->Cell(20, 5, str_pad($row_extraccion->NUMERO, 5, "0", STR_PAD_LEFT), 'B', 0, 'C');
 
-    $pdf->Cell(80, 5, $row_extraccion->DESCRIPCION, 'B', 0, 'L');
+$pdf->Cell(80, 5, $row_extraccion->DESCRIPCION, 'B', 0, 'L');
 
-    $pdf->SetFont('Arial', 'B', 7);
-    $pdf->Cell(60, 5, $row_extraccion->PREMIO, 'B', 1, 'R');
-    $pdf->SetFont('Times', 'B', 10);
+$pdf->SetFont('Arial', 'B', 7);
+$pdf->Cell(60, 5, $row_extraccion->PREMIO, 'B', 1, 'R');
+$pdf->SetFont('Times', 'B', 10);
 }
-*/
+ */
 
 /*
 $rs_extraccion_segundo=sql("SELECT tg.id_premio_descripcion as PREMIO,COUNT(*) as GANADOR
