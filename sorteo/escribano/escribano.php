@@ -43,7 +43,7 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
         </div>
 
 
-       <div id="primer_premio" style="background-image:url('escribano_img/primer_premio_4960.png');"></div>
+      <!--  <div id="primer_premio" style="background-image:url('escribano_img/primer_premio_4960.png');"></div> -->
 
 
         <div id="resultado_primer_premio" ></div>
@@ -138,187 +138,187 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
             var posicionZona1 = {
                 '01': {
                     inicial: {
-                        top: '280px',
-                        left: '333px'
+                        top: '289px',
+                        left: '323px'
                     },
                     final: {
-                        height: '140px'
+                        height: '135px'
                     }
                 },
                 '02': {
                     inicial: {
-                        top: '514px',
+                        top: '510px',
                         left: '193px'
                     },
                     final: {
-                        height: '68px'
+                        height: '82px'
                     }
                 },
                 '03': {
                     inicial: {
-                        top: '514px',
-                        left: '478px'
+                        top: '510px',
+                        left: '470px'
                     },
                     final: {
-                        height: '68px'
+                        height: '82px'
                     }
                 },
                 '04': {
                     inicial: {
-                        top: '697px',
-                        left: '193px'
+                        top: '705px',
+                        left: '185px'
                     },
                     final: {
-                        height: '68px'
+                        height: '82px'
                     }
                 },
                 '05': {
                     inicial: {
-                        top: '697px',
-                        left: '478px'
+                        top: '705px',
+                        left: '455px'
                     },
                     final: {
-                        height: '68px'
+                        height: '82px'
                     }
                 },
                 '06': {
                     inicial: {
-                        top: '191px',
+                        top: '260px',
                         left: '845px'
                     },
                     final: {
-                        height: '53px'
+                        height: '47px'
                     }
                 },
                 '07': {
                     inicial: {
-                        top: '239px',
+                        top: '300px',
                         left: '845px'
                     },
                     final: {
-                        height: '53px'
+                        height: '47px'
                     }
                 },
                 '08': {
                     inicial: {
-                        top: '288px',
+                        top: '340px',
                         left: '845px'
                     },
                     final: {
-                        height: '53px'
+                        height: '47px'
                     }
                 },
                 '09': {
                     inicial: {
-                        top: '336px',
+                        top: '380px',
                         left: '845px'
                     },
                     final: {
-                        height: '53px'
+                        height: '47px'
                     }
                 },
                 '10': {
                     inicial: {
-                        top: '386px',
+                        top: '420px',
                         left: '845px'
                     },
                     final: {
-                        height: '53px'
+                        height: '47px'
                     }
                 },
                 '11': {
                     inicial: {
-                        top: '517px',
+                        top: '550px',
                         left: '830px'
                     },
                     final: {
-                        height: '53px'
+                        height: '47px'
                     }
                 },
                 '12': {
                     inicial: {
-                        top: '567px',
+                        top: '590px',
                         left: '830px'
                     },
                     final: {
-                        height: '53px'
+                        height: '47px'
                     }
                 },
                 '13': {
                     inicial: {
-                        top: '616px',
+                        top: '630px',
                         left: '830px'
                     },
                     final: {
-                        height: '53px'
+                        height: '47px'
                     }
                 },
                 '14': {
                     inicial: {
-                        top: '664px',
+                        top: '670px',
                         left: '830px'
                     },
                     final: {
-                        height: '53px'
+                        height: '47px'
                     }
                 },
                 '15': {
                     inicial: {
-                        top: '714px',
+                        top: '710px',
                         left: '830px'
                     },
                     final: {
-                        height: '53px'
+                        height: '47px'
                     }
                 },
                 '16': {
                     inicial: {
-                        top: '517px',
+                        top: '550px',
                         left: '1150px'
                     },
                     final: {
-                        height: '53px'
+                        height: '47px'
                     }
                 },
                 '17': {
                     inicial: {
-                        top: '567px',
+                        top: '590px',
                         left: '1150px'
                     },
                     final: {
-                        height: '53px'
+                        height: '47px'
                     }
                 },
                 '18': {
                     inicial: {
-                        top: '616px',
+                        top: '630px',
                         left: '1150px'
                     },
                     final: {
-                        height: '53px'
+                        height: '47px'
                     }
                 },
                 '19': {
                     inicial: {
-                        top: '664px',
+                        top: '670px',
                         left: '1150px'
                     },
                     final: {
-                        height: '53px'
+                        height: '47px'
                     }
                 },
                 '20': {
                     inicial: {
-                        top: '714px',
+                        top: '710px',
                         left: '1150px'
                     },
                     final: {
-                        height: '53px'
+                        height: '47px'
                     }
                 },
                 'progresion': {
-                    top: '325px',
-                    left: '1000px',
+                    top: '378px',
+                    left: '1090px',
                     height: '65px'
                 }
             };
@@ -575,7 +575,7 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
 
 
                         // modificacion para optimizacion de rendimiento en navegador
-                        setTimeout(buscar_informacion, 1300);
+                       setTimeout(buscar_informacion, 1300);
 
 
 

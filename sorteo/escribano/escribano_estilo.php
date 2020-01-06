@@ -32,11 +32,11 @@ body{
 
 
 #fecha_sorteo{
-    font-size: 21px;
-    left: 692px;
+    font-size: 31px;
+    left: 420px;
     position: relative;
     font-family: 'MyriadPro-Bold';
-    top: 56px;
+    top: 44px;
 }
 
 #fecha_sorteo_resumen{
@@ -118,15 +118,11 @@ body{
     text-align: center;
     position: absolute;
     font-family: 'MyriadPro-Bold';
+
+   // color:#fff;
 }
 
-.billete2{
-    border: 0px solid #000;
-    text-align: center;
-    position: absolute;
-    font-family: 'MyriadPro-Bold';
-    color:#fff;
-}
+
 
 #primer_premio{
     background-size: 319px 60px;
