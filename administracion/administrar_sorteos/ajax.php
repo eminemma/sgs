@@ -50,11 +50,11 @@ if ($accion == 'modificar') {
     } else if ($_SESSION['id_juego'] == 2) {
         $ultimo_elemento = 9999;
     }
-
     try {
         $rs = sql(" SELECT SORTEO
                   FROM sgs.T_SORTEO
-                  WHERE SORTEO = ?", array($sorteo));
+                  WHERE SORTEO = ?
+                  AND ID_JUEGO=? ", array($sorteo, $_SESSION['id_juego']));
 
         if ($rs->RecordCount() > 0) {
             header('Content-Type: application/json');
