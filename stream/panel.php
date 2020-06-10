@@ -46,6 +46,8 @@ if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.
     <script type="text/javascript" src="librerias/modernizr/modernizr.js"></script>
     <link rel="stylesheet" href="librerias/font-awesome/css/font-awesome.min.css">
 
+    <script type="text/javascript" src="js/loadingoverlay.min.js"></script>
+
 
     <title>SGS - Sistema de Gestion de Sorteos </title>
     <style type="text/css">
@@ -99,8 +101,7 @@ if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.
             <div class="row show-grid">
                 <div class="span12">
                     <div class="btn-group" style="width: 100%">
-                        <button id="demorado" class="btn btn-large btn-danger" disabled  style="width: 100%" data-toggle="modal"
-                        data-target="#demoradoSorteo">Sorteo Demorado</button>
+                        <button id="demorado" class="btn btn-large btn-danger" disabled style="width: 100%" data-toggle="modal" data-target="#demoradoSorteo">Sorteo Demorado</button>
                     </div>
                 </div>
             </div>
@@ -137,7 +138,7 @@ if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.
             <div id="eventos" class="well well-small"></div>
         </div>
     </div>
-<!-- Modal Iniciar Sorteo -->
+    <!-- Modal Iniciar Sorteo -->
     <div id="demoradoSorteo" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -212,6 +213,9 @@ if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.
     </div>
     <script type="text/javascript">
         $(function() {
+            $.LoadingOverlaySetup({
+                zIndex: 99999
+            });
             $.when(esJefeSorteo()).done(function(data) {
                 if (data.esJefe == true) {
                     $('#panelJefe').show();
@@ -248,6 +252,7 @@ if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.
         });
 
         function situacionActual() {
+            $.LoadingOverlay("show");
             $.get('stream/ajax.php?accion=situacion_actual', {},
                 function(data) {
                     if (data.tipo == 'error') {
@@ -283,10 +288,15 @@ if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.
                     }
                     leerEventos();
                 }
+            ).complete(
+                function() {
+                    $.LoadingOverlay("hide");
+                }
             );
         }
 
-        function sorteoDemorado(){
+        function sorteoDemorado() {
+            $.LoadingOverlay("show");
             $.get('stream/ajax.php?accion=sorteo_demorado', {},
                 function(data) {
                     if (data.tipo == 'error') {
@@ -296,10 +306,15 @@ if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.
                     }
                     leerEventos();
                 }
+            ).complete(
+                function() {
+                    $.LoadingOverlay("hide");
+                }
             );
         }
 
         function iniciarSorteo() {
+            $.LoadingOverlay("show");
             $.get('stream/ajax.php?accion=iniciar_sorteo', {},
                 function(data) {
                     if (data.tipo == 'error') {
@@ -313,11 +328,16 @@ if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.
                     }
                     leerEventos();
                 }
+            ).complete(
+                function() {
+                    $.LoadingOverlay("hide");
+                }
             );
             /**/
         }
 
         function detenerSorteo() {
+            $.LoadingOverlay("show");
             $.post('stream/ajax.php?accion=detener_sorteo', $('#formDetener').serialize(),
                 function(data) {
                     if (data.tipo == 'error') {
@@ -332,11 +352,16 @@ if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.
                     }
                     leerEventos();
                 }
+            ).complete(
+                function() {
+                    $.LoadingOverlay("hide");
+                }
             );
 
         }
 
         function finalizarSorteo() {
+            $.LoadingOverlay("show");
             $.get('stream/ajax.php?accion=finalizar_sorteo', {},
                 function(data) {
                     if (data.tipo == 'error') {
@@ -349,14 +374,23 @@ if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.
                     }
                     leerEventos();
                 }
+            ).complete(
+                function() {
+                    $.LoadingOverlay("hide");
+                }
             );
 
         }
 
         function leerEventos() {
+            // $("#eventos").LoadingOverlay("show");
             $.get('stream/ajax.php?accion=listar_eventos', {},
                 function(data) {
                     $('#eventos').html(data);
+                }
+            ).complete(
+                function() {
+                    //$("#eventos").LoadingOverlay("hide");
                 }
             );
         }

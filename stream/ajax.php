@@ -31,7 +31,14 @@ switch ($accion) {
                 ?
             )", array('I', 'Se ' . ($row->CANTIDAD > 0 ? ' reinicio ' : ' inicio ') . ' el sorteo', $sorteo, $id_juego));
 
-            //sql('BEGIN SGS.PR_EXTRACTO_ONLINE();END;');
+            sql("DECLARE
+                    l_jobno pls_integer;
+                BEGIN
+                dbms_job.submit( l_jobno,
+                                'BEGIN SGS.PR_EXTRACTO_ONLINE(); END;',
+                                sysdate + interval '1' second );
+                commit;
+                END;");
 
             $mensaje = array("tipo" => "success");
         } catch (exception $e) {
