@@ -24,7 +24,7 @@ if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.
     <meta http-equiv="Content-Language" content="es" />
     <meta name="distribution" content="global" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <base href="<?php echo $url; ?>/sgs_panel_vivo/">
+    <base href="<?php echo $url; ?>/sgs/">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
