@@ -211,6 +211,9 @@ if ($accion == 'exportar') {
                                             $importe,
                                             '$sorteo_asoc'
                                           )");
+
+                       
+                   
                     } else {
                         $rs_extracto = sql_kanban('	SELECT COUNT(*) as CANTIDAD_EXTRACTO
 													FROM KANBAN.T_PREMIO_EXTRACTO
@@ -329,6 +332,10 @@ if ($accion == 'exportar') {
     }
 
     FinalizarTransaccion_kanban($db_kanban);
+ 
+    if($id_juego == 32){
+        //include dirname(__FILE__) . '/../../mail/procesar_enviar_mail_poceada_contralor.php';
+    }
     ok('Se Exportaron los datos del sorteo,extracciones al KANBAN');
 }
 
@@ -460,11 +467,8 @@ if ($accion == 'exportar_anticipada') {
 									    WHERE ID_PROGRAMA_PREMIOS_ANTIC = ?", array($row_id_programa_premios_antic->ID_PROGRAMA_PREMIOS_ANTIC));
 
             $rs_seq = $rs_seq->FetchNextObject($toupper = true);
-            /*
-            coeficiente ley 20630  = 0.41579732
-            coeficiente 9505       = 0.07451565
-             */
-            $importe_con_ley = ($row_premio->IMPORTE * 1.49031297);
+
+            $importe_con_ley = ($row_premio->IMPORTE / 0.95);
 
             if ($row_premio->ID_TIPO_PREMIO == 2 || $row_premio->ID_TIPO_PREMIO == 1) {
 
@@ -481,8 +485,9 @@ if ($accion == 'exportar_anticipada') {
                     $especie         = null;
                 }
 
-                $rs = sql_kanban("INSERT INTO KANBAN.T_PREMIOS (FRACCION,IMPORTE, ID_DESCRIPCION,BILLETE,ID_JUEGO,SORTEO,SERIE, CONCEPTO,SUC_BAN,NRO_AGEN,ID_SORTEO_ANTICIPADO,OCR,USUARIO,ESPECIE)
-						VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                $rs = sql_kanban("INSERT INTO KANBAN.T_PREMIOS (FRACCION,IMPORTE, ID_DESCRIPCION,BILLETE,ID_JUEGO,SORTEO,SERIE, CONCEPTO,SUC_BAN,NRO_AGEN,
+														FECHA_ALTA,ID_SORTEO_ANTICIPADO,OCR,USUARIO,ESPECIE)
+						VALUES (?,?,?,?,?,?,?,?,?,?,TO_DATE(?,'dd/mm/yyyy'),?,?,?,?)",
                     array(
                         $fraccion,
                         $importe_con_ley,
@@ -494,6 +499,7 @@ if ($accion == 'exportar_anticipada') {
                         $row_premio->PREMIO,
                         $suc_ban,
                         $nro_agen,
+                        $_POST['fecha_desde'],
                         $rs_seq->ID_PREMIOS_ANTICIPADA,
                         $rowValidacion->OCR,
                         'DU' . $_SESSION['dni'],
@@ -577,8 +583,9 @@ if ($accion == 'exportar_anticipada') {
                     $rs          = $rs->FetchNextObject($toupper = true);
                     $id_estimulo = $rs->ID_DESCRIPCION;
 
-                    $rs = sql_kanban("INSERT INTO KANBAN.T_PREMIOS (FRACCION,IMPORTE, ID_DESCRIPCION,BILLETE,	ID_JUEGO,SORTEO,SERIE, CONCEPTO,SUC_BAN,NRO_AGEN,ID_SORTEO_ANTICIPADO,OCR,ESPECIE)
-														VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                    $rs = sql_kanban("INSERT INTO KANBAN.T_PREMIOS (FRACCION,IMPORTE, ID_DESCRIPCION,BILLETE,	ID_JUEGO,SORTEO,SERIE, CONCEPTO,SUC_BAN,NRO_AGEN,
+														FECHA_ALTA,ID_SORTEO_ANTICIPADO,OCR,ESPECIE)
+														VALUES (?,?,?,?,?,?,?,?,?,?,TO_DATE(?,'dd/mm/yyyy'),?,?,?)",
                         array(
                             $fraccion,
                             $importe,
@@ -590,6 +597,7 @@ if ($accion == 'exportar_anticipada') {
                             'ESTIMULO - SEM. ' . $semana . ' - PREMIO Nº ' . $row_estimulo->ORDEN . ' - ' . $desc_especie,
                             $suc_ban,
                             $nro_agen,
+                            $_POST['fecha_desde'],
                             $rs_seq->ID_PREMIOS_ANTICIPADA,
                             $rowValidacion->OCR,
                             $especie,
