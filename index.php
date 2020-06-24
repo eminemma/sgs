@@ -98,6 +98,9 @@ if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.
                                         ">Administrar Incentivos</a></li>
                                     <li><a href="#" onclick="g('version.php');">Auditoria</a></li>
                                     <li><a href="#" onclick="g('version_alta.php');">Version</a></li>
+                                    <li class="divider"></li>
+                                    <li class="nav-header">Panelo Vivo</li>
+                                    <li><a href="stream/panel.php" target="_blank">Vivo y Extracto Quiniela Cba</a></li>
                                     <!-- <li><a href="#" onclick="g('administracion/administrar_anticipada/loteria_administrar_anticipada.php');">Administrar Anticipada</a></li> -->
                                 </ul>
                             </li>
@@ -245,16 +248,6 @@ if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.
                                 </ul>
 
                             </li>
-                               <li class="dropdown">
-                                    <a data-toggle="dropdown" class="dropdown-toggle" href="#"><i class="icon-briefcase icon-white"></i>Panel Control <b class="caret"></b></a>
-                                    <ul class="dropdown-menu">
-                                        <li class="divider"></li>
-                                        <li class="nav-header">Actas Generales</li>
-                                        <li><a href="stream/panel.php" target="_blank">Vivo y Extracto Quiniela Cba</a></li>
-                                        <li class="divider"></li>
-                                    </ul>
-
-                                </li>
 
                             <li class="dropdown">
                                 <a data-toggle="dropdown" class="dropdown-toggle" href="#"><i class="icon-briefcase icon-white"></i> Actas Poceada<b class="caret"></b></a>
