@@ -50,11 +50,11 @@ if ($accion == 'modificar') {
     } else if ($_SESSION['id_juego'] == 2) {
         $ultimo_elemento = 9999;
     }
-
     try {
         $rs = sql(" SELECT SORTEO
                   FROM sgs.T_SORTEO
-                  WHERE SORTEO = ?", array($sorteo));
+                  WHERE SORTEO = ?
+                  AND ID_JUEGO=? ", array($sorteo, $_SESSION['id_juego']));
 
         if ($rs->RecordCount() > 0) {
             header('Content-Type: application/json');
@@ -127,6 +127,20 @@ function sql_sorteo()
                   TS.ID_PROGRAMA
           FROM SGS.T_SORTEO TS
           WHERE TS.ID_SORTEO = ?";
+
+    return $sql;
+}
+
+function sql_quiniela_asociadas()
+{
+    $sql = "SELECT
+                    ID_SORTEO,
+                    SORTEO
+            FROM
+                    SGS.T_SORTEO
+            WHERE  ID_JUEGO                = 2
+                AND  SORTEO=?
+            ORDER BY FECHA_SORTEO DESC";
 
     return $sql;
 }

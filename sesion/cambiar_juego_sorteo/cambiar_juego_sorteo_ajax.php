@@ -140,6 +140,8 @@ if ($row->ID_JUEGO_TIPO == $tipo_juego) {
 										g('administracion/administrar_sorteos/loteria_administrar_sorteos.php');
 									else if('<?php echo $juego ?>'=='2')
 										g('administracion/administrar_sorteos/quiniela_administrar_sorteos.php');
+									else if('<?php echo $juego ?>'=='32')
+										g('administracion/administrar_sorteos/quiniela_poceada_administrar_sorteos.php');
 
 
 					})" title="Modificar Sorteo/Juego"><div class="fa fa-play fa-2x"></div></a></td>
@@ -157,6 +159,7 @@ getPaginadorLinks('#contenedor_sorteos');
     $_SESSION['descripcion_sorteo'] = 'EXTRAORDINARIO';
     $_SESSION['juego_tipo']         = $_GET['tipo_juego'];
     $_SESSION['sale_o_sale']        = 'NO';
+    
 
     $sql = "	SELECT COUNT(*) AS CANTIDAD
 				FROM 	SGS.T_SORTEO TS,
@@ -167,7 +170,7 @@ getPaginadorLinks('#contenedor_sorteos');
 				GROUP BY 	TPP.SALE_O_SALE
 				HAVING 		 UPPER(TPP.SALE_O_SALE) = 'SI'";
     $res = sql($sql, array($_SESSION['sorteo'], $_SESSION['id_juego']));
-    var_dump($res->RecordCount());
+  
     if ($res->RecordCount() > 0) {
         $_SESSION['sale_o_sale'] = 'SI';
     }

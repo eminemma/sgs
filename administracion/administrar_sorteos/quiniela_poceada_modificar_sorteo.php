@@ -1,4 +1,3 @@
-<h3 class="titulo">Modificar Sorteo</h3>
 <?php
 session_start();
 include_once dirname(__FILE__) . '/../../db.php';
@@ -8,11 +7,26 @@ $id_sorteo = isset($_GET['id_sorteo']) ? $_GET['id_sorteo'] : '';
 $res_sorteo = sql(sql_sorteo(), array($id_sorteo));
 $row_sorteo = siguiente($res_sorteo);
 
+?>
+
+<h3 class="titulo">Modificar Sorteo</h3>
+<?php
+
 $res_usuario   = sql(sql_operador());
 $res_escribano = sql(sql_escribano());
-$rs_programa   = sql(sql_programa(), array($_SESSION['id_juego']));
-require_once 'loteria_encabezado.php';
+
+$rs_programa = sql(sql_programa(), array($_SESSION['id_juego']));
+
+$rs_quinielas_asociadas = sql(sql_quiniela_asociadas(), array($row_sorteo->QUINIELA_ASOC));
+
 ?>
+<div class="navbar">
+  <div class="navbar-inner">
+    <a class="brand" href="#" onclick="g('administracion/administrar_sorteos/quiniela_poceada_administrar_sorteos.php')">Sorteo</a>
+    <a class="brand" href="#" onclick="g('administracion/administrar_sorteos/quiniela_poceada_nuevo_sorteo.php')">Nuevo</a>
+
+  </div>
+</div>
 <div class="resultado">
 		<div class="error alert alert-error" onclick="$(this).fadeOut()" style="display:none">
 
@@ -23,7 +37,7 @@ require_once 'loteria_encabezado.php';
 			<i class="icon-ok"></i>
 			<span  class="contenido"></span>
 		</div>
-</div>
+	</div>
 <form method="post" action="#" onsubmit="$.post('administracion/administrar_sorteos/ajax.php',
 													{
   													  accion:'modificar',
@@ -32,9 +46,9 @@ require_once 'loteria_encabezado.php';
 													  operador:$('#operador').val(),
 													  escribano:$('#escribano').val(),
 													  fecha_sorteo:$('#fecha_sorteo').val(),
-													  id_tipo_juego :$('#tipo_juego option:selected').val(),
-													  quiniela_asoc :$('#quiniela_asoc').val(),
-													   programa :$('#programa option:selected').val()
+													   id_tipo_juego :$('#tipo_juego option:selected').val(),
+													   programa :$('#programa option:selected').val(),
+													   quiniela_asoc :$('#quiniela_asoc option:selected').val()
 													  },
 														function(data){
 															if(data.tipo){
@@ -80,7 +94,7 @@ while ($row = siguiente($rs_programa)) {?>
 	    				<option value="<?php echo $row->ID_PROGRAMA ?>" <?php echo ($row->ID_PROGRAMA == $row_sorteo->ID_PROGRAMA) ? 'selected' : '' ?> ><?php echo $row->DESCRIPCION ?></option>
 	    			<?php }?>
 	  			</select>
-	  			<a href="javascript:void(0)" onclick="abrirPrograma();"  title="Programa de Premios"><div class="fa fa-print fa-2x"></div></a>
+	  			<a href="javascript:void(0)" onclick="abrirPrograma();" title="Programa de Premios"><div class="fa fa-print fa-2x"></div></a>
   			</div>
 		</div>
 		<div class="control-group">
@@ -124,20 +138,30 @@ while ($row = siguiente($res_escribano)) {?>
 			<label class="control-label" for="fecha_sorteo_cal">Fecha de Sorteo</label>
 			<div class="controls">
 				<div id="fecha_sorteo_cal" class="input-append">
-					<input id="fecha_sorteo" style="width:200px"  data-format="dd/MM/yyyy" value="<?php echo $row_sorteo->FECHA_SORTEO ?>" type="text" class="input-small recordar" placeholder="obligatorio">
+					<input id="fecha_sorteo" style="width:200px" data-format="dd/MM/yyyy hh:mm:ss" type="text" class="input-small recordar" placeholder="obligatorio">
 					<span class="add-on">
 						<i data-time-icon="icon-time" data-date-icon="icon-calendar" class="icon-calendar"></i>
 					</span>
+
 				</div>
+
 			</div>
 		</div>
+
 		<div class="control-group">
-			<label class="control-label" for="quiniela_asociada">Quiniela Asociada</label>
+			<label class="control-label" for="escribano">Quiniela Asociada</label>
 			<div class="controls">
-				<div id="quiniela_asociada" class="input-append">
-					<input id="quiniela_asoc" style="width:200px"  value="<?php echo $row_sorteo->QUINIELA_ASOC ?>" type="text" class="input-small recordar" placeholder="Sorteo de Quiniela Asociado">
-				</div>
-			</div>
+				<select class="filter-option pull-left" id="quiniela_asoc" name="quiniela_asoc">
+					<option value="0" >Seleccionar</option>
+					<?php
+
+while ($row = siguiente($rs_quinielas_asociadas)) {
+
+    ?>
+	    				<option value="<?php echo $row->SORTEO ?>" <?php echo ($row->SORTEO == $row_sorteo->QUINIELA_ASOC) ? 'selected' : '' ?> ><?php echo $row->SORTEO ?></option>
+	    			<?php }?>
+	  			</select>
+  			</div>
 		</div>
 
 	<div class="control-group">
@@ -147,16 +171,14 @@ while ($row = siguiente($res_escribano)) {?>
 		<button type="button" class="btn">Cancelar</button>
     </div>
   </div>
-
 </form>
-
 <script type="text/javascript">
 function abrirPrograma(){
-	window.open("administracion/administrar_programa/pdf_programa.php?id_programa="+$( "#programa option:selected" ).val(), "_blank");
+	window.open("administracion/administrar_programa/pdf_programa_poceada.php?id_programa="+$( "#programa option:selected" ).val(), "_blank");
 	return false;
 }
 function inicarCombos(){
-  $.get('juego/ajax.php',{'accion':'listar_tipos_juegos','id_juego':1},
+  $.get('juego/ajax.php',{'accion':'listar_tipos_juegos','id_juego':32},
         function(data){
         $.each(data,
             function(i, item) {
@@ -168,13 +190,21 @@ function inicarCombos(){
     );
 
 }
+
 $(function(){
 	$('#fecha_sorteo_cal').datetimepicker({
 		pickDate: true,
 		format: 'dd/MM/yyyy hh:mm:ss'
 	});
+
+
+	$('.add-on').on('click', function(){
+		var offset = $("#fecha_sorteo_cal").offset();
+		$('.bootstrap-datetimepicker-widget').css({
+			top: offset.top -150,
+			left: offset.left + $("#fecha_sorteo_cal").width()
+		})});
 	$("#fecha_sorteo_cal").datetimepicker("setDate","<?php echo $row_sorteo->FECHA_SORTEO ?>" );
 	inicarCombos();
 });
-
 </script>

@@ -567,10 +567,11 @@ $db_kanban->debug = true;*/
 
         if ($solo_venta == 0) {
             $sorteo_kanban    = array();
-            $rs_sorteo_kanban = sql_kanban("	SELECT 	ID_SORTEO,to_char(FECHA_SORTEO,'YYYY-MM-DD HH24:MI:SS') AS FECHA_SORTEO,FECHA_BAJA,ID_ESCRIBANO,
+            $rs_sorteo_kanban = sql_kanban("	SELECT 	ID_SORTEO,
+            											to_char(FECHA_SORTEO,'YYYY-MM-DD HH24:MI:SS') AS FECHA_SORTEO,FECHA_BAJA,ID_ESCRIBANO,
             											USUARIO_JEFE_SORTEO,USUARIO_OPERADOR,ID_PROGRAMA,PRIMER_ELEMENTO,
             											ULTIMO_ELEMENTO,FRACCIONES,CANTIDAD_SORTEOS_FECHA,SORTEO_UNICO,DESCRIPCION,
-            											MONTO_FRACCION,	FECHA_HASTA_PAGO_PREMIO
+            											MONTO_FRACCION,	FECHA_HASTA_PAGO_PREMIO,QUINIELA_ASOC
 									  	FROM KANBAN.T_SORTEO
 										 WHERE SORTEO=? AND ID_JUEGO=?", array($sorteo, $id_juego));
 
@@ -595,6 +596,7 @@ $db_kanban->debug = true;*/
             $sorteo_kanban['descripcion']             = $row_sorteo_kanban->DESCRIPCION;
             $sorteo_kanban['monto_fraccion']          = $row_sorteo_kanban->MONTO_FRACCION;
             $sorteo_kanban['fecha_hasta_pago_premio'] = $row_sorteo_kanban->FECHA_HASTA_PAGO_PREMIO;
+            $sorteo_kanban['quiniela_asoc'] 		  = $row_sorteo_kanban->QUINIELA_ASOC;
 
             //T_PROGRAMA
             //Traigo los datos del Programa desde Kanban
@@ -869,23 +871,26 @@ $db_kanban->debug = true;*/
             $rs_sorteo_sgs = sql("SELECT * FROM SGS.T_SORTEO WHERE ID_JUEGO=? AND SORTEO=?", array($id_juego, $sorteo));
             if ($rs_sorteo_sgs->RowCount() > 0) {
                 $fraccion = ($sorteo_kanban['fracciones'] == null) ? 0 : $sorteo_kanban['fracciones'];
-                sql("UPDATE SGS.T_SORTEO SET FECHA_SORTEO=to_date(?,'YYYY-MM-DD HH24:MI:SS'),
-										FECHA_BAJA=?,
-										ID_ESCRIBANO=?,
-										ID_JEFE=?,
-										ID_OPERADOR=?,
-										ID_PROGRAMA=?,
-										PRIMER_ELEMENTO=?,
-										ULTIMO_ELEMENTO=?,
-										FRACCIONES=?,
-										PROGRESION=?,
-										CANTIDAD_SORTEOS_FECHA=?,
-										SORTEO_UNICO=?,
-										DESCRIPCION=?,
-										MONTO_FRACCION=?,
-										CANTIDAD_SERIE=?,
-										FECHA_HASTA_PAGO_PREMIO=?
-										WHERE ID_JUEGO=? AND SORTEO=?", array($sorteo_kanban['fecha_sorteo'],
+                sql("	UPDATE SGS.T_SORTEO SET 	FECHA_SORTEO 			= to_date(?,'YYYY-MM-DD HH24:MI:SS'),
+													FECHA_BAJA 	 			= ?,
+													ID_ESCRIBANO 			= ?,
+													ID_JEFE      			= ?,
+													ID_OPERADOR  			= ?,
+													ID_PROGRAMA  			= ?,
+													PRIMER_ELEMENTO 		= ?,
+													ULTIMO_ELEMENTO 		= ?,
+													FRACCIONES 				= ?,
+													PROGRESION 				= ?,
+													CANTIDAD_SORTEOS_FECHA  = ?,
+													SORTEO_UNICO 			= ?,
+													DESCRIPCION 			= ?,
+													MONTO_FRACCION 			= ?,
+													CANTIDAD_SERIE 			= ?,
+													FECHA_HASTA_PAGO_PREMIO = ?
+													QUINIELA_ASOC  			= ?
+											WHERE 
+													ID_JUEGO 				= ? 
+												AND SORTEO                  = ?", array($sorteo_kanban['fecha_sorteo'],
                     $sorteo_kanban['fecha_baja'],
                     $sorteo_kanban['id_escribano'],
                     $sorteo_kanban['id_jefe'],
@@ -901,11 +906,13 @@ $db_kanban->debug = true;*/
                     $sorteo_kanban['monto_fraccion'],
                     $sorteo_kanban['cantidad_serie'],
                     $sorteo_kanban['fecha_hasta_pago_premio'],
+                    $sorteo_kanban['quiniela_asoc'],
                     $id_juego,
                     $sorteo));
             } else {
                 $fraccion = ($sorteo_kanban['fracciones'] == null) ? 0 : $sorteo_kanban['fracciones'];
-                sql("INSERT INTO SGS.T_SORTEO ( ID_SORTEO,
+                sql("INSERT INTO SGS.T_SORTEO (
+                							ID_SORTEO,
 											FECHA_SORTEO,
 											FECHA_BAJA,
 											ID_ESCRIBANO,
@@ -923,8 +930,10 @@ $db_kanban->debug = true;*/
 											MONTO_FRACCION,
 											FECHA_HASTA_PAGO_PREMIO,
 											ID_JUEGO,
-											SORTEO)
-										VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", array($sorteo_kanban['id_sorteo'],
+											SORTEO,
+											QUINIELA_ASOC
+											)
+										VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", array($sorteo_kanban['id_sorteo'],
                     $sorteo_kanban['fecha_sorteo'],
                     $sorteo_kanban['fecha_baja'],
                     $sorteo_kanban['id_escribano'],
@@ -942,7 +951,8 @@ $db_kanban->debug = true;*/
                     $sorteo_kanban['monto_fraccion'],
                     $sorteo_kanban['fecha_hasta_pago_premio'],
                     $id_juego,
-                    $sorteo));
+                    $sorteo,
+                $sorteo_kanban['quiniela_asoc']));
             }
             //T_PROGRAMA_PREMIOS_ANEXO
             $rs_anexo_c  = sql("SELECT ID_ANEXO FROM SGS.T_PROGRAMA_ANEXO_CABECERA WHERE ID_PROGRAMA = ?", array($sorteo_kanban['id_programa']));
