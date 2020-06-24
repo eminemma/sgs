@@ -1074,7 +1074,7 @@ function get_duplicates($array)
     return array_diff_assoc($array, array_unique($array));
 }
 
-function importar_extracto_quiniela_asociada($sorteo_kanban)
+function importar_extracto_quiniela_asociada()
 {
     global $db_kanban;
     global $db;
