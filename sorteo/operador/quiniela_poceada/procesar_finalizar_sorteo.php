@@ -6,7 +6,6 @@ include_once dirname(__FILE__) . '/../../../db.php';
 $sorteo   = $_SESSION['sorteo'];
 $id_juego = $_SESSION['id_juego'];
 conectar_db();
-//$db->debug = true;
 $rs = sql('SELECT ID_DESCRIPCION
  									FROM KANBAN.T_PREMIOS@KANBAN_ANTICIPADA
  									WHERE SORTEO = ? AND ID_JUEGO = ? ', array($sorteo, $id_juego));
@@ -280,96 +279,18 @@ try {
      descripcion DESC;
             commit;
  END;");
-    $db->debug = true;
-    $rs        = sql('SELECT ID_DESCRIPCION
+    $rs = sql('SELECT ID_DESCRIPCION
  									FROM KANBAN.T_PREMIOS@KANBAN_ANTICIPADA
  									WHERE SORTEO = ? AND ID_JUEGO = ?
                                     and ID_DESCRIPCION = 82', array($sorteo, $id_juego));
 
-    $rs_recaudacion = sql("     SELECT
-                                        tr.TOTAL_PREMIOS_8_ACIERTOS,
-                                        tr.POZO_MINIMO_8_ASEGURADO,
-                                        tr.PROP_8_ACIERTOS,
-                                        tr_ant.FONDO_RESERVA_8_ACIERTOS,
-                                        tr.TOTAL_PREMIOS_7_ACIERTOS,
-                                        tr.POZO_MINIMO_7_ASEGURADO,
-                                        tr.PROP_7_ACIERTOS,
-                                        tr_ant.FONDO_RESERVA_7_ACIERTOS,
-                                        tr.TOTAL_PREMIOS_6_ACIERTOS,
-                                        tr.POZO_MINIMO_6_ASEGURADO,
-                                        tr.PROP_6_ACIERTOS,
-                                        tr_ant.FONDO_RESERVA_6_ACIERTOS,
-                                        tr.POZO_RESULTANTE_6,
-                                        tr.POZO_RESULTANTE_7,
-                                        tr.POZO_RESULTANTE_8,
-                                        NVL(TR_ANT.POZO_RESERVA_8_PROX_SORTEO,0) AS POZO_RESERVA_8_PROX_SORTEO,
-                                        NVL(TR_ANT.POZO_RESERVA_7_PROX_SORTEO,0) AS POZO_RESERVA_7_PROX_SORTEO,
-                                        NVL(TR_ANT.POZO_RESERVA_6_PROX_SORTEO,0) AS POZO_RESERVA_6_PROX_SORTEO,
-                                        NVL(TR.APORTE_VOLUNTARIO_8_ACIERTOS,0) as APORTE_VOLUNTARIO_8_ACIERTOS,
-                                        NVL(TR.APORTE_VOLUNTARIO_7_ACIERTOS,0) as APORTE_VOLUNTARIO_7_ACIERTOS,
-                                         NVL(TR.APORTE_VOLUNTARIO_6_ACIERTOS,0) as APORTE_VOLUNTARIO_6_ACIERTOS
-                        FROM KANBAN.T_TT_RECAUDACION@KANBAN_ANTICIPADA tr,
-                          (
-                                                      SELECT    FONDO_RESERVA_8_ACIERTOS,
-                                                                FONDO_RESERVA_7_ACIERTOS,
-                                                                FONDO_RESERVA_6_ACIERTOS,
-                                                                ID_JUEGO,
-                                                                POZO_RESERVA_6_PROX_SORTEO,
-                                                                POZO_RESERVA_7_PROX_SORTEO,
-                                                                POZO_RESERVA_8_PROX_SORTEO
-                                                  FROM KANBAN.T_TT_RECAUDACION@KANBAN_ANTICIPADA
-                                                      WHERE (SORTEO,ID_JUEGO) IN (
-                                                      SELECT
-                                                          SORTEO,ID_JUEGO
-                                                      FROM
-                                                          (
-                                                              SELECT
-                                                                  SORTEO,ID_JUEGO
-                                                              FROM
-                                                                  KANBAN.T_SORTEO@KANBAN_ANTICIPADA
-                                                              WHERE
-                                                                  ID_JUEGO  = ?
-                                                                  AND SORTEO < ?
-                                                              ORDER BY SORTEO DESC
-                                                          )
-                                                      WHERE
-                                                          ROWNUM = 1)
-                                                ) TR_ANT
-                        WHERE
-                                tr.ID_JUEGO = ?
-                            AND tr.SORTEO   = ?
-                            AND TR_ANT.ID_JUEGO(+) = tr.ID_JUEGO", array($id_juego, $sorteo, $id_juego, $sorteo));
-    $row                      = siguiente($rs_recaudacion);
-    $aporte_voluntario        = 0;
-    $total_premios_8_aciertos = 0;
-    $acumulado_8_aciertos     = 0;
-    $acumulado_7_aciertos     = 0;
-    $acumulado_6_aciertos     = 0;
-    $aporte_fondo             = 0;
-    $retiro_fondo             = 0;
-    $fondo_reserva_anterior   = 0;
-    $rs                       = sql('SELECT ID_DESCRIPCION
-                                    FROM KANBAN.T_PREMIOS@KANBAN_ANTICIPADA
-                                    WHERE SORTEO = ? AND ID_JUEGO = ?
-                                    and ID_DESCRIPCION = 82', array($sorteo, $id_juego));
-
     if ($rs->RecordCount() == 0) {
-        $aporte_fondo           = $row->PROP_8_ACIERTOS * 0.1;
-        $retiro_fondo           = 0;
-        $fondo_reserva_anterior = $row->FONDO_RESERVA_8_ACIERTOS;
-        $acumulado_8_aciertos   = $row->PROP_8_ACIERTOS * 0.9 + $row->POZO_RESERVA_8_PROX_SORTEO;
-
-    } else {
-        $aporte_fondo           = 0;
-        $retiro_fondo           = $row->APORTE_VOLUNTARIO_8_ACIERTOS;
-        $fondo_reserva_anterior = $row->FONDO_RESERVA_8_ACIERTOS;
-
+        sql("UPDATE KANBAN.T_TT_RECAUDACION@KANBAN_ANTICIPADA A SET POZO_RESERVA_8_PROX_SORTEO=
+				(SELECT (PROP_8_ACIERTOS * .10)
+			FROM KANBAN.T_TT_RECAUDACION@KANBAN_ANTICIPADA
+			WHERE ID_JUEGO=A.ID_JUEGO AND SORTEO=A.SORTEO)
+			WHERE A.ID_JUEGO=? AND A.SORTEO=?", array($id_juego, $sorteo));
     }
-    $fondo_reserva_8_aciertos = $aporte_fondo - $retiro_fondo + $fondo_reserva_anterior;
-
-    $aporte_fondo           = 0;
-    $retiro_fondo           = 0;
-    $fondo_reserva_anterior = 0;
 
     $rs = sql('SELECT ID_DESCRIPCION
                                     FROM KANBAN.T_PREMIOS@KANBAN_ANTICIPADA
@@ -377,134 +298,23 @@ try {
                                     and ID_DESCRIPCION = 83', array($sorteo, $id_juego));
 
     if ($rs->RecordCount() == 0) {
-        $aporte_fondo           = $row->PROP_7_ACIERTOS * 0.1;
-        $retiro_fondo           = 0;
-        $fondo_reserva_anterior = $row->FONDO_RESERVA_7_ACIERTOS;
-        $acumulado_7_aciertos   = $row->PROP_7_ACIERTOS * 0.9 + $row->POZO_RESERVA_7_PROX_SORTEO;
-
-    } else {
-        $aporte_fondo           = 0;
-        $retiro_fondo           = $row->APORTE_VOLUNTARIO_7_ACIERTOS;
-        $fondo_reserva_anterior = $row->FONDO_RESERVA_7_ACIERTOS;
-
+        sql("UPDATE KANBAN.T_TT_RECAUDACION@KANBAN_ANTICIPADA A SET POZO_RESERVA_7_PROX_SORTEO=
+				(SELECT (PROP_7_ACIERTOS * .10)
+			 FROM KANBAN.T_TT_RECAUDACION@KANBAN_ANTICIPADA
+			 WHERE ID_JUEGO=A.ID_JUEGO AND SORTEO=A.SORTEO)
+			 WHERE A.ID_JUEGO=? AND A.SORTEO=?", array($id_juego, $sorteo));
     }
-    $fondo_reserva_7_aciertos = $aporte_fondo - $retiro_fondo + $fondo_reserva_anterior;
-
-    $aporte_fondo           = 0;
-    $retiro_fondo           = 0;
-    $fondo_reserva_anterior = 0;
-    $rs                     = sql('SELECT ID_DESCRIPCION
+    $rs = sql('SELECT ID_DESCRIPCION
                                     FROM KANBAN.T_PREMIOS@KANBAN_ANTICIPADA
                                     WHERE SORTEO = ? AND ID_JUEGO = ?
                                     and ID_DESCRIPCION = 84', array($sorteo, $id_juego));
-
     if ($rs->RecordCount() == 0) {
-        $aporte_fondo           = $row->PROP_6_ACIERTOS * 0.1;
-        $retiro_fondo           = 0;
-        $fondo_reserva_anterior = $row->FONDO_RESERVA_6_ACIERTOS;
-        $acumulado_6_aciertos   = $row->PROP_6_ACIERTOS * 0.9 + $row->POZO_RESERVA_6_PROX_SORTEO;
-
-    } else {
-        $aporte_fondo           = 0;
-        $retiro_fondo           = $row->APORTE_VOLUNTARIO_6_ACIERTOS;
-        $fondo_reserva_anterior = $row->FONDO_RESERVA_6_ACIERTOS;
-
+        sql("UPDATE KANBAN.T_TT_RECAUDACION@KANBAN_ANTICIPADA A SET POZO_RESERVA_6_PROX_SORTEO=
+				(SELECT (PROP_6_ACIERTOS * .10)
+			FROM KANBAN.T_TT_RECAUDACION@KANBAN_ANTICIPADA
+			WHERE ID_JUEGO=A.ID_JUEGO AND SORTEO=A.SORTEO)
+			WHERE A.ID_JUEGO=? AND A.SORTEO=?", array($id_juego, $sorteo));
     }
-    $fondo_reserva_6_aciertos = $aporte_fondo - $retiro_fondo + $fondo_reserva_anterior;
-    sql("UPDATE KANBAN.T_TT_RECAUDACION@KANBAN_ANTICIPADA A
-            SET ACUM_8_ACIERTOS_PROX_SORTEO   = ?,
-                FONDO_RESERVA_8_ACIERTOS     = ?,
-                ACUM_7_ACIERTOS_PROX_SORTEO   = ?,
-                FONDO_RESERVA_7_ACIERTOS     = ?,
-                ACUM_6_ACIERTOS_PROX_SORTEO   = ?,
-                FONDO_RESERVA_6_ACIERTOS     = ?
-            WHERE   A.ID_JUEGO = ?
-                AND A.SORTEO   = ?",
-        array(
-            $acumulado_8_aciertos,
-            $fondo_reserva_8_aciertos,
-            $acumulado_7_aciertos,
-            $fondo_reserva_7_aciertos,
-            $acumulado_6_aciertos,
-            $fondo_reserva_6_aciertos,
-            $id_juego,
-            $sorteo,
-        )
-    );
-
-    /* $rs = sql('SELECT ID_DESCRIPCION
-    FROM KANBAN.T_PREMIOS@KANBAN_ANTICIPADA
-    WHERE SORTEO = ? AND ID_JUEGO = ?
-    and ID_DESCRIPCION = 83', array($sorteo, $id_juego));
-    $aporte_voluntario          = 0;
-    $total_premios_7_aciertos   = 0;
-    $pozo_reserva_7_prox_sorteo = 0;
-
-    if ($rs->RecordCount() == 0) {
-    //SIN GANADORES 8 ACIERTOS
-    $fondo_reserva_7_aciertos   = $row->PROP_7_ACIERTOS * 0.1 + $row->FONDO_RESERVA_7_ACIERTOS;
-    $pozo_reserva_7_prox_sorteo = $row->PROP_7_ACIERTOS * 0.9 + $row->POZO_RESERVA_7_PROX_SORTEO;
-
-    } else {
-    //CON GANADORES 8 ACIERTOS
-
-    if ($aporte_voluntario > 0) {
-    $fondo_reserva_7_aciertos = 0 - $aporte_voluntario + $row->FONDO_RESERVA_7_ACIERTOS;
-    }
-
-    $total_premios_7_aciertos = ($aporte_voluntario + $row->POZO_RESULTANTE_7) * 0.99;
-
-    }
-    sql("UPDATE KANBAN.T_TT_RECAUDACION@KANBAN_ANTICIPADA A
-    SET POZO_RESERVA_7_PROX_SORTEO   = ?,
-    FONDO_RESERVA_7_ACIERTOS     = ?,
-    TOTAL_PREMIOS_7_ACIERTOS     = ?
-    WHERE A.ID_JUEGO = ?
-    AND A.SORTEO   = ?",
-    array(
-    $pozo_reserva_7_prox_sorteo,
-    $fondo_reserva_7_aciertos,
-    $total_premios_7_aciertos,
-    $id_juego,
-    $sorteo,
-    )
-    );
-
-    $rs = sql('SELECT ID_DESCRIPCION
-    FROM KANBAN.T_PREMIOS@KANBAN_ANTICIPADA
-    WHERE SORTEO = ? AND ID_JUEGO = ?
-    and ID_DESCRIPCION = 84', array($sorteo, $id_juego));
-    $aporte_voluntario          = 0;
-    $total_premios_6_aciertos   = 0;
-    $pozo_reserva_6_prox_sorteo = 0;
-
-    if ($rs->RecordCount() == 0) {
-    //SIN GANADORES 8 ACIERTOS
-    $fondo_reserva_6_aciertos   = $row->PROP_6_ACIERTOS * 0.1 + $row->FONDO_RESERVA_6_ACIERTOS;
-    $pozo_reserva_6_prox_sorteo = $row->PROP_6_ACIERTOS * 0.9 + $row->POZO_RESERVA_6_PROX_SORTEO;
-
-    } else {
-    //CON GANADORES 8 ACIERTOS
-
-    if ($aporte_voluntario > 0) {
-    $fondo_reserva_6_aciertos = 0 - $aporte_voluntario + $row->FONDO_RESERVA_6_ACIERTOS;
-    }
-
-    $total_premios_6_aciertos = ($aporte_voluntario + $row->POZO_RESULTANTE_6) * 0.99;
-
-    }
-    sql("UPDATE KANBAN.T_TT_RECAUDACION@KANBAN_ANTICIPADA A
-    SET POZO_RESERVA_6_PROX_SORTEO   = ?,
-    FONDO_RESERVA_6_ACIERTOS     = ?,
-    TOTAL_PREMIOS_6_ACIERTOS     = ?
-    WHERE A.ID_JUEGO = ?
-    AND A.SORTEO   = ?",
-    array(
-    $pozo_reserva_7_prox_sorteo,
-    $fondo_reserva_6_aciertos,
-    $total_premios_6_aciertos,
-    $id_juego,
-    $sorteo));*/
 
     sql("UPDATE KANBAN.T_SORTEO@KANBAN_ANTICIPADA A SET ESTADO_SORTEO='F' WHERE ID_JUEGO= ? AND SORTEO=?", array($id_juego, $sorteo));
 
