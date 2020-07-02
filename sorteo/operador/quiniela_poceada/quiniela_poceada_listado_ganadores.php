@@ -63,7 +63,7 @@ if ($accion == 'mostrar' && $juego == 'primer_juego') {
     <thead>
       <tr>
         <th class="centerCell"># Orden</th>
-        <th class="centerCell">Extraccion</th>
+        <th class="centerCell">Posicion</th>
         <th class="centerCell">Quiniela Asociada Nº <?php echo $quiniela_asoc ?></th>
         <th class="centerCell">Numero</th>
         <th class="centerCell">Estado</th>
