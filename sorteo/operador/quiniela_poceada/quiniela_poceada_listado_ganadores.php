@@ -9,30 +9,30 @@ $sorteo         = $_SESSION['sorteo'];
 $colores        = array('SlateGrey', 'Khaki', 'Goldenrod', 'Salmon', 'OliveDrab', 'SteelBlue', 'Brown');
 $color_posicion = array();
 if ($accion == 'mostrar' && $juego == 'primer_juego') {
-  try {
-    $rs_sorteo = sql("  SELECT QUINIELA_ASOC
+    try {
+        $rs_sorteo = sql("  SELECT QUINIELA_ASOC
                 FROM  SGS.T_SORTEO SO
                 WHERE  SORTEO           = ?
                   AND ID_JUEGO         = ?", array($_SESSION['sorteo'], $_SESSION['id_juego']));
-  } catch (exception $e) {
-    die($db->ErrorMsg());
-  }
+    } catch (exception $e) {
+        die($db->ErrorMsg());
+    }
 
-  if ($row_sorteo = $rs_sorteo->FetchNextObject($toupper = true)) {
-    $quiniela_asoc = $row_sorteo->QUINIELA_ASOC;
-  }
+    if ($row_sorteo = $rs_sorteo->FetchNextObject($toupper = true)) {
+        $quiniela_asoc = $row_sorteo->QUINIELA_ASOC;
+    }
 
-  try {
-    $rs_extraccion_segundo = sql("  SELECT
+    try {
+        $rs_extraccion_segundo = sql("  SELECT
                                                ID_EXTRACCION,
                                                ORDEN,
                                                NUMERO,
                                                POSICION,
 
-                                              CASE WHEN (SORTEO_ASOC LIKE 'QUINIELA DUPLICADO%') THEN 'EXTRACCION QUINIELA '|| POSICION
-                                              WHEN SORTEO_ASOC LIKE ('QUINIELA ASOCIADA%') THEN 'EXTRACCION QUINIELA ' || POSICION
+                                              CASE WHEN (SORTEO_ASOC LIKE 'QUINIELA DUPLICADO%') THEN 'POSICION QUINIELA '|| POSICION
+                                              WHEN SORTEO_ASOC LIKE ('QUINIELA ASOCIADA%') THEN 'POSICION QUINIELA ' || POSICION
                                               ELSE
-                                              'EXTRACCION ' || POSICION
+                                              'POSICION ' || POSICION
                                                END  AS DESCRIPCION,
                                               'ENTERO' AS AFECTA,
                                               SORTEO_ASOC,
@@ -46,18 +46,18 @@ if ($accion == 'mostrar' && $juego == 'primer_juego') {
                                         ORDER BY
                                             ZONA_JUEGO DESC,
                                             ORDEN DESC", array($id_juego, $sorteo));
-    if ($rs_extraccion_segundo->RowCount() == 0) {
-      error('Sin Extracciones hasta el momento');
+        if ($rs_extraccion_segundo->RowCount() == 0) {
+            error('Sin Extracciones hasta el momento');
+        }
+    } catch (exception $e) {
+        error('Error al insertar: ' . $db->ErrorMsg());
     }
-  } catch (exception $e) {
-    error('Error al insertar: ' . $db->ErrorMsg());
-  }
-  $repetidos_posicion = array();
-  while ($row_extraccion_segundo = $rs_extraccion_segundo->FetchNextObject($toupper = true)) {
-    $repetidos_posicion[$row_extraccion_segundo->NUMERO] += 1;
-  }
-  $rs_extraccion_segundo->MoveFirst();
-?>
+    $repetidos_posicion = array();
+    while ($row_extraccion_segundo = $rs_extraccion_segundo->FetchNextObject($toupper = true)) {
+        $repetidos_posicion[$row_extraccion_segundo->NUMERO] += 1;
+    }
+    $rs_extraccion_segundo->MoveFirst();
+    ?>
   <span style="text-align: right;"><a border="0" target="_blank" href="sorteo/acta/quiniela_poceada_acta_final.php" class="icon-print"></a></span>
   <table class="table table-bordered">
     <thead>
@@ -72,15 +72,15 @@ if ($accion == 'mostrar' && $juego == 'primer_juego') {
     </thead>
     <tbody>
       <?php
-      while ($row_extraccion_segundo = $rs_extraccion_segundo->FetchNextObject($toupper = true)) {
+while ($row_extraccion_segundo = $rs_extraccion_segundo->FetchNextObject($toupper = true)) {
         if ($color_posicion[$row_extraccion_segundo->NUMERO] == null && $repetidos_posicion[$row_extraccion_segundo->NUMERO] > 1) {
-          $color_posicion[$row_extraccion_segundo->NUMERO] = $colores[0];
-          unset($colores[0]);
-          $colores = array_values($colores);
+            $color_posicion[$row_extraccion_segundo->NUMERO] = $colores[0];
+            unset($colores[0]);
+            $colores = array_values($colores);
         } else if (strpos($row_extraccion_segundo->SORTEO_ASOC, 'VALIDA') !== false) {
-          $color_posicion[$row_extraccion_segundo->NUMERO] = 'YellowGreen';
+            $color_posicion[$row_extraccion_segundo->NUMERO] = 'YellowGreen';
         }
-      ?>
+        ?>
         <!--  <tr style="background-color: <?php echo $color_posicion[$row_extraccion_segundo->NUMERO] ?>"> -->
         <tr>
           <td class="centerCell"><?php echo $row_extraccion_segundo->ORDEN; ?></td>
@@ -89,7 +89,7 @@ if ($accion == 'mostrar' && $juego == 'primer_juego') {
           <td class="centerCell"><?php echo str_pad($row_extraccion_segundo->NUMERO, 2, "0", STR_PAD_LEFT); ?></td>
           <td class="centerCell"><?php echo ($row_extraccion_segundo->VALIDO == 'S' ? '<div style="color:green"><i class="icon-ok"></i>Valido</div>' : ($row_extraccion_segundo->VALIDO == 'D' ? '<div style="color:red"><i class="icon-remove" style="color:red"> </i>Duplicado Con Posicion  ' . $row_extraccion_segundo->POSICION_DUPLICADO . '</div>' : '')); ?></td>
           <td class="centerCell">
-            <?php if (strpos($row_extraccion_segundo->SORTEO_ASOC, 'VALIDA') !== false || strpos($row_extraccion_segundo->SORTEO_ASOC, 'COINCIDE') !== false) { ?>
+            <?php if (strpos($row_extraccion_segundo->SORTEO_ASOC, 'VALIDA') !== false || strpos($row_extraccion_segundo->SORTEO_ASOC, 'COINCIDE') !== false) {?>
               <a href="#" onclick="if(confirm('Desea eliminar la posicion <?php echo $row_extraccion_segundo->POSICION; ?>?')) { $.post('sorteo/operador/quiniela_poceada/quiniela_poceada_sorteador_ajax.php',{accion:'eliminar',extraccion:<?php echo $row_extraccion_segundo->ID_EXTRACCION; ?>,posicion:<?php echo $row_extraccion_segundo->POSICION; ?>,entero:<?php echo $row_extraccion_segundo->NUMERO; ?>}).done(function(data){
           mostrarMensaje(data);
           if(data.tipo == 'success'){
@@ -100,13 +100,13 @@ if ($accion == 'mostrar' && $juego == 'primer_juego') {
       });  } return false;" border="0">
                 <div class="icon-trash" border="0"></div>
               </a>
-            <?php } ?>
+            <?php }?>
 
 
           </td>
 
         </tr>
-      <?php } ?>
+      <?php }?>
 
     </tbody>
   </table>
@@ -114,6 +114,6 @@ if ($accion == 'mostrar' && $juego == 'primer_juego') {
 
 function getStringBetween($str, $from, $to)
 {
-  $sub = substr($str, strpos($str, $from) + strlen($from), strlen($str));
-  return substr($sub, 0, strpos($sub, $to));
+    $sub = substr($str, strpos($str, $from) + strlen($from), strlen($str));
+    return substr($sub, 0, strpos($sub, $to));
 }
