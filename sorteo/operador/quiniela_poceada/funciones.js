@@ -195,14 +195,18 @@ function guardar_extraccion(nombre_juego) {
             if (data.tipo == 'success') {
                 if (afecta == 'entero') {
                     if (data.valida == false) {
-                        cargarConfiguracion({ accion: "configuracion", juego: "primer_juego" });
-                        configuracion.cantidad_premios_tradicional = parseInt(configuracion.cantidad_premios_tradicional) - 1;
-                        if (buscar_valor_por_campo('sorteado', false, 'posicion') !== undefined) {
-                            $("#posicion").val('');
-                            $("#posicion").val(buscar_valor_por_campo('sorteado', false, 'posicion'));
-                            var e = $.Event("keypress", { which: 13 });
-                            $("#posicion").trigger(e);
-                        }
+                        $.when(cargarConfiguracion({ accion: "configuracion", juego: "primer_juego" })).then(() => {
+                            configuracion.cantidad_premios_tradicional = parseInt(configuracion.cantidad_premios_tradicional) - 1;
+                            if (buscar_valor_por_campo('sorteado', false, 'posicion') !== undefined) {
+                                $("#posicion").val('');
+                                
+                                $("#posicion").val(buscar_valor_por_campo('sorteado', false, 'posicion'));
+                                var e = $.Event("keypress", { which: 13 });
+                                $("#posicion").trigger(e);
+                            }else{
+                                $("#posicion").val('');
+                            }
+                        });
                     }
                 } else if (afecta == 'fraccion') {
                     configuracion.cantidad_premios_extraordinario = parseInt(configuracion.cantidad_premios_extraordinario) - 1;
@@ -245,7 +249,7 @@ function mostrarMensaje(json_mensaje) {
 }
 
 function cargarConfiguracion(param) {
-    $.post(
+    return $.post(
         'sorteo/operador/quiniela_poceada/quiniela_poceada_sorteador_ajax.php',
         param,
         function(data) {

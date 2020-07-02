@@ -38,7 +38,10 @@ try {
         ID_SORTEO_ANTICIPADO,
         USUARIO,
         ORIGINAL,
-        CORDOBA
+        CORDOBA,
+        IMPORTE_NETO,
+        LEY20630,
+        LEY9505
     )
        SELECT
      1 AS fraccion,
@@ -65,7 +68,10 @@ try {
      NULL AS id_sorteo_anticipado,
      NULL AS usuario,
      NULL AS original,
-     NULL AS cordoba
+     NULL AS cordoba,
+     (DECODE(b.descripcion,'ESTIMULO',a.monto_premio / 100 * porcentaje,'OCHO ACIERTOS',(a.monto_premio -(a.monto_premio * .01)) ,a.monto_premio) - IMPUESTOS.F_LEY_9505@KANBAN_ANTICIPADA(a.id_juego,b.monto_fraccion,(DECODE(b.descripcion,'ESTIMULO',a.monto_premio / 100 * porcentaje,'OCHO ACIERTOS',(a.monto_premio -(a.monto_premio * .01)) ,a.monto_premio)) )) AS importe,
+     0,
+      IMPUESTOS.F_LEY_9505@KANBAN_ANTICIPADA(a.id_juego,b.monto_fraccion,(DECODE(b.descripcion,'ESTIMULO',a.monto_premio / 100 * porcentaje,'OCHO ACIERTOS',(a.monto_premio -(a.monto_premio * .01)) ,a.monto_premio)) )
  FROM
      (
          SELECT
@@ -261,7 +267,8 @@ try {
              END AS coincidencias,
              a.id_descripcion,
              c.descripcion,
-             a.porcentaje
+             a.porcentaje,
+             b.monto_fraccion
          FROM
              kanban.t_programa_premios@kanban_anticipada a,
              kanban.t_sorteo@kanban_anticipada b,

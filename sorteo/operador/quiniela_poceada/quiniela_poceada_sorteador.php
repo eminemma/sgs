@@ -143,14 +143,20 @@ try {
         );
     }
 
-
-    $(document).ready(
-        function() {
+ function init()
+        {
             cargarConfiguracion({ accion: "configuracion", juego: "primer_juego" });
-            buscarGanadores();
+             buscarGanadores();
             controlGanadores();
-            setInterval(buscarGanadores, 2000);
-            setInterval(controlGanadores, 1000);
+            var ref = window.setInterval(buscarGanadores, 2000);
+            var ref2 = setInterval(controlGanadores, 1000);
+        }
+    $(document).ready(
+
+        function() {
+
+
+            init();
         });
     </script>
 </head>

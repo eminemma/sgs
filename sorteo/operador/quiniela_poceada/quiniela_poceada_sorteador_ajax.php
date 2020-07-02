@@ -170,13 +170,7 @@ if ($accion == 'control_ingreso') {
                     $valida = true;
                 }
                 if (!$existe_posicion) {
-                    if ($existe_extraccion) {
-                        $mensaje = array("mensaje" => "Se cargo Correctamente, la extraccion ya existe en la posicion " . $existe_extraccion_posicion, "tipo" => "success");
-                    } else {
-                        $mensaje = array("mensaje" => "Se cargo Correctamente la Extraccion", "tipo" => "success");
-                    }
 
-                } else if ($existe_posicion && $existe_bola) {
                     if ($existe_extraccion) {
                         $existe = ", ya existe en la posicion " . $existe_extraccion_posicion;
                     }
