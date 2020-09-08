@@ -36,7 +36,7 @@ $mail->From     = "aplicativos@loteriacba.com.ar";
 $mail->FromName = "Loteria de Cordoba";
 $mail->Subject  = 'SGS Reporte Contralor - Sorteo: ' . $_SESSION['sorteo'];
 
-$mail->AddAttachment(dirname(__FILE__) . '/../sorteo/acta/reporte_contralor_' . $_SESSION['sorteo'] . '_' . date('dmY') . '.pdf', 'reporte_contralor_' . $_SESSION['sorteo'] . '_' . date('dmY') . '.pdf');
+$mail->AddAttachment(dirname(__FILE__) . '/../sorteo/acta/reporte_contralor_' . $_SESSION['sorteo'] . '_' . date('dmY') . '.pdf', 'reporte_desde_sorteo_' . $_SESSION['sorteo'] . '_' . date('dmY') . '.pdf');
 $mail->AddAddress('poceada_cordobesa@loteriacba.com.ar');
 
 $mail->IsHTML(true);
