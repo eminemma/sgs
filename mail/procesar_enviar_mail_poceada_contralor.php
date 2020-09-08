@@ -7,7 +7,7 @@
 @session_start();
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
-error_reporting(E_ALL);
+error_reporting(E_ERROR);
 ini_set('display_errors', 1);
 require __DIR__ . '/../vendor/autoload.php';
 include_once dirname(__FILE__) . '/../config/cuentas_email.php';
