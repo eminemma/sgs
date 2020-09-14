@@ -69,9 +69,11 @@ try {
      NULL AS usuario,
      NULL AS original,
      NULL AS cordoba,
-     (DECODE(b.descripcion,'ESTIMULO',a.monto_premio / 100 * porcentaje,'OCHO ACIERTOS',(a.monto_premio -(a.monto_premio * .01)) ,a.monto_premio) - IMPUESTOS.F_LEY_9505@KANBAN_ANTICIPADA(a.id_juego,b.monto_fraccion,(DECODE(b.descripcion,'ESTIMULO',a.monto_premio / 100 * porcentaje,'OCHO ACIERTOS',(a.monto_premio -(a.monto_premio * .01)) ,a.monto_premio)) )) AS importe,
-     0,
-      IMPUESTOS.F_LEY_9505@KANBAN_ANTICIPADA(a.id_juego,b.monto_fraccion,(DECODE(b.descripcion,'ESTIMULO',a.monto_premio / 100 * porcentaje,'OCHO ACIERTOS',(a.monto_premio -(a.monto_premio * .01)) ,a.monto_premio)) )
+
+     (DECODE(b.descripcion,'ESTIMULO',a.monto_premio / 100 * porcentaje,'OCHO ACIERTOS',(a.monto_premio -(a.monto_premio * .01)) ,a.monto_premio) - 
+     IMPUESTOS.F_LEY_20630(NULL,DECODE(b.descripcion,'ESTIMULO',a.monto_premio / 100 * porcentaje,'OCHO ACIERTOS',(a.monto_premio -(a.monto_premio * .01)) ,a.monto_premio),a.id_juego),
+     IMPUESTOS.F_LEY_20630(NULL,DECODE(b.descripcion,'ESTIMULO',a.monto_premio / 100 * porcentaje,'OCHO ACIERTOS',(a.monto_premio -(a.monto_premio * .01)) ,a.monto_premio),a.id_juego),
+    0
  FROM
      (
          SELECT
