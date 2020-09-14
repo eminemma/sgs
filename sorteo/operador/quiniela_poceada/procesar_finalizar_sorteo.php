@@ -7,7 +7,7 @@ $sorteo   = $_SESSION['sorteo'];
 $id_juego = $_SESSION['id_juego'];
 conectar_db();
 $db->debug = true;
-$rs = sql('SELECT ID_DESCRIPCION
+$rs        = sql('SELECT ID_DESCRIPCION
  									FROM KANBAN.T_PREMIOS@KANBAN_ANTICIPADA
  									WHERE SORTEO = ? AND ID_JUEGO = ? ', array($sorteo, $id_juego));
 if ($rs->RecordCount() > 0) {
@@ -72,9 +72,9 @@ try {
      NULL AS original,
      NULL AS cordoba,
 
-     (DECODE(b.descripcion,'ESTIMULO',a.monto_premio / 100 * porcentaje,'OCHO ACIERTOS',(a.monto_premio -(a.monto_premio * .01)) ,a.monto_premio) - 
-     IMPUESTOS.F_LEY_20630(NULL,DECODE(b.descripcion,'ESTIMULO',a.monto_premio / 100 * porcentaje,'OCHO ACIERTOS',(a.monto_premio -(a.monto_premio * .01)) ,a.monto_premio),a.id_juego)),
-     IMPUESTOS.F_LEY_20630(NULL,DECODE(b.descripcion,'ESTIMULO',a.monto_premio / 100 * porcentaje,'OCHO ACIERTOS',(a.monto_premio -(a.monto_premio * .01)) ,a.monto_premio),a.id_juego)),
+     DECODE(b.descripcion,'ESTIMULO',a.monto_premio / 100 * porcentaje,'OCHO ACIERTOS',(a.monto_premio -(a.monto_premio * .01)) ,a.monto_premio) -
+     IMPUESTOS.F_LEY_20630(NULL,DECODE(b.descripcion,'ESTIMULO',a.monto_premio / 100 * porcentaje,'OCHO ACIERTOS',(a.monto_premio -(a.monto_premio * .01)) ,a.monto_premio),a.id_juego),
+     IMPUESTOS.F_LEY_20630(NULL,DECODE(b.descripcion,'ESTIMULO',a.monto_premio / 100 * porcentaje,'OCHO ACIERTOS',(a.monto_premio -(a.monto_premio * .01)) ,a.monto_premio),a.id_juego),
     0
  FROM
      (
