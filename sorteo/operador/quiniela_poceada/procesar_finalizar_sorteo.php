@@ -6,10 +6,19 @@ include_once dirname(__FILE__) . '/../../../db.php';
 $sorteo   = $_SESSION['sorteo'];
 $id_juego = $_SESSION['id_juego'];
 conectar_db();
-$db->debug = true;
-$rs        = sql('SELECT ID_DESCRIPCION
+//$db->debug = true;
+$rs = sql('SELECT ID_DESCRIPCION
  									FROM KANBAN.T_PREMIOS@KANBAN_ANTICIPADA
  									WHERE SORTEO = ? AND ID_JUEGO = ? ', array($sorteo, $id_juego));
+
+$rs_politica = sql(' SELECT
+                        ID_JUEGO_POLITICA
+                    FROM
+                        KAIZEN.JUEGO@KANBAN_ANTICIPADA KJ
+                    WHERE
+                        KJ.COD_JUEGO = ? ', array($id_juego));
+$row_politica = $rs_politica->FetchNextObject($toupper = true);
+
 if ($rs->RecordCount() > 0) {
     header('Content-Type: application/json');
     die(json_encode(array("mensaje" => 'Ya existen premios generados', "tipo" => "error")));
@@ -43,7 +52,8 @@ try {
         CORDOBA,
         IMPORTE_NETO,
         LEY20630,
-        LEY9505
+        LEY9505,
+        MAYOR
     )
        SELECT
      1 AS fraccion,
@@ -75,7 +85,16 @@ try {
      DECODE(b.descripcion,'ESTIMULO',a.monto_premio / 100 * porcentaje,'OCHO ACIERTOS',(a.monto_premio -(a.monto_premio * .01)) ,a.monto_premio) -
      IMPUESTOS.F_LEY_20630(NULL,DECODE(b.descripcion,'ESTIMULO',a.monto_premio / 100 * porcentaje,'OCHO ACIERTOS',(a.monto_premio -(a.monto_premio * .01)) ,a.monto_premio),a.id_juego),
      IMPUESTOS.F_LEY_20630(NULL,DECODE(b.descripcion,'ESTIMULO',a.monto_premio / 100 * porcentaje,'OCHO ACIERTOS',(a.monto_premio -(a.monto_premio * .01)) ,a.monto_premio),a.id_juego),
-    0
+    0,
+    (   CASE
+             WHEN (DECODE(b.descripcion,'ESTIMULO',a.monto_premio / 100 * porcentaje,'OCHO ACIERTOS',(a.monto_premio -(a.monto_premio * .01)) ,a.monto_premio)) <= (  SELECT
+                                                        POLITICA.F_TOPE_PREMIO_CC(?)
+                                                    FROM
+                                                        DUAL)  THEN
+            'S'
+        ELSE
+            NULL
+        END)
  FROM
      (
          SELECT
@@ -289,7 +308,7 @@ try {
      b.coincidencias,
      descripcion DESC;
             commit;
- END;");
+ END;", array($row_politica->ID_JUEGO_POLITICA));
     $rs = sql('SELECT ID_DESCRIPCION
  									FROM KANBAN.T_PREMIOS@KANBAN_ANTICIPADA
  									WHERE SORTEO = ? AND ID_JUEGO = ?
