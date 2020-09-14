@@ -15,7 +15,6 @@ if ($rs->RecordCount() > 0) {
     die(json_encode(array("mensaje" => 'Ya existen premios generados', "tipo" => "error")));
 }
 
-die('Emma');
 try {
     $db->Execute("BEGIN
     INSERT INTO KANBAN.T_PREMIOS@KANBAN_ANTICIPADA (
