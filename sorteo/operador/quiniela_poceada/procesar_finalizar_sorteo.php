@@ -14,6 +14,8 @@ if ($rs->RecordCount() > 0) {
     header('Content-Type: application/json');
     die(json_encode(array("mensaje" => 'Ya existen premios generados', "tipo" => "error")));
 }
+
+die('Emma');
 try {
     $db->Execute("BEGIN
     INSERT INTO KANBAN.T_PREMIOS@KANBAN_ANTICIPADA (
@@ -289,7 +291,6 @@ try {
      descripcion DESC;
             commit;
  END;");
-die('Emma');
     $rs = sql('SELECT ID_DESCRIPCION
  									FROM KANBAN.T_PREMIOS@KANBAN_ANTICIPADA
  									WHERE SORTEO = ? AND ID_JUEGO = ?
