@@ -6,6 +6,7 @@ include_once dirname(__FILE__) . '/../../../db.php';
 $sorteo   = $_SESSION['sorteo'];
 $id_juego = $_SESSION['id_juego'];
 conectar_db();
+$db->debug = true;
 $rs = sql('SELECT ID_DESCRIPCION
  									FROM KANBAN.T_PREMIOS@KANBAN_ANTICIPADA
  									WHERE SORTEO = ? AND ID_JUEGO = ? ', array($sorteo, $id_juego));
