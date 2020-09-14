@@ -289,6 +289,7 @@ try {
      descripcion DESC;
             commit;
  END;");
+die('Emma');
     $rs = sql('SELECT ID_DESCRIPCION
  									FROM KANBAN.T_PREMIOS@KANBAN_ANTICIPADA
  									WHERE SORTEO = ? AND ID_JUEGO = ?
