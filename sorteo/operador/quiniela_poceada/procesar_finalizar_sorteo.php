@@ -88,7 +88,7 @@ try {
      IMPUESTOS.F_LEY_20630@KANBAN_ANTICIPADA(NULL,DECODE(b.descripcion,'ESTIMULO',a.monto_premio / 100 * porcentaje,'OCHO ACIERTOS',(a.monto_premio -(a.monto_premio * .01)) ,a.monto_premio),a.id_juego),
     0,
     (   CASE
-             WHEN (DECODE(b.descripcion,'ESTIMULO',a.monto_premio / 100 * porcentaje,'OCHO ACIERTOS',(a.monto_premio -(a.monto_premio * .01)) ,a.monto_premio)) <= (  SELECT
+             WHEN (DECODE(b.descripcion,'ESTIMULO',a.monto_premio / 100 * porcentaje,'OCHO ACIERTOS',(a.monto_premio -(a.monto_premio * .01)) ,a.monto_premio)) >= (  SELECT
                                                         POLITICA.F_TOPE_PREMIO_CC@KANBAN_ANTICIPADA(?)
                                                     FROM
                                                         DUAL)  THEN
