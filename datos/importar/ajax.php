@@ -1106,13 +1106,15 @@ $db->debug = true;*/
     		AND SORTEO = ?", array($id_juego, $sorteo));
 
     $rs_extracto = sql("	SELECT
-    								ORDEN as ID_DESCRIPCION,SUBSTR(LPAD(NUMERO,4,'0'),-2) AS BILLETE,NUMERO AS BILLETE_ORIGINAL
-								FROM
-    								SGS.T_EXTRACCION
-								WHERE
-								    SORTEO = ?
-								    AND ID_JUEGO = ?
-								order by ORDEN", array($sorteo_kanban['quiniela_asoc'], 2));
+								ID_DESCRIPCION,
+								SUBSTR(LPAD(BILLETE, 4, '0'), - 2) AS BILLETE,
+								BILLETE   AS BILLETE_ORIGINAL
+							FROM
+								KANBAN.T_PREMIO_EXTRACTO@KANBAN_ANTICIPADA
+							WHERE
+								SORTEO = ?
+								AND ID_JUEGO = ?
+								order by ID_DESCRIPCION", array($sorteo_kanban['quiniela_asoc'], 2));
     $extracto          = array();
     $extracto_original = array();
     while ($row_extracto = siguiente_kanban($rs_extracto)) {
@@ -1124,7 +1126,6 @@ $db->debug = true;*/
     }
 
     $resultado = array_unique($extracto);
-
     ksort($resultado);
     foreach ($resultado as $key => $value) {
         sql("INSERT
@@ -1224,6 +1225,7 @@ $db->debug = true;*/
     ID_JUEGO = ?
     AND SORTEO = ?
     AND POSICION = ?", array($key,$id_juego, $sorteo, $posicion ));*/
-    }
+	}
+	info('Se finalizo la importacion de los numeros del sorteo, Cantidad: '. (count($resultado) + count($duplicados)).' Fecha ' . date('d/m/Y H:i:s'));
 
 }

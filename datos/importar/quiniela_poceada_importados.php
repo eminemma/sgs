@@ -167,7 +167,7 @@ try {
                 AND te.ID_JUEGO=?
                 AND te.ZONA_JUEGO=1
                 AND (TE.SORTEO_ASOC LIKE '%QUINIELA ASOCIADA%' OR TE.SORTEO_ASOC LIKE '%QUINIELA DUPLICADO%')
-        ORDER BY te.zona_juego desc ,te.ORDEN DESC", array($_SESSION['sorteo'], $_SESSION['id_juego']));
+        ORDER BY te.zona_juego desc ,te.ORDEN asc", array($_SESSION['sorteo'], $_SESSION['id_juego']));
 } catch (exception $e) {die($db->ErrorMsg());}
 $pdf->SetFont('Arial', 'B', 7);
 $pdf->Cell(100, 4, 'QUINIELA ASOCIADA ' . $quiniela_asoc, 1, 1, 'L', 1);
