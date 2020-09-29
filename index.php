@@ -256,6 +256,7 @@ if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.
                                     <li class="nav-header">Actas Generales</li>
                                     <li><a href="#" onclick="p('sorteo/acta/quiniela_poceada_acta_extracto.php');">Acta Sorteo</a></li>
                                     <li><a href="#" onclick="p('sorteo/acta/quiniela_poceada_acta_final.php');">Acta Extracciones</a></li>
+                                    <li><a href="#" onclick="p('sorteo/acta/quiniela_poceada_acta_contralor.php?reportePDF=1');">Informe Contralor</a></li>
                                     <li class="divider"></li>
                                 </ul>
 

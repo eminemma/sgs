@@ -9,8 +9,10 @@ $titulo2 = strtoupper('SORTEO ' . $_SESSION['sorteo']);
 
 require "header_listado.php";
 //require dirname(__FILE__).'/../../librerias/pdf/fpdf.php';
-$conPie = false;
-$pdf    = new PDF('P');
+//
+$reportePDF = isset($_GET['reportePDF']) ? (Bool) $_GET['reportePDF'] : false;
+$conPie     = false;
+$pdf        = new PDF('P');
 $pdf->AliasNbPages();
 $pdf->AddPage();
 try {
@@ -166,5 +168,8 @@ $pdf->SetX(25);
 $pdf->Cell(160, 5, $pozo_7_aciertos, 1, 1, 'C');
 $pdf->SetX(25);
 $pdf->Cell(160, 5, $pozo_6_aciertos, 1, 1, 'C');
-
-$pdf->Output(dirname(__FILE__) . '/reporte_contralor_' . $_SESSION['sorteo'] . '_' . date('dmY') . '.pdf', 'F');
+if ($reportePDF === false) {
+    $pdf->Output(dirname(__FILE__) . '/reporte_contralor_' . $_SESSION['sorteo'] . '_' . date('dmY') . '.pdf', 'F');
+} else {
+    $pdf->Output();
+}
