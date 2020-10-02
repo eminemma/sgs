@@ -61,10 +61,10 @@
                 var incentivoMostrando = data.incentivoMostrando;
                 switch (incentivoMostrando) {
                     case ('resumen'):
-                        $('#resumen').css("background-image", "url(escribano_img/gordo_navidad_2019_semana1_resumen.jpg)");
+                        $('#resumen').css("background-image", "url(escribano_img/gordo_navidad_2020_semana1_resumen.jpg)");
                         break;
                     default:
-                     $('#incentivo').css("background-image", "url(escribano_img/gordo_navidad_2019_semana1_blanco.jpg)");
+                     $('#incentivo').css("background-image", "url(escribano_img/gordo_navidad_2020_semana1_blanco.jpg)");
                         break;
                 }
 
@@ -105,11 +105,11 @@
                 aleatorio = data.cantFracciones;
                 switch (incentivoMostrando) {
                      case ('resumen'):
-                        $('#resumen').css("background-image", "url(escribano_img/gordo_navidad_2019_semana1_resumen.jpg)");
+                        $('#resumen').css("background-image", "url(escribano_img/gordo_navidad_2020_semana1_resumen.jpg)");
                         mostrar_resumen(data);
                         break;
                     default:
-                     $('#incentivo').css("background-image", "url(escribano_img/gordo_navidad_2019_semana1_blanco.jpg)");
+                     $('#incentivo').css("background-image", "url(escribano_img/gordo_navidad_2020_semana1_blanco.jpg)");
                      buscar_ganador(data);
                         break;
                 }
@@ -136,7 +136,7 @@
         if (data.descIncentivo.length > 10 && data.descIncentivo.length <= 29) {
             $('#premio').css('font-size', '35px');
         }
-        $('#premio').html(data.descIncentivo+' EN EFECTIVO');
+        $('#premio').html(data.descIncentivo);
         $('#escribano_d').html(data.escribano);
         $('#jefe_sorteo_d').html(data.jefe_sorteo);
 
@@ -221,9 +221,9 @@
                 id = '#ganadores';
             var tam = '';
             if (i==0)
-                tam = 'style="height: 60px;"';
+                tam = 'style="height: 61px;"';
             else
-                tam = 'style="height: 69px;"';
+                tam = 'style="height: 73px;"';
             if (data.ganadores[i].NOMBRE == 'VENTA CONTADO CASA CENTRAL')
                 $('#ganadores').append('<div class="ganador"'+tam+'><div class="billete">' + pad(data.ganadores[i].BILLETE, 5) + '</div><div class="fraccion">' + pad(data.ganadores[i].FRACCION, 2) + '</div><div class="premio_r" id="premio_r_' + i + '">' + data.ganadores[i].PREMIO + ' <BR/> EN EFECTIVO</div><div class="agencia">9001</div><div class="sucursal">CORDOBA</div></div>');
             else if (data.ganadores[i].NOMBRE == 'VENTA CONTADO') {

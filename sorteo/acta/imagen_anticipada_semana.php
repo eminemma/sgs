@@ -111,17 +111,17 @@ $pdf->setXY(10, 10);
 /*$pdf->Image('../escribano/escribano_img/gordo_navidad_2018_semana' . $semana . '_extracto.jpg', 0, 0, 300, 210);*/
 
 if (!$ultima_semana) {
-    $pdf->Image('../escribano/escribano_img/gordo_navidad_2019_semana1_extracto_digital.jpg', 0, 0, 355, 215);
+    $pdf->Image('../escribano/escribano_img/gordo_navidad_2020_semana1_extracto_digital.jpg', 0, 0, 355, 215);
 } else {
-    $pdf->Image('../escribano/escribano_img/gordo_navidad_2019_semana1_extracto_digital_ultima.jpg', 0, 0, 355, 215);
+    $pdf->Image('../escribano/escribano_img/gordo_navidad_2020_semana1_extracto_digital_ultima.jpg', 0, 0, 355, 215);
 }
 
 //----------------------- 1º Pagina ------------------------------------
 
 $pdf->SetFont('Arial', 'B', 18);
-$pdf->SetXY(320, 38);
+$pdf->SetXY(320, 32);
 $pdf->Cell(20, 0, $sorteo, 0, 'L', 1);
-$pdf->SetXY(302, 20);
+$pdf->SetXY(302, 17);
 $pdf->Cell(20, 0, $fecha_sorteo, 0, 'L', 1);
 
 if (strlen($premio1) > 40) {
@@ -156,12 +156,12 @@ if ($ultima_semana) {
 }
 while ($row_ganador = siguiente($res_ganador)) {
     $pdf->SetFont('Arial', 'B', 28);
-    $pdf->setXY(22, 15 + $y);
-    $pdf->Cell(35, 17, str_pad($row_ganador->BILLETE, 5, 0, STR_PAD_LEFT), 0, 0, 'C');
-    $pdf->setXY(59, 15 + $y);
+    $pdf->setXY(22, 23 + $y);
+    $pdf->Cell(35, 16, str_pad($row_ganador->BILLETE, 5, 0, STR_PAD_LEFT), 0, 0, 'C');
+    $pdf->setXY(59, 23 + $y);
     $pdf->Cell(29, 17, str_pad($row_ganador->FRACCION, 2, 0, STR_PAD_LEFT), 0, 0, 'C');
     $pdf->SetFont('Arial', 'B', 11);
-    $pdf->setXY(90, 15 + $y);
+    $pdf->setXY(90, 24 + $y);
     $pdf->SetFont('Arial', 'B', 9);
     $linea_ancho = 3;
     if (strlen($row_ganador->PREMIO) <= 10) {
@@ -169,7 +169,7 @@ while ($row_ganador = siguiente($res_ganador)) {
         $linea_ancho = 9;
     }
     if (strlen($row_ganador->PREMIO) > 10 && strlen($row_ganador->PREMIO) <= 27) {
-        $linea_ancho = 5;
+        $linea_ancho = 8;
     }
     if (strlen($row_ganador->PREMIO) > 27 && strlen($row_ganador->PREMIO) <= 37) {
         $linea_ancho = 5;
@@ -184,22 +184,24 @@ while ($row_ganador = siguiente($res_ganador)) {
     $premio = str_replace('.', '', $premio);
     $premio = str_replace(' ', '', $premio);
 
+    $efectivo = false;
     if (!is_numeric($premio)) {
         $premio = $row_ganador->PREMIO;
     } else {
-        $premio = $row_ganador->PREMIO . ' EN EFECTIVO ';
+        $efectivo = true;
+        $premio   = $row_ganador->PREMIO . ' EN EFECTIVO ';
     }
     $pdf->SetFont('Arial', 'B', 22);
     $pdf->MultiCell(47, $linea_ancho, $row_ganador->PREMIO, 0, 'C');
     $pdf->SetFont('Arial', 'B', 16);
     $pdf->setX(90);
-    $pdf->MultiCell(47, $linea_ancho, ' EN EFECTIVO ', 0, 'C');
-    $pdf->setXY(140, 15 + $y);
+
+    $pdf->setXY(140, 24 + $y);
 
     if ($row_ganador->NOMBRE == 'VENTA CONTADO CASA CENTRAL') {
         $pdf->SetFont('Arial', 'B', 26);
         $pdf->Cell(28, 17, '9001', 0, 0, 'C');
-        $pdf->setXY(172, 16 + $y);
+        $pdf->setXY(172, 24 + $y);
         $pdf->SetFont('Arial', 'B', 13);
         $pdf->Cell(60, 5, 'CORDOBA', 0, 0, 'L');
     } else if ($row_ganador->NOMBRE == 'VENTA CONTADO') {
@@ -210,14 +212,14 @@ while ($row_ganador = siguiente($res_ganador)) {
         }
         $pdf->SetFont('Arial', 'B', 26);
         $pdf->Cell(28, 17, '9001', 0, 0, 'C');
-        $pdf->setXY(172, 16 + $y);
+        $pdf->setXY(172, 24 + $y);
         $pdf->SetFont('Arial', 'B', 13);
         $pdf->Cell(60, 5, $localidad, 0, 0, 'L');
     } else {
         //$pdf->setXY(203, 58 + $y);
         $pdf->SetFont('Arial', 'B', 26);
         $pdf->MultiCell(28, 17, str_pad($row_ganador->AGENCIA, 4, 0, STR_PAD_LEFT), 0, 'C');
-        $pdf->setXY(172, 16 + $y);
+        $pdf->setXY(172, 24 + $y);
         $pdf->SetFont('Arial', 'B', 13);
         $pdf->MultiCell(60, 5, utf8_decode($row_ganador->LOCALIDAD), 0, 'L');
 
@@ -227,7 +229,7 @@ while ($row_ganador = siguiente($res_ganador)) {
     if ($ultima_semana) {
         $y += 19.3;
     } else {
-        $y += 19;
+        $y += 17;
     }
 }
 /*$pdf->SetFont('Arial', 'B', 28);
@@ -286,7 +288,7 @@ if ($semana != $cantidad_semanas) {
 
     $y_premio = 0;
     $pdf->SetFont('Arial', 'B', 9);
-    $pdf->SetXY($x + 160, $y - 5);
+    $pdf->SetXY($x + 160, $y - 2);
     while ($row_premio = siguiente($res_premios)) {
         if ($row_premio->CANTIDAD == 1) {
             $premio = str_replace('$', '', trim($row_premio->PREMIO));
@@ -312,7 +314,7 @@ if ($semana != $cantidad_semanas) {
             }
 
         }
-        $pdf->SetXY(195, $pdf->GetY() + $y_premio);
+        $pdf->SetXY(192, $pdf->GetY() + $y_premio);
         $pdf->MultiCell(62, 4, $premio, 0, 'L');
 
         $y_premio = 0;

@@ -174,14 +174,15 @@ while ($row_ganador = siguiente($res_ganador)) {
         $pdf->SetFont('Arial', 'B', 8);
     }
 
-    $premio = str_replace('$', '', trim($row_ganador->PREMIO));
-    $premio = str_replace('EN EFECTIVO', '', $premio);
-    $premio = str_replace('.', '', $premio);
-    $premio = str_replace(' ', '', $premio);
-
+    $premio   = str_replace('$', '', trim($row_ganador->PREMIO));
+    $premio   = str_replace('EN EFECTIVO', '', $premio);
+    $premio   = str_replace('.', '', $premio);
+    $premio   = str_replace(' ', '', $premio);
+    $efectivo = false;
     if (!is_numeric($premio)) {
         $premio = $row_ganador->PREMIO;
     } else {
+        //$efectivo = true;
         $premio = $row_ganador->PREMIO . ' EN EFECTIVO ';
     }
 
@@ -189,7 +190,6 @@ while ($row_ganador = siguiente($res_ganador)) {
     $pdf->MultiCell(41, $linea_ancho, $row_ganador->PREMIO, 0, 'C');
     $pdf->SetFont('Arial', 'B', 14);
     $pdf->setX(75);
-    $pdf->MultiCell(41, $linea_ancho, ' EN EFECTIVO ', 0, 'C');
 
     $pdf->setXY(115, 8 + $y);
 

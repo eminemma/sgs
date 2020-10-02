@@ -28,7 +28,7 @@ body {
     margin: 0 auto;
     position: relative;
     font-family: 'MyriadPro-BoldCond';
-    color: #ffffff;
+    color: #000;
 }
 
 #tipo_incentivo {
@@ -43,16 +43,16 @@ body {
 }
 
 #aleatorio_entero {
-    top: 376px;
-    left: 217px;
+    top: 343px;
+    left: 182px;
     position: absolute;
     text-align: center;
     font-size: 97px;
 }
 
 #aleatorio_fraccion {
-    top: 378px;
-    left: 615px;
+    top: 345px;
+    left: 645px;
     position: absolute;
     text-align: center;
     font-size: 97px;
@@ -66,7 +66,7 @@ body {
 }
 
 #agencia {
-    top: 550px;
+    top: 510px;
     left: 124px;
     position: absolute;
     font-size: 43px;
@@ -74,7 +74,7 @@ body {
 }
 
 #nombre_d {
-    top: 550px;
+    top: 510px;
     left: 217px;
     position: absolute;
     font-size: 43px;
@@ -82,7 +82,7 @@ body {
 }
 
 #localidad_d {
-    top: 655px;
+    top: 615px;
     left: 131px;
     position: absolute;
     font-size: 43px;
@@ -153,14 +153,14 @@ body {
 
 #orden {
     position: absolute;
-    top: 246px;
-    left: 141px;
+    top: 211px;
+    left: 108px;
     font-size: 59px;
 }
 
 #ganadores {
     position: absolute;
-    top: 228px;
+    top: 220px;
     left: 87px;
     width: 735px;
     height: 440px;
@@ -335,8 +335,8 @@ body {
 
 #premio {
     position: absolute;
-    top: 245px;
-    left: 297px;
+    top: 222px;
+    left: 309px;
     font-size: 21px;
     width: 452px;
     text-align: center;
@@ -345,8 +345,8 @@ body {
 
 #fecha_sorteo {
     position: absolute;
-    left: 1029px;
-    top: 100px;
+    left: 1039px;
+    top: 78px;
     font-size: 32px;
     color: black;
 }
