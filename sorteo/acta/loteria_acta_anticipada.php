@@ -136,7 +136,7 @@ while ($row = siguiente($res)) {
         if (!is_numeric($premio)) {
             $premio = $row->CANTIDAD . ' ' . $row->PREMIO;
         } else {
-            $premio = $row->CANTIDAD . ' PREMIO DE ' . $row->PREMIO . ' EN EFECTIVO ';
+            $premio = $row->CANTIDAD . ' PREMIO DE ' . $row->PREMIO;
         }
     } else {
         $premio = '' . $row->CANTIDAD . ' PREMIOS DE ' . $row->PREMIO;
@@ -149,7 +149,7 @@ while ($row = siguiente($res)) {
     if (!is_numeric($premio_real)) {
         $premio = '(' . $row->CANTIDAD . ')   ' . $row->PREMIO;
     } else {
-        $premio = $row->CANTIDAD . ' PREMIOS DE ' . $row->PREMIO . ' EN EFECTIVO ';
+        $premio = $row->CANTIDAD . ' PREMIOS DE ' . $row->PREMIO;
     }
     $pdf->Cell(0, 7, utf8_decode($premio), 0, 1, 'C');
 
@@ -157,7 +157,7 @@ while ($row = siguiente($res)) {
 
 $pdf->SetFont('Arial', '', 10);
 $pdf->MultiCell(0, 7, utf8_decode('Recibiendo por parte de Departamento Sistemas el soporte informático que contiene los datos ingresados,               siendo las ............. horas del día de la fecha se procede a realizar el sorteo resultando favorecido:'));
-$sql = "SELECT TAG.BILLETE,TAG.FRACCION,TAG.AGENCIA,TAG.NOMBRE,TAG.LOCALIDAD,TAG.ORDEN,TAG.SUCURSAL,TA.PREMIO
+$sql = "SELECT TAG.BILLETE,TAG.FRACCION,TAG.AGENCIA,TAG.NOMBRE,TAG.LOCALIDAD,TAG.ORDEN,TAG.SUCURSAL,TA.PREMIO,count(*) as cantidad
         FROM
           SGS.T_ANTICIPADA_GANADORES TAG,SGS.T_ANTICIPADA TA
         WHERE TAG.ID_JUEGO    = ?
@@ -167,6 +167,7 @@ $sql = "SELECT TAG.BILLETE,TAG.FRACCION,TAG.AGENCIA,TAG.NOMBRE,TAG.LOCALIDAD,TAG
         AND TAG.ORDEN = TA.ORDEN
         AND TAG.SORTEO = TA.SORTEO
         AND TAG.ID_JUEGO = TA.ID_JUEGO
+        group by TAG.BILLETE,TAG.FRACCION,TAG.AGENCIA,TAG.NOMBRE,TAG.LOCALIDAD,TAG.ORDEN,TAG.SUCURSAL,TA.PREMIO
         ORDER BY TAG.ORDEN";
 $res = sql($sql, array($_SESSION['id_juego'], $_SESSION['sorteo'], $semana));
 $i   = 1;
@@ -204,7 +205,7 @@ while ($row = siguiente($res)) {
         $pdf->Cell(100, 5, utf8_decode('Premio : ' . $premio), 0, 1, 'L');
         $pdf->SetX(10);
     } else if ($nombre_agencia == 'VENTA CONTADO CASA CENTRAL') {
-        $pdf->Cell(100, 5, utf8_decode('Comercializado por 9001 CORODBA'), 0, 1, 'L');
+        $pdf->Cell(100, 5, utf8_decode('Comercializado por 9001 CORDOBA'), 0, 1, 'L');
         $pdf->SetX(30);
         $pdf->Cell(100, 5, utf8_decode('de la Localidad de : Cordoba, Delegación: Casa Central'), 0, 1, 'L');
         $pdf->SetX(30);
@@ -223,7 +224,7 @@ while ($row = siguiente($res)) {
         if (!is_numeric($premio_real)) {
             $premio = '(' . $row->CANTIDAD . ')   ' . $row->PREMIO;
         } else {
-            $premio = $row->PREMIO . ' EN EFECTIVO ';
+            $premio = $row->PREMIO;
         }
         $pdf->Cell(100, 5, utf8_decode('Premio : ' . $premio), 0, 1, 'L');
         $pdf->SetX(10);

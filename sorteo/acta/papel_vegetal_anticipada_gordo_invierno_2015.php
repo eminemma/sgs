@@ -103,7 +103,7 @@ $pdf->SetAutoPageBreak(true, 1);
 $pdf->SetFont('Arial', 'B', 8);
 $pdf->setXY(10, 10);
 if ($semana == $cantidad_semanas) {
-    /* $pdf->Image('../escribano/escribano_img/gordo_navidad_2019_semana1_extracto_digital_ultima.jpg', 0, 0, 297, 215);*/
+    $pdf->Image('../escribano/escribano_img/gordo_navidad_2020_semana1_extracto_digital_ultima.jpg', 0, 0, 297, 215);
 } else {
     /* $pdf->Image('../escribano/escribano_img/gordo_navidad_2019_semana1_extracto_digital.jpg', 0, 0, 297, 215);*/
 }
@@ -223,9 +223,9 @@ while ($row_ganador = siguiente($res_ganador)) {
     $pdf->SetFont('Arial', 'B', 25);
 
     if ($semana == $cantidad_semanas) {
-        $y += 19;
+        $y += 17;
     } else {
-        $y += 18.7;
+        $y += 17;
     }
     /*
 CORTE PARA A4 DISEÑO

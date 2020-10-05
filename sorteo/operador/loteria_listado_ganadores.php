@@ -404,7 +404,7 @@ while ($row_extraccion_incentivo = $rs_extraccion_incentivo->FetchNextObject($to
       <th>Localidad</th>
       <th>Eliminar</th>
       <th>Acta</th>
-      <th>Vegetal</th>
+      <!--<th>Vegetal</th>-->
       <th>Extracto</th>
       <th>Informe</th>
     </tr>
@@ -447,9 +447,9 @@ while ($row_extraccion_incentivo = $rs_extraccion_incentivo->FetchNextObject($to
 	  <td class="centerCell">
 		<a id="Alcanzan Objetivo" target="_blank" href="sorteo/acta/loteria_acta_anticipada.php?semana=<?php echo $row_extraccion_incentivo->SEMANA; ?>"><img style="height:20px;" src="img/printer.png " /></a>
 	  </td>
-	  <td class="centerCell">
+	  <!--<td class="centerCell">
 		<a id="Alcanzan Objetivo" target="_blank" href="sorteo/acta/papel_vegetal_anticipada_gordo_invierno_2015.php?semana=<?php echo $row_extraccion_incentivo->SEMANA; ?>"><img style="height:20px;" src="img/printer.png " /></a>
-	  </td>
+	  </td>-->
 	  <td class="centerCell">
 		<a id="Alcanzan Objetivo" target="_blank" href="sorteo/acta/limagen_extracto_anticipada.php?semana=<?php echo $row_extraccion_incentivo->SEMANA; ?>"><img style="height:20px;" src="img/printer.png " /></a>
 	  </td>
