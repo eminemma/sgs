@@ -131,10 +131,10 @@
         $('#premio').css('font-size', '26.5px');
 
         if (data.descIncentivo.length <= 10) {
-            $('#premio').css('font-size', '54px');
+            $('#premio').css('font-size', '75px');
         }
         if (data.descIncentivo.length > 10 && data.descIncentivo.length <= 29) {
-            $('#premio').css('font-size', '35px');
+            $('#premio').css('font-size', '75px');
         }
         $('#premio').html(data.descIncentivo);
         $('#escribano_d').html(data.escribano);
@@ -221,7 +221,7 @@
                 id = '#ganadores';
             var tam = '';
             if (i==0)
-                tam = 'style="height: 61px;"';
+                tam = 'style="height: 65px;"';
             else
                 tam = 'style="height: 73px;"';
             if (data.ganadores[i].NOMBRE == 'VENTA CONTADO CASA CENTRAL')

@@ -210,6 +210,10 @@ if ($accion == 'mostrar_extracto') {
             $semana = 9;
         } else if ($tipo == 'semana_10') {
             $semana = 10;
+        } else if ($tipo == 'semana_11') {
+            $semana = 11;
+        } else if ($tipo == 'semana_12') {
+            $semana = 12;
         }
 
         ComenzarTransaccion($db);
