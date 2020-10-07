@@ -335,7 +335,7 @@ switch ($accion) {
 				    TPA.SORTEO,
 				    TPA.SEMANA,
 				    TPA.DESCRIPCION,
-				    TS.FECHA_HASTA_PAGO_PREMIO,
+				    TS.FECHA_HASTA_PAGO_PREMIO_MAX,
 				    TO_CHAR(TPA.FECHA_PROXIMO_SORTEO,'DD/MM/YYYY') AS FECHA_PROXIMO_SORTEO,
 				    (SELECT TPP.DESCRIPCION
 				    FROM KANBAN.T_PROGRAMA_PREMIOS_ANTIC@KANBAN_ANTICIPADA TPP
@@ -1225,7 +1225,7 @@ $db->debug = true;*/
     ID_JUEGO = ?
     AND SORTEO = ?
     AND POSICION = ?", array($key,$id_juego, $sorteo, $posicion ));*/
-	}
-	info('Se finalizo la importacion de los numeros del sorteo, Cantidad: '. (count($resultado) + count($duplicados)).' Fecha ' . date('d/m/Y H:i:s'));
+    }
+    info('Se finalizo la importacion de los numeros del sorteo, Cantidad: ' . (count($resultado) + count($duplicados)) . ' Fecha ' . date('d/m/Y H:i:s'));
 
 }
