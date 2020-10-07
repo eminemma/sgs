@@ -633,7 +633,7 @@ function importar_datos_sorteo()
             $rs_sorteo_kanban = sql_kanban("	SELECT 	ID_SORTEO,to_char(FECHA_SORTEO,'YYYY-MM-DD HH24:MI:SS') AS FECHA_SORTEO,FECHA_BAJA,ID_ESCRIBANO,
             											USUARIO_JEFE_SORTEO,USUARIO_OPERADOR,ID_PROGRAMA,PRIMER_ELEMENTO,
             											ULTIMO_ELEMENTO,FRACCIONES,CANTIDAD_SORTEOS_FECHA,SORTEO_UNICO,DESCRIPCION,
-            											MONTO_FRACCION,	FECHA_HASTA_PAGO_PREMIO,QUINIELA_ASOC
+            											MONTO_FRACCION,	FECHA_HASTA_PAGO_PREMIO_MAX,QUINIELA_ASOC
 									  	FROM KANBAN.T_SORTEO
 										 WHERE SORTEO=? AND ID_JUEGO=?", array($sorteo, $id_juego));
 
@@ -657,7 +657,7 @@ function importar_datos_sorteo()
             $sorteo_kanban['sorteo_unico']            = $row_sorteo_kanban->SORTEO_UNICO;
             $sorteo_kanban['descripcion']             = $row_sorteo_kanban->DESCRIPCION;
             $sorteo_kanban['monto_fraccion']          = $row_sorteo_kanban->MONTO_FRACCION;
-            $sorteo_kanban['fecha_hasta_pago_premio'] = $row_sorteo_kanban->FECHA_HASTA_PAGO_PREMIO;
+            $sorteo_kanban['fecha_hasta_pago_premio'] = $row_sorteo_kanban->FECHA_HASTA_PAGO_PREMIO_MAX;
             $sorteo_kanban['quiniela_asoc']           = $row_sorteo_kanban->QUINIELA_ASOC;
 
             //T_PROGRAMA
