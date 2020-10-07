@@ -105,17 +105,8 @@ $rs = sql("	SELECT EXPORTADO
 
 <div class="info  alert-info"><i class="icon-info-sign"></i> Al exportar se generaran de manera automaticamente los premios al apostador y a la agencia</div>
 <br>
-<div class="info  alert-info"><i class="icon-info-sign"></i> El grupo se conforma por los siguientes destinatarios:
+<div class="info  alert-info"><i class="icon-info-sign"></i> El grupo utilizado para enviar el extracto es:
 <ul>
-	<li>premios@loteriacba.com.ar</li>
-	<li>info@loteriacba.com.ar</li>
-	<li>sorteos@loteriacba.com.ar</li>
-	<li>daniel.robert@loteriacba.com.ar</li>
-	<li>Marco.Toriano@loteriacba.com.ar</li>
-	<li>Alejandro.Mazzola@loteriacba.com.ar</li>
-	<li>Patricia.Nue@loteriacba.com.ar</li>
-	<li>delegaciones@loteriacba.com.ar</li>
-	<li>cdcsanluis@slotsmachines.com.ar</li>
-	<li>lpipitone@slotsmachines.com.ar</li>
+	<li>extracto.compra.anticipada@loteriacba.com.ar</li>
 </ul>
 </div>
