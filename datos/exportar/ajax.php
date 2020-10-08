@@ -54,7 +54,7 @@ if ($accion == 'exportar') {
 									S.ID_ESCRIBANO            = ?,
 									S.USUARIO_JEFE_SORTEO  	  = ?,
 									S.USUARIO_OPERADOR     	  = ?,
-									S.FECHA_HASTA_PAGO_PREMIO = to_date(?,'dd/mm/yyyy'),
+									--S.FECHA_HASTA_PAGO_PREMIO = to_date(?,'dd/mm/yyyy'),
 									S.QUINIELA_ASOC           = ?,
                                     S.ESTADO_SORTEO           = 'F'
 								WHERE S.ID_JUEGO           	  = ?
@@ -63,7 +63,6 @@ if ($accion == 'exportar') {
                 $row_sorteo_local->ID_ESCRIBANO,
                 $row_sorteo_local->ID_JEFE,
                 $row_sorteo_local->ID_OPERADOR,
-                $row_sorteo_local->FECHA_HASTA_PAGO_PREMIO,
                 $row_sorteo_local->QUINIELA_ASOC,
                 $id_juego, $sorteo));
 
@@ -212,8 +211,6 @@ if ($accion == 'exportar') {
                                             '$sorteo_asoc'
                                           )");
 
-                       
-                   
                     } else {
                         $rs_extracto = sql_kanban('	SELECT COUNT(*) as CANTIDAD_EXTRACTO
 													FROM KANBAN.T_PREMIO_EXTRACTO
@@ -332,8 +329,8 @@ if ($accion == 'exportar') {
     }
 
     FinalizarTransaccion_kanban($db_kanban);
- 
-    if($id_juego == 32){
+
+    if ($id_juego == 32) {
         //include dirname(__FILE__) . '/../../mail/procesar_enviar_mail_poceada_contralor.php';
     }
     ok('Se Exportaron los datos del sorteo,extracciones al KANBAN');
