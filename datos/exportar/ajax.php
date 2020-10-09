@@ -54,7 +54,6 @@ if ($accion == 'exportar') {
 									S.ID_ESCRIBANO            = ?,
 									S.USUARIO_JEFE_SORTEO  	  = ?,
 									S.USUARIO_OPERADOR     	  = ?,
-									--S.FECHA_HASTA_PAGO_PREMIO = to_date(?,'dd/mm/yyyy'),
 									S.QUINIELA_ASOC           = ?,
                                     S.ESTADO_SORTEO           = 'F'
 								WHERE S.ID_JUEGO           	  = ?
