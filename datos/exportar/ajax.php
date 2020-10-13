@@ -498,7 +498,7 @@ if ($accion == 'exportar_anticipada') {
                 die(error('El minimo de apuesta del juego no se ecuentra parametrizado'));
             }
             $row_minimo9505  = $rs_minimo9505->FetchNextObject($toupper = true);
-            $importe_con_ley = round(($row_premio->IMPORTE / 0.671), 2);
+            $importe_con_ley = ($row_premio->IMPORTE / 0.671);
 
             if ($row_premio->ID_TIPO_PREMIO == 2 || $row_premio->ID_TIPO_PREMIO == 1) {
 
@@ -675,7 +675,7 @@ if ($accion == 'exportar_anticipada') {
                     $desc_especie = 'EFECTIVO';
                     $importe      = $row_estimulo->IMPORTE;
 
-                    $importe_con_ley_estimulo = round(($row_estimulo->IMPORTE / 0.671), 2);
+                    $importe_con_ley_estimulo = $row_estimulo->IMPORTE / 0.671;
 
                     $rs_impuestos = sql_kanban("SELECT IMPUESTOS.F_LEY_20630(NULL, ?, ?) AS LEY_20630,
                                              IMPUESTOS.F_LEY_9505(?, ?, ?) AS LEY_9505
