@@ -464,7 +464,41 @@ if ($accion == 'exportar_anticipada') {
 
             $rs_seq = $rs_seq->FetchNextObject($toupper = true);
 
-            $importe_con_ley = ($row_premio->IMPORTE / 0.95);
+            //TRAER ID POLITICA PARA BUSCAR EL TOPE
+            $rs_kaizen = sql_kanban(" SELECT
+                                        ID_JUEGO_POLITICA
+                                    FROM
+                                        KAIZEN.JUEGO KJ
+                                    WHERE
+                                        KJ.COD_JUEGO = ?", array($_SESSION['id_juego']));
+            if ($rs_kaizen->RecordCount() == 0) {
+                die(error('El juego no esta cargado en kaizen'));
+            }
+            $row_kaizen = $rs_kaizen->FetchNextObject($toupper = true);
+            //TOPE MINIMO DE PREMIOS PARA CALCULAR SI ES MAYOR
+            $rs_tope = sql_kanban("   SELECT
+                                            POLITICA.F_TOPE_PREMIO_CC(?) as TOPE_PREMIO
+                                        FROM
+                                            DUAL", array($row_kaizen->ID_JUEGO_POLITICA));
+
+            $row_tope = $rs_tope->FetchNextObject($toupper = true);
+            if ($row_tope->TOPE_PREMIO == null) {
+                die(error('El tope del juego en politicas no esta cargado'));
+            }
+
+            //MINIMO APUESTA PARA 9505
+            $rs_minimo9505 = sql_kanban("   SELECT
+                                            MINIMO
+                                        FROM
+                                            IMPUESTOS.T_IMP_9505
+                                        WHERE
+                                            ID_JUEGO = ?", array($row_kaizen->ID_JUEGO_POLITICA));
+
+            if ($rs_minimo9505->RecordCount() == 0) {
+                die(error('El minimo de apuesta del juego no se ecuentra parametrizado'));
+            }
+            $row_minimo9505  = $rs_minimo9505->FetchNextObject($toupper = true);
+            $importe_con_ley = round(($row_premio->IMPORTE / 0.671), 2);
 
             if ($row_premio->ID_TIPO_PREMIO == 2 || $row_premio->ID_TIPO_PREMIO == 1) {
 
@@ -476,14 +510,72 @@ if ($accion == 'exportar_anticipada') {
 
                 $id_descripcion = $rs_ID->ID_DESCRIPCION;
                 $especie        = null;
+                $esMayor        = 'N';
+                $ley20630       = 0;
+                $ley9505        = 0;
+                $neto           = 0;
+
                 if ((int) $row_premio->ID_TIPO_PREMIO == 1) {
                     $importe_con_ley = null;
                     $especie         = null;
+
+                } else {
+                    //calcular impuestos
+                    $rs_impuestos = sql_kanban("SELECT IMPUESTOS.F_LEY_20630(NULL, ?, ?) AS LEY_20630,
+                                             IMPUESTOS.F_LEY_9505(?, ?, ?) AS LEY_9505
+                                      FROM DUAL", array($importe_con_ley, $_SESSION['id_juego'], $_SESSION['id_juego'], $row_minimo9505->MINIMO, $importe_con_ley));
+                    $row_impuestos = $rs_impuestos->FetchNextObject($toupper = true);
+                    $ley20630      = $row_impuestos->LEY_20630;
+                    $ley9505       = $row_impuestos->LEY_9505;
+                    $neto          = $importe_con_ley - $row_impuestos->LEY_20630 - $row_impuestos->LEY_9505;
+                    if ($row_premio->IMPORTE > $row_tope->TOPE_PREMIO) {
+                        $esMayor = 'S';
+
+                    }
                 }
 
-                $rs = sql_kanban("INSERT INTO KANBAN.T_PREMIOS (FRACCION,IMPORTE, ID_DESCRIPCION,BILLETE,ID_JUEGO,SORTEO,SERIE, CONCEPTO,SUC_BAN,NRO_AGEN,
-														FECHA_ALTA,ID_SORTEO_ANTICIPADO,OCR,USUARIO,ESPECIE)
-						VALUES (?,?,?,?,?,?,?,?,?,?,TO_DATE(?,'dd/mm/yyyy'),?,?,?,?)",
+                $rs = sql_kanban("  INSERT INTO KANBAN.T_PREMIOS (
+                                        FRACCION,
+                                        IMPORTE,
+                                        ID_DESCRIPCION,
+                                        BILLETE,
+                                        ID_JUEGO,
+                                        SORTEO,
+                                        SERIE,
+                                        CONCEPTO,
+                                        SUC_BAN,
+                                        NRO_AGEN,
+    									FECHA_ALTA,
+                                        ID_SORTEO_ANTICIPADO,
+                                        OCR,
+                                        USUARIO,
+                                        ESPECIE,
+                                        MAYOR,
+                                        IMPORTE_NETO,
+                                        LEY20630,
+                                        LEY9505
+                                    )
+						            VALUES (
+                                        ?,
+                                        ?,
+                                        ?,
+                                        ?,
+                                        ?,
+                                        ?,
+                                        ?,
+                                        ?,
+                                        ?,
+                                        ?,
+                                        TO_DATE(?,'dd/mm/yyyy'),
+                                        ?,
+                                        ?,
+                                        ?,
+                                        ?,
+                                        ?,
+                                        ?,
+                                        ?,
+                                        ?
+                                    )",
                     array(
                         $fraccion,
                         $importe_con_ley,
@@ -500,6 +592,10 @@ if ($accion == 'exportar_anticipada') {
                         $rowValidacion->OCR,
                         'DU' . $_SESSION['dni'],
                         $row_premio->ID_DESCRIPCION_ESPECIA,
+                        $esMayor,
+                        $neto,
+                        $ley20630,
+                        $ley9505,
                     )
                 );
 
@@ -508,10 +604,20 @@ if ($accion == 'exportar_anticipada') {
                 $especie      = null;
                 $desc_especie = null;
 
+                $esMayor  = 'N';
+                $ley20630 = 0;
+                $ley9505  = 0;
+                $neto     = 0;
+
+                $importe_con_ley_estimulo = 0;
+                $esMayor                  = 'N';
+                $ley20630                 = 0;
+                $ley9505                  = 0;
+                $neto                     = 0;
+
                 //$db_kanban->debug = true;
                 $rs_estimulo = null;
-                if ((int) $row_premio->ID_TIPO_PREMIO == 1) {
-                    $rs_estimulo = sql_kanban("		SELECT      PD.ORDEN,
+                $rs_estimulo = sql_kanban("		SELECT      PD.ORDEN,
                                                                 PP.ID_DESCRIPCION,
     														    PD.DESCRIPCION
     														    ||' '
@@ -530,14 +636,14 @@ if ($accion == 'exportar_anticipada') {
     													AND PD.ID_JUEGO                  	= ?
     													AND PD.SERIE                     	= ?
     													ORDER BY PD.SEMANA ASC",
-                        array(
-                            $row_id_programa_premios_antic->ID_PROGRAMA_PREMIOS_ANTIC,
-                            $_SESSION['sorteo'],
-                            $_SESSION['id_juego'],
-                            $_SESSION['serie'],
-                        )
-                    );
-
+                    array(
+                        $row_id_programa_premios_antic->ID_PROGRAMA_PREMIOS_ANTIC,
+                        $_SESSION['sorteo'],
+                        $_SESSION['id_juego'],
+                        $_SESSION['serie'],
+                    )
+                );
+                if ($rs_estimulo->RecordCount() > 0) {
                     $row_estimulo = $rs_estimulo->FetchNextObject($toupper = true);
                     $especie      = $row_estimulo->PREMIO_ID_ESPECIAS;
                     $desc_especie = $row_estimulo->DESCRIPCION_ESPECIA;
@@ -568,8 +674,21 @@ if ($accion == 'exportar_anticipada') {
                     $row_estimulo = $rs_estimulo->FetchNextObject($toupper = true);
                     $desc_especie = 'EFECTIVO';
                     $importe      = $row_estimulo->IMPORTE;
-                }
 
+                    $importe_con_ley_estimulo = round(($row_estimulo->IMPORTE / 0.671), 2);
+
+                    $rs_impuestos = sql_kanban("SELECT IMPUESTOS.F_LEY_20630(NULL, ?, ?) AS LEY_20630,
+                                             IMPUESTOS.F_LEY_9505(?, ?, ?) AS LEY_9505
+                                      FROM DUAL", array($importe_con_ley_estimulo, $_SESSION['id_juego'], $_SESSION['id_juego'], $row_minimo9505->MINIMO, $importe_con_ley_estimulo));
+                    $row_impuestos = $rs_impuestos->FetchNextObject($toupper = true);
+                    $ley20630      = $row_impuestos->LEY_20630;
+                    $ley9505       = $row_impuestos->LEY_9505;
+                    $neto          = $importe_con_ley_estimulo - $row_impuestos->LEY_20630 - $row_impuestos->LEY_9505;
+                    if ($importe > $row_tope->TOPE_PREMIO) {
+                        $esMayor = 'S';
+
+                    }
+                }
                 if ($rs_estimulo->RowCount() != 0) {
 
                     $rs = sql_kanban("	SELECT ID_DESCRIPCION
@@ -579,12 +698,29 @@ if ($accion == 'exportar_anticipada') {
                     $rs          = $rs->FetchNextObject($toupper = true);
                     $id_estimulo = $rs->ID_DESCRIPCION;
 
-                    $rs = sql_kanban("INSERT INTO KANBAN.T_PREMIOS (FRACCION,IMPORTE, ID_DESCRIPCION,BILLETE,	ID_JUEGO,SORTEO,SERIE, CONCEPTO,SUC_BAN,NRO_AGEN,
-														FECHA_ALTA,ID_SORTEO_ANTICIPADO,OCR,ESPECIE)
-														VALUES (?,?,?,?,?,?,?,?,?,?,TO_DATE(?,'dd/mm/yyyy'),?,?,?)",
+                    $rs = sql_kanban("INSERT INTO KANBAN.T_PREMIOS (
+                                        FRACCION,
+                                        IMPORTE,
+                                        ID_DESCRIPCION,
+                                        BILLETE,
+                                        ID_JUEGO,
+                                        SORTEO,
+                                        SERIE,
+                                        CONCEPTO,
+                                        SUC_BAN,
+                                        NRO_AGEN,
+										FECHA_ALTA,
+                                        ID_SORTEO_ANTICIPADO,
+                                        OCR,
+                                        ESPECIE,
+                                        MAYOR,
+                                        IMPORTE_NETO,
+                                        LEY20630,
+                                        LEY9505)
+									VALUES (?,?,?,?,?,?,?,?,?,?,TO_DATE(?,'dd/mm/yyyy'),?,?,?,?,?,?,?)",
                         array(
                             $fraccion,
-                            $importe,
+                            $importe_con_ley_estimulo,
                             $id_estimulo,
                             $billete,
                             $_SESSION['id_juego'],
@@ -597,6 +733,10 @@ if ($accion == 'exportar_anticipada') {
                             $rs_seq->ID_PREMIOS_ANTICIPADA,
                             $rowValidacion->OCR,
                             $especie,
+                            $esMayor,
+                            $neto,
+                            $ley20630,
+                            $ley9505,
                         )
                     );
 
