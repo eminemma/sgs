@@ -32,11 +32,11 @@ body{
 
 
 #fecha_sorteo{
-    font-size: 31px;
-    left: 420px;
+  font-size: 23px;
+    left: 767px;
     position: relative;
     font-family: 'MyriadPro-Bold';
-    top: 44px;
+    top: 50px;
 }
 
 #fecha_sorteo_resumen{
