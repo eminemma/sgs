@@ -295,9 +295,10 @@ if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.
                                             })">Importados en formato CSV</a></li>
                                     <li><a href="#" onclick="
                                     $.get('juego/ajax.php?accion=obtener_juego', function(data) {
-                                        if (data.id_juego == 1 || data.id_juego == 2)
+                                        let id_juego = parseInt(data.id_juego);
+                                        if (id_juego == 1 || data.id_juego == 2)
                                             g('datos/exportar/loteria_exportar_datos.php');
-                                        if (data.id_juego == 32)
+                                        else if (data.id_juego == 32)
                                             g('datos/exportar/quiniela_poceada_exportar_datos.php');
                                         else if (data.id_juego !== 'null')
                                            alert('Este juego no esta contemplado para esta opción');
