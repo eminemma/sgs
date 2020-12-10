@@ -330,7 +330,7 @@ if ($accion == 'exportar') {
     FinalizarTransaccion_kanban($db_kanban);
 
     if ($id_juego == 32) {
-        //include dirname(__FILE__) . '/../../mail/procesar_enviar_mail_poceada_contralor.php';
+        include dirname(__FILE__) . '/../../mail/procesar_enviar_mail_poceada_contralor.php';
     }
     ok('Se Exportaron los datos del sorteo,extracciones al KANBAN');
 }
@@ -498,7 +498,7 @@ if ($accion == 'exportar_anticipada') {
                 die(error('El minimo de apuesta del juego no se ecuentra parametrizado'));
             }
             $row_minimo9505  = $rs_minimo9505->FetchNextObject($toupper = true);
-            $importe_con_ley = ($row_premio->IMPORTE / 0.671);
+            $importe_con_ley = round(($row_premio->IMPORTE / 0.671), 3);
 
             if ($row_premio->ID_TIPO_PREMIO == 2 || $row_premio->ID_TIPO_PREMIO == 1) {
 
@@ -545,7 +545,6 @@ if ($accion == 'exportar_anticipada') {
                                         CONCEPTO,
                                         SUC_BAN,
                                         NRO_AGEN,
-    									FECHA_ALTA,
                                         ID_SORTEO_ANTICIPADO,
                                         OCR,
                                         USUARIO,
@@ -566,7 +565,6 @@ if ($accion == 'exportar_anticipada') {
                                         ?,
                                         ?,
                                         ?,
-                                        TO_DATE(?,'dd/mm/yyyy'),
                                         ?,
                                         ?,
                                         ?,
@@ -587,7 +585,6 @@ if ($accion == 'exportar_anticipada') {
                         $row_premio->PREMIO,
                         $suc_ban,
                         $nro_agen,
-                        $_POST['fecha_desde'],
                         $rs_seq->ID_PREMIOS_ANTICIPADA,
                         $rowValidacion->OCR,
                         'DU' . $_SESSION['dni'],
@@ -675,7 +672,7 @@ if ($accion == 'exportar_anticipada') {
                     $desc_especie = 'EFECTIVO';
                     $importe      = $row_estimulo->IMPORTE;
 
-                    $importe_con_ley_estimulo = $row_estimulo->IMPORTE / 0.671;
+                    $importe_con_ley_estimulo = round(($row_estimulo->IMPORTE / 0.671), 3);
 
                     $rs_impuestos = sql_kanban("SELECT IMPUESTOS.F_LEY_20630(NULL, ?, ?) AS LEY_20630,
                                              IMPUESTOS.F_LEY_9505(?, ?, ?) AS LEY_9505
@@ -709,7 +706,6 @@ if ($accion == 'exportar_anticipada') {
                                         CONCEPTO,
                                         SUC_BAN,
                                         NRO_AGEN,
-										FECHA_ALTA,
                                         ID_SORTEO_ANTICIPADO,
                                         OCR,
                                         ESPECIE,
@@ -717,7 +713,7 @@ if ($accion == 'exportar_anticipada') {
                                         IMPORTE_NETO,
                                         LEY20630,
                                         LEY9505)
-									VALUES (?,?,?,?,?,?,?,?,?,?,TO_DATE(?,'dd/mm/yyyy'),?,?,?,?,?,?,?)",
+									VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
                         array(
                             $fraccion,
                             $importe_con_ley_estimulo,
@@ -729,7 +725,6 @@ if ($accion == 'exportar_anticipada') {
                             'ESTIMULO - SEM. ' . $semana . ' - PREMIO Nº ' . $row_estimulo->ORDEN . ' - ' . $desc_especie,
                             $suc_ban,
                             $nro_agen,
-                            $_POST['fecha_desde'],
                             $rs_seq->ID_PREMIOS_ANTICIPADA,
                             $rowValidacion->OCR,
                             $especie,
