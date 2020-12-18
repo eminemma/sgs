@@ -210,7 +210,7 @@ $pdf->SetXY(30, 60);
 $pdf->Cell(30, 0, $progresion[1], 0, 0, 'C');
 //cuadroS de numeros
 //1 al quinto premio
-if ($rscomercializado->Rowcount() == 0 && ($_SESSION['juego_tipo'] == 'EXTRAORDINARIA') && $sale_o_sale[1] == 'SI') {
+if ($rscomercializado->Rowcount() == 0 && ($_SESSION['juego_tipo'] == 'EXTRAORDINARIA') && strtoupper($sale_o_sale[1]) == 'SI') {
     $pdf->SetXY(35, 80);
     $pdf->SetFont('Arial', 'BI', 12);
 }
@@ -224,7 +224,7 @@ $pdf->Cell(20, 0, '1er. Premio de', 0, 0, 1);
 $pdf->SetXY(65, 90);
 $pdf->SetFont('Arial', 'b', 13);
 
-if ($rscomercializado->Rowcount() == 0 && ($_SESSION['juego_tipo'] == 'EXTRAORDINARIA') && $sale_o_sale[1] == 'SI') {
+if ($rscomercializado->Rowcount() == 0 && ($_SESSION['juego_tipo'] == 'EXTRAORDINARIA') && strtoupper($sale_o_sale[1]) == 'SI') {
     $pdf->Cell(20, 0, 'No Vendido (*)', 0, 0, 1);
 } else {
     $pdf->Cell(20, 0, '$ ' . number_format($efectivo[1], 0, ',', '.'), 0, 0, 1);
@@ -292,7 +292,7 @@ $pdf->SetFont('Arial', 'B', 13);
 $pdf->SetXY(140, 122);
 $pdf->Cell(20, 0, $quini[5], 0, 1, 1);
 $pdf->SetXY(50, 127);
-if ($_SESSION['juego_tipo'] == 'EXTRAORDINARIA' && $rscomercializado->Rowcount() == 0 && $sale_o_sale[1] == 'SI') {
+if ($_SESSION['juego_tipo'] == 'EXTRAORDINARIA' && $rscomercializado->Rowcount() == 0 && strtoupper($sale_o_sale[1]) == 'SI') {
     $pdf->SetFont('Arial', 'b', 10);
     $pdf->Cell(20, 0, '(*) Premio $' . number_format($efectivo[1], 0, ',', '.') . ' Sujeto a modalidad Sortea Hasta Que Sale', 0, 0, 1);
 }

@@ -125,12 +125,12 @@ body{
 
 
 #primer_premio{
-    background-size: 319px 60px;
-    top: 142px;
-    left: 169px;
+    background-size: 375px 78px;
+    top: 126px;
+    left: 109px;
     position: absolute;
-    width: 319px;
-    height: 60px;
+    width: 379px;
+    height: 71px;
 }
 
 #primer_premio_resumen{

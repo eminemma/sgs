@@ -31,6 +31,17 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
     <link href="escribano_estilo.php" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="../../librerias/jquery/jquery-1.10.1.js"></script>
     <script type="text/javascript" src="../../js/funciones.js?17072017"></script>
+    <style type="text/css">
+        .w3-xlarge{
+            font-size: 47px !important;
+        }
+        .w3-modal-content {
+            width: 95% !important;
+        }
+        .w3-large{
+            font-size: 35px !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -43,7 +54,7 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
         </div>
 
 
-      <!--  <div id="primer_premio" style="background-image:url('escribano_img/primer_premio_4960.png');"></div> -->
+        <div id="primer_premio" style="background-image:url('escribano_img/primer_premio_5011.png');"></div>
 
 
         <div id="resultado_primer_premio" ></div>
@@ -601,12 +612,16 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                                         function() {
                                             //CODIGO PARA MOSTRAR GANADORES EN EL SORTEOS SALE O SALE
                                              $('#primer_premio').fadeOut();
-                                            $('#resultado_primer_premio').css('background-size', '248px 63px');
-                                            $('#resultado_primer_premio').css('top', '133px');
-                                            $('#resultado_primer_premio').css('height', '62px');
-                                            $('#resultado_primer_premio').css('left', '178px');
+                                             $('#resultado_primer_premio').css('background-size', '375px 78px');
+                                            $('#resultado_primer_premio').css('top', '126px');
+                                            $('#resultado_primer_premio').css('height', '71px');
+                                            $('#resultado_primer_premio').css('left', '109px');
+                                            $('#resultado_primer_premio').css('width', '326px');
                                             $('#resultado_primer_premio').css('background-image', 'url(escribano_img/no_vendido_<?php echo $_SESSION['sorteo']; ?>.png)');
                                             $('#resultado_primer_premio').fadeIn();
+
+
+
                                         }
                                     );
                                     $( "body").unbind( "keydown" );
@@ -643,6 +658,7 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                                                     if(this['localidad'].length<=6){
                                                         $( "#ganadores_primer_premio" ).addClass( "w3-xlarge" );
                                                     }
+
                                                     if(this['localidad'].length>6 && this['localidad'].length<=12){
                                                         $( "#ganadores_primer_premio" ).addClass( "w3-large" );
                                                     }
@@ -956,7 +972,7 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
 
                 $('#zona3 #localidad').remove();
                 if(sortea_hasta_sale_ganadores[sortea_hasta_sale_resumenContador] != undefined){
-                    var estilo = { top: '500px', left: '940px', width: '230px', height: '220px', 'font-size': '30px', 'text-align': 'left' };
+                    var estilo = { top: '500px', left: '940px', width: '254px', height: '220px', 'font-size': '30px', 'text-align': 'left' };
                     var elemento = $('<span id="localidad" class="billete2">' + sortea_hasta_sale_ganadores[sortea_hasta_sale_resumenContador] + '<br> </span>').css(estilo);
                     $('#zona3').append(elemento);
 
@@ -973,7 +989,7 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                         if(sortea_hasta_sale_ganadores.length<=6){
                             $( "#ganadores_primer_premio" ).addClass( "w3-xlarge" );
                         }
-                        if(sortea_hasta_sale_ganadores.length>6 && this['localidad'].length<=12){
+                        if(sortea_hasta_sale_ganadores.length>6 && sortea_hasta_sale_ganadores.length<=12){
                             $( "#ganadores_primer_premio" ).addClass( "w3-large" );
                         }
                         if(sortea_hasta_sale_ganadores.length > 12){
@@ -1198,10 +1214,11 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                 intervalPrimeroPremio = setInterval(function(data){
                     if(primer_premio == true){
                         $('#primer_premio').fadeOut();
-                        $('#resultado_primer_premio').css('background-size', '250px 62px');
-                        $('#resultado_primer_premio').css('top', '135px');
-                        $('#resultado_primer_premio').css('height', '62px');
-                        $('#resultado_primer_premio').css('left', '181px');
+                        $('#resultado_primer_premio').css('background-size', '375px 78px');
+                        $('#resultado_primer_premio').css('top', '126px');
+                        $('#resultado_primer_premio').css('height', '71px');
+                        $('#resultado_primer_premio').css('left', '109px');
+                        $('#resultado_primer_premio').css('width', '292px');
                         $('#resultado_primer_premio').css('background-image', 'url(escribano_img/vendido_<?php echo $_SESSION['sorteo']; ?>.png)');
                         $('#resultado_primer_premio').fadeIn();
                         primer_premio = false;
