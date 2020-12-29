@@ -741,14 +741,14 @@ if ($accion == 'eliminar') {
 				FROM SGS.T_EXTRACCION
 				WHERE ID_EXTRACCION = ?', array($extraccion));
 
-        if ($posicion == 1) {
-            sql('   DELETE
+        //if ($posicion == 1) {
+        sql('   DELETE
 					FROM SGS.T_GANADORES
 					WHERE ID_JUEGO            = ?
 					AND SORTEO                = ?
 					AND ID_PREMIO_DESCRIPCION = ?
 					AND BILLETE               = ?', array($id_juego, $sorteo, $posicion, $entero));
-        }
+        //}
         /*
         if($posicion==24){
         sql('   DELETE
