@@ -32,11 +32,11 @@ body{
 
 
 #fecha_sorteo{
-  font-size: 23px;
-    left: 767px;
-    position: relative;
-    font-family: 'MyriadPro-Bold';
-    top: 50px;
+  font-size: 27px;
+  left: 445px;
+  position: relative;
+  font-family: 'MyriadPro-Bold';
+  top: 50px;
 }
 
 #fecha_sorteo_resumen{
@@ -86,23 +86,23 @@ body{
 }
 
 #zona1{
-    background-image: url(escribano_img/zona1_<?php echo date('Y') ?>_<?php echo $_SESSION['sorteo'] ?>.png);
+    background-image: url(escribano_img/zona1_2021_5012.png);
    background-size: 1366px 768px;
 }
 #zona2{
-    background-image: url(escribano_img/zona2_<?php echo date('Y') ?>_<?php echo $_SESSION['sorteo'] ?>.png);
-	 background-size: 1366px 768px;
+    background-image: url(escribano_img/zona2_2021_5012.png);
+     background-size: 1366px 768px;
     display: none;
 }
 #zona3{
-    background-image: url(escribano_img/zona3_<?php echo date('Y') ?>_<?php echo $_SESSION['sorteo'] ?>.png);
-	 background-size: 1366px 768px;
+    background-image: url(escribano_img/zona3_2021_5012.png);
+     background-size: 1366px 768px;
     display: none;
 }
 
 /*SORTEO BILLETE ENTERO*/
 #zona4{
-    background-image: url(escribano_img/zona4_<?php echo date('Y') ?>_<?php echo $_SESSION['sorteo'] ?>.png);
+    background-image: url(escribano_img/zona4_2021_5012.png);
     display: none;
 }
 
@@ -154,8 +154,8 @@ display: block;
 
 /*SOLO PARA EL RESUMEN*/
 #escribano_resumen{
-    background-image: url(escribano_img/resumen_<?php echo $_SESSION['sorteo'] ?>.png);
-	background-size: 1024px 768px;
+    background-image: url(escribano_img/resumen_5012.png);
+    background-size: 1024px 768px;
 }
 
 #bola01{

@@ -53,9 +53,9 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
             <?php echo $fecha_sorteo; ?>
         </div>
 
-
+        <?php if (strtoupper($_SESSION['sale_o_sale']) == 'SI') {?>
         <div id="primer_premio" style="background-image:url('escribano_img/primer_premio_5011.png');"></div>
-
+        <?php }?>
 
         <div id="resultado_primer_premio" ></div>
     </div>
@@ -149,8 +149,8 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
             var posicionZona1 = {
                 '01': {
                     inicial: {
-                        top: '276px',
-                        left: '303px'
+                        top: '291px',
+                        left: '316px'
                     },
                     final: {
                         height: '135px'
@@ -159,7 +159,7 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                 '02': {
                     inicial: {
                         top: '512px',
-                        left: '165px'
+                        left: '189px'
                     },
                     final: {
                         height: '71px'
@@ -167,8 +167,8 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                 },
                 '03': {
                     inicial: {
-                        top: '512px',
-                        left: '440px'
+                        top: '510px',
+                        left: '468px'
                     },
                     final: {
                         height: '71px'
@@ -176,8 +176,8 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                 },
                 '04': {
                     inicial: {
-                        top: '697px',
-                        left: '165px'
+                        top: '707px',
+                        left: '181px'
                     },
                     final: {
                         height: '71px'
@@ -185,8 +185,8 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                 },
                 '05': {
                     inicial: {
-                        top: '696px',
-                        left: '440px'
+                        top: '705px',
+                        left: '458px'
                     },
                     final: {
                         height: '71px'
@@ -194,8 +194,8 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                 },
                 '06': {
                     inicial: {
-                        top: '192px',
-                        left: '802px'
+                        top: '250px',
+                        left: '832px'
                     },
                     final: {
                         height: '47px'
@@ -203,8 +203,8 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                 },
                 '07': {
                     inicial: {
-                        top: '240px',
-                        left: '802px'
+                        top: '294px',
+                        left: '832px'
                     },
                     final: {
                         height: '47px'
@@ -212,8 +212,8 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                 },
                 '08': {
                     inicial: {
-                        top: '290px',
-                        left: '802px'
+                        top: '336px',
+                        left: '832px'
                     },
                     final: {
                         height: '47px'
@@ -221,8 +221,8 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                 },
                 '09': {
                     inicial: {
-                        top: '339px',
-                        left: '802px'
+                        top: '379px',
+                        left: '832px'
                     },
                     final: {
                         height: '47px'
@@ -230,8 +230,8 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                 },
                 '10': {
                     inicial: {
-                        top: '390px',
-                        left: '802px'
+                        top: '421px',
+                        left: '832px'
                     },
                     final: {
                         height: '47px'
@@ -239,8 +239,8 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                 },
                 '11': {
                     inicial: {
-                        top: '520px',
-                        left: '800px'
+                        top: '540px',
+                        left: '830px'
                     },
                     final: {
                         height: '47px'
@@ -248,8 +248,8 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                 },
                 '12': {
                     inicial: {
-                        top: '570px',
-                        left: '800px'
+                        top: '584px',
+                        left: '830px'
                     },
                     final: {
                         height: '47px'
@@ -257,8 +257,8 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                 },
                 '13': {
                     inicial: {
-                        top: '619px',
-                        left: '800px'
+                        top: '628px',
+                        left: '830px'
                     },
                     final: {
                         height: '47px'
@@ -266,8 +266,8 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                 },
                 '14': {
                     inicial: {
-                        top: '668px',
-                        left: '800px'
+                        top: '671px',
+                        left: '830px'
                     },
                     final: {
                         height: '47px'
@@ -275,8 +275,8 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                 },
                 '15': {
                     inicial: {
-                        top: '717px',
-                        left: '800px'
+                        top: '714px',
+                        left: '830px'
                     },
                     final: {
                         height: '47px'
@@ -284,8 +284,8 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                 },
                 '16': {
                     inicial: {
-                        top: '520px',
-                        left: '1107px'
+                        top: '540px',
+                        left: '1189px'
                     },
                     final: {
                         height: '47px'
@@ -293,8 +293,8 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                 },
                 '17': {
                     inicial: {
-                        top: '570px',
-                        left: '1107px'
+                        top: '584px',
+                        left: '1189px'
                     },
                     final: {
                         height: '47px'
@@ -302,8 +302,8 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                 },
                 '18': {
                     inicial: {
-                        top: '620px',
-                        left: '1107px'
+                        top: '628px',
+                        left: '1189px'
                     },
                     final: {
                         height: '47px'
@@ -311,8 +311,8 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                 },
                 '19': {
                     inicial: {
-                        top: '669px',
-                        left: '1107px'
+                        top: '671px',
+                        left: '1189px'
                     },
                     final: {
                         height: '47px'
@@ -320,16 +320,16 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                 },
                 '20': {
                     inicial: {
-                        top: '717px',
-                        left: '1107px'
+                        top: '714px',
+                        left: '1189px'
                     },
                     final: {
                         height: '47px'
                     }
                 },
                 'progresion': {
-                    top: '338px',
-                    left: '1000px',
+                    top: '358px',
+                    left: '1056px',
                     height: '85px'
                 }
             };

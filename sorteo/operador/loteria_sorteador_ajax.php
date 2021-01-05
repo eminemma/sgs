@@ -286,6 +286,10 @@ if ($accion == 'control_ingreso') {
                 if ($existe_posicion && $existe_bola) {
                     $siempre_sale_p = ($siempre_sale == 'true') ? '1' : '0';
                 }
+                //SOLO SERVIDOR B
+                if ($_SESSION['juego_tipo'] == 'EXTRAORDINARIA') {
+                    $siempre_sale_p = '1';
+                }
                 $cantidadGanadores = 0;
                 $stmt              = $db->PrepareSP("BEGIN SGS.PR_INGRESAR_NUMERO(:a1, :a2, :a3, :a4, :a5, :a6, :a7, :a8,:a9,:a10); END;");
                 $db->InParameter($stmt, $juego, 'a1');
@@ -302,11 +306,9 @@ if ($accion == 'control_ingreso') {
                 /* var_dump($juego, $entero, $id_juego, $sorteo, $posicion, $fraccion, $tipo_sorteo, $siempre_sale, $usuario);*/
 
                 //sql('COMMIT');
-                /*
-                HABILITAR EN DESARROLLO
-                 */
-                /*  $existe_posicion = false;
-                $existe_bola     = true;*/
+                //SOLO SERVIDOR B
+                $existe_posicion = false;
+                $existe_bola     = true;
                 if ($siempre_sale_p == '1') {
 
                     //    Valido las bolas ingresadas de ambos usuarios si coinciden (LO HACE EL PROCEDURE)
