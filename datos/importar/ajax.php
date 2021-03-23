@@ -487,7 +487,8 @@ switch ($accion) {
         $rs = sql("SELECT
 				    TOTAL_PREMIOS_8_ACIERTOS,
     				TOTAL_PREMIOS_7_ACIERTOS,
-    				TOTAL_PREMIOS_6_ACIERTOS
+    				TOTAL_PREMIOS_6_ACIERTOS,
+    				TOTAL_PREMIOS_5_ACIERTOS
 			FROM
     			KANBAN.T_TT_RECAUDACION@KANBAN_ANTICIPADA
     		WHERE SORTEO = $sorteo
@@ -499,7 +500,7 @@ switch ($accion) {
 
         if ($rs->RecordCount() > 0) {
             $row = siguiente($rs);
-            if ($row->TOTAL_PREMIOS_8_ACIERTOS == '0' || $row->TOTAL_PREMIOS_7_ACIERTOS == '0' || $row->TOTAL_PREMIOS_6_ACIERTOS == '0') {
+            if ($row->TOTAL_PREMIOS_8_ACIERTOS == '0' || $row->TOTAL_PREMIOS_7_ACIERTOS == '0' || $row->TOTAL_PREMIOS_6_ACIERTOS == '0' || $row->TOTAL_PREMIOS_5_ACIERTOS == '0') {
                 die(error('Es necesario definir los premios para cada categoria de premios antes de importar'));
             }
         }

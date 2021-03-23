@@ -17,12 +17,13 @@
 	</div>
 	<div id="zona3">
 		<div id="c3"></div>
-		<div id="cantidad_ganadores_8_aciertos" class="cantidad_ganadores">Cantidad Ganadores 60</div>
+		<div id="cantidad_ganadores_8_aciertos" class="cantidad_ganadores">Cantidad Ganadores </div>
 	</div>
 	<div id="zona4">
 		<div id="c4"></div>
-		<div id="cantidad_ganadores_7_aciertos" class="cantidad_ganadores">Cantidad Ganadores 10</div>
-		<div id="cantidad_ganadores_6_aciertos" class="cantidad_ganadores">Cantidad Ganadores 20</div>
+		<div id="cantidad_ganadores_7_aciertos" class="cantidad_ganadores">Cantidad Ganadores </div>
+		<div id="cantidad_ganadores_6_aciertos" class="cantidad_ganadores">Cantidad Ganadores </div>
+		<div id="cantidad_ganadores_5_aciertos" class="cantidad_ganadores">Cantidad Ganadores </div>
 	</div>
 	<script type="text/javascript">
 		$(document).ready(
@@ -249,8 +250,8 @@
 		 var posicionZona4 =	{
 								'SEGUNDO_PREMIO':	{
 									inicial:	{
-										top: '430px',
-										left: '410px'
+										top: '450px',
+										left: '220px'
 									},
 									final:	{
 										height: '90px'
@@ -258,8 +259,17 @@
 								},
 								'TERCER_PREMIO':	{
 									inicial:	{
-										top: '430px',
-										left: '950px'
+										top: '450px',
+										left: '690px'
+									},
+									final:	{
+										height: '90px'
+									}
+								},
+								'CUARTO_PREMIO':	{
+									inicial:	{
+										top: '450px',
+										left: '1140px'
 									},
 									final:	{
 										height: '90px'
@@ -475,6 +485,30 @@
 			else
 				$('#cantidad_ganadores_6_aciertos').html(pozos[2].cantidad_ganadores_6_aciertos);
 
+
+			//5 ACIERTOS ANIMACION
+			var id = 'pozo'+zona+'_5_aciertos';
+			$('#'+id).remove();
+			elemento = $('<span id="'+id+'" class="pozo_5_aciertos">'+pozos[3].pozo_5_aciertos+'</span>');
+
+			$('#zona'+zona).append(elemento);
+			var inicial =  posiciones['CUARTO_PREMIO'].inicial;
+					inicial.height = '0px';
+					inicial['font-size'] = '0px';
+
+			$('#'+id).css(inicial);
+
+			var final =  posiciones['CUARTO_PREMIO'].final;
+			final.width = getAnchoByAlto2(final.height);
+			final.top = (parseInt(inicial.top) - (parseInt(final.height) / 2))+'px';
+			final.left = (parseInt(inicial.left) - (parseInt(final.width) / 2))+'px';
+			final['font-size'] = getTamanioTextoByAlto(final.height);
+
+			$('#'+id).animate(final, 1000);
+			if(pozos[3].cantidad_ganadores_5_aciertos == '0')
+				$('#cantidad_ganadores_5_aciertos').html('Pozo Vacante ');
+			else
+				$('#cantidad_ganadores_5_aciertos').html(pozos[3].cantidad_ganadores_5_aciertos);
 
 		}
 

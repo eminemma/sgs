@@ -235,6 +235,15 @@ body {
     
 }
 
+.pozo_5_aciertos {
+    border: 0px solid #000;
+    text-align: center;
+    position: absolute;
+    font-family: 'MyriadPro-Bold';
+        color: white;
+    
+}
+
 .cantidad_ganadores{
     border: 0px solid #000;
     text-align: center;
@@ -245,17 +254,25 @@ body {
 
 #cantidad_ganadores_7_aciertos{
     top: 540px;
-    left: 200px;
+    left: 12px;
     font-size: 27px;
     width: 430px;
 }
 
 #cantidad_ganadores_6_aciertos{
     top: 540px;
-    left: 740px;
+    left: 500px;
     font-size: 27px;
-     width: 430px;
+    width: 430px;
 }
+
+#cantidad_ganadores_5_aciertos{
+    top: 540px;
+    left: 940px;
+    font-size: 27px;
+    width: 430px;
+}
+
 
 #cantidad_ganadores_8_aciertos{
     top: 560px;

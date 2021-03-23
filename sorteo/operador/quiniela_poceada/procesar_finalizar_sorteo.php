@@ -56,260 +56,288 @@ try {
         LEY9505,
         MAYOR
     )
-       SELECT
-     1 AS fraccion,
-     DECODE(b.descripcion,'ESTIMULO',a.monto_premio / 100 * porcentaje,'OCHO ACIERTOS',(a.monto_premio -(a.monto_premio * .01)) ,a.monto_premio) AS importe,
-     NULL AS pagado,
-     b.id_descripcion,
-     a.secuencia      AS billete,
-     a.id_juego,
-     a.sorteo,
-     1 AS serie,
-     NULL AS especie,
-     b.descripcion    AS concepto,
-     NULL AS primer_premio,
-     SYSDATE          AS fecha_alta,
-     NULL AS validado,
-     NULL AS prescripto,
-     NULL AS fecha_paga,
-     lpad(a.cod_juego,2,'0')
-     || lpad(a.concurso,5,'0')
-     || lpad(a.ocr,9,'0') AS ocr,
-     a.nro_sucursal   AS suc_ban,
-     a.nro_agencia    AS nro_agen,
-     NULL AS pago_agencia,
-     NULL AS id_sorteo_anticipado,
-     NULL AS usuario,
-     NULL AS original,
-     NULL AS cordoba,
+        SELECT
+            1 AS FRACCION,
+            DECODE(B.DESCRIPCION, 'ESTIMULO', A.MONTO_PREMIO / 100 * PORCENTAJE, 'OCHO ACIERTOS',(A.MONTO_PREMIO -(A.MONTO_PREMIO
+            *.01)), A.MONTO_PREMIO) AS IMPORTE,
+            NULL AS PAGADO,
+            B.ID_DESCRIPCION,
+            A.SECUENCIA      AS BILLETE,
+            A.ID_JUEGO,
+            A.SORTEO,
+            1 AS SERIE,
+            NULL AS ESPECIE,
+            B.DESCRIPCION    AS CONCEPTO,
+            NULL AS PRIMER_PREMIO,
+            SYSDATE          AS FECHA_ALTA,
+            NULL AS VALIDADO,
+            NULL AS PRESCRIPTO,
+            NULL AS FECHA_PAGA,
+            LPAD(A.COD_JUEGO, 2, '0')
+            || LPAD(A.CONCURSO, 5, '0')
+            || LPAD(A.OCR, 9, '0') AS OCR,
+            A.NRO_SUCURSAL   AS SUC_BAN,
+            A.NRO_AGENCIA    AS NRO_AGEN,
+            NULL AS PAGO_AGENCIA,
+            NULL AS ID_SORTEO_ANTICIPADO,
+            NULL AS USUARIO,
+            NULL AS ORIGINAL,
+            NULL AS CORDOBA,
+            DECODE(B.DESCRIPCION, 'ESTIMULO', A.MONTO_PREMIO / 100 * PORCENTAJE, 'OCHO ACIERTOS',(A.MONTO_PREMIO -(A.MONTO_PREMIO
+            *.01)), A.MONTO_PREMIO) - IMPUESTOS.F_LEY_20630@KANBAN_ANTICIPADA(NULL, DECODE(B.DESCRIPCION, 'ESTIMULO', A.MONTO_PREMIO
+            / 100 * PORCENTAJE, 'OCHO ACIERTOS',(A.MONTO_PREMIO -(A.MONTO_PREMIO *.01)), A.MONTO_PREMIO), A.ID_JUEGO),
+            IMPUESTOS.F_LEY_20630@KANBAN_ANTICIPADA(NULL, DECODE(B.DESCRIPCION, 'ESTIMULO', A.MONTO_PREMIO / 100 * PORCENTAJE, 'OCHO ACIERTOS'
+            ,(A.MONTO_PREMIO -(A.MONTO_PREMIO *.01)), A.MONTO_PREMIO), A.ID_JUEGO),
+            0,
+            (
+                CASE
+                    WHEN ( DECODE(B.DESCRIPCION, 'ESTIMULO', A.MONTO_PREMIO / 100 * PORCENTAJE, 'OCHO ACIERTOS',(A.MONTO_PREMIO -
+                    (A.MONTO_PREMIO *.01)), A.MONTO_PREMIO) ) >= (
+                        SELECT
+                            POLITICA.F_TOPE_PREMIO_CC@KANBAN_ANTICIPADA(?)
+                        FROM
+                            DUAL
+                    ) THEN
+                        'S'
+                    ELSE
+                        'N'
+                END
+            )
+        FROM
+            (
+                SELECT
+                    A.ID_JUEGO,
+                    A.SORTEO,
+                    A.COINCIDENCIAS,
+                    A.MONTO AS MONTO_TOTAL,
+                    B.OCR,
+                    A.MONTO / C.CANTIDAD AS MONTO_PREMIO,
+                    B.SECUENCIA,
+                    B.NRO_AGENCIA,
+                    B.NRO_SUCURSAL,
+                    COD_JUEGO,
+                    CONCURSO
+                FROM
+                    (
+                        SELECT
+                            ID_JUEGO,
+                            SORTEO,
+                            8 AS COINCIDENCIAS,
+                            TOTAL_PREMIOS_8_ACIERTOS AS MONTO
+                        FROM
+                            KANBAN.T_TT_RECAUDACION@KANBAN_ANTICIPADA
+                        WHERE
+                            ID_JUEGO = $id_juego
+                            AND SORTEO = $sorteo
+                        UNION
+                        SELECT
+                            ID_JUEGO,
+                            SORTEO,
+                            7 AS ACIERTOS,
+                            TOTAL_PREMIOS_7_ACIERTOS AS MONTO
+                        FROM
+                            KANBAN.T_TT_RECAUDACION@KANBAN_ANTICIPADA
+                        WHERE
+                            ID_JUEGO = $id_juego
+                            AND SORTEO = $sorteo
+                        UNION
+                        SELECT
+                            ID_JUEGO,
+                            SORTEO,
+                            6 AS ACIERTOS,
+                            TOTAL_PREMIOS_6_ACIERTOS AS MONTO
+                        FROM
+                            KANBAN.T_TT_RECAUDACION@KANBAN_ANTICIPADA
+                        WHERE
+                            ID_JUEGO = $id_juego
+                            AND SORTEO = $sorteo
+                        UNION
+                        SELECT
+                            ID_JUEGO,
+                            SORTEO,
+                            5 AS ACIERTOS,
+                            TOTAL_PREMIOS_5_ACIERTOS AS MONTO
+                        FROM
+                            KANBAN.T_TT_RECAUDACION@KANBAN_ANTICIPADA
+                        WHERE
+                            ID_JUEGO = $id_juego
+                            AND SORTEO = $sorteo
+                    ) A,
+                    (
+                        SELECT
+                            COD_JUEGO,
+                            CONCURSO,
+                            NRO_AGENCIA,
+                            NRO_SUCURSAL,
+                            OCR,
+                            SECUENCIA,
+                            COUNT(*) AS COINCIDENCIAS
+                        FROM
+                            (
+                                SELECT
+                                    COD_JUEGO,
+                                    CONCURSO,
+                                    A.NRO_AGENCIA,
+                                    A.NRO_SUCURSAL,
+                                    A.OCR,
+                                    SECUENCIA,
+                                    LPAD(BILLETE, 2, '0') AS EXTRACCION,
+                                    SUBSTR(APUESTA, - 2),
+                                    SUBSTR(APUESTA, - 4, 2),
+                                    SUBSTR(APUESTA, - 6, 2),
+                                    SUBSTR(APUESTA, - 8, 2),
+                                    SUBSTR(APUESTA, - 10, 2),
+                                    SUBSTR(APUESTA, - 12, 2),
+                                    SUBSTR(APUESTA, - 14, 2),
+                                    SUBSTR(APUESTA, - 16, 2)
+                                FROM
+                                    FACTURACION_BOLDT.APUESTAS_NACIONALES@KANBAN_ANTICIPADA   A,
+                                    SGS.T_PREMIO_EXTRACTO                                     B
+                                WHERE
+                                    A.COD_JUEGO = $id_juego
+                                    AND A.CONCURSO = $sorteo
+                                    AND ( SUBSTR(APUESTA, - 2) = LPAD(BILLETE, 2, '0')
+                                          OR SUBSTR(APUESTA, - 4, 2) = LPAD(BILLETE, 2, '0')
+                                          OR SUBSTR(APUESTA, - 6, 2) = LPAD(BILLETE, 2, '0')
+                                          OR SUBSTR(APUESTA, - 8, 2) = LPAD(BILLETE, 2, '0')
+                                          OR SUBSTR(APUESTA, - 10, 2) = LPAD(BILLETE, 2, '0')
+                                          OR SUBSTR(APUESTA, - 12, 2) = LPAD(BILLETE, 2, '0')
+                                          OR SUBSTR(APUESTA, - 14, 2) = LPAD(BILLETE, 2, '0')
+                                          OR SUBSTR(APUESTA, - 16, 2) = LPAD(BILLETE, 2, '0') )
+                                    AND B.ID_JUEGO = $id_juego
+                                    AND B.SORTEO = $sorteo
+                                    AND SUBSTR(SORTEO_ASOC, 1, 8) != 'COINCIDE'
+                            )
+                        GROUP BY
+                            COD_JUEGO,
+                            CONCURSO,
+                            OCR,
+                            SECUENCIA,
+                            NRO_AGENCIA,
+                            NRO_SUCURSAL
+                        HAVING
+                            COUNT(*) IN (
+                                8,
+                                7,
+                                6,
+                                5
+                            )
+                    ) B,
+                    (
+                        SELECT
+                            COINCIDENCIAS,
+                            COUNT(*) AS CANTIDAD
+                        FROM
+                            (
+                                SELECT
+                                    COD_JUEGO,
+                                    CONCURSO,
+                                    NRO_AGENCIA,
+                                    NRO_SUCURSAL,
+                                    OCR,
+                                    SECUENCIA,
+                                    COUNT(*) AS COINCIDENCIAS
+                                FROM
+                                    (
+                                        SELECT
+                                            COD_JUEGO,
+                                            CONCURSO,
+                                            A.NRO_AGENCIA,
+                                            A.NRO_SUCURSAL,
+                                            A.OCR,
+                                            SECUENCIA,
+                                            LPAD(BILLETE, 2, '0') AS EXTRACCION,
+                                            SUBSTR(APUESTA, - 2),
+                                            SUBSTR(APUESTA, - 4, 2),
+                                            SUBSTR(APUESTA, - 6, 2),
+                                            SUBSTR(APUESTA, - 8, 2),
+                                            SUBSTR(APUESTA, - 10, 2),
+                                            SUBSTR(APUESTA, - 12, 2),
+                                            SUBSTR(APUESTA, - 14, 2),
+                                            SUBSTR(APUESTA, - 16, 2)
+                                        FROM
+                                            FACTURACION_BOLDT.APUESTAS_NACIONALES@KANBAN_ANTICIPADA   A,
+                                            SGS.T_PREMIO_EXTRACTO                                     B
+                                        WHERE
+                                            A.COD_JUEGO = $id_juego
+                                            AND A.CONCURSO = $sorteo
+                                            AND ( SUBSTR(APUESTA, - 2) = LPAD(BILLETE, 2, '0')
+                                                  OR SUBSTR(APUESTA, - 4, 2) = LPAD(BILLETE, 2, '0')
+                                                  OR SUBSTR(APUESTA, - 6, 2) = LPAD(BILLETE, 2, '0')
+                                                  OR SUBSTR(APUESTA, - 8, 2) = LPAD(BILLETE, 2, '0')
+                                                  OR SUBSTR(APUESTA, - 10, 2) = LPAD(BILLETE, 2, '0')
+                                                  OR SUBSTR(APUESTA, - 12, 2) = LPAD(BILLETE, 2, '0')
+                                                  OR SUBSTR(APUESTA, - 14, 2) = LPAD(BILLETE, 2, '0')
+                                                  OR SUBSTR(APUESTA, - 16, 2) = LPAD(BILLETE, 2, '0') )
+                                            AND B.ID_JUEGO = $id_juego
+                                            AND B.SORTEO = $sorteo
+                                            AND SUBSTR(SORTEO_ASOC, 1, 8) != 'COINCIDE'
+                                    )
+                                GROUP BY
+                                    COD_JUEGO,
+                                    CONCURSO,
+                                    OCR,
+                                    SECUENCIA,
+                                    NRO_AGENCIA,
+                                    NRO_SUCURSAL
+                                HAVING
+                                    COUNT(*) IN (
+                                        8,
+                                        7,
+                                        6,
+                                        5
+                                    )
+                            )
+                        WHERE
+                            COINCIDENCIAS IN (
+                                8,
+                                7,
+                                6,
+                                5
+                            )
+                        GROUP BY
+                            COINCIDENCIAS
+                    ) C
+                WHERE
+                    A.COINCIDENCIAS = B.COINCIDENCIAS
+                    AND B.COINCIDENCIAS = C.COINCIDENCIAS
+            ) A,
+            (
+                SELECT
+                    CASE REGEXP_SUBSTR(C.DESCRIPCION, '(\S*)')
+                        WHEN 'OCHO'       THEN
+                            8
+                        WHEN 'SIETE'      THEN
+                            7
+                        WHEN 'SEIS'       THEN
+                            6
+                        WHEN 'CINCO'      THEN
+                            5
+                        WHEN 'ESTIMULO'   THEN
+                            8
+                    END AS COINCIDENCIAS,
+                    A.ID_DESCRIPCION,
+                    C.DESCRIPCION,
+                    A.PORCENTAJE,
+                    B.MONTO_FRACCION
+                FROM
+                    KANBAN.T_PROGRAMA_PREMIOS@KANBAN_ANTICIPADA     A,
+                    KANBAN.T_SORTEO@KANBAN_ANTICIPADA               B,
+                    KANBAN.T_PREMIO_DESCRIPCION@KANBAN_ANTICIPADA   C
+                WHERE
+                    A.ID_PROGRAMA = B.ID_PROGRAMA
+                    AND A.ID_DESCRIPCION = C.ID_DESCRIPCION
+                    AND B.ID_JUEGO = $id_juego
+                    AND B.SORTEO = $sorteo
+            ) B
+        WHERE
+            A.COINCIDENCIAS = B.COINCIDENCIAS
+        ORDER BY
+            B.COINCIDENCIAS,
+            DESCRIPCION DESC;
 
-     DECODE(b.descripcion,'ESTIMULO',a.monto_premio / 100 * porcentaje,'OCHO ACIERTOS',(a.monto_premio -(a.monto_premio * .01)) ,a.monto_premio) -
-     IMPUESTOS.F_LEY_20630@KANBAN_ANTICIPADA(NULL,DECODE(b.descripcion,'ESTIMULO',a.monto_premio / 100 * porcentaje,'OCHO ACIERTOS',(a.monto_premio -(a.monto_premio * .01)) ,a.monto_premio),a.id_juego),
-     IMPUESTOS.F_LEY_20630@KANBAN_ANTICIPADA(NULL,DECODE(b.descripcion,'ESTIMULO',a.monto_premio / 100 * porcentaje,'OCHO ACIERTOS',(a.monto_premio -(a.monto_premio * .01)) ,a.monto_premio),a.id_juego),
-    0,
-    (   CASE
-             WHEN (DECODE(b.descripcion,'ESTIMULO',a.monto_premio / 100 * porcentaje,'OCHO ACIERTOS',(a.monto_premio -(a.monto_premio * .01)) ,a.monto_premio)) >= (  SELECT
-                                                        POLITICA.F_TOPE_PREMIO_CC@KANBAN_ANTICIPADA(?)
-                                                    FROM
-                                                        DUAL)  THEN
-            'S'
-        ELSE
-            'N'
-        END)
- FROM
-     (
-         SELECT
-             a.id_juego,
-             a.sorteo,
-             a.coincidencias,
-             a.monto   AS monto_total,
-             b.ocr,
-             a.monto / c.cantidad AS monto_premio,
-             b.secuencia,
-             b.nro_agencia,
-             b.nro_sucursal,
-             cod_juego,
-             concurso
-         FROM
-             (
-                 SELECT
-                     id_juego,
-                     sorteo,
-                     8 AS coincidencias,
-                     total_premios_8_aciertos   AS monto
-                 FROM
-                     kanban.t_tt_recaudacion@kanban_anticipada
-                 WHERE
-                     id_juego = $id_juego
-                     AND sorteo = $sorteo
-                 UNION
-                 SELECT
-                     id_juego,
-                     sorteo,
-                     7 AS aciertos,
-                     total_premios_7_aciertos   AS monto
-                 FROM
-                     kanban.t_tt_recaudacion@kanban_anticipada
-                 WHERE
-                     id_juego = $id_juego
-                     AND sorteo = $sorteo
-                 UNION
-                 SELECT
-                     id_juego,
-                     sorteo,
-                     6 AS aciertos,
-                     total_premios_6_aciertos   AS monto
-                 FROM
-                     kanban.t_tt_recaudacion@kanban_anticipada
-                 WHERE
-                     id_juego = $id_juego
-                     AND sorteo = $sorteo
-             ) a,
-             (
-                 SELECT
-                     cod_juego,
-                     concurso,
-                     nro_agencia,
-                     nro_sucursal,
-                     ocr,
-                     secuencia,
-                     COUNT(*) AS coincidencias
-                 FROM
-                     (
-                         SELECT
-                             cod_juego,
-                             concurso,
-                             a.nro_agencia,
-                             a.nro_sucursal,
-                             a.ocr,
-                             secuencia,
-                             lpad(billete,2,'0') AS extraccion,
-                             substr(apuesta,-2),
-                             substr(apuesta,-4,2),
-                             substr(apuesta,-6,2),
-                             substr(apuesta,-8,2),
-                             substr(apuesta,-10,2),
-                             substr(apuesta,-12,2),
-                             substr(apuesta,-14,2),
-                             substr(apuesta,-16,2)
-                         FROM
-                             facturacion_boldt.apuestas_nacionales@kanban_anticipada a,
-                             sgs.t_premio_extracto b
-                         WHERE
-                             a.cod_juego = $id_juego
-                             AND a.concurso = $sorteo
-                             AND ( substr(apuesta,-2) = lpad(billete,2,'0')
-                                   OR substr(apuesta,-4,2) = lpad(billete,2,'0')
-                                   OR substr(apuesta,-6,2) = lpad(billete,2,'0')
-                                   OR substr(apuesta,-8,2) = lpad(billete,2,'0')
-                                   OR substr(apuesta,-10,2) = lpad(billete,2,'0')
-                                   OR substr(apuesta,-12,2) = lpad(billete,2,'0')
-                                   OR substr(apuesta,-14,2) = lpad(billete,2,'0')
-                                   OR substr(apuesta,-16,2) = lpad(billete,2,'0') )
-                             AND b.id_juego = $id_juego
-                             AND b.sorteo = $sorteo
-                             AND substr(sorteo_asoc,1,8) != 'COINCIDE'
-                     )
-                 GROUP BY
-                     cod_juego,
-                     concurso,
-                     ocr,
-                     secuencia,
-                     nro_agencia,
-                     nro_sucursal
-                 HAVING
-                     COUNT(*) IN (
-                         8,
-                         7,
-                         6
-                     )
-             ) b,
-             (
-                 SELECT
-                     coincidencias,
-                     COUNT(*) AS cantidad
-                 FROM
-                     (
-                         SELECT
-                             cod_juego,
-                             concurso,
-                             nro_agencia,
-                             nro_sucursal,
-                             ocr,
-                             secuencia,
-                             COUNT(*) AS coincidencias
-                         FROM
-                             (
-                                 SELECT
-                                     cod_juego,
-                                     concurso,
-                                     a.nro_agencia,
-                                     a.nro_sucursal,
-                                     a.ocr,
-                                     secuencia,
-                                     lpad(billete,2,'0') AS extraccion,
-                                     substr(apuesta,-2),
-                                     substr(apuesta,-4,2),
-                                     substr(apuesta,-6,2),
-                                     substr(apuesta,-8,2),
-                                     substr(apuesta,-10,2),
-                                     substr(apuesta,-12,2),
-                                     substr(apuesta,-14,2),
-                                     substr(apuesta,-16,2)
-                                 FROM
-                                     facturacion_boldt.apuestas_nacionales@kanban_anticipada a,
-                                     sgs.t_premio_extracto b
-                                 WHERE
-                                     a.cod_juego = $id_juego
-                                     AND a.concurso = $sorteo
-                                     AND ( substr(apuesta,-2) = lpad(billete,2,'0')
-                                           OR substr(apuesta,-4,2) = lpad(billete,2,'0')
-                                           OR substr(apuesta,-6,2) = lpad(billete,2,'0')
-                                           OR substr(apuesta,-8,2) = lpad(billete,2,'0')
-                                           OR substr(apuesta,-10,2) = lpad(billete,2,'0')
-                                           OR substr(apuesta,-12,2) = lpad(billete,2,'0')
-                                           OR substr(apuesta,-14,2) = lpad(billete,2,'0')
-                                           OR substr(apuesta,-16,2) = lpad(billete,2,'0') )
-                                     AND b.id_juego = $id_juego
-                                     AND b.sorteo = $sorteo
-                                     AND substr(sorteo_asoc,1,8) != 'COINCIDE'
-                             )
-                         GROUP BY
-                             cod_juego,
-                             concurso,
-                             ocr,
-                             secuencia,
-                             nro_agencia,
-                             nro_sucursal
-                         HAVING
-                             COUNT(*) IN (
-                                 8,
-                                 7,
-                                 6
-                             )
-                     )
-                 WHERE
-                     coincidencias IN (
-                         8,
-                         7,
-                         6
-                     )
-                 GROUP BY
-                     coincidencias
-             ) c
-         WHERE
-             a.coincidencias = b.coincidencias
-             AND b.coincidencias = c.coincidencias
-     ) a,
-     (
-         SELECT
-             CASE regexp_substr(c.descripcion,'(\S*)')
-                 WHEN 'OCHO'       THEN 8
-                 WHEN 'SIETE'      THEN 7
-                 WHEN 'SEIS'       THEN 6
-                 WHEN 'ESTIMULO'   THEN 8
-             END AS coincidencias,
-             a.id_descripcion,
-             c.descripcion,
-             a.porcentaje,
-             b.monto_fraccion
-         FROM
-             kanban.t_programa_premios@kanban_anticipada a,
-             kanban.t_sorteo@kanban_anticipada b,
-             kanban.t_premio_descripcion@kanban_anticipada c
-         WHERE
-             a.id_programa = b.id_programa
-             AND a.id_descripcion = c.id_descripcion
-             AND b.id_juego = $id_juego
-             AND b.sorteo = $sorteo
-     ) b
- WHERE
-     a.coincidencias = b.coincidencias
- ORDER BY
-     b.coincidencias,
-     descripcion DESC;
-            commit;
- END;", array($row_politica->ID_JUEGO_POLITICA));
+    COMMIT;
+END;", array($row_politica->ID_JUEGO_POLITICA));
 
     $rs = sql('SELECT ID_DESCRIPCION
  									FROM KANBAN.T_PREMIOS@KANBAN_ANTICIPADA
