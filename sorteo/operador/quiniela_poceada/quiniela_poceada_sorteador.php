@@ -187,7 +187,7 @@ try {
                                 <a href="#" class="ver_pozo_8_aciertos" onclick="cargar_juego(this.className); return false;"><img src="img/icono_screen.png" width="19" height="19" border="0" style="vertical-align: middle;">Pantalla Pozo 8 Aciertos</a>
                             </li>
                             <li>
-                                <a href="#" class="ver_pozo_67_aciertos" onclick="cargar_juego(this.className); return false;"><img src="img/icono_screen.png" width="19" height="19" border="0" style="vertical-align: middle;">Pantalla Pozos 7 y 6 Aciertos</a>
+                                <a href="#" class="ver_pozo_67_aciertos" onclick="cargar_juego(this.className); return false;"><img src="img/icono_screen.png" width="19" height="19" border="0" style="vertical-align: middle;">Pantalla Pozos 7, 6 y 5 Aciertos</a>
                             </li>
                             <li class="divider-vertical"></li>
                         </ul>
