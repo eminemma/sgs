@@ -25,6 +25,15 @@ if ($rs->RecordCount() > 0) {
     die(json_encode(array("mensaje" => 'Ya existen premios generados', "tipo" => "error")));
 }
 
+$rs_sorteo = sql('  SELECT  MONTO_FRACCION
+                    FROM KANBAN.T_SORTEO@KANBAN_ANTICIPADA
+                    WHERE   SORTEO   = ?
+                        AND ID_JUEGO = ? ', array($sorteo, $id_juego));
+
+$row_sorteo = $rs_sorteo->FetchNextObject($toupper = true);
+
+$m_fraccion = $row_sorteo->MONTO_FRACCION;
+
 try {
     $db->Execute("BEGIN
     INSERT INTO KANBAN.T_PREMIOS@KANBAN_ANTICIPADA (
@@ -111,7 +120,19 @@ try {
                     A.COINCIDENCIAS,
                     A.MONTO AS MONTO_TOTAL,
                     B.OCR,
-                    A.MONTO / C.CANTIDAD AS MONTO_PREMIO,
+                    --A.MONTO / C.CANTIDAD AS MONTO_PREMIO,
+
+                     CASE A.COINCIDENCIAS
+                     	when  5 then
+
+                     		$m_fraccion
+
+                     	else
+                     		A.MONTO / C.CANTIDAD
+                     	END AS MONTO_PREMIO,
+
+
+
                     B.SECUENCIA,
                     B.NRO_AGENCIA,
                     B.NRO_SUCURSAL,
@@ -374,6 +395,25 @@ END;", array($row_politica->ID_JUEGO_POLITICA));
 			FROM KANBAN.T_TT_RECAUDACION@KANBAN_ANTICIPADA
 			WHERE ID_JUEGO=A.ID_JUEGO AND SORTEO=A.SORTEO)
 			WHERE A.ID_JUEGO=? AND A.SORTEO=?", array($id_juego, $sorteo));
+    }
+
+    $rs_premios = sql('SELECT SUM(IMPORTE) AS TOTAL_PREMIOS
+                                    FROM KANBAN.T_PREMIOS@KANBAN_ANTICIPADA
+                                    WHERE SORTEO = ? AND ID_JUEGO = ?
+                                    and ID_DESCRIPCION = 85', array($sorteo, $id_juego));
+    $db->debug = true;
+    if ($rs_premios->RecordCount() > 0) {
+        $row_premios = $rs_premios->FetchNextObject($toupper = true);
+        $rs_pozo     = sql('SELECT PROP_5_ACIERTOS
+            FROM KANBAN.T_TT_RECAUDACION@KANBAN_ANTICIPADA
+            WHERE ID_JUEGO=? AND SORTEO=?', array($id_juego, $sorteo));
+
+        $row_pozo = $rs_pozo->FetchNextObject($toupper = true);
+        //POZO DEL HOY MENOS LOS PREMIOS, SI QUEDA PLATA VA A LA RESERVA SINO NO VA A LA RESERVA ?? NEGATIVA
+        $reserva = $row_pozo->PROP_5_ACIERTOS - $row_premios->TOTAL_PREMIOS;
+
+        sql("UPDATE KANBAN.T_TT_RECAUDACION@KANBAN_ANTICIPADA A SET POZO_RESERVA_5_PROX_SORTEO=?
+            WHERE A.ID_JUEGO=? AND A.SORTEO=?", array($reserva, $id_juego, $sorteo));
     }
 
     sql("UPDATE KANBAN.T_SORTEO@KANBAN_ANTICIPADA A SET ESTADO_SORTEO='F' WHERE ID_JUEGO= ? AND SORTEO=?", array($id_juego, $sorteo));

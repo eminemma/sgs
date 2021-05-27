@@ -39,24 +39,32 @@ $res_rec = sql("SELECT
 				    TOTAL_PREMIOS_8_ACIERTOS,
 				    TOTAL_PREMIOS_7_ACIERTOS,
 				    TOTAL_PREMIOS_6_ACIERTOS,
-				    TOTAL_PREMIOS_5_ACIERTOS,
 				    (SELECT COUNT(*) FROM KANBAN.T_PREMIOS@KANBAN_ANTICIPADA WHERE SORTEO=REC.SORTEO AND ID_JUEGO=REC.ID_JUEGO AND ID_DESCRIPCION = 82) AS CANTIDAD_GANADORES_8,
 				    (SELECT COUNT(*) FROM KANBAN.T_PREMIOS@KANBAN_ANTICIPADA WHERE SORTEO=REC.SORTEO AND ID_JUEGO=REC.ID_JUEGO AND ID_DESCRIPCION = 83) AS CANTIDAD_GANADORES_7,
-				    (SELECT COUNT(*) FROM KANBAN.T_PREMIOS@KANBAN_ANTICIPADA WHERE SORTEO=REC.SORTEO AND ID_JUEGO=REC.ID_JUEGO AND ID_DESCRIPCION = 84) AS CANTIDAD_GANADORES_6,
-				    (SELECT COUNT(*) FROM KANBAN.T_PREMIOS@KANBAN_ANTICIPADA WHERE SORTEO=REC.SORTEO AND ID_JUEGO=REC.ID_JUEGO AND ID_DESCRIPCION = 85) AS CANTIDAD_GANADORES_5
+				    (SELECT COUNT(*) FROM KANBAN.T_PREMIOS@KANBAN_ANTICIPADA WHERE SORTEO=REC.SORTEO AND ID_JUEGO=REC.ID_JUEGO AND ID_DESCRIPCION = 84) AS CANTIDAD_GANADORES_6
 				FROM
 				    KANBAN.T_TT_RECAUDACION@KANBAN_ANTICIPADA REC
 				WHERE
 				    SORTEO       = ?
 				    AND ID_JUEGO = ?",
     array($_SESSION['sorteo'], $_SESSION['id_juego']));
-
 $row_rec = siguiente($res_rec);
+//CINCO ACIERTOS
+$res_premios_5 = sql("SELECT
+				    SUM(IMPORTE) as TOTAL_PREMIOS_5_ACIERTOS , COUNT(*) AS CANTIDAD_GANADORES_5
+				FROM
+				    KANBAN.T_PREMIOS@KANBAN_ANTICIPADA REC
+				WHERE
+				    SORTEO       = ?
+				    AND ID_JUEGO = ?",
+    array($_SESSION['sorteo'], $_SESSION['id_juego']));
+
+$row_premios_5 = siguiente($res_premios_5);
 
 $pozos['pozos'][] = array('pozo_8_aciertos' => '$' . number_format($row_rec->TOTAL_PREMIOS_8_ACIERTOS, 0, ',', '.'), 'cantidad_ganadores_8_aciertos' => (($row_rec->CANTIDAD_GANADORES_8 == 0) ? 'Pozo Vacante' : ($row_rec->CANTIDAD_GANADORES_8 > 1 ? $row_rec->CANTIDAD_GANADORES_8 . ' Ganadores con $' . number_format(($row_rec->TOTAL_PREMIOS_8_ACIERTOS / $row_rec->CANTIDAD_GANADORES_8), 0, ',', '.') . ' c/u ' : $row_rec->CANTIDAD_GANADORES_8 . ' Ganador con $' . number_format(($row_rec->TOTAL_PREMIOS_8_ACIERTOS / $row_rec->CANTIDAD_GANADORES_8), 0, ',', '.'))));
 $pozos['pozos'][] = array('pozo_7_aciertos' => '$' . number_format($row_rec->TOTAL_PREMIOS_7_ACIERTOS, 0, ',', '.'), 'cantidad_ganadores_7_aciertos' => (($row_rec->CANTIDAD_GANADORES_7 == 0) ? 'Pozo Vacante' : ($row_rec->CANTIDAD_GANADORES_7 > 1 ? $row_rec->CANTIDAD_GANADORES_7 . ' Ganadores con $' . number_format(($row_rec->TOTAL_PREMIOS_7_ACIERTOS / $row_rec->CANTIDAD_GANADORES_7), 0, ',', '.') . ' c/u' : $row_rec->CANTIDAD_GANADORES_7 . ' Ganador con $' . number_format(($row_rec->TOTAL_PREMIOS_7_ACIERTOS / $row_rec->CANTIDAD_GANADORES_7), 0, ',', '.'))));
 $pozos['pozos'][] = array('pozo_6_aciertos' => '$' . number_format($row_rec->TOTAL_PREMIOS_6_ACIERTOS, 0, ',', '.'), 'cantidad_ganadores_6_aciertos' => (($row_rec->CANTIDAD_GANADORES_6 == 0) ? 'Pozo Vacante' : ($row_rec->CANTIDAD_GANADORES_6 > 1 ? $row_rec->CANTIDAD_GANADORES_6 . ' Ganadores con $' . number_format(($row_rec->TOTAL_PREMIOS_6_ACIERTOS / $row_rec->CANTIDAD_GANADORES_6), 0, ',', '.') . ' c/u ' : $row_rec->CANTIDAD_GANADORES_6 . ' Ganador con $' . number_format(($row_rec->TOTAL_PREMIOS_6_ACIERTOS / $row_rec->CANTIDAD_GANADORES_6), 0, ',', '.'))));
-$pozos['pozos'][] = array('pozo_5_aciertos' => '$' . number_format($row_rec->TOTAL_PREMIOS_5_ACIERTOS, 0, ',', '.'), 'cantidad_ganadores_5_aciertos' => (($row_rec->CANTIDAD_GANADORES_5 == 0) ? 'Pozo Vacante' : ($row_rec->CANTIDAD_GANADORES_5 > 1 ? $row_rec->CANTIDAD_GANADORES_5 . ' Ganadores con $' . number_format(($row_rec->TOTAL_PREMIOS_5_ACIERTOS / $row_rec->CANTIDAD_GANADORES_5), 0, ',', '.') . ' c/u ' : $row_rec->CANTIDAD_GANADORES_5 . ' Ganador con $' . number_format(($row_rec->TOTAL_PREMIOS_5_ACIERTOS / $row_rec->CANTIDAD_GANADORES_5), 0, ',', '.'))));
+$pozos['pozos'][] = array('pozo_5_aciertos' => '$' . number_format($row_premios_5->TOTAL_PREMIOS_5_ACIERTOS, 0, ',', '.'), 'cantidad_ganadores_5_aciertos' => (($row_premios_5->CANTIDAD_GANADORES_5 == 0) ? 'Pozo Vacante' : ($row_premios_5->CANTIDAD_GANADORES_5 > 1 ? $row_premios_5->CANTIDAD_GANADORES_5 . ' Ganadores con $' . number_format(($row_premios_5->TOTAL_PREMIOS_5_ACIERTOS / $row_premios_5->CANTIDAD_GANADORES_5), 0, ',', '.') . ' c/u ' : $row_premios_5->CANTIDAD_GANADORES_5 . ' Ganador con $' . number_format(($row_premios_5->TOTAL_PREMIOS_5_ACIERTOS / $row_premios_5->CANTIDAD_GANADORES_5), 0, ',', '.'))));
 $retorno          = array(
     'zonaMostrando' => 'zona' . (int) $row->VALOR,
     'escribano'     => ($row_sorteo->ESCRIBANO == null) ? '' : $row_sorteo->ESCRIBANO,

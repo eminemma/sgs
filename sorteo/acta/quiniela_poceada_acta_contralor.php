@@ -158,10 +158,22 @@ $res_rec = sql(
 
 $row_rec = siguiente($res_rec);
 
+//CINCO ACIERTOS
+$res_premios_5 = sql("SELECT
+                    SUM(IMPORTE) as TOTAL_PREMIOS_5_ACIERTOS , COUNT(*) AS CANTIDAD_GANADORES_5
+                FROM
+                    KANBAN.T_PREMIOS@KANBAN_ANTICIPADA REC
+                WHERE
+                    SORTEO       = ?
+                    AND ID_JUEGO = ?",
+    array($_SESSION['sorteo'], $_SESSION['id_juego']));
+
+$row_premios_5 = siguiente($res_premios_5);
+
 $pozo_8_aciertos = (($row_rec->CANTIDAD_GANADORES_8 == 0) ? 'Pozo Vacante con 8 Aciertos' : ($row_rec->CANTIDAD_GANADORES_8 > 1 ? $row_rec->CANTIDAD_GANADORES_8 . ' Ganadores con $' . number_format(($row_rec->TOTAL_PREMIOS_8_ACIERTOS / $row_rec->CANTIDAD_GANADORES_8), 2, ',', '.') . ' c/u, 8 Aciertos  ' : $row_rec->CANTIDAD_GANADORES_8 . ' Ganador con $' . number_format(($row_rec->TOTAL_PREMIOS_8_ACIERTOS / $row_rec->CANTIDAD_GANADORES_8), 2, ',', '.') . ', 8 Aciertos  '));
 $pozo_7_aciertos = (($row_rec->CANTIDAD_GANADORES_7 == 0) ? 'Pozo Vacante con 7 Aciertos' : ($row_rec->CANTIDAD_GANADORES_7 > 1 ? $row_rec->CANTIDAD_GANADORES_7 . ' Ganadores con $' . number_format(($row_rec->TOTAL_PREMIOS_7_ACIERTOS / $row_rec->CANTIDAD_GANADORES_7), 2, ',', '.') . ' c/u, 7 Aciertos' : $row_rec->CANTIDAD_GANADORES_7 . ' Ganador con $' . number_format(($row_rec->TOTAL_PREMIOS_7_ACIERTOS / $row_rec->CANTIDAD_GANADORES_7), 2, ',', '.') . ', 7 Aciertos  '));
 $pozo_6_aciertos = (($row_rec->CANTIDAD_GANADORES_6 == 0) ? 'Pozo Vacante con 6 Aciertos' : ($row_rec->CANTIDAD_GANADORES_6 > 1 ? $row_rec->CANTIDAD_GANADORES_6 . ' Ganadores con $' . number_format(($row_rec->TOTAL_PREMIOS_6_ACIERTOS / $row_rec->CANTIDAD_GANADORES_6), 2, ',', '.') . ' c/u, 6 Aciertos ' : $row_rec->CANTIDAD_GANADORES_6 . ' Ganador con $' . number_format(($row_rec->TOTAL_PREMIOS_6_ACIERTOS / $row_rec->CANTIDAD_GANADORES_6), 2, ',', '.') . ', 6 Aciertos  '));
-$pozo_5_aciertos = (($row_rec->CANTIDAD_GANADORES_5 == 0) ? 'Pozo Vacante con 5 Aciertos' : ($row_rec->CANTIDAD_GANADORES_5 > 1 ? $row_rec->CANTIDAD_GANADORES_5 . ' Ganadores con $' . number_format(($row_rec->TOTAL_PREMIOS_5_ACIERTOS / $row_rec->CANTIDAD_GANADORES_5), 2, ',', '.') . ' c/u, 5 Aciertos ' : $row_rec->CANTIDAD_GANADORES_5 . ' Ganador con $' . number_format(($row_rec->TOTAL_PREMIOS_5_ACIERTOS / $row_rec->CANTIDAD_GANADORES_5), 2, ',', '.') . ', 5 Aciertos  '));
+$pozo_5_aciertos = (($row_premios_5->CANTIDAD_GANADORES_5 == 0) ? 'Pozo Vacante con 5 Aciertos' : ($row_premios_5->CANTIDAD_GANADORES_5 > 1 ? $row_premios_5->CANTIDAD_GANADORES_5 . ' Ganadores con $' . number_format(($row_premios_5->TOTAL_PREMIOS_5_ACIERTOS / $row_premios_5->CANTIDAD_GANADORES_5), 2, ',', '.') . ' c/u, 5 Aciertos ' : $row_premios_5->CANTIDAD_GANADORES_5 . ' Ganador con $' . number_format(($row_premios_5->TOTAL_PREMIOS_5_ACIERTOS / $row_premios_5->CANTIDAD_GANADORES_5), 2, ',', '.') . ', 5 Aciertos  '));
 $pdf->ln(10);
 $pdf->SetX(25);
 $pdf->Cell(160, 5, 'Ganadores', 1, 1, 'C');

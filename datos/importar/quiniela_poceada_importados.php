@@ -190,7 +190,8 @@ try {
                                     RECAUDACION,
                                     TOTAL_PREMIOS_8_ACIERTOS,
                                     TOTAL_PREMIOS_7_ACIERTOS,
-                                    TOTAL_PREMIOS_6_ACIERTOS
+                                    TOTAL_PREMIOS_6_ACIERTOS,
+                                    TOTAL_PREMIOS_5_ACIERTOS
                             FROM
                                 KANBAN.T_TT_RECAUDACION@KANBAN_ANTICIPADA
                             WHERE SORTEO = ?
@@ -200,15 +201,15 @@ $row_recaudacion = $rs_recaudacion->FetchNextObject($toupper = true);
 $pdf->SetFont('Arial', 'B', 9);
 $pdf->Cell(50, 4, 'RECAUDACION', 1, 1, 'C', 1);
 $pdf->Cell(50, 5, '$ ' . number_format($row_recaudacion->RECAUDACION, 2, ',', '.'), 'B', 1, 'R');
-$pdf->Cell(50, 5, '8 ACIERTOS', 1, 0, 'C', 1);
-$pdf->Cell(50, 5, '7 ACIERTOS', 1, 0, 'C', 1);
-$pdf->Cell(50, 5, '6 ACIERTOS', 1, 0, 'C', 1);
-$pdf->Cell(50, 5, '5 ACIERTOS', 1, 1, 'C', 1);
+$pdf->Cell(40, 5, '8 ACIERTOS', 1, 0, 'C', 1);
+$pdf->Cell(40, 5, '7 ACIERTOS', 1, 0, 'C', 1);
+$pdf->Cell(40, 5, '6 ACIERTOS', 1, 0, 'C', 1);
+$pdf->Cell(40, 5, '5 ACIERTOS', 1, 1, 'C', 1);
 
-$pdf->Cell(50, 5, '$ ' . number_format($row_recaudacion->TOTAL_PREMIOS_8_ACIERTOS, 2, ',', '.'), 'B', 0, 'R');
-$pdf->Cell(50, 5, '$ ' . number_format($row_recaudacion->TOTAL_PREMIOS_7_ACIERTOS, 2, ',', '.'), 'B', 0, 'R');
-$pdf->Cell(50, 5, '$ ' . number_format($row_recaudacion->TOTAL_PREMIOS_6_ACIERTOS, 2, ',', '.'), 'B', 0, 'R');
-$pdf->Cell(50, 5, '$ ' . number_format($row_recaudacion->TOTAL_PREMIOS_5_ACIERTOS, 2, ',', '.'), 'B', 1, 'R');
+$pdf->Cell(40, 5, '$ ' . number_format($row_recaudacion->TOTAL_PREMIOS_8_ACIERTOS, 2, ',', '.'), 'B', 0, 'R');
+$pdf->Cell(40, 5, '$ ' . number_format($row_recaudacion->TOTAL_PREMIOS_7_ACIERTOS, 2, ',', '.'), 'B', 0, 'R');
+$pdf->Cell(40, 5, '$ ' . number_format($row_recaudacion->TOTAL_PREMIOS_6_ACIERTOS, 2, ',', '.'), 'B', 0, 'R');
+$pdf->Cell(40, 5, '$ ' . number_format($row_recaudacion->TOTAL_PREMIOS_5_ACIERTOS, 2, ',', '.'), 'B', 1, 'R');
 
 $pdf->Output();
 
