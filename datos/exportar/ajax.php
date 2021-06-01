@@ -497,8 +497,10 @@ if ($accion == 'exportar_anticipada') {
             if ($rs_minimo9505->RecordCount() == 0) {
                 die(error('El minimo de apuesta del juego no se ecuentra parametrizado'));
             }
-            $row_minimo9505  = $rs_minimo9505->FetchNextObject($toupper = true);
-            $importe_con_ley = round(($row_premio->IMPORTE / 0.671), 3);
+            $row_minimo9505 = $rs_minimo9505->FetchNextObject($toupper = true);
+            //$importe_con_ley = round(($row_premio->IMPORTE / 0.671), 3);
+            //
+            $importe_con_ley = round(($row_premio->IMPORTE), 3);
 
             if ($row_premio->ID_TIPO_PREMIO == 2 || $row_premio->ID_TIPO_PREMIO == 1) {
 
