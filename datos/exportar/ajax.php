@@ -352,7 +352,8 @@ if ($accion == 'exportar_anticipada') {
 				  					TG.AGENCIA,
 				  					TG.LOCALIDAD,
 				  					TG.NOMBRE,
-		                			TA.ID_ESCRIBANO
+		                			TA.ID_ESCRIBANO,
+                                    TG.EXPORTADO
 							FROM 	SGS.T_ANTICIPADA_GANADORES TG,
 									SGS.T_ANTICIPADA TA
 							WHERE TG.SORTEO 	= ?
@@ -366,6 +367,10 @@ if ($accion == 'exportar_anticipada') {
             $billete   = $row_ganador->BILLETE;
             $fraccion  = $row_ganador->FRACCION;
             $escribano = $row_ganador->ID_ESCRIBANO;
+            $exportado = $row_ganador->EXPORTADO;
+            if ($exportado == 'SI') {
+                die(error('Este premio ya fue exportado'));
+            }
         } else {
             die(error('No existen extracciones para la semana seleccionada'));
         }

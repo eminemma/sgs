@@ -163,11 +163,13 @@ if (!$ultima_semana) {
 }
 
 //----------------------- 1º Pagina ------------------------------------
-
+if ($ultima_semana) {
+    $x = 5;
+}
 $pdf->SetFont('Arial', 'B', 16);
-$pdf->SetXY(255, 30);
+$pdf->SetXY(255 + $x, 30);
 $pdf->Cell(20, 0, $sorteo, 0, 'L', 1);
-$pdf->SetXY(240, 17);
+$pdf->SetXY(240 + $x, 17);
 $pdf->Cell(20, 0, $fecha_sorteo, 0, 'L', 1);
 
 if (strlen($premio1) > 40) {
@@ -198,16 +200,17 @@ $res_ganador = sql("SELECT TG.ID_JUEGO,
                             ORDER BY TG.ORDEN", array($_SESSION['id_juego'], $_SESSION['sorteo'], $semana));
 $y = 12;
 if ($ultima_semana) {
-    $y = 30;
+    $y = 12;
+    $x = -1;
 }
 while ($row_ganador = siguiente($res_ganador)) {
     $pdf->SetFont('Arial', 'B', 25);
-    $pdf->setXY(36, 23 + $y);
+    $pdf->setXY(36 + $x, 23 + $y);
     $pdf->Cell(27, 14, str_pad($row_ganador->BILLETE, 5, 0, STR_PAD_LEFT), 0, 0, 'C');
-    $pdf->setXY(62, 23 + $y);
+    $pdf->setXY(62 + $x, 23 + $y);
     $pdf->Cell(23, 14, str_pad($row_ganador->FRACCION, 2, 0, STR_PAD_LEFT), 0, 0, 'C');
     $pdf->SetFont('Arial', 'B', 11);
-    $pdf->setXY(86, 22 + $y);
+    $pdf->setXY(86 + $x, 22 + $y);
     $pdf->SetFont('Arial', 'B', 9);
     $linea_ancho = 3;
     $pdf->SetFont('Arial', 'B', 19);
@@ -244,7 +247,7 @@ while ($row_ganador = siguiente($res_ganador)) {
     $pdf->SetFont('Arial', 'B', 16);
     $pdf->setX(90);
 
-    $pdf->setXY(119, 23 + $y);
+    $pdf->setXY(119 + $x, 23 + $y);
 
     if ($row_ganador->NOMBRE == 'VENTA CONTADO CASA CENTRAL') {
         //if (1 == 2) {
@@ -279,7 +282,7 @@ while ($row_ganador = siguiente($res_ganador)) {
     $pdf->SetFont('Arial', 'B', 25);
 
     if ($ultima_semana) {
-        $y += 16.57;
+        $y += 11.75;
     } else {
         $y += 11.75;
     }
@@ -302,7 +305,7 @@ $pdf->Cell(0, 0, utf8_decode($localidad1), 0, 'L', 1);*/
 $x = 20;
 $y = 180;
 if ($ultima_semana) {
-    $x = 63;
+    $x = 45;
     $y = 180;
 }
 $pdf->SetFont('Arial', 'B', 8);
