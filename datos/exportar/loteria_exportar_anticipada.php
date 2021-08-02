@@ -25,6 +25,7 @@ TS.SORTEO    = ?
 AND TS.ID_JUEGO    =?
 AND TS.ID_JEFE     =JEFE.ID_USUARIO(+)
 AND TS.ID_ESCRIBANO=ES.ID_ESCRIBANO(+)
+AND TRUNC(TS.FECHA_SORTEO) = TRUNC(SYSDATE)
 ORDER BY SEMANA,ORDEN ASC";
 $today      = date("d/m/Y");
 $res_sorteo = sql($sql, array($sorteo, $id_juego));
@@ -34,7 +35,7 @@ if ($res_sorteo->RecordCount() == 0) {
 $semana = 0;
 ?>
 <h3 class="titulo">Exportación sorteo anticipada a KANBAN</h3>
-
+<div id="mensaje"></div>
 <table class="table table-bordered">
 	<thead>
 		<tr>
@@ -68,7 +69,24 @@ $rs = sql("	SELECT EXPORTADO
 <?php
 } else {
         ?>
-        <td class="centerCell"><button  id="cambiar_juego_sorteo" class="btn" onclick="g('datos/exportar/ajax.php?accion=exportar_anticipada&semana=<?php echo $row->SEMANA ?>&orden=<?php echo $row->ORDEN ?>');
+        <td class="centerCell"><button  id="cambiar_juego_sorteo" class="btn" onclick="
+        iniciar_giro('.icon-refresh');
+        $.get(
+    'datos/exportar/ajax.php?accion=exportar_anticipada&semana=<?php echo $row->SEMANA ?>&orden=<?php echo $row->ORDEN ?>',
+    function(data){
+      $('#mensaje').html(data);
+    }
+  ).error(
+    function(jqXHR, textStatus, errorThrown){
+      $('#mensaje').html('Se ha producido un error ('+errorThrown+').<br>'+textStatus);
+    }
+  ).complete(
+    function(){
+      detener_giro('.icon-refresh');
+      g('datos/exportar/loteria_exportar_anticipada.php');
+
+    }
+  );
                                             return false;"
            <?php if ($row->FECHA_SORTEO != $today) {
             ?>disabled<?php }

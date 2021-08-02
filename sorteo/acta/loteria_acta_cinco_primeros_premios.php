@@ -123,7 +123,8 @@ while ($row_fraccion = $rs_fracciones->FetchNextObject($toupper = true)) {
 	              WHERE SORTEO = ?
 	              AND ID_JUEGO = ?
 	              AND BILLETE  = ?
-	              group by DESCRIPCION_AGENCIA,LOCALIDAD,ID_AGENCIA,PROVINCIA,DESCRIPCION_SUCURSAL,ID_SUCURSAL,PROVINCIA", array($_SESSION['sorteo'], $_SESSION['id_juego'], $row_fraccion->NUMERO));
+	              group by DESCRIPCION_AGENCIA,LOCALIDAD,ID_AGENCIA,PROVINCIA,DESCRIPCION_SUCURSAL,ID_SUCURSAL,PROVINCIA
+                  order by ID_SUCURSAL,ID_AGENCIA", array($_SESSION['sorteo'], $_SESSION['id_juego'], $row_fraccion->NUMERO));
     } catch (exception $e) {die($db->ErrorMsg());}
 
     while ($row_dist = siguiente($rs_dist)) {
@@ -265,7 +266,8 @@ while ($row_fraccion = $rs_fracciones->FetchNextObject($toupper = true)) {
 	              WHERE SORTEO = ?
 	              AND ID_JUEGO = ?
 	              AND BILLETE  = ?
-	              group by DESCRIPCION_AGENCIA,LOCALIDAD,ID_AGENCIA,PROVINCIA,DESCRIPCION_SUCURSAL,ID_SUCURSAL,PROVINCIA", array($_SESSION['sorteo'], $_SESSION['id_juego'], $row_fraccion->NUMERO));
+	              group by DESCRIPCION_AGENCIA,LOCALIDAD,ID_AGENCIA,PROVINCIA,DESCRIPCION_SUCURSAL,ID_SUCURSAL,PROVINCIA
+                  order by ID_SUCURSAL,ID_AGENCIA", array($_SESSION['sorteo'], $_SESSION['id_juego'], $row_fraccion->NUMERO));
     } catch (exception $e) {die($db->ErrorMsg());}
 
     while ($row_dist = siguiente($rs_dist)) {

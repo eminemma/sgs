@@ -43,7 +43,7 @@ body {
 }
 
 #aleatorio_entero {
-    top: 343px;
+    top: 374px;
     left: 182px;
     position: absolute;
     text-align: center;
@@ -51,8 +51,8 @@ body {
 }
 
 #aleatorio_fraccion {
-    top: 345px;
-    left: 645px;
+    top: 374px;
+    left: 611px;
     position: absolute;
     text-align: center;
     font-size: 97px;
@@ -66,7 +66,7 @@ body {
 }
 
 #agencia {
-    top: 510px;
+    top: 545px;
     left: 124px;
     position: absolute;
     font-size: 43px;
@@ -74,7 +74,7 @@ body {
 }
 
 #nombre_d {
-    top: 510px;
+    top: 545px;
     left: 217px;
     position: absolute;
     font-size: 43px;
@@ -82,7 +82,7 @@ body {
 }
 
 #localidad_d {
-    top: 615px;
+    top: 655px;
     left: 131px;
     position: absolute;
     font-size: 43px;
@@ -153,17 +153,16 @@ body {
 
 #orden {
     position: absolute;
-    top: 211px;
-    left: 108px;
+    top: 235px;
+    left: 130px;
     font-size: 59px;
 }
 
 #ganadores {
-    position: absolute;
-    top: 220px;
+   position: absolute;
+    top: 153px;
     left: 87px;
     width: 735px;
-    height: 440px;
 }
 
 #ganadores2 {
@@ -335,7 +334,7 @@ body {
 
 #premio {
     position: absolute;
-    top: 200px;
+    top: 229px;
     left: 309px;
     font-size: 21px;
     width: 452px;
@@ -346,7 +345,7 @@ body {
 #fecha_sorteo {
     position: absolute;
     left: 1039px;
-    top: 78px;
+    top: 54px;
     font-size: 32px;
     color: black;
 }

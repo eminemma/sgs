@@ -352,7 +352,8 @@ if ($accion == 'exportar_anticipada') {
 				  					TG.AGENCIA,
 				  					TG.LOCALIDAD,
 				  					TG.NOMBRE,
-		                			TA.ID_ESCRIBANO
+		                			TA.ID_ESCRIBANO,
+                                    TG.EXPORTADO
 							FROM 	SGS.T_ANTICIPADA_GANADORES TG,
 									SGS.T_ANTICIPADA TA
 							WHERE TG.SORTEO 	= ?
@@ -366,6 +367,10 @@ if ($accion == 'exportar_anticipada') {
             $billete   = $row_ganador->BILLETE;
             $fraccion  = $row_ganador->FRACCION;
             $escribano = $row_ganador->ID_ESCRIBANO;
+            $exportado = $row_ganador->EXPORTADO;
+            if ($exportado == 'SI') {
+                die(error('Este premio ya fue exportado'));
+            }
         } else {
             die(error('No existen extracciones para la semana seleccionada'));
         }
@@ -497,8 +502,10 @@ if ($accion == 'exportar_anticipada') {
             if ($rs_minimo9505->RecordCount() == 0) {
                 die(error('El minimo de apuesta del juego no se ecuentra parametrizado'));
             }
-            $row_minimo9505  = $rs_minimo9505->FetchNextObject($toupper = true);
-            $importe_con_ley = round(($row_premio->IMPORTE / 0.671), 3);
+            $row_minimo9505 = $rs_minimo9505->FetchNextObject($toupper = true);
+            //$importe_con_ley = round(($row_premio->IMPORTE / 0.671), 3);
+            //
+            $importe_con_ley = round(($row_premio->IMPORTE), 3);
 
             if ($row_premio->ID_TIPO_PREMIO == 2 || $row_premio->ID_TIPO_PREMIO == 1) {
 
@@ -672,7 +679,7 @@ if ($accion == 'exportar_anticipada') {
                     $desc_especie = 'EFECTIVO';
                     $importe      = $row_estimulo->IMPORTE;
 
-                    $importe_con_ley_estimulo = round(($row_estimulo->IMPORTE / 0.671), 3);
+                    $importe_con_ley_estimulo = round(($row_estimulo->IMPORTE), 3);
 
                     $rs_impuestos = sql_kanban("SELECT IMPUESTOS.F_LEY_20630(NULL, ?, ?) AS LEY_20630,
                                              IMPUESTOS.F_LEY_9505(?, ?, ?) AS LEY_9505
