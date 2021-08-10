@@ -25,8 +25,8 @@ if ($accion == 'modificar') {
         try {
 
             $ok = sql("UPDATE sgs.T_SORTEO
-              SET id_escribano=?,id_operador=?,id_jefe=?,fecha_sorteo=to_date(?,'dd/mm/yyyy hh24:mi:ss'),id_tipo_juego=?,quiniela_asoc=?,id_programa=?
-             WHERE ID_SORTEO             = ?", array($escribano, $operador, $jefe_sorteo, $fecha_sorteo, $id_tipo_juego, $quiniela_asoc, $programa, $id));
+              SET id_escribano=?,id_operador=?,id_jefe=?,fecha_sorteo=to_date(?,'dd/mm/yyyy hh24:mi:ss'),quiniela_asoc=?,id_programa=?
+             WHERE ID_SORTEO             = ?", array($escribano, $operador, $jefe_sorteo, $fecha_sorteo, $quiniela_asoc, $programa, $id));
 
             if ($ok) {
                 $json = array('mensaje' => 'Se modifico correctamente el Sorteo', 'tipo' => 'success');
@@ -43,7 +43,12 @@ if ($accion == 'modificar') {
 
     conectar_db();
     //$db->debug=true;
-    $sorteo          = isset($_POST['sorteo']) ? $_POST['sorteo'] : '';
+    $sorteo      = isset($_POST['sorteo']) ? $_POST['sorteo'] : '';
+    $id_programa = isset($_POST['id_programa']) ? $_POST['id_programa'] : '';
+    if ((int) $id_programa == -1) {
+        $id_programa = null;
+    }
+
     $primer_elemento = 0;
     if ($_SESSION['id_juego'] == 1) {
         $ultimo_elemento = 99999;
@@ -69,9 +74,9 @@ if ($accion == 'modificar') {
         }
 
         $ok = sql("INSERT INTO
-                      sgs.T_SORTEO(SORTEO,ID_JUEGO,FECHA_SORTEO,ID_PROGRAMA,PRIMER_ELEMENTO,ULTIMO_ELEMENTO,MONTO_FRACCION,ID_TIPO_JUEGO,FRACCIONES)
-              VALUES(?,?,to_date(?,'dd/mm/yyyy hh24:mi'),?,?,?,?,?,?)",
-            array($sorteo, $_SESSION['id_juego'], date('d/m/Y'), 1, 0, $ultimo_elemento, 90, $_POST['id_tipo_juego'], 0));
+                      sgs.T_SORTEO(SORTEO,ID_JUEGO,FECHA_SORTEO,ID_PROGRAMA,PRIMER_ELEMENTO,ULTIMO_ELEMENTO,MONTO_FRACCION,FRACCIONES)
+              VALUES(?,?,to_date(?,'dd/mm/yyyy hh24:mi'),?,?,?,?,?)",
+            array($sorteo, $_SESSION['id_juego'], date('d/m/Y'), $id_programa, 0, $ultimo_elemento, 90, 0));
 
         if ($ok) {
             $json = array('mensaje' => 'Se grabo correctamente el Sorteo', 'tipo' => 'success');
@@ -124,7 +129,8 @@ function sql_sorteo()
                   TS.ID_SORTEO,
                   TS.ID_TIPO_JUEGO,
                   TS.QUINIELA_ASOC,
-                  TS.ID_PROGRAMA
+                  TS.ID_PROGRAMA,
+                  TS.IMPORTADO
           FROM SGS.T_SORTEO TS
           WHERE TS.ID_SORTEO = ?";
 
@@ -172,13 +178,15 @@ function sql_administracion_sorteo()
                     DECODE(TS.ID_JEFE,NULL,'SIN JEFE',JEFE.DESCRIPCION) AS JEFE_SORTEO,
                     DECODE(TS.ID_OPERADOR,NULL,'SIN OPERADOR',OPERADOR.DESCRIPCION) AS OPERADOR,
                     DECODE(TS.ID_ESCRIBANO,NULL,'SIN ESCRIBANO',ES.DESCRIPCION) AS ESCRIBANO,
-                    TS.SORTEO,TS.ID_SORTEO,ROWNUM RNUM
+                    TS.SORTEO,TS.ID_SORTEO, TP.DESCRIPCION AS PROGRAMA,ROWNUM RNUM
             FROM    SGS.T_SORTEO TS,
                     SUPERUSUARIO.USUARIOS JEFE,
                     SUPERUSUARIO.USUARIOS OPERADOR,
-                    SGS.T_ESCRIBANO ES
+                    SGS.T_ESCRIBANO ES,
+                    SGS.T_PROGRAMA TP
             WHERE   TS.SORTEO     = ?
               AND TS.ID_JUEGO     = ?
+              AND TS.ID_PROGRAMA  = TP.ID_PROGRAMA
               AND TS.ID_JEFE      = JEFE.ID_USUARIO(+)
               AND TS.ID_OPERADOR  = OPERADOR.ID_USUARIO(+)
               AND TS.ID_ESCRIBANO = ES.ID_ESCRIBANO(+)";

@@ -227,7 +227,16 @@ switch ($accion) {
         $migrados         = $row_billetes_sgs->CANTIDAD;
         if ($venta_neta != $migrados) {
             error('CANTIDAD DE REGISTROS MIGRADOS: ' . $migrados . '. La cantidad de registros no coincide. Por favor intente migrar nuevamente. Fecha ' . date('d/m/Y H:i:s'));
+
         } else {
+
+            sql("UPDATE SGS.T_SORTEO
+				SET
+				    IMPORTADO = 'SI'
+				WHERE
+				    ID_JUEGO   = ?
+				    AND SORTEO = ?", array($id_juego, $sorteo));
+
             ok('CANTIDAD DE REGISTROS MIGRADOS: ' . $migrados . ' Fecha ' . date('d/m/Y H:i:s'));
         }
 
@@ -236,9 +245,17 @@ switch ($accion) {
     case 'importar_quiniela':
         $billetes   = isset($_GET['billetes']) ? $_GET['billetes'] : '';
         $solo_venta = (isset($_GET['solo_venta']) && $_GET['solo_venta'] != 'undefined') ? $_GET['solo_venta'] : 0;
-
+        $sorteo     = $_SESSION['sorteo'];
+        $id_juego   = $_SESSION['id_juego'];
         //IMPORTACION DE DATOS DEL SORTEO (QUINIELA NO TIENE DISTRIBUCION VENTA DIRECTA EN LA AGENCIA)
         importar_datos_sorteo();
+
+        sql("UPDATE SGS.T_SORTEO
+				SET
+				    IMPORTADO = 'SI'
+				WHERE
+				    ID_JUEGO   = ?
+				    AND SORTEO = ?", array($id_juego, $sorteo));
         break;
     case 'importar_loteria_anticipada':
         conectar_db();
@@ -631,16 +648,27 @@ function importar_datos_sorteo()
 
         if ($solo_venta == 0) {
 
-            $rs_sorteo_kanban = sql_kanban("	SELECT 	ID_SORTEO,to_char(FECHA_SORTEO,'YYYY-MM-DD HH24:MI:SS') AS FECHA_SORTEO,FECHA_BAJA,ID_ESCRIBANO,
-            											USUARIO_JEFE_SORTEO,USUARIO_OPERADOR,ID_PROGRAMA,PRIMER_ELEMENTO,
+            $rs_sorteo_kanban = sql_kanban("	SELECT
+            											ID_SORTEO,to_char(FECHA_SORTEO,'YYYY-MM-DD HH24:MI:SS') AS FECHA_SORTEO,FECHA_BAJA,ID_ESCRIBANO,
+            											USUARIO_JEFE_SORTEO,USUARIO_OPERADOR,PRIMER_ELEMENTO,
             											ULTIMO_ELEMENTO,FRACCIONES,CANTIDAD_SORTEOS_FECHA,SORTEO_UNICO,DESCRIPCION,
-            											MONTO_FRACCION,decode(id_juego,1,FECHA_HASTA_PAGO_PREMIO_MAX,FECHA_HASTA_PAGO_PREMIO) as FECHA_HASTA_PAGO_PREMIO_MAX,QUINIELA_ASOC
+            											MONTO_FRACCION,decode(id_juego,1,FECHA_HASTA_PAGO_PREMIO_MAX,FECHA_HASTA_PAGO_PREMIO) as FECHA_HASTA_PAGO_PREMIO_MAX,QUINIELA_ASOC,ID_PROGRAMA
 									  	FROM KANBAN.T_SORTEO
 										 WHERE SORTEO=? AND ID_JUEGO=?", array($sorteo, $id_juego));
 
             $row_sorteo_kanban = siguiente_kanban($rs_sorteo_kanban);
             if ($rs_sorteo_kanban->RecordCount() == 0) {
                 die(error('El sorteo seleccionado no existe en KANBAN'));
+            }
+
+            $rs_sorteo_sgs = sql("	SELECT
+            											ID_PROGRAMA
+									  	FROM SGS.T_SORTEO
+										 WHERE SORTEO=? AND ID_JUEGO=?", array($sorteo, $id_juego));
+
+            $row_sorteo_sgs = siguiente($rs_sorteo_sgs);
+            if ($row_sorteo_kanban->ID_PROGRAMA !== $row_sorteo_sgs->ID_PROGRAMA && $row_sorteo_sgs->ID_PROGRAMA !== null) {
+                die(error('<strong>El programa del sorteo no coincide con el programa asignado en kanban</strong>'));
             }
 
             $sorteo_kanban['id_sorteo']               = $row_sorteo_kanban->ID_SORTEO;
@@ -1227,6 +1255,13 @@ $db->debug = true;*/
     AND SORTEO = ?
     AND POSICION = ?", array($key,$id_juego, $sorteo, $posicion ));*/
     }
+
+    sql("UPDATE SGS.T_SORTEO
+				SET
+				    IMPORTADO = 'SI'
+				WHERE
+				    ID_JUEGO   = ?
+				    AND SORTEO = ?", array($id_juego, $sorteo));
     info('Se finalizo la importacion de los numeros del sorteo, Cantidad: ' . (count($resultado) + count($duplicados)) . ' Fecha ' . date('d/m/Y H:i:s'));
 
 }

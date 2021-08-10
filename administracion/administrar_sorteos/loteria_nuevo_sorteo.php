@@ -2,36 +2,36 @@
 function inicarCombos(){
   $.get('juego/ajax.php',{'accion':'listar_tipos_juegos','id_juego':1},
         function(data){
-          $.each(data, 
+          $.each(data,
             function(i, item) {
-              $('#tipo_juego').append('<option value="'+item.ID_JUEGO_TIPO+'">'+item.DESCRIPCION+'</option>');
+              $('#programa').append('<option value="'+item.ID_PROGRAMA+'">'+item.DESCRIPCION+'</option>');
           }
         );
       }
-    );   
+    );
 }
 
-$(document).ready(function() {  
-    inicarCombos(); 
+$(document).ready(function() {
+    inicarCombos();
 });
 </script>
 <h3 class="titulo">Modificar Sorteo</h3>
-<?php 
+<?php
 session_start();
-include_once dirname(__FILE__).'/../../db.php';
-include_once dirname(__FILE__).'/ajax.php';
+include_once dirname(__FILE__) . '/../../db.php';
+include_once dirname(__FILE__) . '/ajax.php';
 
-$res_sorteo=sql(sql_sorteo(), array($id_sorteo));
-$row_sorteo=siguiente($res_sorteo);
+$res_sorteo = sql(sql_sorteo(), array($id_sorteo));
+$row_sorteo = siguiente($res_sorteo);
 
-$res_usuario=sql(sql_operador());
-$res_escribano=sql(sql_escribano());
+$res_usuario   = sql(sql_operador());
+$res_escribano = sql(sql_escribano());
 
 require_once 'loteria_encabezado.php';
 ?>
 <div class="resultado">
 	<div class="error alert alert-error" onclick="$(this).fadeOut()" style="display:none">
-		
+
 		<div class="contenido_error"></div>
 	</div>
 
@@ -41,10 +41,10 @@ require_once 'loteria_encabezado.php';
 	</div>
 </div>
 <form method="post" action="#" onsubmit="$.post('administracion/administrar_sorteos/ajax.php',
-													{ 
-  													  accion:'nuevo',	
+													{
+  													  accion:'nuevo',
 													  sorteo :$('#sorteo').val(),
-													  id_tipo_juego :$('#tipo_juego option:selected').val()													
+													  id_programa :$('#programa option:selected').val()
 													  },
 														function(data){
 															$('.error').fadeOut()
@@ -62,7 +62,7 @@ require_once 'loteria_encabezado.php';
 																	$('.ok').fadeIn('slow', function() {
 																	    	 $('.ok > .contenido').html(data.mensaje);
 																	    });
-																}   
+																}
 															}else{
 																$('.error').fadeIn('slow', function() {
 																    	 $('.error > .contenido_error').html(data);
@@ -71,20 +71,22 @@ require_once 'loteria_encabezado.php';
 														}
 												); return false;" class="form-horizontal">
 
-		<h4> 
-			<label class="control-label" for="jefe_sorteo">Sorteo</label>	
+		<h4>
+			<label class="control-label" for="jefe_sorteo">Sorteo</label>
 			<div class="controls">
 				<input type="text" id="sorteo" placeholder="Sorteo">
-			</div>		
+			</div>
 		</h4>
-		<h4> 
-			<label class="control-label" for="jefe_sorteo">Tipo Juego</label>	
+		<h4>
+			<label class="control-label" for="jefe_sorteo">Programa</label>
 			<div class="controls">
-				<select id="tipo_juego"></select>
-			</div>		
+				<select id="programa">
+					<option value="-1">Sin Programa</option>
+				</select>
+			</div>
 		</h4>
-		
-		
+
+
 	<div class="control-group">
     <div class="controls">
       <input type="hidden" id="id_sorteo" name="id_sorteo" value="<?php echo $id_sorteo ?>">
@@ -100,5 +102,5 @@ $(function(){
 	});
 });
 </script>
-		
-</form>		
+
+</form>

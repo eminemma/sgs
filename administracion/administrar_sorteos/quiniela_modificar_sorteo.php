@@ -4,9 +4,12 @@ include_once dirname(__FILE__) . '/../../db.php';
 include_once dirname(__FILE__) . '/ajax.php';
 $id_sorteo = isset($_GET['id_sorteo']) ? $_GET['id_sorteo'] : '';
 
-$res_sorteo = sql(sql_sorteo(), array($id_sorteo));
-$row_sorteo = siguiente($res_sorteo);
-
+$res_sorteo           = sql(sql_sorteo(), array($id_sorteo));
+$row_sorteo           = siguiente($res_sorteo);
+$deshabilitarPrograma = false;
+if ($row_sorteo->IMPORTADO == 'SI') {
+    $deshabilitarPrograma = true;
+}
 ?>
 
 <h3 class="titulo">Modificar Sorteo</h3>
@@ -37,7 +40,6 @@ require_once 'quiniela_encabezado.php';
 													  operador:$('#operador').val(),
 													  escribano:$('#escribano').val(),
 													  fecha_sorteo:$('#fecha_sorteo').val(),
-													   id_tipo_juego :$('#tipo_juego option:selected').val(),
 													   programa :$('#programa option:selected').val()
 													  },
 														function(data){
@@ -69,15 +71,9 @@ require_once 'quiniela_encabezado.php';
 			Sorteo <?php echo $row_sorteo->SORTEO ?>
 		</h4>
 		<div class="control-group">
-			<label class="control-label" for="fecha_sorteo_cal">Tipo de Juego</label>
-			<div class="controls">
-				<select id="tipo_juego"></select>
-			</div>
-		</div>
-		<div class="control-group">
 			<label class="control-label" for="programa">Programa Premio</label>
 			<div class="controls">
-				<select class="filter-option pull-left" id="programa" name="programa">
+				<select  class="filter-option pull-left" id="programa" name="programa" <?php echo ($deshabilitarPrograma == true) ? 'disabled="disbaled"' : '' ?>>
 					<option value="-1" <?php echo ($row->ID_PROGRAMA == null) ? 'selected' : ''; ?>>Seleccionar</option>
 					<?php
 while ($row = siguiente($rs_programa)) {?>
@@ -152,7 +148,7 @@ function abrirPrograma(){
 	return false;
 }
 function inicarCombos(){
-  $.get('juego/ajax.php',{'accion':'listar_tipos_juegos','id_juego':2},
+  /*$.get('juego/ajax.php',{'accion':'listar_tipos_juegos','id_juego':2},
         function(data){
         $.each(data,
             function(i, item) {
@@ -161,7 +157,7 @@ function inicarCombos(){
         );
         $('#tipo_juego option[value="<?php echo $row_sorteo->ID_TIPO_JUEGO ?>"]').attr("selected",true);
       }
-    );
+    );*/
 
 }
 

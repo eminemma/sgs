@@ -3,23 +3,27 @@
 include_once dirname(__FILE__) . '/../../../db.php';
 include_once dirname(__FILE__) . '/../../../librerias/alambre/funcion.inc.php';
 
-$res = sql("SELECT 	TE.DESCRIPCION AS ESCRIBANO,
-				  	TOP.DESCRIPCION     AS OPERADOR,
-				  	TJ.DESCRIPCION      AS JEFE,
-				  	TJT.DESCRIPCION AS TIPO_JUEGO,
-				  	TO_CHAR(TS.FECHA_SORTEO,'dd/mm/YYYY') as FECHA_SORTEO,
-				  	TO_CHAR(TS.FECHA_SORTEO,'HH24:MI') AS HORA_SORTEO,
-				  	TS.SORTEO
-			FROM 	SGS.T_SORTEO TS,
-				  	SGS.T_ESCRIBANO TE,
-				  	SUPERUSUARIO.USUARIOS TOP,
-				  	SUPERUSUARIO.USUARIOS TJ,
-				  	SGS.T_JUEGO_TIPO TJT
-			WHERE TS.ID_ESCRIBANO 	  = TE.ID_ESCRIBANO
-				AND TS.ID_OPERADOR    = TOP.ID_USUARIO
-				AND TS.ID_JEFE        = TJ.ID_USUARIO
-				AND TS.ID_TIPO_JUEGO  = TJT.ID_JUEGO_TIPO
-				AND TS.SORTEO         = ?",
+$res = sql("  	SELECT  TE.DESCRIPCION    AS ESCRIBANO,
+					    TOP.DESCRIPCION   AS OPERADOR,
+					    TJ.DESCRIPCION    AS JEFE,
+					    TJT.DESCRIPCION   AS TIPO_JUEGO,
+					    TO_CHAR(TS.FECHA_SORTEO, 'dd/mm/YYYY') AS FECHA_SORTEO,
+					    TO_CHAR(TS.FECHA_SORTEO, 'HH24:MI') AS HORA_SORTEO,
+					    TS.SORTEO
+					FROM
+					    SGS.T_SORTEO            TS,
+					    SGS.T_ESCRIBANO         TE,
+					    SUPERUSUARIO.USUARIOS   TOP,
+					    SUPERUSUARIO.USUARIOS   TJ,
+					    SGS.T_JUEGO_TIPO        TJT,
+					    SGS.T_PROGRAMA          TPP
+					WHERE
+					    TS.ID_ESCRIBANO = TE.ID_ESCRIBANO
+					    AND TS.ID_OPERADOR = TOP.ID_USUARIO
+					    AND TS.ID_JEFE = TJ.ID_USUARIO
+					    AND TS.SORTEO = ?
+					    AND TS.ID_PROGRAMA = TPP.ID_PROGRAMA
+					    AND TPP.CODIGO_TIPO_JUEGO  = TJT.CODIGO_TIPO_JUEGO",
     array($_SESSION['sorteo']));
 
 $row_sorteo = siguiente($res);

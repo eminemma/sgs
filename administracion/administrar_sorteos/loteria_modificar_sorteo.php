@@ -5,12 +5,17 @@ include_once dirname(__FILE__) . '/../../db.php';
 include_once dirname(__FILE__) . '/ajax.php';
 $id_sorteo = isset($_GET['id_sorteo']) ? $_GET['id_sorteo'] : '';
 
-$res_sorteo = sql(sql_sorteo(), array($id_sorteo));
-$row_sorteo = siguiente($res_sorteo);
+$res_sorteo           = sql(sql_sorteo(), array($id_sorteo));
+$row_sorteo           = siguiente($res_sorteo);
+$deshabilitarPrograma = false;
+if ($row_sorteo->IMPORTADO == 'SI') {
+    $deshabilitarPrograma = true;
+}
 
 $res_usuario   = sql(sql_operador());
 $res_escribano = sql(sql_escribano());
 $rs_programa   = sql(sql_programa(), array($_SESSION['id_juego']));
+
 require_once 'loteria_encabezado.php';
 ?>
 <div class="resultado">
@@ -32,7 +37,7 @@ require_once 'loteria_encabezado.php';
 													  operador:$('#operador').val(),
 													  escribano:$('#escribano').val(),
 													  fecha_sorteo:$('#fecha_sorteo').val(),
-													  id_tipo_juego :$('#tipo_juego option:selected').val(),
+													  id_programa :$('#tipo_juego option:selected').val(),
 													  quiniela_asoc :$('#quiniela_asoc').val(),
 													   programa :$('#programa option:selected').val()
 													  },
@@ -64,16 +69,11 @@ require_once 'loteria_encabezado.php';
 		<h4>
 			Sorteo <?php echo $row_sorteo->SORTEO ?>
 		</h4>
-		<div class="control-group">
-			<label class="control-label" for="fecha_sorteo_cal">Tipo de Juego</label>
-			<div class="controls">
-				<select id="tipo_juego"></select>
-			</div>
-		</div>
+
 		<div class="control-group">
 			<label class="control-label" for="programa">Programa Premio</label>
 			<div class="controls">
-				<select class="filter-option pull-left" id="programa" name="programa">
+				<select class="filter-option pull-left" id="programa" name="programa" <?php echo ($deshabilitarPrograma == true) ? 'disabled="disbaled"' : '' ?>>
 					<option value="-1" <?php echo ($row->ID_PROGRAMA == null) ? 'selected' : ''; ?>>Seleccionar</option>
 					<?php
 while ($row = siguiente($rs_programa)) {?>

@@ -33,6 +33,7 @@ require_once 'loteria_encabezado.php';
 			<th>#</th>
 			<th>Sorteo</th>
 			<th class="centerCell">Denominacion</th>
+			<th class="centerCell">Programa</th>
 			<th class="centerCell">Fecha Sorteo</th>
 			<th class="centerCell">Fecha Prescripcion</th>
 			<th class="centerCell">Jefe</th>
@@ -47,6 +48,7 @@ require_once 'loteria_encabezado.php';
 				<td class="centerCell"><?php echo $row->RNUM ?></td>
 				<td class="centerCell"><?php echo $row->SORTEO ?></td>
 				<td class="centerCell"><?php echo $row->DESCRIPCION ?></td>
+				<td class="centerCell"><?php echo $row->PROGRAMA ?></td>
 				<td class="centerCell"><?php echo $row->FECHA_SORTEO ?></td>
 				<td class="centerCell"><?php echo $row->FECHA_HASTA_PAGO_PREMIO ?></td>
 				<td class="centerCell"><?php echo $row->JEFE_SORTEO ?></td>

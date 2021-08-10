@@ -20,7 +20,7 @@ if ($_GET['accion'] == 'ver_sorteos') {
 							  		DESCRIPCION
 							FROM SGS.T_JUEGO_TIPO
 							WHERE ID_JUEGO=?
-							AND ID_JUEGO_TIPO<>184",
+							AND ID_JUEGO_TIPO<>83",
         array((int) $_GET['juego']));
 
     $i = 0;
@@ -37,8 +37,12 @@ $tipo_juego = $_GET['tipo_juego'];
 		AND ID_JUEGO        = ?",
             array((int) $_GET['juego']));
     }
-
-    while ($row = siguiente($rs_juegos)) {
+    ?>
+    <li>
+    <a onclick="g('sesion/cambiar_juego_sorteo/cambiar_juego_sorteo_ajax.php?juego=<?php echo $_GET['juego']; ?>&descripcion_juego=<?php echo $_GET['descripcion_juego'] ?>&tipo_juego=-1'+a('ver_sorteos'), '#contenedor_sorteos');" href="#">SIN PROGRAMA</a>
+    </li>
+<?php
+while ($row = siguiente($rs_juegos)) {
         if ($i == 0) {
             $tipo_juego     = isset($_GET['tipo_juego']) ? $_GET['tipo_juego'] : $row->CODIGO_TIPO_JUEGO;
             $rs_tipo_juegos = sql("SELECT ID_JUEGO_TIPO,
@@ -46,7 +50,8 @@ $tipo_juego = $_GET['tipo_juego'];
 									  CODIGO_TIPO_JUEGO,
 									  DESCRIPCION
 									FROM T_JUEGO_TIPO
-									WHERE ID_JUEGO_TIPO = ?",
+									WHERE ID_JUEGO_TIPO = ?
+									",
                 array((int) $tipo_juego));
             $row_tipo_juego = siguiente($rs_tipo_juegos);
 
@@ -101,22 +106,55 @@ if ($row->ID_JUEGO_TIPO == $tipo_juego) {
 </ul>
 </div>
 <?php
+$sql = '';
+    $rs  = null;
+    if ((int) $tipo_juego == -1) {
+        $sql = " SELECT
+					    LPAD(TS.SORTEO, 5, '0')
+					    || ' - '
+					    || TS.DESCRIPCION AS DESC_SORTEO,
+					    TO_CHAR(TS.FECHA_SORTEO, 'DD/MM/YYYY') AS FECHA_SORTEO,
+					    TS.SORTEO,
+					    TJ.DESCRIPCION    AS DESC_JUEGO
+					FROM
+					    SGS.T_SORTEO       TS,
+					    SGS.T_JUEGO        TJ
+					WHERE
+					    TS.ID_JUEGO = TJ.ID_JUEGO
+					    AND TJ.ID_JUEGO = ?
+                        AND TS.ID_PROGRAMA IS NULL
+					ORDER BY
+					    TS.FECHA_SORTEO DESC,
+					    TS.SORTEO DESC";
 
-    $sql = "	SELECT LPAD(TS.sorteo,5,'0') || ' - ' || TS.descripcion AS DESC_SORTEO,
-					TO_CHAR(TS.FECHA_SORTEO, 'DD/MM/YYYY') AS FECHA_SORTEO,
-					TS.SORTEO,
-					TJ.DESCRIPCION AS DESC_JUEGO,
-					TJP.DESCRIPCION AS TIPO_JUEGO
-			FROM 	SGS.T_SORTEO TS,
-					SGS.T_JUEGO TJ,
-					SGS.T_JUEGO_TIPO TJP
-			WHERE TS.ID_JUEGO = TJ.ID_JUEGO
-					AND ts.id_tipo_juego = tjp.id_juego_tipo (+)
-					AND TJ.ID_JUEGO      =  ?
-					AND TS.ID_TIPO_JUEGO =  ?
-					--AND TS.FECHA_SORTEO>=SYSDATE - 8
-			ORDER BY TS.fecha_sorteo desc,TS.SORTEO DESC";
-    $rs = getPaginadorRs($sql, array($juego, $tipo_juego));
+        $rs = getPaginadorRs($sql, array($juego));
+    } else {
+        $sql = "	    SELECT
+					    LPAD(TS.SORTEO, 5, '0')
+					    || ' - '
+					    || TS.DESCRIPCION AS DESC_SORTEO,
+					    TO_CHAR(TS.FECHA_SORTEO, 'DD/MM/YYYY') AS FECHA_SORTEO,
+					    TS.SORTEO,
+					    TJ.DESCRIPCION    AS DESC_JUEGO,
+					    TJP.DESCRIPCION   AS TIPO_JUEGO
+					FROM
+					    SGS.T_SORTEO       TS,
+					    SGS.T_JUEGO        TJ,
+					    SGS.T_JUEGO_TIPO   TJP,
+					    SGS.T_PROGRAMA     TP
+					WHERE
+					    TS.ID_JUEGO = TJ.ID_JUEGO
+					    AND TS.ID_PROGRAMA = TP.ID_PROGRAMA
+					    AND TJP.CODIGO_TIPO_JUEGO = TP.CODIGO_TIPO_JUEGO
+					    AND TJ.ID_JUEGO = ?
+					    AND TJP.ID_JUEGO_TIPO = ?
+										--AND TS.FECHA_SORTEO>=SYSDATE - 8
+					ORDER BY
+					    TS.FECHA_SORTEO DESC,
+					    TS.SORTEO DESC";
+        $rs = getPaginadorRs($sql, array($juego, $tipo_juego));
+
+    }
     getPaginadorLinks('#contenedor_sorteos');
     ?>
 <table class="table table-condensed table-bordered">
@@ -159,7 +197,6 @@ getPaginadorLinks('#contenedor_sorteos');
     $_SESSION['descripcion_sorteo'] = 'EXTRAORDINARIO';
     $_SESSION['juego_tipo']         = $_GET['tipo_juego'];
     $_SESSION['sale_o_sale']        = 'NO';
-    
 
     $sql = "	SELECT COUNT(*) AS CANTIDAD
 				FROM 	SGS.T_SORTEO TS,
@@ -170,7 +207,7 @@ getPaginadorLinks('#contenedor_sorteos');
 				GROUP BY 	TPP.SALE_O_SALE
 				HAVING 		 UPPER(TPP.SALE_O_SALE) = 'SI'";
     $res = sql($sql, array($_SESSION['sorteo'], $_SESSION['id_juego']));
-  
+
     if ($res->RecordCount() > 0) {
         $_SESSION['sale_o_sale'] = 'SI';
     }
