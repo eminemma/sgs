@@ -9,7 +9,8 @@ $res = sql("SELECT 	TE.DESCRIPCION AS ESCRIBANO,
 				  	TJT.DESCRIPCION AS TIPO_JUEGO,
 				  	TO_CHAR(TS.FECHA_SORTEO,'dd/mm/YYYY') as FECHA_SORTEO,
 				  	TO_CHAR(TS.FECHA_SORTEO,'HH24:MI') AS HORA_SORTEO,
-				  	TS.SORTEO
+				  	TS.SORTEO,
+				  	TS.MONTO_FRACCION
 			FROM 	SGS.T_SORTEO TS,
 				  	SGS.T_ESCRIBANO TE,
 				  	SUPERUSUARIO.USUARIOS TOP,
@@ -59,7 +60,7 @@ $row_rec = siguiente($res_rec);
 $pozos['pozos'][] = array('pozo_8_aciertos' => '$' . number_format($row_rec->TOTAL_PREMIOS_8_ACIERTOS, 0, ',', '.'), 'cantidad_ganadores_8_aciertos' => (($row_rec->CANTIDAD_GANADORES_8 == 0) ? 'Pozo Vacante' : ($row_rec->CANTIDAD_GANADORES_8 > 1 ? $row_rec->CANTIDAD_GANADORES_8 . ' Ganadores con $' . number_format(($row_rec->TOTAL_PREMIOS_8_ACIERTOS / $row_rec->CANTIDAD_GANADORES_8), 0, ',', '.') . ' c/u ' : $row_rec->CANTIDAD_GANADORES_8 . ' Ganador con $' . number_format(($row_rec->TOTAL_PREMIOS_8_ACIERTOS / $row_rec->CANTIDAD_GANADORES_8), 0, ',', '.'))));
 $pozos['pozos'][] = array('pozo_7_aciertos' => '$' . number_format($row_rec->TOTAL_PREMIOS_7_ACIERTOS, 0, ',', '.'), 'cantidad_ganadores_7_aciertos' => (($row_rec->CANTIDAD_GANADORES_7 == 0) ? 'Pozo Vacante' : ($row_rec->CANTIDAD_GANADORES_7 > 1 ? $row_rec->CANTIDAD_GANADORES_7 . ' Ganadores con $' . number_format(($row_rec->TOTAL_PREMIOS_7_ACIERTOS / $row_rec->CANTIDAD_GANADORES_7), 0, ',', '.') . ' c/u' : $row_rec->CANTIDAD_GANADORES_7 . ' Ganador con $' . number_format(($row_rec->TOTAL_PREMIOS_7_ACIERTOS / $row_rec->CANTIDAD_GANADORES_7), 0, ',', '.'))));
 $pozos['pozos'][] = array('pozo_6_aciertos' => '$' . number_format($row_rec->TOTAL_PREMIOS_6_ACIERTOS, 0, ',', '.'), 'cantidad_ganadores_6_aciertos' => (($row_rec->CANTIDAD_GANADORES_6 == 0) ? 'Pozo Vacante' : ($row_rec->CANTIDAD_GANADORES_6 > 1 ? $row_rec->CANTIDAD_GANADORES_6 . ' Ganadores con $' . number_format(($row_rec->TOTAL_PREMIOS_6_ACIERTOS / $row_rec->CANTIDAD_GANADORES_6), 0, ',', '.') . ' c/u ' : $row_rec->CANTIDAD_GANADORES_6 . ' Ganador con $' . number_format(($row_rec->TOTAL_PREMIOS_6_ACIERTOS / $row_rec->CANTIDAD_GANADORES_6), 0, ',', '.'))));
-$pozos['pozos'][] = array('pozo_5_aciertos' => '$' . number_format($row_rec->TOTAL_PREMIOS_5_ACIERTOS, 0, ',', '.'), 'cantidad_ganadores_5_aciertos' => (($row_rec->CANTIDAD_GANADORES_5 == 0) ? 'Pozo Vacante' : ($row_rec->CANTIDAD_GANADORES_5 > 1 ? $row_rec->CANTIDAD_GANADORES_5 . ' Ganadores con $' . number_format(($row_rec->MONTO_FRACCION), 0, ',', '.') . ' c/u ' : $row_rec->CANTIDAD_GANADORES_5 . ' Ganador con $' . number_format(($row_rec->MONTO_FRACCION), 0, ',', '.'))));
+$pozos['pozos'][] = array('pozo_5_aciertos' => '$' . number_format($row_sorteo->MONTO_FRACCION, 0, ',', '.') . ' c/u', 'cantidad_ganadores_5_aciertos' => (($row_rec->CANTIDAD_GANADORES_5 == 0) ? 'Sin Ganadores' : ($row_rec->CANTIDAD_GANADORES_5 > 1 ? $row_rec->CANTIDAD_GANADORES_5 . ' Ganadores' : $row_rec->CANTIDAD_GANADORES_5 . ' Ganador ')));
 $retorno          = array(
     'zonaMostrando' => 'zona' . (int) $row->VALOR,
     'escribano'     => ($row_sorteo->ESCRIBANO == null) ? '' : $row_sorteo->ESCRIBANO,
