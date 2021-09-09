@@ -661,13 +661,24 @@ function importar_datos_sorteo()
                 die(error('El sorteo seleccionado no existe en KANBAN'));
             }
 
+            $rs_sorteo_sgs_pr = sql("	SELECT
+										    COUNT(*) as CANTIDAD_PROGRAMA
+										FROM
+										    SGS.T_PROGRAMA
+										WHERE ID_PROGRAMA=?", array($row_sorteo_kanban->ID_PROGRAMA));
+
             $rs_sorteo_sgs = sql("	SELECT
             											ID_PROGRAMA
 									  	FROM SGS.T_SORTEO
 										 WHERE SORTEO=? AND ID_JUEGO=?", array($sorteo, $id_juego));
 
-            $row_sorteo_sgs = siguiente($rs_sorteo_sgs);
-            if ($row_sorteo_kanban->ID_PROGRAMA !== $row_sorteo_sgs->ID_PROGRAMA && $row_sorteo_sgs->ID_PROGRAMA !== null) {
+            $row_sorteo_sgs    = siguiente($rs_sorteo_sgs);
+            $row_sorteo_sgs_pr = siguiente($rs_sorteo_sgs_pr);
+            if ($row_sorteo_sgs_pr->CANTIDAD_PROGRAMA == 0) {
+                info('<strong>Se cargo un programa de premios nuevo en el SGS </strong>');
+            }
+
+            if ($id_juego == 2 && ($row_sorteo_kanban->ID_PROGRAMA !== $row_sorteo_sgs->ID_PROGRAMA && $row_sorteo_sgs->ID_PROGRAMA !== null)) {
                 die(error('<strong>El programa del sorteo no coincide con el programa asignado en kanban</strong>'));
             }
 
