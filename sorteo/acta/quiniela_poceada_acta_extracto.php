@@ -14,7 +14,7 @@ $pdf    = new PDF('P');
 $pdf->AliasNbPages();
 $pdf->AddPage();
 try {
-    $rs_sorteo = sql("  SELECT  TE.DESCRIPCION AS ESCRIBANO,
+    $rs_sorteo = sql("  SELECT   TE.DESCRIPCION AS ESCRIBANO,
                                 TOP.DESCRIPCION     AS OPERADOR,
                                 TJ.DESCRIPCION      AS JEFE,
                                 TJT.DESCRIPCION AS TIPO_JUEGO,
@@ -26,11 +26,13 @@ try {
                                 SGS.T_ESCRIBANO TE,
                                 SUPERUSUARIO.USUARIOS TOP,
                                 SUPERUSUARIO.USUARIOS TJ,
-                                SGS.T_JUEGO_TIPO TJT
+                                SGS.T_JUEGO_TIPO TJT,
+                                SGS.T_PROGRAMA TP
                         WHERE TS.ID_ESCRIBANO     = TE.ID_ESCRIBANO
                             AND TS.ID_OPERADOR    = TOP.ID_USUARIO
                             AND TS.ID_JEFE        = TJ.ID_USUARIO
-                            AND TS.ID_TIPO_JUEGO  = TJT.ID_JUEGO_TIPO
+                            AND TP.ID_PROGRAMA = TS.ID_PROGRAMA
+                            AND TP.CODIGO_TIPO_JUEGO = TJT.CODIGO_TIPO_JUEGO
                             AND TS.SORTEO         = ?
                             AND TS.ID_JUEGO       = ?", array($_SESSION['sorteo'], $_SESSION['id_juego']));
 } catch (exception $e) {
