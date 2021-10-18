@@ -61,10 +61,10 @@
                 var incentivoMostrando = data.incentivoMostrando;
                 switch (incentivoMostrando) {
                     case ('resumen'):
-                        $('#resumen').css("background-image", "url(escribano_img/gordo_invierno_2021_semana1_resumen.jpg)");
+                        $('#resumen').css("background-image", "url(escribano_img/gordo_navidad_2021_semana1_resumen.png)");
                         break;
                     default:
-                     $('#incentivo').css("background-image", "url(escribano_img/gordo_invierno_2021_semana1_blanco.jpg)");
+                     $('#incentivo').css("background-image", "url(escribano_img/gordo_navidad_2021_semana1_blanco.png)");
                         break;
                 }
 
@@ -105,11 +105,11 @@
                 aleatorio = data.cantFracciones;
                 switch (incentivoMostrando) {
                      case ('resumen'):
-                        $('#resumen').css("background-image", "url(escribano_img/gordo_invierno_2021_semana1_resumen.jpg)");
+                        $('#resumen').css("background-image", "url(escribano_img/gordo_navidad_2021_semana1_resumen.png)");
                         mostrar_resumen(data);
                         break;
                     default:
-                     $('#incentivo').css("background-image", "url(escribano_img/gordo_invierno_2021_semana1_blanco.jpg)");
+                     $('#incentivo').css("background-image", "url(escribano_img/gordo_navidad_2021_semana1_blanco.png)");
                      buscar_ganador(data);
                         break;
                 }

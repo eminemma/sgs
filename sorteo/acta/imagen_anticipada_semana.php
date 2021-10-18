@@ -155,10 +155,10 @@ $pdf->setXY(10, 10);
 
 if (!$ultima_semana) {
 
-    $pdf->centreImage('../escribano/escribano_img/gordo_invierno_2021_semana1_extracto_digital.jpg');
+    $pdf->centreImage('../escribano/escribano_img/gordo_navidad_2021_semana1_extracto_digital.png');
     //$pdf->Image('../escribano/escribano_img/gordo_navidad_2020_semana1_extracto_digital.jpg', 0, 0);
 } else {
-    $pdf->centreImage('../escribano/escribano_img/gordo_invierno_2021_semana1_extracto_digital_ultima.jpg');
+    $pdf->centreImage('../escribano/escribano_img/gordo_navidad_2021_semana1_extracto_digital_ultima.png');
     //$pdf->Image('../escribano/escribano_img/gordo_navidad_2020_semana1_extracto_digital_ultima.jpg', 0, 0);
 }
 
@@ -198,7 +198,7 @@ $res_ganador = sql("SELECT TG.ID_JUEGO,
                             AND TG.SEMANA     =TA.SEMANA
                             AND TG.ORDEN      =TA.ORDEN
                             ORDER BY TG.ORDEN", array($_SESSION['id_juego'], $_SESSION['sorteo'], $semana));
-$y = 12;
+$y = 21;
 if ($ultima_semana) {
     $y = 12;
     $x = -1;
