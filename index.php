@@ -99,7 +99,7 @@ if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.
                                     <li><a href="#" onclick="g('version.php');">Auditoria</a></li>
                                     <li><a href="#" onclick="g('version_alta.php');">Version</a></li>
                                     <li class="divider"></li>
-                                    <li class="nav-header">Panelo Vivo</li>
+                                    <li class="nav-header">Panel Vivo</li>
                                     <li><a href="stream/panel.php" target="_blank">Vivo y Extracto Quiniela Cba</a></li>
                                     <!-- <li><a href="#" onclick="g('administracion/administrar_anticipada/loteria_administrar_anticipada.php');">Administrar Anticipada</a></li> -->
                                 </ul>
