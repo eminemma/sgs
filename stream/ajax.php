@@ -61,7 +61,7 @@ switch ($accion) {
                 ?,
                 ?,
                 ?
-            )", array('P', 'El sorteo se encuentra demorado, ', $sorteo, $id_juego));
+            )", array('P', 'El sorteo se encuentra demorado ', $sorteo, $id_juego));
             $mensaje = array("tipo" => "success");
         } catch (exception $e) {
             $mensaje = array("mensaje" => "Error al iniciar: " . $db->ErrorMsg(), "tipo" => "error");

@@ -98,32 +98,32 @@ if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.
                 <h3><?php echo $_SESSION['juego'] ?></h3>
                 <h3><?php echo $_SESSION['sorteo'] ?></h3>
             </div>
-            <div class="row show-grid">
+            <!--<div class="row show-grid">
                 <div class="span12">
                     <div class="btn-group" style="width: 100%">
                         <button id="demorado" class="btn btn-large btn-danger" disabled style="width: 100%" data-toggle="modal" data-target="#demoradoSorteo">Sorteo Demorado</button>
                     </div>
                 </div>
-            </div>
+            </div>-->
 
             <div class="row show-grid">
                 <div class="span12">
                     <div class="btn-group" style="width: 100%">
-                        <button id="iniciar" class="btn btn-large btn-success" disabled style="width: 100%" data-toggle="modal" data-target="#iniciarSorteo">Iniciar Sorteo</button>
+                        <button id="iniciar" class="btn btn-large btn-success"  style="width: 100%" data-toggle="modal" data-target="#iniciarSorteo">Iniciar Sorteo</button>
                     </div>
                 </div>
             </div>
-            <div class="row show-grid">
+            <!--<div class="row show-grid">
                 <div class="span12">
                     <div class="btn-group" style="width: 100%">
                         <button id="detener" class="btn btn-large btn-danger" disabled style="width: 100%" data-toggle="modal" data-target="#detenerSorteo">Detener Sorteo</button>
                     </div>
                 </div>
-            </div>
+            </div>-->
             <div class="row show-grid">
                 <div class="span12">
                     <div class="btn-group" style="width: 100%">
-                        <button id="finalizar" class="btn btn-large btn-primary" disabled style="width: 100%" data-toggle="modal" data-target="#finalizarSorteo">Finalizar Sorteo</button>
+                        <button id="finalizar" class="btn btn-large btn-primary"  style="width: 100%" data-toggle="modal" data-target="#finalizarSorteo">Finalizar Sorteo</button>
 
                     </div>
                 </div>
@@ -263,23 +263,23 @@ if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.
                             $('#demorado').prop('disabled', true);
                             $('#iniciar').prop('disabled', true);
                             $('#finalizar').prop('disabled', false);
-                            $('#detener').prop('disabled', false);
+                           // $('#detener').prop('disabled', false);
                         } else if (data.situacion == 'C' || data.situacion == 'S' || data.situacion == 'D') {
                             $('#iniciar').text('Reiniciar Sorteo');
                             $('#iniciarSorteo > .modal-body').text('¿Esta seguro de reiniciar el sorteo?');
                             $('#demorado').prop('disabled', true);
                             $('#detener').prop('disabled', true);
                             $('#iniciar').prop('disabled', false);
-                            $('#finalizar').prop('disabled', true);
+                            //$('#finalizar').prop('disabled', true);
                         } else if (data.situacion == 'F') {
                             $('#demorado').prop('disabled', true);
                             $('#detener').prop('disabled', true);
-                            $('#iniciar').prop('disabled', true);
-                            $('#finalizar').prop('disabled', true);
-                        } else if (data.situacion == null) {
-                            $('#demorado').prop('disabled', false);
                             $('#iniciar').prop('disabled', false);
                             $('#finalizar').prop('disabled', true);
+                        } else if (data.situacion == null) {
+                            //$('#demorado').prop('disabled', false);
+                            $('#iniciar').prop('disabled', false);
+                            //$('#finalizar').prop('disabled', true);
                             $('#detener').prop('disabled', true);
                         } else if (data.situacion == 'P') {
                             $('#demorado').prop('disabled', false);
@@ -320,10 +320,10 @@ if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.
                     if (data.tipo == 'error') {
                         $('#mensaje').html(data.mensaje);
                     } else if (data.tipo == 'success') {
-                        $('#demorado').prop('disabled', true);
+                        //$('#demorado').prop('disabled', true);
                         $('#iniciar').prop('disabled', true);
                         $('#finalizar').prop('disabled', false);
-                        $('#detener').prop('disabled', false);
+                        //$('#detener').prop('disabled', false);
                         $('#iniciarSorteo').modal('hide');
                     }
                     leerEventos();
@@ -367,8 +367,8 @@ if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.
                     if (data.tipo == 'error') {
                         $('#mensaje').html(data.mensaje);
                     } else if (data.tipo == 'success') {
-                        $('#detener').prop('disabled', true);
-                        $('#iniciar').prop('disabled', true);
+                        //$('#detener').prop('disabled', true);
+                        $('#iniciar').prop('disabled', false);
                         $('#finalizar').prop('disabled', true);
                         $('#finalizarSorteo').modal('hide');
                     }
