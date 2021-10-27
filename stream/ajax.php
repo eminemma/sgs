@@ -29,7 +29,7 @@ switch ($accion) {
                 ?,
                 ?,
                 ?
-            )", array('I', 'Se ' . ($row->CANTIDAD > 0 ? ' reinicio ' : ' inicio ') . ' el sorteo', $sorteo, $id_juego));
+            )", array('I', 'Se ' . ($row->CANTIDAD > 0 ? ' reinicio ' : ' inicio ') . ' la transmisión', $sorteo, $id_juego));
 
             sql("DECLARE
                     l_jobno pls_integer;
@@ -106,7 +106,7 @@ switch ($accion) {
                 ?,
                 ?,
                 ?
-            )", array('F', 'Se finalizo el sorteo', $sorteo, $id_juego));
+            )", array('F', 'Se finalizo la transmisión', $sorteo, $id_juego));
             $mensaje = array("tipo" => "success");
         } catch (exception $e) {
             $mensaje = array("mensaje" => "Error al iniciar: " . $db->ErrorMsg(), "tipo" => "error");

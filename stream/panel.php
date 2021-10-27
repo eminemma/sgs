@@ -109,7 +109,7 @@ if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.
             <div class="row show-grid">
                 <div class="span12">
                     <div class="btn-group" style="width: 100%">
-                        <button id="iniciar" class="btn btn-large btn-success"  style="width: 100%" data-toggle="modal" data-target="#iniciarSorteo">Iniciar Sorteo</button>
+                        <button id="iniciar" class="btn btn-large btn-success"  style="width: 100%" data-toggle="modal" data-target="#iniciarSorteo">Iniciar transmisión</button>
                     </div>
                 </div>
             </div>
@@ -123,7 +123,7 @@ if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.
             <div class="row show-grid">
                 <div class="span12">
                     <div class="btn-group" style="width: 100%">
-                        <button id="finalizar" class="btn btn-large btn-primary"  style="width: 100%" data-toggle="modal" data-target="#finalizarSorteo">Finalizar Sorteo</button>
+                        <button id="finalizar" class="btn btn-large btn-primary"  style="width: 100%" data-toggle="modal" data-target="#finalizarSorteo">Finalizar transmisión</button>
 
                     </div>
                 </div>
@@ -159,7 +159,7 @@ if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.
             <h3 id="myModalLabel">Confirmacion</h3>
         </div>
         <div class="modal-body">
-            ¿Esta seguro de iniciar el sorteo?
+            ¿Esta seguro de iniciar de la transmisión?
         </div>
         <div class="modal-footer">
             <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
