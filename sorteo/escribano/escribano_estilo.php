@@ -33,11 +33,12 @@ body{
 
 #fecha_sorteo{
   font-size: 23px;
-    left: 767px;
-    position: relative;
-    font-family: 'MyriadPro-Bold';
-    top: 50px;
+  left: 719px;
+  position: relative;
+  font-family: 'MyriadPro-Bold';
+  top: 50px;
 }
+
 
 #fecha_sorteo_resumen{
     font-size: 16px;
@@ -126,11 +127,11 @@ body{
 
 #primer_premio{
     background-size: 375px 78px;
-    top: 126px;
-    left: 109px;
+    top: 133px;
+    left: 139px;
     position: absolute;
     width: 379px;
-    height: 71px;
+    height: 77px;
 }
 
 #primer_premio_resumen{

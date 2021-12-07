@@ -54,7 +54,7 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
         </div>
 
         <?php if (strtoupper($_SESSION['sale_o_sale']) == 'SI') {?>
-        <div id="primer_premio" style="background-image:url('escribano_img/primer_premio_5011.png');"></div>
+        <div id="primer_premio" style="background-image:url('escribano_img/primer_premio_5062.png');"></div>
         <?php }?>
 
         <div id="resultado_primer_premio" ></div>
@@ -86,7 +86,7 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
 
     <div id="zona3">
         <!-- <div id="sorteo"><?php echo $_SESSION['sorteo']; ?></div>-->
-            <div id="fecha_sorteo" style="left: 1110px;top: 89px;"><?php echo $fecha_sorteo; ?></div>
+            <div id="fecha_sorteo" style="left: 1177px;top: 70px;"><?php echo $fecha_sorteo; ?></div>
     </div>
 
 
@@ -149,8 +149,8 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
             var posicionZona1 = {
                 '01': {
                     inicial: {
-                        top: '269px',
-                        left: '305px'
+                        top: '275px',
+                        left: '336px'
                     },
                     final: {
                         height: '135px'
@@ -158,8 +158,8 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                 },
                 '02': {
                     inicial: {
-                        top: '512px',
-                        left: '163px'
+                        top: '510px',
+                        left: '196px'
                     },
                     final: {
                         height: '71px'
@@ -168,7 +168,7 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                 '03': {
                     inicial: {
                         top: '510px',
-                        left: '442px'
+                        left: '475px'
                     },
                     final: {
                         height: '71px'
@@ -176,8 +176,8 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                 },
                 '04': {
                     inicial: {
-                        top: '697px',
-                        left: '163px'
+                        top: '693px',
+                        left: '196px'
                     },
                     final: {
                         height: '71px'
@@ -185,8 +185,8 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                 },
                 '05': {
                     inicial: {
-                        top: '697px',
-                        left: '442px'
+                        top: '693px',
+                        left: '475px'
                     },
                     final: {
                         height: '71px'
@@ -195,7 +195,7 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                 '06': {
                     inicial: {
                         top: '190px',
-                        left: '802px'
+                        left: '835px'
                     },
                     final: {
                         height: '47px'
@@ -204,7 +204,7 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                 '07': {
                     inicial: {
                         top: '238px',
-                        left: '802px'
+                        left: '835px'
                     },
                     final: {
                         height: '47px'
@@ -213,7 +213,7 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                 '08': {
                     inicial: {
                         top: '286px',
-                        left: '802px'
+                        left: '835px'
                     },
                     final: {
                         height: '47px'
@@ -222,7 +222,7 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                 '09': {
                     inicial: {
                         top: '338px',
-                        left: '802px'
+                        left: '835px'
                     },
                     final: {
                         height: '47px'
@@ -231,7 +231,7 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                 '10': {
                     inicial: {
                         top: '384px',
-                        left: '802px'
+                        left: '835px'
                     },
                     final: {
                         height: '47px'
@@ -240,7 +240,7 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                 '11': {
                     inicial: {
                         top: '520px',
-                        left: '790px'
+                        left: '823px'
                     },
                     final: {
                         height: '47px'
@@ -249,7 +249,7 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                 '12': {
                     inicial: {
                         top: '568px',
-                        left: '790px'
+                        left: '823px'
                     },
                     final: {
                         height: '47px'
@@ -258,7 +258,7 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                 '13': {
                     inicial: {
                         top: '616px',
-                        left: '790px'
+                        left: '823px'
                     },
                     final: {
                         height: '47px'
@@ -267,7 +267,7 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                 '14': {
                     inicial: {
                         top: '664px',
-                        left: '790px'
+                        left: '823px'
                     },
                     final: {
                         height: '47px'
@@ -276,7 +276,7 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                 '15': {
                     inicial: {
                         top: '712px',
-                        left: '790px'
+                        left: '823px'
                     },
                     final: {
                         height: '47px'
@@ -328,9 +328,9 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                     }
                 },
                 'progresion': {
-                    top: '332px',
-                    left: '996px',
-                    height: '85px'
+                    top: '347px',
+                    left: '1056px',
+                    height: '70px'
                 }
             };
 
@@ -612,11 +612,11 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                                         function() {
                                             //CODIGO PARA MOSTRAR GANADORES EN EL SORTEOS SALE O SALE
                                              $('#primer_premio').fadeOut();
-                                             $('#resultado_primer_premio').css('background-size', '375px 78px');
-                                            $('#resultado_primer_premio').css('top', '126px');
+                                             $('#resultado_primer_premio').css('background-size', '375px 82px');
+                                            $('#resultado_primer_premio').css('top', '131px');
                                             $('#resultado_primer_premio').css('height', '71px');
-                                            $('#resultado_primer_premio').css('left', '109px');
-                                            $('#resultado_primer_premio').css('width', '326px');
+                                            $('#resultado_primer_premio').css('left', '142px');
+                                            $('#resultado_primer_premio').css('width', '384px');
                                             $('#resultado_primer_premio').css('background-image', 'url(escribano_img/no_vendido_<?php echo $_SESSION['sorteo']; ?>.png)');
                                             $('#resultado_primer_premio').fadeIn();
 
@@ -1214,11 +1214,11 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                 intervalPrimeroPremio = setInterval(function(data){
                     if(primer_premio == true){
                         $('#primer_premio').fadeOut();
-                        $('#resultado_primer_premio').css('background-size', '375px 78px');
-                        $('#resultado_primer_premio').css('top', '126px');
+                        $('#resultado_primer_premio').css('background-size', '375px 82px');
+                        $('#resultado_primer_premio').css('top', '131px');
                         $('#resultado_primer_premio').css('height', '71px');
-                        $('#resultado_primer_premio').css('left', '109px');
-                        $('#resultado_primer_premio').css('width', '292px');
+                        $('#resultado_primer_premio').css('left', '142px');
+                        $('#resultado_primer_premio').css('width', '384px');
                         $('#resultado_primer_premio').css('background-image', 'url(escribano_img/vendido_<?php echo $_SESSION['sorteo']; ?>.png)');
                         $('#resultado_primer_premio').fadeIn();
                         primer_premio = false;
@@ -1228,8 +1228,6 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                         primer_premio = true;
                     }
                 },2000);
-
-
 
 
             }
