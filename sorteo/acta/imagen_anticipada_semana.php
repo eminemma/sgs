@@ -164,7 +164,7 @@ if (!$ultima_semana) {
 
 //----------------------- 1º Pagina ------------------------------------
 if ($ultima_semana) {
-    $x = 5;
+    $x = 0;
 }
 $pdf->SetFont('Arial', 'B', 16);
 $pdf->SetXY(255 + $x, 30);
@@ -200,7 +200,7 @@ $res_ganador = sql("SELECT TG.ID_JUEGO,
                             ORDER BY TG.ORDEN", array($_SESSION['id_juego'], $_SESSION['sorteo'], $semana));
 $y = 21;
 if ($ultima_semana) {
-    $y = 12;
+    $y = 21;
     $x = -1;
 }
 while ($row_ganador = siguiente($res_ganador)) {
