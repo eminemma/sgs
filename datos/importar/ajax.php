@@ -311,7 +311,7 @@ switch ($accion) {
             AND S.ID_PROVINCIA             = P.ID_PROVINCIA(+)
             AND R.ID_JUEGO                 = $id_juego
             AND R.SORTEO                   = $sorteo
-            AND R.VENTA_EMPLEADO = 'S'
+            AND (R.VENTA_EMPLEADO = 'S' or r.venta_contado='S')
             AND R.OCR IS NOT NULL
             )");
 
@@ -454,7 +454,7 @@ switch ($accion) {
 				  AND R.ID_JUEGO       = $id_juego
 				  AND R.SORTEO         = $sorteo
 				  AND R.SERIE                    =1
-				  AND R.VENTA_EMPLEADO = 'S'
+				  AND (R.VENTA_EMPLEADO = 'S' or r.venta_contado='S')
 				  AND R.OCR           IS NOT NULL
 				  UNION
 				  SELECT R.ID_JUEGO ID_JUEGO,
