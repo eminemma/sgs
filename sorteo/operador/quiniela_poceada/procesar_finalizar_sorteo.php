@@ -371,6 +371,9 @@ END;", array($row_politica->ID_JUEGO_POLITICA));
 			FROM KANBAN.T_TT_RECAUDACION@KANBAN_ANTICIPADA
 			WHERE ID_JUEGO=A.ID_JUEGO AND SORTEO=A.SORTEO)
 			WHERE A.ID_JUEGO=? AND A.SORTEO=?", array($id_juego, $sorteo));
+    } else {
+        sql("UPDATE KANBAN.T_TT_RECAUDACION@KANBAN_ANTICIPADA A SET POZO_RESERVA_8_PROX_SORTEO=0
+            WHERE A.ID_JUEGO=? AND A.SORTEO=?", array($id_juego, $sorteo));
     }
 
     $rs = sql('SELECT ID_DESCRIPCION
@@ -384,6 +387,9 @@ END;", array($row_politica->ID_JUEGO_POLITICA));
 			 FROM KANBAN.T_TT_RECAUDACION@KANBAN_ANTICIPADA
 			 WHERE ID_JUEGO=A.ID_JUEGO AND SORTEO=A.SORTEO)
 			 WHERE A.ID_JUEGO=? AND A.SORTEO=?", array($id_juego, $sorteo));
+    } else {
+        sql("UPDATE KANBAN.T_TT_RECAUDACION@KANBAN_ANTICIPADA A SET POZO_RESERVA_7_PROX_SORTEO=0
+            WHERE A.ID_JUEGO=? AND A.SORTEO=?", array($id_juego, $sorteo));
     }
     $rs = sql('SELECT ID_DESCRIPCION
                                     FROM KANBAN.T_PREMIOS@KANBAN_ANTICIPADA
@@ -395,13 +401,16 @@ END;", array($row_politica->ID_JUEGO_POLITICA));
 			FROM KANBAN.T_TT_RECAUDACION@KANBAN_ANTICIPADA
 			WHERE ID_JUEGO=A.ID_JUEGO AND SORTEO=A.SORTEO)
 			WHERE A.ID_JUEGO=? AND A.SORTEO=?", array($id_juego, $sorteo));
+    } else {
+        sql("UPDATE KANBAN.T_TT_RECAUDACION@KANBAN_ANTICIPADA A SET POZO_RESERVA_6_PROX_SORTEO=0
+            WHERE A.ID_JUEGO=? AND A.SORTEO=?", array($id_juego, $sorteo));
     }
 
     $rs_premios = sql('SELECT SUM(IMPORTE) AS TOTAL_PREMIOS
                                     FROM KANBAN.T_PREMIOS@KANBAN_ANTICIPADA
                                     WHERE SORTEO = ? AND ID_JUEGO = ?
                                     and ID_DESCRIPCION = 85', array($sorteo, $id_juego));
-    $db->debug = true;
+    //$db->debug = true;
     if ($rs_premios->RecordCount() > 0) {
         $row_premios = $rs_premios->FetchNextObject($toupper = true);
         $rs_pozo     = sql('SELECT PROP_5_ACIERTOS
@@ -414,6 +423,9 @@ END;", array($row_politica->ID_JUEGO_POLITICA));
 
         sql("UPDATE KANBAN.T_TT_RECAUDACION@KANBAN_ANTICIPADA A SET POZO_RESERVA_5_PROX_SORTEO=?
             WHERE A.ID_JUEGO=? AND A.SORTEO=?", array($reserva, $id_juego, $sorteo));
+    } else {
+        sql("UPDATE KANBAN.T_TT_RECAUDACION@KANBAN_ANTICIPADA A SET POZO_RESERVA_5_PROX_SORTEO=0
+            WHERE A.ID_JUEGO=? AND A.SORTEO=?", array($id_juego, $sorteo));
     }
 
     sql("UPDATE KANBAN.T_SORTEO@KANBAN_ANTICIPADA A SET ESTADO_SORTEO='F' WHERE ID_JUEGO= ? AND SORTEO=?", array($id_juego, $sorteo));
