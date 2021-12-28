@@ -25,12 +25,16 @@ if ($accion == 'mostrar' && $juego == 'primer_juego') {
                                                   FROM SGS.T_GANADORES
                                                   WHERE ID_PREMIO_DESCRIPCION = TE.POSICION
                                                     AND BILLETE               = TE.NUMERO
+                                                    AND SORTEO = TE.SORTEO
+            									    AND ID_JUEGO= TE.ID_jUEGO
                                                 ),0,'--',
                                                 (
                                                   SELECT COUNT(*)
                                                   FROM SGS.T_GANADORES
                                                   WHERE ID_PREMIO_DESCRIPCION = TE.POSICION
                                                     AND BILLETE               = TE.NUMERO
+                                                    AND SORTEO = TE.SORTEO
+            									  AND ID_JUEGO= TE.ID_jUEGO
                                                 )
                                               )AS GANADORES,
                                         (
@@ -129,12 +133,16 @@ while ($row_extraccion_segundo = $rs_extraccion_segundo->FetchNextObject($touppe
                                                 FROM SGS.T_GANADORES
                                                 WHERE ID_PREMIO_DESCRIPCION   = TE.POSICION
                                                   AND BILLETE                 = TE.NUMERO
+                                                  AND SORTEO = TE.SORTEO
+            									  AND ID_JUEGO= TE.ID_jUEGO
                                               ),0,'--',
                                               (
                                                 SELECT COUNT(*)
                                                 FROM SGS.T_GANADORES
                                                 WHERE ID_PREMIO_DESCRIPCION  = TE.POSICION
                                                   AND BILLETE                = TE.NUMERO
+                                                  AND SORTEO = TE.SORTEO
+            									  AND ID_JUEGO= TE.ID_jUEGO
                                               )
                                             )AS GANADORES,
                                       DECODE(
@@ -142,7 +150,9 @@ while ($row_extraccion_segundo = $rs_extraccion_segundo->FetchNextObject($touppe
                                                 SELECT COUNT(*)
                                                 FROM SGS.T_GANADORES
                                                 WHERE ID_PREMIO_DESCRIPCION   = TE.POSICION
-                                                  AND BILLETE                 = TE.NUMERO
+                                                    AND BILLETE               = TE.NUMERO
+                                                    AND SORTEO                = TE.SORTEO
+            										AND ID_JUEGO              = TE.ID_jUEGO
                                               ),0,'Sin Ganadores','Ganador'
                                             )AS DESCRIPCION
                               FROM  SGS.T_EXTRACCION TE,
@@ -225,12 +235,16 @@ while ($row_extraccion_segundo = $rs_extraccion_segundo->FetchNextObject($touppe
                                                 FROM SGS.T_GANADORES
                                                 WHERE ID_PREMIO_DESCRIPCION   = TE.POSICION
                                                   AND BILLETE                 = TE.NUMERO
+                                                  AND SORTEO                = TE.SORTEO
+            										AND ID_JUEGO              = TE.ID_jUEGO
                                               ),0,'--',
                                               (
                                                 SELECT COUNT(*)
                                                 FROM SGS.T_GANADORES
                                                 WHERE ID_PREMIO_DESCRIPCION  = TE.POSICION
                                                   AND BILLETE                = TE.NUMERO
+                                                  AND SORTEO                = TE.SORTEO
+            										AND ID_JUEGO              = TE.ID_jUEGO
                                               )
                                             )AS GANADORES,
                                       TPD.DESCRIPCION,
