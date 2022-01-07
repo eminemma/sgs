@@ -150,7 +150,7 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                 '01': {
                     inicial: {
                         top: '275px',
-                        left: '336px'
+                        left: '320px'
                     },
                     final: {
                         height: '135px'
@@ -158,8 +158,8 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                 },
                 '02': {
                     inicial: {
-                        top: '510px',
-                        left: '196px'
+                        top: '494px',
+                        left: '185px'
                     },
                     final: {
                         height: '71px'
@@ -167,8 +167,8 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                 },
                 '03': {
                     inicial: {
-                        top: '510px',
-                        left: '475px'
+                        top: '494px',
+                        left: '460px'
                     },
                     final: {
                         height: '71px'
@@ -176,8 +176,8 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                 },
                 '04': {
                     inicial: {
-                        top: '693px',
-                        left: '196px'
+                        top: '686px',
+                        left: '185px'
                     },
                     final: {
                         height: '71px'
@@ -185,8 +185,8 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                 },
                 '05': {
                     inicial: {
-                        top: '693px',
-                        left: '475px'
+                        top: '686px',
+                        left: '460px'
                     },
                     final: {
                         height: '71px'
@@ -194,143 +194,143 @@ $fecha_sorteo = $row_sorteo->FECHA_SORTEO;
                 },
                 '06': {
                     inicial: {
-                        top: '190px',
-                        left: '835px'
+                        top: '167px',
+                        left: '810px'
                     },
                     final: {
-                        height: '47px'
+                        height: '45px'
                     }
                 },
                 '07': {
                     inicial: {
-                        top: '238px',
-                        left: '835px'
+                        top: '203px',
+                        left: '810px'
                     },
                     final: {
-                        height: '47px'
+                        height: '45px'
                     }
                 },
                 '08': {
                     inicial: {
-                        top: '286px',
-                        left: '835px'
+                        top: '241px',
+                        left: '810px'
                     },
                     final: {
-                        height: '47px'
+                        height: '45px'
                     }
                 },
                 '09': {
                     inicial: {
-                        top: '338px',
-                        left: '835px'
+                        top: '276px',
+                        left: '810px'
                     },
                     final: {
-                        height: '47px'
+                        height: '45px'
                     }
                 },
                 '10': {
                     inicial: {
-                        top: '384px',
-                        left: '835px'
+                        top: '316px',
+                        left: '810px'
                     },
                     final: {
-                        height: '47px'
+                        height: '45px'
                     }
                 },
                 '11': {
                     inicial: {
-                        top: '520px',
+                        top: '410px',
                         left: '823px'
                     },
                     final: {
-                        height: '47px'
+                        height: '45px'
                     }
                 },
                 '12': {
                     inicial: {
-                        top: '568px',
+                        top: '450px',
                         left: '823px'
                     },
                     final: {
-                        height: '47px'
+                        height: '45px'
                     }
                 },
                 '13': {
                     inicial: {
-                        top: '616px',
+                        top: '490px',
                         left: '823px'
                     },
                     final: {
-                        height: '47px'
+                        height: '45px'
                     }
                 },
                 '14': {
                     inicial: {
-                        top: '664px',
+                        top: '527px',
                         left: '823px'
                     },
                     final: {
-                        height: '47px'
+                        height: '45px'
                     }
                 },
                 '15': {
                     inicial: {
-                        top: '712px',
+                        top: '570px',
                         left: '823px'
                     },
                     final: {
-                        height: '47px'
+                        height: '45px'
                     }
                 },
                 '16': {
                     inicial: {
-                        top: '520px',
-                        left: '1090px'
+                        top: '410px',
+                        left: '1130px'
                     },
                     final: {
-                        height: '47px'
+                        height: '45px'
                     }
                 },
                 '17': {
                     inicial: {
-                        top: '568px',
-                        left: '1090px'
+                        top: '450px',
+                        left: '1130px'
                     },
                     final: {
-                        height: '47px'
+                        height: '45px'
                     }
                 },
                 '18': {
                     inicial: {
-                        top: '616px',
-                        left: '1090px'
+                        top: '490px',
+                        left: '1130px'
                     },
                     final: {
-                        height: '47px'
+                        height: '45px'
                     }
                 },
                 '19': {
                     inicial: {
-                        top: '664px',
-                        left: '1090px'
+                        top: '527px',
+                        left: '1130px'
                     },
                     final: {
-                        height: '47px'
+                        height: '45px'
                     }
                 },
                 '20': {
                     inicial: {
-                        top: '712px',
-                        left: '1090px'
+                        top: '570px',
+                        left: '1130px'
                     },
                     final: {
-                        height: '47px'
+                        height: '45px'
                     }
                 },
                 'progresion': {
-                    top: '347px',
+                    top: '273px',
                     left: '1056px',
-                    height: '70px'
+                    height: '65px'
                 }
             };
 
