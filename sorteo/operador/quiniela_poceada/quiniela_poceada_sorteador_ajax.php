@@ -166,34 +166,90 @@ if ($accion == 'control_ingreso') {
             if (!$ok) {
                 $mensaje = array("mensaje" => "Error al insertar: " . $db->ErrorMsg(), "tipo" => "error");
             } else {
-                if ($existe_extraccion) {
-                    $valida = true;
-                }
-                if (!$existe_posicion) {
 
-                    if ($existe_extraccion) {
-                        $existe = ", ya existe en la posicion " . $existe_extraccion_posicion;
-                    }
-                    $mensaje     = array("mensaje" => "Se cargo Correctamente la Extraccion, validada con el otro usuario" . $existe, "tipo" => "success", "valida" => $valida);
+                if (!$existe_posicion) {
+                    $mensaje = array("mensaje" => "Se cargo Correctamente la Extraccion", "tipo" => "info");
+                    //Borro al tabla de control de ingreso, sino hay coincidencias
+                } else if ($existe_posicion && !$existe_bola) {
+                    $mensaje = array("mensaje" => "Se cargo pero sin coincidencias", "tipo" => "error");
+                    sql("UPDATE SGS.t_parametro_compartido
+                                    SET VALOR=?,ID_USUARIO=?
+                                WHERE ID_JUEGO=?
+                                        AND PARAMETRO='COINCIDENCIA'", array('No existie coincidencias en los numeros ingresados ', $_SESSION['dni'], $id_juego));
+                    //Borro al tabla de control de ingreso, sino hay coincidencias
+                    sql("DELETE FROM sgs.TEMP_CTRL_INGRESO_NUMERO");
+
+                } else if ($existe_posicion && $existe_bola && $cantidadGanadores > 0) {
+                    $mensaje = array("mensaje" => "Se cargo Correctamente la Extraccion, con Ganador", "tipo" => "success");
+                    sql("DELETE FROM sgs.TEMP_CTRL_INGRESO_NUMERO");
+                } else if ($existe_posicion && $existe_bola && $cantidadGanadores == 0) {
+                    $mensaje = array("mensaje" => "Se cargo Correctamente la Extraccion, POZO VACANTE", "tipo" => "success");
+                    sql("DELETE FROM sgs.TEMP_CTRL_INGRESO_NUMERO");
+                }
+
+                if (!$existe_posicion) {
+                    $mensaje = array("mensaje" => "Se cargo Correctamente la Extraccion", "tipo" => "info");
+
+                } else if ($existe_posicion && $existe_bola) {
+                    $mensaje = array("mensaje" => "Validación Correcta entre operadores", "tipo" => "success");
+
                     $rs_usuarios = sql(" SELECT
-                                SUBSTR(ID_JEFE,3,LENGTH(ID_JEFE)) AS USUARIO1,
-                                SUBSTR(ID_OPERADOR,3,LENGTH(ID_OPERADOR)) AS USUARIO2
-                            FROM
-                                SGS.T_SORTEO
-                            WHERE SORTEO  =?
-                             AND  ID_JUEGO=?", array($sorteo, $id_juego));
+                                                    SUBSTR(ID_JEFE,3,LENGTH(ID_JEFE)) AS USUARIO1,
+                                                    SUBSTR(ID_OPERADOR,3,LENGTH(ID_OPERADOR)) AS USUARIO2
+                                                FROM
+                                                    SGS.T_SORTEO
+                                                WHERE SORTEO  =?
+                                                 AND  ID_JUEGO=?", array($sorteo, $id_juego));
                     $row_usuarios = siguiente($rs_usuarios);
 
                     sql("UPDATE SGS.t_parametro_compartido
-                                SET VALOR='VALIDA',
-                                    VALOR_SEGUNDO='VALIDA',
-                                    ID_USUARIO=?,
-                                    ID_USUARIO2=?
-                                 WHERE ID_JUEGO=?
-                                    AND PARAMETRO='VALIDACION'", array($row_usuarios->USUARIO1, $row_usuarios->USUARIO2, $id_juego));
+                                        SET VALOR='VALIDA',
+                                            VALOR_SEGUNDO='VALIDA',
+                                            ID_USUARIO=?,
+                                            ID_USUARIO2=?
+                                         WHERE ID_JUEGO=?
+                                            AND PARAMETRO='VALIDACION'", array($row_usuarios->USUARIO1, $row_usuarios->USUARIO2, $id_juego));
 
                     sql("DELETE FROM sgs.TEMP_CTRL_INGRESO_NUMERO");
                 } else if ($existe_posicion && !$existe_bola) {
+                    $mensaje = array("mensaje" => "Se cargo pero sin coincidencias", "tipo" => "error");
+                    //Grabo en parametros compartidos coincidencias
+                    sql("UPDATE SGS.t_parametro_compartido
+                                    SET VALOR=?,ID_USUARIO=?
+                                WHERE ID_JUEGO=?
+                                        AND PARAMETRO='COINCIDENCIA'", array('No existio coincidencias en los numeros ingresados', $_SESSION['dni'], $id_juego));
+                    //Borro al tabla de control de ingreso, sino hay coincidencias
+                    sql("DELETE FROM sgs.TEMP_CTRL_INGRESO_NUMERO");
+                }
+
+                /*if ($existe_extraccion) {
+                $valida = true;
+                }
+                if (!$existe_posicion) {
+
+                if ($existe_extraccion) {
+                $existe = ", ya existe en la posicion " . $existe_extraccion_posicion;
+                }
+                $mensaje     = array("mensaje" => "Se cargo Correctamente la Extraccion, validada con el otro usuario" . $existe, "tipo" => "success", "valida" => $valida);
+                $rs_usuarios = sql(" SELECT
+                SUBSTR(ID_JEFE,3,LENGTH(ID_JEFE)) AS USUARIO1,
+                SUBSTR(ID_OPERADOR,3,LENGTH(ID_OPERADOR)) AS USUARIO2
+                FROM
+                SGS.T_SORTEO
+                WHERE SORTEO  =?
+                AND  ID_JUEGO=?", array($sorteo, $id_juego));
+                $row_usuarios = siguiente($rs_usuarios);
+
+                sql("UPDATE SGS.t_parametro_compartido
+                SET VALOR='VALIDA',
+                VALOR_SEGUNDO='VALIDA',
+                ID_USUARIO=?,
+                ID_USUARIO2=?
+                WHERE ID_JUEGO=?
+                AND PARAMETRO='VALIDACION'", array($row_usuarios->USUARIO1, $row_usuarios->USUARIO2, $id_juego));
+
+                sql("DELETE FROM sgs.TEMP_CTRL_INGRESO_NUMERO");
+                }*/else if ($existe_posicion && !$existe_bola) {
                     $mensaje = array("mensaje" => "Se cargo pero sin coincidencias", "tipo" => "error");
                     //Grabo en parametros compartidos coincidencias
                     sql("UPDATE SGS.t_parametro_compartido
@@ -319,10 +375,10 @@ if ($accion == 'control_ganador' && $juego == 'primer_juego') {
             $mensaje['usuario']    = $_SESSION['dni'];
             $mensaje['tipo']       = 'success';
             sql("UPDATE SGS.t_parametro_compartido
-        SET VALOR=null,ID_USUARIO=null
-        WHERE ID_JUEGO=?
-        and id_usuario = ?
-        AND PARAMETRO='VALIDACION'", array($id_juego, $_SESSION['dni']));
+                SET VALOR=null,ID_USUARIO=null
+                WHERE ID_JUEGO=?
+                and id_usuario = ?
+                AND PARAMETRO='VALIDACION'", array($id_juego, $_SESSION['dni']));
 
         }
 
@@ -337,10 +393,10 @@ if ($accion == 'control_ganador' && $juego == 'primer_juego') {
             $mensaje['usuario']    = $_SESSION['dni'];
             $mensaje['tipo']       = 'success';
             sql("UPDATE SGS.t_parametro_compartido
-        SET VALOR_SEGUNDO=null,ID_USUARIO2=null
-        WHERE ID_JUEGO=?
-        and id_usuario2 = ?
-        AND PARAMETRO='VALIDACION'", array($id_juego, $_SESSION['dni']));
+                SET VALOR_SEGUNDO=null,ID_USUARIO2=null
+                WHERE ID_JUEGO=?
+                and id_usuario2 = ?
+                AND PARAMETRO='VALIDACION'", array($id_juego, $_SESSION['dni']));
         }
 
     } catch (exception $e) {

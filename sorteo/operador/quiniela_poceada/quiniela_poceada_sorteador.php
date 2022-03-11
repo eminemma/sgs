@@ -124,10 +124,16 @@ try {
                     $('#error_juego >.contenido_error').html(data.mensaje);
                 } else if ((typeof data.coincidencia != 'undefined' || typeof data.reinicio != 'undefined' || typeof data.validacion != 'undefined')) {
                    // alert(JSON.stringify(data));
-                    if (data.tipo == 'success' || data.tipo == 'info') {
 
-                        if (data.validacion == 'VALIDA' || data.reinicio == 'SI') {
+                    if (data.tipo == 'success' || data.tipo == 'info') {
+                        if (data.validacion == 'VALIDA' ){
+                            $("#success_juego.alert").slideDown("slow");
+                            $('#success_juego > .contenido_error').html('Validación Correcta entre operadores');
+                        }
+                         if (data.validacion == 'VALIDA' || data.reinicio == 'SI') {
+
                             cargarConfiguracion({ accion: "configuracion", juego: "primer_juego" });
+
                         } else if(data.coincidencia != 'undefined' ) {
                             $("#success_juego.alert").slideDown("slow");
                             $('#success_juego > .contenido_error').html(data.coincidencia);
