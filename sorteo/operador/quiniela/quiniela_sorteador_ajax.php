@@ -308,31 +308,6 @@ if ($accion == 'control_ganador' && $juego == 'primer_juego') {
     conectar_db();
     //$db->debug=true;
     try {
-        //Se detiene sorteo
-        $rs_estado_panel = sql("SELECT * FROM (
-                                    SELECT
-                                        ID,
-                                        SITUACION,
-                                        SORTEO,
-                                        ID_JUEGO,
-                                        ESTADO,
-                                        FECHA
-                                    FROM
-                                        T_HIST_SITUACION_SORTEO
-                                    WHERE ID_JUEGO=?
-                                    AND SORTEO=?
-                                    and estado= 'D'
-                                    ORDER BY FECHA DESC) WHERE ROWNUM=1", array($id_juego, $sorteo));
-
-        if ($rs_estado_panel->RecordCount() > 0) {
-            $row_estado_panel = siguiente($rs_estado_panel);
-
-            $mensaje = array("mensaje" => "Detenido", "tipo" => "error");
-            header('Content-Type: application/json');
-            echo json_encode($mensaje);
-            die();
-        }
-
         $rs_extraccion_primer = sql('SELECT COUNT(*) AS EXTRACCION
 							FROM sgs.T_EXTRACCION
 							WHERE ID_JUEGO=?

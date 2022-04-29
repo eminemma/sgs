@@ -307,8 +307,8 @@ if ($accion == 'control_ingreso') {
 
                 //sql('COMMIT');
                 //SOLO SERVIDOR B
-                $existe_posicion = false;
-                $existe_bola     = true;
+                //$existe_posicion = false;
+                //$existe_bola     = true;
                 if ($siempre_sale_p == '1') {
 
                     //    Valido las bolas ingresadas de ambos usuarios si coinciden (LO HACE EL PROCEDURE)

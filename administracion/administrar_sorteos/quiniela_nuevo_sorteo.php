@@ -18,6 +18,7 @@ $(document).ready(function() {
 <h3 class="titulo">Nuevo Sorteo</h3>
 <?php
 session_start();
+error_reporting(EALL);
 include_once dirname(__FILE__) . '/../../db.php';
 include_once dirname(__FILE__) . '/ajax.php';
 

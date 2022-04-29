@@ -20,7 +20,7 @@ if (!is_file(dirname(__FILE__) . '/../sorteo/acta/' . $_SESSION['sorteo'] . '_SE
     die(error('No se genero el extracto anticipado, y no se puede enviar al email'));
 }
 
-$mail              = new PHPMailer(true);
+$mail = new PHPMailer(true);
 //$mail->SMTPDebug   = 4;
 $mail->SMTPAutoTLS = "false";
 $mail->SMTPSecure  = "";

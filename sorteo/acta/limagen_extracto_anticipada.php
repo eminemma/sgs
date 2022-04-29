@@ -7,7 +7,9 @@ header("Pragma: public");
 header("Expires: 0");
 header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 header("Cache-Control: public");
-header("../numero_letra.php");
+
+//header("../numero_letra.php");
+
 require "header_listado_b.php";
 
 $mostrar = false;

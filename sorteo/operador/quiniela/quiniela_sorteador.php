@@ -138,7 +138,6 @@ try {
 
 
       var controlGanadores2= function controlGanadores(){
-        console.log('Pasa');
           param={
                   accion:'control_ganador',
                   juego:param.juego
@@ -150,12 +149,7 @@ try {
                       if(data.mensaje=='No Finalizo'){
                         habilitarJuegos();
                       }
-                      console.log(data.mensaje);
-                      if(data.mensaje=='Detenido'){
-                        $("#warning_juego2.alert").slideDown("slow");
-                        $('#warning_juego2 > .contenido_error').html('Se detuvo el juego en el panel de stream');
-                        deshabilitarJuegos();
-                      }else if(data.mensaje=='Finalizo' && param.juego=='primer_juego'){
+                      if(data.mensaje=='Finalizo' && param.juego=='primer_juego'){
                         $("#warning_juego2.alert").slideDown("slow");
                         $('#warning_juego2 > .contenido_error').html('Finalizo la extraccion de todos los numeros sorteados');
                         deshabilitarJuegos();
