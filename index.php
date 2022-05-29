@@ -96,6 +96,7 @@ if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.
                                             alert('Es necesario seleccionar un Juego');
                                         });
                                         ">Administrar Incentivos</a></li>
+                                    <li><a href="#" onclick="g('parametros_generales.php');">Parametros Generales</a></li>
                                     <li><a href="#" onclick="g('version.php');">Auditoria</a></li>
                                     <li><a href="#" onclick="g('version_alta.php');">Version</a></li>
                                     <li class="divider"></li>
@@ -130,8 +131,10 @@ if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.
                                                     p('sorteo/operador/loteria_sorteador.php');
                                                 else if (data.id_juego == '2')
                                                     p('sorteo/operador/quiniela/quiniela_sorteador.php');
-                                                else if (data.id_juego == '32')
+                                                else if (data.id_juego == '32' && localStorage.getItem('windows') == 0)
                                                     p('sorteo/operador/quiniela_poceada/quiniela_poceada_sorteador.php');
+                                                else if (data.id_juego == '32' && localStorage.getItem('windows') == 1)
+                                                     alert('La ventana del operador ya se encuentra abierta');
                                                 else if (data.id_juego !== 'null')
                                                     alert('Este juego no esta contemplado para esta opción');
                                                 else

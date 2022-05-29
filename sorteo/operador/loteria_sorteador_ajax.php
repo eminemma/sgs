@@ -307,8 +307,23 @@ if ($accion == 'control_ingreso') {
 
                 //sql('COMMIT');
                 //SOLO SERVIDOR B
-                //$existe_posicion = false;
-                //$existe_bola     = true;
+                try {
+
+                    $rs_param = sql("		SELECT
+										    VALOR
+										FROM
+										    T_PARAMETRO_COMPARTIDO
+										WHERE PARAMETRO='CARGADOBLE'");
+                    //$mensaje = 'OK';
+                } catch (exception $e) {
+                    $mensaje = array("mensaje" => "Error : " . $db->ErrorMsg(), "tipo" => "error");
+                }
+                $row_param = siguiente($rs_param);
+                if ($row_param->VALOR == 'N') {
+                    $existe_posicion = false;
+                    $existe_bola     = true;
+                }
+
                 if ($siempre_sale_p == '1') {
 
                     //    Valido las bolas ingresadas de ambos usuarios si coinciden (LO HACE EL PROCEDURE)

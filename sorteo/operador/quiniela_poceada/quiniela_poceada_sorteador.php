@@ -156,6 +156,15 @@ try {
             controlGanadores();
             var ref = window.setInterval(buscarGanadores, 2000);
             var ref2 = setInterval(controlGanadores, 1000);
+             console.log('Abriendo');
+            if(localStorage.getItem('windows')===1){
+                console.log('p1');
+                window.close();
+
+            }else{
+                console.log('p2');
+                localStorage.setItem("windows",1);
+            }
         }
     $(document).ready(
 
@@ -164,6 +173,13 @@ try {
 
             init();
         });
+
+
+
+    $(window).on('beforeunload', function(){
+        console.log('Cerrando');
+        localStorage.setItem("windows",0);
+    });
     </script>
 </head>
 

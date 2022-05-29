@@ -1,0 +1,99 @@
+create or replace TRIGGER "TRG_CONTROL_INGRESO" before
+  INSERT ON "TEMP_CTRL_INGRESO_NUMERO" FOR EACH ROW 
+
+DECLARE 
+    V_EXISTE_EXTRACCION NUMBER:=0;
+    V_EXISTE_EXTRACCION_POSICION NUMBER;
+    V_SORTEO_ASOC VARCHAR(30):= NULL;
+    V_CONTADOR NUMBER;
+    V_MAX_ORDEN NUMBER;
+    V_VALIDA VARCHAR(1);
+    V_CARGA_DOBLE char(1);
+
+  BEGIN
+    IF INSERTING THEN
+      -- BUSCO EL MISMO NUMERO, POSICION, FRACCION Y ZONA CARGADO POR OTRO USUARIO
+      SELECT COUNT(*)
+      INTO V_CONTADOR
+      FROM SGS.TEMP_CTRL_INGRESO_NUMERO
+      WHERE ID_JUEGO        = :NEW.ID_JUEGO
+      AND SORTEO            = :NEW.SORTEO
+      AND ZONA_JUEGO        = NVL(:NEW.ZONA_JUEGO,1)
+      AND ID_USUARIO        <> :NEW.ID_USUARIO
+      AND NUMERO            = :NEW.NUMERO
+      AND NVL(POSICION,0)   = NVL(:NEW.POSICION,0)
+      AND NVL(FRACCION,0)   = NVL(:NEW.FRACCION,0);
+    END IF;
+
+  SELECT
+            VALOR
+        INTO V_CARGA_DOBLE
+        FROM
+            SGS.T_PARAMETRO_COMPARTIDO
+        WHERE
+            PARAMETRO = 'CARGADOBLE';
+    --V_CONTADOR:=1;
+    IF ((V_CARGA_DOBLE='N' AND  V_CONTADOR = 0) OR (V_CARGA_DOBLE='S' AND  V_CONTADOR > 0)) THEN --CARGA 1
+      --BUSCO EL MAXIMO NUMERO CARGADO
+      SELECT NVL(MAX(ORDEN),0)
+      INTO V_MAX_ORDEN
+      FROM SGS.T_EXTRACCION
+      WHERE ID_JUEGO  = :NEW.ID_JUEGO
+      AND SORTEO      = :NEW.SORTEO
+      AND ZONA_JUEGO  = NVL(:NEW.ZONA_JUEGO,1);
+      IF :NEW.ID_JUEGO = 32 THEN
+          BEGIN
+          SELECT min(POSICION) as POSICION,COUNT(*) INTO V_EXISTE_EXTRACCION_POSICION,V_EXISTE_EXTRACCION
+          FROM sgs.T_EXTRACCION
+          WHERE ID_JUEGO= :NEW.ID_JUEGO
+                AND SORTEO= :NEW.SORTEO
+                AND NUMERO= :NEW.NUMERO                
+                AND VALIDO='S';
+          EXCEPTION
+          WHEN NO_DATA_FOUND THEN
+           NULL;
+        END;    
+
+      IF V_EXISTE_EXTRACCION > 0 THEN
+        V_SORTEO_ASOC:='COINCIDE CON POSICION '||V_EXISTE_EXTRACCION_POSICION;
+        V_VALIDA := 'D';
+      ELSE
+        V_SORTEO_ASOC:='VALIDA';
+        V_VALIDA := 'N';
+      END IF;
+    END IF;
+
+
+      -- INSERTO EL NUMERO
+      INSERT
+      INTO SGS.T_EXTRACCION
+        (
+          ID_EXTRACCION,
+          ID_JUEGO,
+          SORTEO,
+          ORDEN,
+          POSICION,
+          NUMERO,
+          FRACCION,
+          ZONA_JUEGO,
+          SORTEO_ASOC,
+          VALIDO,
+          POSICION_DUPLICADO
+        )
+        VALUES
+        (
+          NULL,
+          :NEW.ID_JUEGO,
+          :NEW.SORTEO,
+          V_MAX_ORDEN+1,
+          :NEW.POSICION,
+          :NEW.NUMERO,
+          :NEW.FRACCION,
+          NVL(:NEW.ZONA_JUEGO,1),
+          V_SORTEO_ASOC,
+          V_VALIDA,
+          V_EXISTE_EXTRACCION_POSICION
+        );
+
+    END IF;
+  END;

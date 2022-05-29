@@ -170,6 +170,38 @@ if ($accion == 'control_ingreso') {
                 if (!$existe_posicion) {
                     $mensaje = array("mensaje" => "Se cargo Correctamente la Extraccion", "tipo" => "info");
                     //Borro al tabla de control de ingreso, sino hay coincidencias
+                    try {
+
+                        $rs_param = sql("       SELECT
+                                            VALOR
+                                        FROM
+                                            T_PARAMETRO_COMPARTIDO
+                                        WHERE PARAMETRO='CARGADOBLE'");
+                        //$mensaje = 'OK';
+                    } catch (exception $e) {
+                        $mensaje = array("mensaje" => "Error : " . $db->ErrorMsg(), "tipo" => "error");
+                    }
+                    $row_param = siguiente($rs_param);
+                    if ($row_param->VALOR == 'N') {
+                        $rs_usuarios = sql(" SELECT
+                                    SUBSTR(ID_JEFE,3,LENGTH(ID_JEFE)) AS USUARIO1,
+                                    SUBSTR(ID_OPERADOR,3,LENGTH(ID_OPERADOR)) AS USUARIO2
+                                FROM
+                                    SGS.T_SORTEO
+                                WHERE SORTEO  =?
+                                 AND  ID_JUEGO=?", array($sorteo, $id_juego));
+                        $row_usuarios = siguiente($rs_usuarios);
+
+                        sql("UPDATE SGS.t_parametro_compartido
+                                    SET VALOR='VALIDA',
+                                        VALOR_SEGUNDO='VALIDA',
+                                        ID_USUARIO=?,
+                                        ID_USUARIO2=?
+                                     WHERE ID_JUEGO=?
+                                        AND PARAMETRO='VALIDACION'", array($row_usuarios->USUARIO1, $row_usuarios->USUARIO2, $id_juego));
+                        sql("DELETE FROM sgs.TEMP_CTRL_INGRESO_NUMERO");
+                    }
+
                 } else if ($existe_posicion && !$existe_bola) {
                     $mensaje = array("mensaje" => "Se cargo pero sin coincidencias", "tipo" => "error");
                     sql("UPDATE SGS.t_parametro_compartido

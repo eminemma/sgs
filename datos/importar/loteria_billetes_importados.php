@@ -18,6 +18,21 @@ try {
 } catch (exception $e) {
     die($db->ErrorMsg());
 }
+
+try {
+    $rs_parametro = sql(" SELECT
+                            ID_COMPARTIDO,
+                            PARAMETRO,
+                            decode(VALOR,'N','Carga un Operador','Carga dos Operadores') as VALOR
+                        FROM
+                            SGS.T_PARAMETRO_COMPARTIDO
+                        WHERE PARAMETRO = 'CARGADOBLE'");
+    if ($row_parametro = $rs_parametro->FetchNextObject($toupper = true)) {
+        $valor = $row_parametro->VALOR;
+    }
+} catch (exception $e) {
+    die($db->ErrorMsg());
+}
 if ($row_modalidad = $rs_modalidad->FetchNextObject($toupper = true)) {
     $fecha_importacion = $row_modalidad->FECHA_IMPORTACION;
 }
@@ -115,8 +130,12 @@ $pdf->SetXY(20, 80);
 $pdf->Cell(30, 8, 'Fecha de Caducidad: ', 0, 0, 'L');
 $pdf->SetXY(70, 80);
 $pdf->Cell(30, 8, $fecha_caduca, 0, 1, 'L');
+$pdf->SetXY(20, 85);
+$pdf->Cell(30, 8, 'Tipo de Carga: ', 0, 0, 'L');
+$pdf->SetXY(70, 85);
+$pdf->Cell(30, 8, $valor, 0, 1, 'L');
 $pdf->SetFont('Arial', 'B', 7);
-$pdf->SetXY(10, 90);
+$pdf->SetXY(10, 95);
 $pdf->Cell(190, 4, 'PROGRAMA DE PREMIOS', 1, 1, 'L', 1);
 try {
 
