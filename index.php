@@ -131,7 +131,7 @@ if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.
                                                     p('sorteo/operador/loteria_sorteador.php');
                                                 else if (data.id_juego == '2')
                                                     p('sorteo/operador/quiniela/quiniela_sorteador.php');
-                                                else if (data.id_juego == '32' && localStorage.getItem('windows') == 0)
+                                                else if (data.id_juego == '32' && (localStorage.getItem('windows') == 0 || && localStorage.getItem('windows') == null))
                                                     p('sorteo/operador/quiniela_poceada/quiniela_poceada_sorteador.php');
                                                 else if (data.id_juego == '32' && localStorage.getItem('windows') == 1)
                                                      alert('La ventana del operador ya se encuentra abierta');
