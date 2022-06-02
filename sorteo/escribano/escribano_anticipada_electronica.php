@@ -12,7 +12,7 @@
 
 <body>
     <div id="incentivo">
-       <!--  <div id="sorteo"></div> -->
+        <div id="sorteo"></div>
         <div id="fecha_sorteo"></div>
         <div id="orden"></div>
         <div id="premio"></div>
@@ -32,7 +32,7 @@
         <div id="jefe_sorteo_d"></div> -->
     </div>
     <div id="resumen">
-        <!-- <div id="sorteo_r"></div> -->
+        <div id="sorteo_r"></div>
         <div id="fecha_sorteo_r"></div>
 <!--         <div id="escribano_r"></div>
         <div id="jefe_sorteo_r"></div> -->
@@ -61,10 +61,10 @@
                 var incentivoMostrando = data.incentivoMostrando;
                 switch (incentivoMostrando) {
                     case ('resumen'):
-                        $('#resumen').css("background-image", "url(escribano_img/gordo_navidad_2021_semana1_resumen.png)");
+                        $('#resumen').css("background-image", "url(escribano_img/gordito_invierno_2022_semana1_resumen.png)");
                         break;
                     default:
-                     $('#incentivo').css("background-image", "url(escribano_img/gordo_navidad_2021_semana1_blanco.png)");
+                     $('#incentivo').css("background-image", "url(escribano_img/gordito_invierno_2022_semana1_blanco.png)");
                         break;
                 }
 
@@ -105,11 +105,11 @@
                 aleatorio = data.cantFracciones;
                 switch (incentivoMostrando) {
                      case ('resumen'):
-                        $('#resumen').css("background-image", "url(escribano_img/gordo_navidad_2021_semana1_resumen.png)");
+                        $('#resumen').css("background-image", "url(escribano_img/gordito_invierno_2022_semana1_resumen.png)");
                         mostrar_resumen(data);
                         break;
                     default:
-                     $('#incentivo').css("background-image", "url(escribano_img/gordo_navidad_2021_semana1_blanco.png)");
+                     $('#incentivo').css("background-image", "url(escribano_img/gordito_invierno_2022_semana1_blanco.png)");
                      buscar_ganador(data);
                         break;
                 }
@@ -221,9 +221,9 @@
                 id = '#ganadores';
             var tam = '';
             if (i==0)
-                tam = 'style="height: 50px;"';
+                tam = 'style="height: 60px;"';
             else
-                tam = 'style="height: 50px;"';
+                tam = 'style="height: 70px;"';
             if (data.ganadores[i].NOMBRE == 'VENTA CONTADO CASA CENTRAL')
                 $('#ganadores').append('<div class="ganador"'+tam+'><div class="billete">' + pad(data.ganadores[i].BILLETE, 5) + '</div><div class="fraccion">' + pad(data.ganadores[i].FRACCION, 2) + '</div><div class="premio_r" id="premio_r_' + i + '">' + data.ganadores[i].PREMIO + ' <BR/></div><div class="agencia">9001</div><div class="sucursal">CORDOBA</div></div>');
             else if (data.ganadores[i].NOMBRE == 'VENTA CONTADO') {
